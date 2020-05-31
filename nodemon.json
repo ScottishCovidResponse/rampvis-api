@@ -1,0 +1,20 @@
+{
+  "ignore": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    ".git",
+    "node_modules",
+    "typings"
+    ],
+    "verbose": true,
+    "exec": "npm start",
+    "execMap": {
+      "ts": "ts-node --compilerOptions {\"\"\"module\"\"\":\"\"\"commonjs\"\"\"}"
+    },
+    "watch": ["src/*", "public/*"],
+    "ext": "ts, js, json, html, css",
+    "env": {
+      "PORT": 2000,
+      "NODE_ENV": "development"
+    }
+  }
