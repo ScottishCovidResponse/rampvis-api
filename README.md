@@ -24,6 +24,7 @@ Inject seed data:
 npm run dev-seed
 ```
 
+This will create a test user to allow login, user: `admin@test.com` and password: `pass123`
 
 **Using Docker**
 TODO
