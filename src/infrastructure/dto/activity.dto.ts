@@ -1,11 +1,9 @@
 import { IsOptional, IsString, IsDate, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserDto } from './user.dto';
-import { MemberDto } from '../client/member.dto';
+
 import { ACTIVITY_ACTION } from '../entities/activity.interface';
 import { ACTIVITY_TYPE } from '../entities/activity.interface';
 import { ACCOUNT_ROLES } from '../entities/account.interface';
-import { ParticipantDto } from '../chat/participant.dto';
 
 export class ActivityDto {
 
@@ -30,8 +28,4 @@ export class ActivityDto {
 
   @IsEnum(ACCOUNT_ROLES)
   public accountRole!: ACCOUNT_ROLES;
-
-  @IsOptional()
-  @IsString()
-  public account?: ParticipantDto;
 }

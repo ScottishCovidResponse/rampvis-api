@@ -2,7 +2,7 @@
 
 module.exports = {
     apps: [{
-        name: "scrc-vis-api",
+        name: "api-scrc-vis",
         script: "./dist/server.js",
         instances: "max",
         exec_mode: "cluster",
