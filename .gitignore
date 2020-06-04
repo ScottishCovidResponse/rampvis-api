@@ -6,3 +6,4 @@ temp
 .tmp
 .idea
 logs
+mongo_db_data/
