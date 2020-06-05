@@ -61,9 +61,8 @@ sudo rm -f /etc/nginx/conf.d/scrc-vis-app.conf
 sudo touch /etc/nginx/conf.d/scrc-vis-app.conf
 echo "server {" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
 echo "    listen 80;" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
-# echo "    server_name  *.amazonaws.com;" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
 echo "    server_name vis.scrc.uk;" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
-echo "    root /var/www/scrc-vis;" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
+echo "    root /var/www/ui-scrc-vis;" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
 echo "    location / {" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
 echo "        try_files \$uri \$uri/ /index.html;" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
 echo "    }" | sudo tee -a /etc/nginx/conf.d/scrc-vis-app.conf
@@ -102,7 +101,7 @@ git clone https://5bf8f45e68b1b864be643a00278c4973f0d24dc9@github.com/ScottishCo
 cd api-scrc-vis
 git checkout master
 npm install
-npm run build
+npm run build --production
 
 echo "
 ----------------------
@@ -130,12 +129,12 @@ cd ui-scrc-vis
 git checkout master
 npm install
 
+npm install -g @angular/cli@9.1.7 > /dev/null
+npm install -g typescript@3.8.3
+
 # create angular publish directory
 sudo mkdir /var/www/ui-scrc-vis -p
 sudo chmod 777 /var/www/ui-scrc-vis
-
-npm install -g @angular/cli@9.1.7 > /dev/null
-npm install -g typescript@3.8.3
 
 # build angular project and copy files
 ng build --prod --output-path ./dist
