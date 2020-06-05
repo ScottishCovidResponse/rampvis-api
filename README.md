@@ -26,6 +26,10 @@ npm run dev-seed
 
 This will create a test user to allow login, user: `admin@test.com` and password: `pass123`
 
+## APIs
+
+Please refer [doc](./doc/API.md)
+
 **Using Docker**
 TODO
  

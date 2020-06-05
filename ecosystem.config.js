@@ -16,7 +16,7 @@ module.exports = {
         max_restarts: 5,                // defaults to 15
         instance_var: 'INSTANCE_ID',
         env: {
-            PORT: 3000,
+            PORT: 2000,
             NODE_ENV: "development"
         },
         env_staging: {

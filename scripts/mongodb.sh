@@ -16,6 +16,7 @@ sudo apt-get install -y mongodb-org
 
 # set mongo to bind to all IPs, not only to listen localhost
 sudo sed -i "s,\\(^[[:blank:]]*bindIp:\\) .*,\\1 0.0.0.0," /etc/mongod.conf
+sudo sed -i "s,\\(^[[:blank:]]*dbPath:\\) .*,\\1 /data/db," /etc/mongod.conf
 
 # create mongodb data folder
 sudo mkdir /data/db -p
