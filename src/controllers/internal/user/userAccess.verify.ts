@@ -6,12 +6,6 @@ import { AccessControlException } from '../../../exceptions/exception';
 
 
 const grantObject = {
-  guest: {
-    user: {
-      "read:own": ['id'],
-      "update:own": ['phone', 'password']
-    }
-  },
   user: {
     user: {
       "read:own": ['id'],
@@ -19,6 +13,15 @@ const grantObject = {
     }
   },
   admin: {
+    user: {
+      "read:own": ['id'],
+      "update:any": ['phone', 'password', 'role'],
+      "read:any": ['*'],
+      "create:any": ['*'],
+      "delete:any": ['*']
+    }
+  },
+  developer: {
     user: {
       "read:own": ['id'],
       "update:any": ['phone', 'password', 'role'],

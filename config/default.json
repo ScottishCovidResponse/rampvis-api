@@ -1,11 +1,12 @@
 {
     "allowOrigins": [
-        "http://localhost:4200",
-        "http://localhost"
+        "http://vis.scrc.uk",
+        "http://localhost:4200"
     ],
     "apiUrl": "/api/v1",
     "mongodb": {
-        "url": "mongodb://localhost:27017",
+        "__url": "mongodb://localhost:27017",
+        "url": "mongodb://192.168.251.20:27017",
         "internal": {
             "db": "scrc_internal",
             "collection": {
