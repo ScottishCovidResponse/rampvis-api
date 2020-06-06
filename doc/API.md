@@ -16,8 +16,49 @@ nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubile
 
 ```bash
 # For example, this will return all entries from - Table 2 - ICU patients
-curl --location --request GET http://vis.scrc.uk/2000/api/v1/scotland/icupatients
+curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/icupatients'
 
+# Example response
+[
+    {
+        "date": "18/03/2020",
+        "nhs_ayrshire_arran": "*",
+        "nhs_borders": "*",
+        "nhs_dumfries_galloway": "*",
+        "nhs_fife": "*",
+        "nhs_forth_valley": "*",
+        "nhs_grampian": "*",
+        "nhs_greater_glasgow_clyde": "*",
+        "nhs_highland": "*",
+        "nhs_lanarkshire": "*",
+        "nhs_lothian": "5",
+        "nhs_orkney": "*",
+        "nhs_shetland": "*",
+        "nhs_tayside": "*",
+        "": "*",
+        "golden_jubilee_nationalhospital": "*",
+        "scotland": "6"
+    },
+    {
+        "date": "19/03/2020",
+        "nhs_ayrshire_arran": "*",
+        "nhs_borders": "*",
+        "nhs_dumfries_galloway": "*",
+        "nhs_fife": "*",
+        "nhs_forth_valley": "*",
+        "nhs_grampian": "*",
+        "nhs_greater_glasgow_clyde": "*",
+        "nhs_highland": "*",
+        "nhs_lanarkshire": "*",
+        "nhs_lothian": "5",
+        "nhs_orkney": "*",
+        "nhs_shetland": "*",
+        "nhs_tayside": "*",
+        "": "*",
+        "golden_jubilee_nationalhospital": "*",
+        "scotland": "11"
+    },
+...]
 ```
 
 ```bash
@@ -40,5 +81,7 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/cumulative/nhs
     {
         "date": "20/03/2020",
         "value": "16"
-    }]
+    }
+...
+]
 ```
