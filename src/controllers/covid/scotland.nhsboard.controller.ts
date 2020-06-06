@@ -12,14 +12,26 @@ import {RequestWithUser} from '../internal/auth/requestWithUser.interface';
 import {ScotlandRegionNhs} from './scotland-regions-nhs.enum';
 
 @controller('/scotland')
-export class ScotlandCumulativeController {
+export class ScotlandNhsboardController {
 
     constructor() {}
+
+    @httpGet('/cumulative')
+    public async getAllCumulative(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        logger.debug('ScotlandNhsboardController: getAllCumulative:');
+
+        try {
+            const data: any[] = await this.readCSV('cumulative_cases.csv');
+            response.status(200).send(data);
+        } catch (error) {
+            next(new CsvParseError(500, error.message));
+        }
+    }
 
     @httpGet('/cumulative/:id')
     public async getCumulative(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const nhsName: ScotlandRegionNhs = request.params.id as any;
-        logger.debug('ScotlandCumulativeController: getData: nhsName  = ' + nhsName);
+        logger.debug('ScotlandNhsboardController: getData: nhsName  = ' + nhsName);
 
         try {
             const data: any[] = await this.readCSV('cumulative_cases.csv');
@@ -34,10 +46,22 @@ export class ScotlandCumulativeController {
         }
     }
 
+    @httpGet('/icupatients')
+    public async getAllIcuPatients(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        logger.debug('ScotlandNhsboardController: getAllIcuPatients:');
+
+        try {
+            const data: any[] = await this.readCSV('icu_patients.csv');
+            response.status(200).send(data);
+        } catch (error) {
+            next(new CsvParseError(500, error.message));
+        }
+    }
+
     @httpGet('/icupatients/:id')
     public async getIcuPatients(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const nhsName = request.params.id;
-        logger.debug('ScotlandCumulativeController: getIcuPatients: nhsName  = ' + nhsName);
+        logger.debug('ScotlandNhsboardController: getIcuPatients: nhsName  = ' + nhsName);
 
         try {
             const data: any[] = await this.readCSV('icu_patients.csv');
@@ -52,10 +76,22 @@ export class ScotlandCumulativeController {
         }
     }
 
+    @httpGet('/hospconfirmed')
+    public async getAllHospitalConfirmed(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        logger.debug('ScotlandNhsboardController: getAllHospitalConfirmed:');
+
+        try {
+            const data: any[] = await this.readCSV('hospital_conformed.csv');
+            response.status(200).send(data);
+        } catch (error) {
+            next(new CsvParseError(500, error.message));
+        }
+    }
+
     @httpGet('/hospconfirmed/:id')
     public async getHospitalConfirmed(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const nhsName = request.params.id;
-        logger.debug('ScotlandCumulativeController: getHospitalConfirmed: nhsName  = ' + nhsName);
+        logger.debug('ScotlandNhsboardController: getHospitalConfirmed: nhsName  = ' + nhsName);
 
         try {
             const data: any[] = await this.readCSV('hospital_conformed.csv');
@@ -70,10 +106,22 @@ export class ScotlandCumulativeController {
         }
     }
 
+    @httpGet('/hospsuspected')
+    public async getAllHospitalSuspected(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        logger.debug('ScotlandNhsboardController: getAllHospitalSuspected:');
+
+        try {
+            const data: any[] = await this.readCSV('hospital_suspected.csv');
+            response.status(200).send(data);
+        } catch (error) {
+            next(new CsvParseError(500, error.message));
+        }
+    }
+
     @httpGet('/hospsuspected/:id')
     public async getHospitalSuspected(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const nhsName = request.params.id;
-        logger.debug('ScotlandCumulativeController: getHospitalSuspected: nhsName  = ' + nhsName);
+        logger.debug('ScotlandNhsboardController: getHospitalSuspected: nhsName  = ' + nhsName);
 
         try {
             const data: any[] = await this.readCSV('hospital_suspected.csv');
