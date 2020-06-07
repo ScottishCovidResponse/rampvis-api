@@ -1,7 +1,8 @@
 {
     "allowOrigins": [
         "http://vis.scrc.uk",
-        "http://localhost:4200"
+        "http://localhost:4200",
+        "http://localhost"
     ],
     "apiUrl": "/api/v1",
     "mongodb": {
