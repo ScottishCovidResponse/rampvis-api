@@ -59,7 +59,10 @@ export class UserService extends DataService<IUser> implements IUserService {
 
     
     isUser(accountRole: ACCOUNT_ROLES): boolean {
-        return accountRole === ACCOUNT_ROLES.ADMIN || accountRole === ACCOUNT_ROLES.USER || accountRole === ACCOUNT_ROLES.GUEST;
+        return accountRole === ACCOUNT_ROLES.ADMIN
+            || accountRole === ACCOUNT_ROLES.USER
+            || accountRole === ACCOUNT_ROLES.GUEST
+            || accountRole === ACCOUNT_ROLES.DEVELOPER;
     }
     
 
