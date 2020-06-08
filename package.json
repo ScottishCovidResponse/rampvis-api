@@ -12,6 +12,8 @@
     "dev:debug": "nodemon --inspect src/server.ts"
   },
   "dependencies": {
+    "@fast-csv/format": "^4.3.0",
+    "@fast-csv/parse": "^4.3.0",
     "accesscontrol": "^2.2.1",
     "app-root-path": "^2.2.1",
     "automapper-ts": "^1.9.0",
@@ -22,11 +24,14 @@
     "compression": "^1.7.4",
     "config": "^3.2.2",
     "connect-mongo": "^3.0.0",
+    "convert-csv-to-json": "0.0.15",
     "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
     "debug": "~4.1.1",
     "envalid": "^5.0.0",
     "express": "~4.17.1",
     "express-session": "^1.16.2",
+    "fast-csv": "^4.3.0",
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
     "jsonwebtoken": "^8.5.1",

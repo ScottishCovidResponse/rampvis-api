@@ -16,7 +16,6 @@ export interface IAccount {
 
 export enum ACCOUNT_ROLES {
   ADMIN = 'admin',
-  GUEST = 'guest',
   USER = 'user',
   DEVELOPER = 'developer',
 }
