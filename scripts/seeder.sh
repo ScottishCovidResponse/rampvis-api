@@ -5,6 +5,7 @@ echo "
 "
 mongo
 use scrc_internal
+
 db.users.insert({
     "name" : "Admin User",
     "email" : "admin@test.com",
@@ -35,6 +36,5 @@ db.users.insert({
         "country" : "UK",
         "zip" : "AB CD",
         "alpha2Code": 'GB',
-
     }
 })

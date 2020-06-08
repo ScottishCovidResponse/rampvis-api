@@ -86,6 +86,12 @@ class AccessControlException extends HttpException {
   }
 }
 
+class CsvParseError extends HttpException {
+  constructor(code: number, message: string) {
+    super(code, message, ERROR_CODES.CSV_PARSE_ERROR);
+  }
+}
+
 export {
   HttpException,
   AssertionErrorException,
@@ -99,4 +105,5 @@ export {
   DatabaseException,
   RedundantUpdateErrorException,
   AccessControlException,
+  CsvParseError,
 }
