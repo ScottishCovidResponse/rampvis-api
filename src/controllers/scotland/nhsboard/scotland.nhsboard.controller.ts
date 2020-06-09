@@ -2,14 +2,11 @@ import {NextFunction} from 'connect';
 import {Response} from 'express-serve-static-core';
 import {controller, httpGet} from 'inversify-express-utils';
 
-import * as csv from 'fast-csv';
-import * as fs from 'fs';
-import * as path from 'path';
-
-import {CsvParseError} from '../../exceptions/exception';
-import {logger} from '../../utils/logger';
-import {RequestWithUser} from '../internal/auth/requestWithUser.interface';
-import {ScotlandRegionNhs} from './scotland-regions-nhs.enum';
+import { CsvParseError } from '../../../exceptions/exception';
+import { logger } from '../../../utils/logger';
+import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
+import { ScotlandRegionNhs } from './scotland-regions-nhs.enum';
+import { readCSV } from '../../../csv/csv-reader';
 
 @controller('/scotland')
 export class ScotlandNhsboardController {
@@ -21,7 +18,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getAllCumulative:');
 
         try {
-            const data: any[] = await this.readCSV('cumulative_cases.csv');
+            const data: any[] = await readCSV('cumulative_cases.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -34,7 +31,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getData: nhsName  = ' + nhsName);
 
         try {
-            const data: any[] = await this.readCSV('cumulative_cases.csv');
+            const data: any[] = await readCSV('cumulative_cases.csv');
             response.status(200).send(data.map((d: any) => {
                 return {
                     date: d.date,
@@ -51,7 +48,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getAllIcuPatients:');
 
         try {
-            const data: any[] = await this.readCSV('icu_patients.csv');
+            const data: any[] = await readCSV('icu_patients.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -64,7 +61,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getIcuPatients: nhsName  = ' + nhsName);
 
         try {
-            const data: any[] = await this.readCSV('icu_patients.csv');
+            const data: any[] = await readCSV('icu_patients.csv');
             response.status(200).send(data.map((d: any) => {
                 return {
                     date: d.date,
@@ -81,7 +78,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getAllHospitalConfirmed:');
 
         try {
-            const data: any[] = await this.readCSV('hospital_conformed.csv');
+            const data: any[] = await readCSV('hospital_conformed.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -94,7 +91,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getHospitalConfirmed: nhsName  = ' + nhsName);
 
         try {
-            const data: any[] = await this.readCSV('hospital_conformed.csv');
+            const data: any[] = await readCSV('hospital_conformed.csv');
             response.status(200).send(data.map((d: any) => {
                 return {
                     date: d.date,
@@ -111,7 +108,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getAllHospitalSuspected:');
 
         try {
-            const data: any[] = await this.readCSV('hospital_suspected.csv');
+            const data: any[] = await readCSV('hospital_suspected.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -124,7 +121,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getHospitalSuspected: nhsName  = ' + nhsName);
 
         try {
-            const data: any[] = await this.readCSV('hospital_suspected.csv');
+            const data: any[] = await readCSV('hospital_suspected.csv');
             response.status(200).send(data.map((d: any) => {
                 return {
                     date: d.date,
@@ -135,31 +132,6 @@ export class ScotlandNhsboardController {
             next(new CsvParseError(500, error.message));
         }
     }
-
-
-    private readCSV(fileName: string): Promise<any[]> {
-        return new Promise((resolve: any) => {
-            const returnLit: any[] = [];
-
-            const stream = fs.createReadStream(path.resolve(__dirname, '', fileName))
-                .pipe(csv.parse({headers: true}));
-
-            stream.on('error', (error: any) => {
-                console.error(error);
-            });
-
-            stream.on('data', (row: any) => {
-                // console.log(row);
-                returnLit.push(row);
-            });
-
-            stream.on('end', (rowCount: number) => {
-                console.log(`Parsed ${rowCount} rows`);
-                resolve(returnLit);
-            });
-        });
-    }
-
 
 }
 
