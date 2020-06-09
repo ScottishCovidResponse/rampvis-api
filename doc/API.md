@@ -1,10 +1,14 @@
 # List of APIs  
+
  
+## COVID 19 data by NHS Board 26 May 2020 
 The data from the file `COVID-19+data+by+NHS+Board+26+May+2020.xlsx` can be accessed via the following APIs
+
+URL: http://vis.scrc.uk 
  
 ```bash
-curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/<table>'
-curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/<table>/:<region>'
+curl --location --request GET '<URL>/api/v1/scotland/<table>'
+curl --location --request GET '<URL>/api/v1/scotland/<table>/:<region>'
 ```
 
 - Accepted `table` values `cumulative, icupatients, hospconfirmed, hospsuspected`
@@ -20,25 +24,6 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/icupatients'
 
 # Example response
 [
-    {
-        "date": "15/04/2020",
-        "nhs_ayrshire_arran": "13",
-        "nhs_borders": "6",
-        "nhs_dumfries_galloway": "6",
-        "nhs_fife": "5",
-        "nhs_forth_valley": "7",
-        "nhs_grampian": "15",
-        "nhs_greater_glasgow_clyde": "71",
-        "nhs_highland": "5",
-        "nhs_lanarkshire": "29",
-        "nhs_lothian": "28",
-        "nhs_orkney": "*",
-        "nhs_shetland": "*",
-        "nhs_tayside": "6",
-        "nhs_western_isles_scotland": "*",
-        "golden_jubilee_nationalhospital": "*",
-        "scotland": "195"
-    },
     {
         "date": "16/04/2020",
         "nhs_ayrshire_arran": "13",
@@ -59,44 +44,6 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/icupatients'
         "scotland": "196"
     },
     {
-        "date": "17/04/2020",
-        "nhs_ayrshire_arran": "11",
-        "nhs_borders": "6",
-        "nhs_dumfries_galloway": "5",
-        "nhs_fife": "6",
-        "nhs_forth_valley": "6",
-        "nhs_grampian": "15",
-        "nhs_greater_glasgow_clyde": "67",
-        "nhs_highland": "6",
-        "nhs_lanarkshire": "29",
-        "nhs_lothian": "30",
-        "nhs_orkney": "*",
-        "nhs_shetland": "*",
-        "nhs_tayside": "5",
-        "nhs_western_isles_scotland": "*",
-        "golden_jubilee_nationalhospital": "*",
-        "scotland": "189"
-    },
-    {
-        "date": "18/04/2020",
-        "nhs_ayrshire_arran": "12",
-        "nhs_borders": "6",
-        "nhs_dumfries_galloway": "5",
-        "nhs_fife": "6",
-        "nhs_forth_valley": "*",
-        "nhs_grampian": "15",
-        "nhs_greater_glasgow_clyde": "65",
-        "nhs_highland": "6",
-        "nhs_lanarkshire": "27",
-        "nhs_lothian": "28",
-        "nhs_orkney": "*",
-        "nhs_shetland": "*",
-        "nhs_tayside": "7",
-        "nhs_western_isles_scotland": "*",
-        "golden_jubilee_nationalhospital": "*",
-        "scotland": "182"
-    },
-    {
         "date": "19/04/2020",
         "nhs_ayrshire_arran": "10",
         "nhs_borders": "6",
@@ -115,7 +62,8 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/icupatients'
         "golden_jubilee_nationalhospital": "*",
         "scotland": "174"
     },
-...]
+    ...
+]
 ```
 
 ```bash
@@ -135,10 +83,18 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/cumulative/nhs
         "date": "19/03/2020",
         "value": "12"
     },
-    {
-        "date": "20/03/2020",
-        "value": "16"
-    }
-...
+    ...
 ]
+```
+
+
+## Covid Deaths Data Week 20 
+The data from the file `covid-deaths-data-week-20.xlsx` can be accessed via the following APIs
+
+URL: http://vis.scrc.uk 
+ 
+```bash
+curl --location --request GET '<URL>/api/v1/scotland/covid-deaths/data-week/gender-age'
+curl --location --request GET '<URL>/api/v1/scotland/covid-deaths/data-week/location'
+curl --location --request GET '<URL>/api/v1/scotland/covid-deaths/data-week/type'
 ```

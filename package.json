@@ -5,6 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
+    "copy-csv": "copyfiles -u 1 ./src/csv/*.csv ./dist/",
     "start": "ts-node src/server.ts",
     "dev": "set PORT=2000&& set NODE_ENV=development&& node ./node_modules/nodemon/bin/nodemon.js",
     "dev-seed": "node ./node_modules/nodemon/bin/nodemon.js seed",
