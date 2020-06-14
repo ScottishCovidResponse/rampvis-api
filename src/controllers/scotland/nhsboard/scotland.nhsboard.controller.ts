@@ -27,17 +27,25 @@ export class ScotlandNhsboardController {
 
     @httpGet('/cumulative/:id')
     public async getCumulative(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const nhsName: ScotlandRegionNhs = request.params.id as any;
-        logger.debug('ScotlandNhsboardController: getData: nhsName  = ' + nhsName);
+        const id: any = request.params.id as any;
+        let data: any[] = [];
 
         try {
-            const data: any[] = await readCSV('cumulative_cases.csv');
-            response.status(200).send(data.map((d: any) => {
-                return {
-                    date: d.date,
-                    value: d[nhsName],
-                };
-            }));
+            if (id === 'pearson-correlation') {
+                logger.debug('ScotlandNhsboardController: getCumulative: pearson-correlation');
+                data = await readCSV('cumulative_case_pearson_correlation.csv');
+                response.status(200).send(data);
+            } else {
+                const nhsName: ScotlandRegionNhs = id;
+                logger.debug('ScotlandNhsboardController: getData: nhsName  = ' + nhsName);
+                data = await readCSV('cumulative_cases.csv');
+                response.status(200).send(data.map((d: any) => {
+                    return {
+                        date: d.date,
+                        value: d[nhsName],
+                    };
+                }));
+            }
         } catch (error) {
             next(new CsvParseError(500, error.message));
         }
