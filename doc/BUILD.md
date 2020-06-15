@@ -10,6 +10,7 @@ pm2 delete api-scrc-vis
 
 git pull
 
+npm install
 npm run build 
 npm run copy-csv
 pm2 start --env production
