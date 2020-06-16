@@ -5,7 +5,7 @@ import {controller, httpGet} from 'inversify-express-utils';
 import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
 import { CsvParseError } from '../../../exceptions/exception';
 import { logger } from '../../../utils/logger';
-import { readCSV } from '../../../csv/csv-reader';
+import { readCSV } from '../../../services/csv.service';
 
 @controller('/scotland/covid-deaths/data-week')
 export class ScotlandCovidDeathsDataWeek {
