@@ -91,20 +91,35 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/cumulative/nhs
 ]
 ```
 
-Pearson Correlation
 
-```
-curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/cumulative/pearson-correlation'
 
-```
-
-## Covid Deaths Data Week 20 
-The data from the file `covid-deaths-data-week-20.xlsx` can be accessed via the following APIs
-
-URL: http://vis.scrc.uk 
+### Stat APIs
 
 ```bash
-curl --location --request GET '<URL>/api/v1/scotland/covid-deaths/data-week/gender-age'
-curl --location --request GET '<URL>/api/v1/scotland/covid-deaths/data-week/location'
-curl --location --request GET '<URL>/api/v1/scotland/covid-deaths/data-week/type'
+curl --location --request GET <endpoints>
+
+# available endpoints
+http://vis.scrc.uk/stat/v1/scotland/region/cumulative/mse
+http://vis.scrc.uk/stat/v1/scotland/region/cumulative/f-test
+http://vis.scrc.uk/stat/v1/scotland/region/cumulative/pearson-correlation
 ```
+
+
+
+## Covid Deaths Data Week 20 
+
+The data from the file `covid-deaths-data-week-20.xlsx` can be accessed via the following APIs
+
+```bash
+curl --location --request GET <endpoints> 
+
+# available endpoints
+http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/gender-age
+http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/location
+http://vis.scrc.uk /api/v1/scotland/covid-deaths/data-week/type
+```
+
+
+
+
+

@@ -34,15 +34,17 @@ npm install -g copyfiles
 ```
 
 ```bash
-cd api-scrc-vis  # data-api
-pm2 stop api-scrc-vis
-pm2 delete api-scrc-vis
-
+cd api-scrc-vis
 git pull
+
+cd data-api
+
+pm2 stop data-api
+pm2 delete data-api
+
 
 npm install
 npm run build 
-npm run copy-csv
 pm2 start --env production
 ```
  
