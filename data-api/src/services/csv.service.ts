@@ -2,11 +2,13 @@ import * as csv from 'fast-csv';
 import fs from 'fs';
 import path from 'path';
 
+const CSV_DATA_PATH = '../../../csv-data'
+
 function readCSV(fileName: string): Promise<any[]> {
     return new Promise((resolve: any) => {
         const returnLit: any[] = [];
 
-        const stream = fs.createReadStream(path.resolve(__dirname, '', fileName))
+        const stream = fs.createReadStream(path.resolve(__dirname, CSV_DATA_PATH, fileName))
             .pipe(csv.parse({headers: true}));
 
         stream.on('error', (error: any) => {

@@ -6,7 +6,7 @@ import { CsvParseError } from '../../../exceptions/exception';
 import { logger } from '../../../utils/logger';
 import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
 import { ScotlandRegionNhs } from './scotland-regions-nhs.enum';
-import { readCSV } from '../../../csv/csv-reader';
+import { readCSV } from '../../../services/csv.service';
 
 @controller('/scotland')
 export class ScotlandNhsboardController {
@@ -34,17 +34,21 @@ export class ScotlandNhsboardController {
             if (id === 'pearson-correlation') {
                 logger.debug('ScotlandNhsboardController: getCumulative: pearson-correlation');
                 data = await readCSV('cumulative_case_pearson_correlation.csv');
+
                 response.status(200).send(data);
+
             } else {
                 const nhsName: ScotlandRegionNhs = id;
                 logger.debug('ScotlandNhsboardController: getData: nhsName  = ' + nhsName);
                 data = await readCSV('cumulative_cases.csv');
+
                 response.status(200).send(data.map((d: any) => {
                     return {
                         date: d.date,
                         value: d[nhsName],
                     };
                 }));
+
             }
         } catch (error) {
             next(new CsvParseError(500, error.message));
