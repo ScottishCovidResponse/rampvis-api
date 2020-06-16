@@ -1,6 +1,5 @@
 from controllers import app
 
-
 @app.route('/controllers/health')
 def index():
     return "Hello Analytics"
