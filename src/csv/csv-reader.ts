@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import * as csv from "fast-csv";
+import * as csv from 'fast-csv';
+import fs from 'fs';
+import path from 'path';
 
 function readCSV(fileName: string): Promise<any[]> {
     return new Promise((resolve: any) => {
@@ -22,7 +22,7 @@ function readCSV(fileName: string): Promise<any[]> {
             console.log(`Parsed ${rowCount} rows`);
             resolve(returnLit);
         });
-    })
+    });
 }
 
-export { readCSV }
+export { readCSV };
