@@ -87,6 +87,12 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/cumulative/nhs
 ]
 ```
 
+Pearson Correlation
+
+```
+curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/cumulative/pearson-correlation'
+
+```
 
 ## Covid Deaths Data Week 20 
 The data from the file `covid-deaths-data-week-20.xlsx` can be accessed via the following APIs
