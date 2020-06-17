@@ -1,17 +1,30 @@
 import pandas as pd
 import scipy.stats as stats
+import numpy as np
 
 
 def mse(df: pd.DataFrame):
     result = []
-    for i in df.columns:
-        obj = {'name': i}
+    max_val = 0
 
+    #
+    # TODO improve!
+    #
+    for i in df.columns:
         for j in df.columns:
             mse_val = ((df[i] - df[j]) ** 2).mean() ** .5
-            obj[j] = round(mse_val, 2)
+            if mse_val > max_val:
+                max_val = mse_val
+
+    for i in df.columns:
+        obj = {'name': i}
+        for j in df.columns:
+            mse_val = ((df[i] - df[j]) ** 2).mean() ** .5
+            obj[j] = round(max_val - mse_val, 2)
 
         result.append(obj)
+
+    print(result)
 
     return result
 

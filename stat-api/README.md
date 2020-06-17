@@ -4,7 +4,7 @@ Getting started-
 ```
 # setup environment, e.g., using conda
 conda activate stat-api-env
-onda install --file requirements.txt
+conda install --file requirements.txt
 
 # start the server
 flask run
