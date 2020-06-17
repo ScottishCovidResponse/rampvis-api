@@ -1,8 +1,8 @@
 from controllers import app
 
-@app.route('/controllers/health')
+@app.route('/stat/v1/health')
 def index():
-    return "Hello Analytics"
+    return "Hello!"
 
 
 if __name__ == '__main__':
