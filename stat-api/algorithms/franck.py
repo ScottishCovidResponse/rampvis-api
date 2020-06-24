@@ -19,9 +19,8 @@ def compute_metrics(df1, df2, metrics, window):
         'var1_names': df1.columns[1:].tolist(),
         'var2_names': df2.columns[1:].tolist()
     }
-    metrics = metrics.split(',')
     for m in metrics:
-        result[m] = [[None]*len(result['var2_names']) for _ in range(len(result['var1_names']))]
+        result[m] = np.zeros((number_of_columns1 - 1, number_of_columns2 - 1))
 
     # Using nested for loops to create a 2-D matrix
     for i in range(number_of_columns1 - 1):
