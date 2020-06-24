@@ -43,7 +43,7 @@ The API returns correlation metrics between two variables. The end point is `htt
 - `smooth` (optional, default is `none`) [smooth the data](https://scipy-cookbook.readthedocs.io/items/SignalSmooth.html): `none`, `flat`, `hanning`, `hamming`, `bartlett`, `blackman`
 
 #### Example
-`http://vis.scrc.uk/stat/v1/correlation/?var1=scotland/hospital_confirmed&var2=scotland/hospital_confirmed&metrics=zncc,pearsonr,f-test&smooth=hanning` returns ZNCC, Pearson and F-test metrics between hospital_confirmed and hospital_confirmed in Scotland and the data is smoothed using Hanning option.
+http://vis.scrc.uk/stat/v1/correlation/?var1=scotland/hospital_confirmed&var2=scotland/hospital_confirmed&metrics=zncc,pearsonr,f-test&smooth=hanning returns ZNCC, Pearson and F-test metrics between hospital_confirmed and hospital_confirmed in Scotland and the data is smoothed using Hanning option.
 
 #### Output
 The API return a JSON object as follows
