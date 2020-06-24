@@ -20,12 +20,17 @@ def query():
 
     df1 = variable_to_df(var1)
     df2 = variable_to_df(var2)
+    metrics = metrics.split(',')
 
     try:
         result = compute_metrics(df1, df2, metrics, window)
     except Exception as v:
         abort(400, v)
 
+    # Convert to list for serialisation
+    for m in metrics:
+        result[m] = result[m].tolist()
+    
     response = Response(json.dumps(result), mimetype='application/json')
     return response
 
