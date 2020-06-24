@@ -32,7 +32,30 @@ http://vis.scrc.uk/stat/v1/scotland/region/cumulative/f-test
 http://vis.scrc.uk/stat/v1/scotland/region/cumulative/pearson-correlation
 ```
 
+### Correlation metrics
+#### API
+The API returns correlation metrics between two variables. The end point is `http://vis.scrc.uk/stat/v1/correlation/`. It takes on 4 parameters:
+- `var1` defines the first variable as `country/filename`
+  - `country`: `scotland`
+  - `filename`: `cumulative_cases`, `hospital_confirmed`, `hospital_suspected`, `icu_patients`
+- `var2` defines the second variable as `country/filename`
+- `metrics` a list of metrics as a string separated by comma: `ZNCC`, `pearsonr`, `spearmanr`, `kendalltau`, `SSIM`, `PSNR`, `MSE`, `NRMSE`, `ME`, `MAE`, `MSLE`, `MedAE`, `f-test`
+- `smooth` (optional, default is `none`) [smooth the data](https://scipy-cookbook.readthedocs.io/items/SignalSmooth.html): `none`, `flat`, `hanning`, `hamming`, `bartlett`, `blackman`
 
+#### Example
+`http://vis.scrc.uk/stat/v1/correlation/?var1=scotland/hospital_confirmed&var2=scotland/hospital_confirmed&metrics=zncc,pearsonr,f-test&smooth=hanning` returns ZNCC, Pearson and F-test metrics between hospital_confirmed and hospital_confirmed in Scotland and the data is smoothed using Hanning option.
+
+#### Output
+The API return a JSON object as follows
+```
+{ 
+  var1_names: [columns in var1 file], 
+  var2_names: [columns in var2 file],
+  metric1: [2d array],
+  metric2: [2d array]
+}
+
+```
 
 ## Covid Deaths Data Week 20 
 
@@ -46,8 +69,3 @@ http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/gender-age
 http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/location
 http://vis.scrc.uk /api/v1/scotland/covid-deaths/data-week/type
 ```
-
-
-
-
-
