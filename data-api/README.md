@@ -1,5 +1,5 @@
 
-# API - NodeJS
+# Data API - Node.js
 
 ## Quick start
 

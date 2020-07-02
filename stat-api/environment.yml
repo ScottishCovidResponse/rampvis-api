@@ -1,0 +1,13 @@
+name: stat-api-env
+channels:
+  - anaconda
+  - defaults
+dependencies:
+  - flask=1.1.2
+  - flask-cors=3.0.8
+  - pandas=1.0.3
+  - scikit-learn=0.22.1
+  - scikit-image=0.16.2
+  - scipy=1.4.1
+  - pip:
+    - apscheduler==3.6.3
