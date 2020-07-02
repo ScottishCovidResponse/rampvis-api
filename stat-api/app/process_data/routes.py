@@ -2,10 +2,18 @@ from flask import Response
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from app.data_fetch import blueprint
+from app.process_data import blueprint
+
+count = 0
+def task():
+    global count
+    scheduler.print_jobs()
+    print('Count: ', count)
+    count += 1
+
 
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(lambda: scheduler.print_jobs(), 'interval', seconds=5)
+scheduler.add_job(task, 'interval', seconds=5)
 
 
 @blueprint.route('/start', methods=['GET'])

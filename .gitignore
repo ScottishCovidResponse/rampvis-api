@@ -8,3 +8,4 @@ temp
 .idea
 logs
 __pycache__
+error.log
