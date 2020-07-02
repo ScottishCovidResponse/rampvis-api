@@ -1,0 +1,33 @@
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:10:58] "[37mGET /stat/v1/health HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:10:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:11:20] "[35m[1mGET /stat/v1/scotland/region/cumulative/mse HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:11:20] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:11:20] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:11:20] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:11:20] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:11:20] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/scotland/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/scotland/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:58] "[35m[1mGET /stat/v1/scotland/region/cumulative/mse HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:58] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:58] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:58] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:58] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:58] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:12:59] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/correlation/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/scotland/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[35m[1mGET /stat/v1/scotland/region/cumulative/mse HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/region/cumulative/mse?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:15:58] "[37mGET /stat/v1/scotland/region/cumulative/mse HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:16:10] "[37mGET /stat/v1/scotland/region/cumulative/f-test HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:16:19] "[37mGET /stat/v1/scotland/region/cumulative/pearson-correlation HTTP/1.1[0m" 200 -

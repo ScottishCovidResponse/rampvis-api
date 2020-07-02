@@ -4,6 +4,7 @@ Getting started-
 ```
 # setup environment, e.g., using conda
 conda activate stat-api-env
+
 conda install --file requirements.txt
 
 # start the server
