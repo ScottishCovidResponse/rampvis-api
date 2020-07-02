@@ -31,3 +31,153 @@ INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:13:39] "[37mGET /stat/v1/scotland/r
 INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:15:58] "[37mGET /stat/v1/scotland/region/cumulative/mse HTTP/1.1[0m" 200 -
 INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:16:10] "[37mGET /stat/v1/scotland/region/cumulative/f-test HTTP/1.1[0m" 200 -
 INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:16:19] "[37mGET /stat/v1/scotland/region/cumulative/pearson-correlation HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/dynamic_data_fetch/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/dynamic_data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Added job "schedule.<locals>.<lambda>" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:28:24.952366+01:00 (in 4.998083 seconds)
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:28:19] "[37mGET /stat/v1/data_fetch/schedule HTTP/1.1[0m" 200 -
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:24 BST)" (scheduled at 2020-07-02 19:28:24.952366+01:00)
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:28:29.952366+01:00 (in 4.997231 seconds)
+INFO:apscheduler.executors.default:Job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:29 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:28:34.952366+01:00 (in 4.995181 seconds)
+INFO:apscheduler.executors.default:Running job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:34 BST)" (scheduled at 2020-07-02 19:28:29.952366+01:00)
+INFO:apscheduler.executors.default:Job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:34 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:28:39.952366+01:00 (in 4.995662 seconds)
+INFO:apscheduler.executors.default:Running job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:39 BST)" (scheduled at 2020-07-02 19:28:34.952366+01:00)
+INFO:apscheduler.executors.default:Job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:39 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:28:44.952366+01:00 (in 4.995501 seconds)
+INFO:apscheduler.executors.default:Running job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:44 BST)" (scheduled at 2020-07-02 19:28:39.952366+01:00)
+INFO:apscheduler.executors.default:Job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:44 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:28:49.952366+01:00 (in 4.999253 seconds)
+INFO:apscheduler.executors.default:Running job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:49 BST)" (scheduled at 2020-07-02 19:28:44.952366+01:00)
+INFO:apscheduler.executors.default:Job "schedule.<locals>.<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:28:49 BST)" executed successfully
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:apscheduler.scheduler:Added job "<lambda>" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:33:47.101131+01:00 (in 3.738198 seconds)
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:33:43] "[37mGET /stat/v1/data_fetch/schedule HTTP/1.1[0m" 200 -
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:33:47 BST)" (scheduled at 2020-07-02 19:33:47.101131+01:00)
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:33:52.101131+01:00 (in 4.998677 seconds)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:33:52 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:33:57.101131+01:00 (in 4.993968 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:33:57 BST)" (scheduled at 2020-07-02 19:33:52.101131+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:33:57 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:02.101131+01:00 (in 4.997859 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:02 BST)" (scheduled at 2020-07-02 19:33:57.101131+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:02 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:07.101131+01:00 (in 4.994236 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:07 BST)" (scheduled at 2020-07-02 19:34:02.101131+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:07 BST)" executed successfully
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:05] "[35m[1mGET /stat/v1/data_fetch/stop HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:05] "[37mGET /stat/v1/data_fetch/stop?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:05] "[37mGET /stat/v1/data_fetch/stop?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:05] "[37mGET /stat/v1/data_fetch/stop?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:05] "[37mGET /stat/v1/data_fetch/stop?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:06] "[37mGET /stat/v1/data_fetch/stop?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:06] "[37mGET /stat/v1/data_fetch/stop?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:12.101131+01:00 (in 4.993752 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:12 BST)" (scheduled at 2020-07-02 19:34:07.101131+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:12 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:17.101131+01:00 (in 4.998287 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:17 BST)" (scheduled at 2020-07-02 19:34:12.101131+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:17 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:22.101131+01:00 (in 4.998666 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:22 BST)" (scheduled at 2020-07-02 19:34:17.101131+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:22 BST)" executed successfully
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:apscheduler.scheduler:Added job "<lambda>" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:54.897173+01:00 (in 1.696800 seconds)
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:34:53] "[37mGET /stat/v1/data_fetch/schedule HTTP/1.1[0m" 200 -
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:54 BST)" (scheduled at 2020-07-02 19:34:54.897173+01:00)
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:34:59.897173+01:00 (in 4.999271 seconds)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:34:59 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:35:04.897173+01:00 (in 4.998067 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:04 BST)" (scheduled at 2020-07-02 19:34:59.897173+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:04 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:35:09.897173+01:00 (in 4.996860 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:09 BST)" (scheduled at 2020-07-02 19:35:04.897173+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:09 BST)" executed successfully
+INFO:apscheduler.scheduler:Scheduler has been shut down
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:No jobs; waiting until a job is added
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:35:05] "[37mGET /stat/v1/data_fetch/stop HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DATA/CODE/project-ramp-vis/api-scrc-vis/stat-api/app/data_fetch/routes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:apscheduler.scheduler:Added job "<lambda>" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:35:41.949236+01:00 (in 2.799350 seconds)
+INFO:werkzeug:127.0.0.1 - - [02/Jul/2020 19:35:39] "[37mGET /stat/v1/data_fetch/start HTTP/1.1[0m" 200 -
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:41 BST)" (scheduled at 2020-07-02 19:35:41.949236+01:00)
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:35:46.949236+01:00 (in 4.999377 seconds)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:46 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:35:51.949236+01:00 (in 4.993980 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:51 BST)" (scheduled at 2020-07-02 19:35:46.949236+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:51 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:35:56.949236+01:00 (in 4.993403 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:56 BST)" (scheduled at 2020-07-02 19:35:51.949236+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:35:56 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:36:01.949236+01:00 (in 4.995053 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:01 BST)" (scheduled at 2020-07-02 19:35:56.949236+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:01 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:36:06.949236+01:00 (in 4.998054 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:06 BST)" (scheduled at 2020-07-02 19:36:01.949236+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:06 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:36:11.949236+01:00 (in 4.993804 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:11 BST)" (scheduled at 2020-07-02 19:36:06.949236+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:11 BST)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2020-07-02 19:36:16.949236+01:00 (in 4.996935 seconds)
+INFO:apscheduler.executors.default:Running job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:16 BST)" (scheduled at 2020-07-02 19:36:11.949236+01:00)
+INFO:apscheduler.executors.default:Job "<lambda> (trigger: interval[0:00:05], next run at: 2020-07-02 19:36:16 BST)" executed successfully
