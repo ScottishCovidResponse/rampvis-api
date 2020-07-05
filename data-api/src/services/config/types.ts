@@ -1,6 +1,9 @@
 const TYPES = {
-    IActivityService: Symbol.for('ActivityService'),
-    IUserService: Symbol.for('UserService'),
+    DataService: Symbol.for('DataService'),
+
+    UserService: Symbol.for('UserService'),
+    BookmarkService: Symbol.for('BookmarkService'),
+    ActivityService: Symbol.for('ActivityService'),
 
     DbClient: Symbol.for('DbClient'),
 };

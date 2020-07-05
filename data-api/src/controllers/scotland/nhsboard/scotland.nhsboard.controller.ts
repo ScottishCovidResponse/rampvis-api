@@ -4,7 +4,7 @@ import {controller, httpGet} from 'inversify-express-utils';
 
 import { CsvParseError } from '../../../exceptions/exception';
 import { logger } from '../../../utils/logger';
-import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
+import { RequestWithUser } from '../../request-with-user.interface';
 import { ScotlandRegionNhs } from './scotland-regions-nhs.enum';
 import { readCSV } from '../../../services/csv.service';
 
