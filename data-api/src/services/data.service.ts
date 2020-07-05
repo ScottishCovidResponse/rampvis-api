@@ -1,4 +1,6 @@
 import {inject, injectable, unmanaged} from 'inversify';
+import { provide } from 'inversify-binding-decorators';
+
 import {
     AggregationCursor,
     Collection,
@@ -14,10 +16,9 @@ import {
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { MAPPING_TYPES } from './config/automapper.config';
 import { TYPES } from './config/types';
-import { IService } from './service.interface';
 
-@injectable()
-export abstract class DataService<T extends { _id: any }> implements IService<T> {
+@provide(TYPES.DataService)
+export abstract class DataService<T extends { _id: any }> {
     private readonly db: Collection<T>;
     private readonly dbName: string;
     private readonly collectionName: string;

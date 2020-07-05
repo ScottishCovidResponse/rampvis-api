@@ -1,44 +1,43 @@
 {
-    "allowOrigins": [
-        "http://vis.scrc.uk",
-        "http://localhost:4200",
-        "http://localhost"
-    ],
-    "apiUrl": "/api/v1",
-    "mongodb": {
-        "url": "mongodb://192.168.251.20:27017",
-        "internal": {
-            "db": "scrc_internal",
-            "collection": {
-                "users": "users",
-                "activities": "activities"
-            }
-        },
-        "indexes": {
-            "tracking_day": 86400
-        }
+  "allowOrigins": [
+    "http://vis.scrc.uk",
+    "http://localhost:4200",
+    "http://localhost"
+  ],
+  "apiUrl": "/api/v1",
+  "mongodb": {
+    "url": "mongodb://192.168.251.20:27017",
+    "db": "ramp_vis",
+    "collection": {
+      "users": "users",
+      "bookmarks": "bookmarks",
+      "activities": "activities"
     },
-    "redis" : {
-        "port": 6379,
-        "host": "localhost"
-    },
-    "pushy": {
-        "secretApiKey": "",
-        "prefix": "STAGE_"
-    },
-    "google": {
-        "geoCodeApi": "https://maps.googleapis.com/maps/api/geocode/json?address=",
-        "reverseGeoCodeApi": "https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "autocompleteApi": "https://maps.googleapis.com/maps/api/place/autocomplete/json?language=en&types=geocode&input=",
-        "placeApi": "https://maps.googleapis.com/maps/api/place/details/json?placeid=",
-        "apiKey": ""
-    },
-    "jwt": {
-        "algorithm": "HS256"
-    },
-    "session": {
-        "secret": "Qmg:z@nP(1GEdk(",
-        "pvtKey": "config/session/session-token.pvt.key",
-        "pubKey": "config/session/session-token.pub.key"
+    "indexes": {
+      "tracking_day": 86400
     }
+  },
+  "redis": {
+    "port": 6379,
+    "host": "localhost"
+  },
+  "pushy": {
+    "secretApiKey": "",
+    "prefix": "STAGE_"
+  },
+  "google": {
+    "geoCodeApi": "https://maps.googleapis.com/maps/api/geocode/json?address=",
+    "reverseGeoCodeApi": "https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+    "autocompleteApi": "https://maps.googleapis.com/maps/api/place/autocomplete/json?language=en&types=geocode&input=",
+    "placeApi": "https://maps.googleapis.com/maps/api/place/details/json?placeid=",
+    "apiKey": ""
+  },
+  "jwt": {
+    "algorithm": "HS256"
+  },
+  "session": {
+    "secret": "Qmg:z@nP(1GEdk(",
+    "pvtKey": "config/session/session-token.pvt.key",
+    "pubKey": "config/session/session-token.pub.key"
+  }
 }

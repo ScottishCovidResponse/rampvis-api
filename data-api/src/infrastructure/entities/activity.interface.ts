@@ -1,5 +1,5 @@
 import { ObjectId } from 'bson';
-import { ACCOUNT_ROLES } from './account.interface';
+import { ACCOUNT_ROLES } from './user.interface';
 
 export interface IActivity {
     _id: string | ObjectId;
@@ -13,11 +13,14 @@ export interface IActivity {
 
 export enum ACTIVITY_TYPE {
     USER = 'user',
+    BOOKMARK = 'bookmark',
 }
 
 export enum ACTIVITY_ACTION {
     CREATE = 'create',
-    REMOVE = 'remove',
     UPDATE = 'update',
+    READ = 'read',
+    DELETE = 'delete',
     LOGIN = 'login',
+
 }

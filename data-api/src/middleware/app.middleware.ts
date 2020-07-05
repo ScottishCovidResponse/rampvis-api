@@ -4,6 +4,7 @@ import config from 'config';
 import cors from 'cors';
 import {Application} from 'express';
 import morgan from 'morgan';
+import * as express from 'express';
 
 import {logger, loggerStream} from '../utils/logger';
 
@@ -21,8 +22,12 @@ function appMiddleware(app: Application) {
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
-        extended: false,
+        extended: true,
     }));
+
+    app.use(express.urlencoded({
+        extended: true
+    }))
 
     // CORS
     const allowedOrigins: string[] = config.get('allowOrigins');

@@ -2,7 +2,7 @@ import {NextFunction} from 'connect';
 import {Response} from 'express-serve-static-core';
 import {controller, httpGet} from 'inversify-express-utils';
 
-import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
+import { RequestWithUser } from '../../request-with-user.interface';
 import { CsvParseError } from '../../../exceptions/exception';
 import { logger } from '../../../utils/logger';
 import { readCSV } from '../../../services/csv.service';
