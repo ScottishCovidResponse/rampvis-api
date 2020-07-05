@@ -3,20 +3,51 @@ import express from 'express';
 import {Application} from 'express-serve-static-core';
 import {Container} from 'inversify';
 import {InversifyExpressServer} from 'inversify-express-utils';
+import { buildProviderModule } from "inversify-binding-decorators";
 
 import {DbClient, getDatabaseClient} from './infrastructure/db/mongodb.connection';
 import {appMiddleware} from './middleware/app.middleware';
 import {exceptionLoggingMiddleware} from './middleware/custom.middleware';
 import {configureAutoMapper} from './services/config/automapper.config';
-import {DIContainer} from './services/config/inversify.config';
 import {TYPES} from './services/config/types';
 import {logger} from './utils/logger';
-import {DbSeeder} from './utils/seeder';
+
+import { DIContainer } from './services/config/inversify.config';
+
 
 // declare metadata by @controller annotation
 import './controllers/controller.module';
 
 export class App {
+    public app!: express.Application;
+
+    constructor() {}
+
+    public async init() {
+        // set up container
+        let container: Container = DIContainer;
+
+        await App.initDatabase(container);
+        // App.initPushService(container);
+        await App.createDbIndexes(container);
+
+        const server = new InversifyExpressServer(container, null, {rootPath: config.get('apiUrl')});
+        this.app = server.setConfig((application: express.Application) => {
+            App.initMiddleware(application);
+            App.initAutoMapper();
+        })
+            .setErrorConfig((application: express.Application) => {
+                App.initErrorHandling(application);
+            })
+            .build();
+    }
+
+    private static setupContainer(): Container {
+        let container = new Container();
+        // Reflects all decorators provided by this package and packages them into a module to be loaded by the container
+        container.load(buildProviderModule());
+        return container;
+    }
 
     //
     // Static private initialization methods
@@ -54,47 +85,10 @@ export class App {
         }
     }
 
-    private static async seedDatabase() {
-        logger.info('Initialize database seeder.');
-        const dbSeeder = new DbSeeder();
-        await dbSeeder.initDatabase();
-    }
-
     private static initAutoMapper() {
         configureAutoMapper();
     }
 
-    //
-    // Public methods
-    //
-    public app!: express.Application;
-
-    constructor() {
-        //
-    }
-
-    public async init() {
-        // set up container
-        const container = DIContainer;
-
-        await App.initDatabase(container);
-        // App.initPushService(container);
-        await App.createDbIndexes(container);
-
-        const server = new InversifyExpressServer(container, null, {rootPath: config.get('apiUrl')});
-        this.app = server.setConfig((application: express.Application) => {
-            App.initMiddleware(application);
-            App.initAutoMapper();
-        })
-            .setErrorConfig((application: express.Application) => {
-                App.initErrorHandling(application);
-            })
-            .build();
-
-        if (process.argv.includes('seed')) {
-            await App.seedDatabase();
-        }
-    }
 
     public listen() {
         this.app.listen(process.env.PORT || 3000, () => {
