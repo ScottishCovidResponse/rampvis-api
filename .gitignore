@@ -9,3 +9,4 @@ temp
 logs
 __pycache__
 error.log
+stat-api/error.log
