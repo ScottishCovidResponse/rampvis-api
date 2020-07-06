@@ -13,7 +13,7 @@ export interface IUser {
     address?: IAddress;
 
     githubId?: string,
-    githubLogin?: string,
+    githubUsername?: string,
 
     role: ACCOUNT_ROLES;
 

@@ -27,16 +27,6 @@ export class UserController {
                 ) {
     }
 
-    @httpGet('/')
-    public async getAllUsers(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        logger.debug('UserController: getAllUsers: request.user = ' + JSON.stringify(request.user));
-
-        const result: Array<IUser> = await this.userService.getAllUsers();
-        const resultDto: Array<UserDto> = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
-        logger.debug(`UserController: getAllUsers: resultDto = ${JSON.stringify(resultDto)}`);
-        response.status(200).send(resultDto);
-    }
-
     @httpGet('/:id')
     public async getUser(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const userId = request.params.id;
@@ -49,6 +39,18 @@ export class UserController {
     }
 
 
+    @httpGet('/')
+    public async getAllUsers(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        logger.debug('UserController: getAllUsers: request.user = ' + JSON.stringify(request.user));
+
+        const result: Array<IUser> = await this.userService.getAllUsers();
+        const resultDto: Array<UserDto> = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+        logger.debug(`UserController: getAllUsers: resultDto = ${JSON.stringify(resultDto)}`);
+        response.status(200).send(resultDto);
+    }
+
+
+
     @httpPost('/', dtoValidate(UserDto))
     public async createUser(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const userDto: UserDto = request.body;
@@ -56,7 +58,7 @@ export class UserController {
         logger.debug('UserController: createUser: request.user = ' + JSON.stringify(request.user) + ', create userDto = ' + JSON.stringify(userDto));
 
         try {
-            const result = await this.userService.findByEmail(userDto.email);
+            const result = await this.userService.findByEmail(<string>userDto.email);
             if (result) {
                 next(new UserWithEmailAlreadyExistsException(<string>result.email));
             } else {

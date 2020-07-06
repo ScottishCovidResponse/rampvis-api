@@ -1,9 +1,11 @@
 import * as bcrypt from 'bcryptjs';
-import { controller, httpPost } from 'inversify-express-utils';
+import {controller, httpGet, httpPost} from 'inversify-express-utils';
 import { TYPES } from '../services/config/types';
 import { inject } from 'inversify';
 import { NextFunction } from 'connect';
-import { Response } from 'express-serve-static-core';
+import { Request, Response } from 'express-serve-static-core';
+import config from "config";
+import passport from "passport";
 
 import { RequestWithUser } from './request-with-user.interface';
 import { WrongCredentialsException } from '../exceptions/exception';
@@ -26,13 +28,30 @@ export class AuthController {
                 @inject(TYPES.ActivityService) private activityService: ActivityService) {
     }
 
+    @httpGet('/github-login', passport.authenticate('github'))
+
+    @httpGet('/github-callback', passport.authenticate('github', { failureRedirect: `${config.get('github.failureRedirect')}` }))
+    public async githubCallback(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const currentUser = (request as any).currentUser;
+        logger.debug('AuthController: callback: currentUser = ', currentUser);
+
+        const tokenData: ITokenData = UserToken.create(currentUser, null);
+
+        response.redirect(`${config.get('github.successRedirect')}/?token=${tokenData.token}`)
+    }
+
+
+    //
+    // TODO, unsecured and to be deprecated
+    // Login with GitHubLoginDto
+    //
     @httpPost('/github', dtoValidate(GitHubLoginDto))
     public async auth(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const data: UserDto = request.body as any;
 
         logger.error('AuthController: auth: data = ', data);
 
-        let user: IUser = await this.userService.getGitHubUser(data);
+        let user: IUser = await this.userService.getGitHubUser(<string>data.githubId);
 
         if (!user) {
             user = await this.userService.saveGitHubUser(data);
@@ -47,6 +66,9 @@ export class AuthController {
         const tokenData: ITokenData = UserToken.create(user, null);
         response.status(200).send(tokenData);
     }
+
+
+
 
     @httpPost('/login', dtoValidate(LoginDto))
     public async login(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
