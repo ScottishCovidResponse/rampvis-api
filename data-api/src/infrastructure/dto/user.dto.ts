@@ -7,15 +7,15 @@ export class UserDto {
 
     @IsOptional()
     @IsString()
-    public id!: string;
+    public id?: string;
 
     @IsOptional()
     @IsString()
-    public name!: string;
+    public name?: string;
 
     @IsOptional()
     @IsEmail()
-    public email!: string;
+    public email?: string;
 
     @IsOptional()
     @IsString()
@@ -23,11 +23,11 @@ export class UserDto {
 
     @IsOptional()
     @IsString()
-    public phone!: string;
+    public phone?: string;
 
     @IsOptional()
     @IsEnum(ACCOUNT_ROLES)
-    public role!: ACCOUNT_ROLES;
+    public role?: ACCOUNT_ROLES;
 
     @IsOptional()
     @IsDate()
@@ -49,5 +49,5 @@ export class UserDto {
 
     @IsString()
     @IsOptional()
-    public githubLogin?: string;
+    public githubUsername?: string;
 }

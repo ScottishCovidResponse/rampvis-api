@@ -34,8 +34,8 @@ export class UserService extends DataService<IUser> {
     // GitHub user
     //
 
-    async getGitHubUser(userDto: UserDto): Promise<IUser> {
-        return await this.get({ githubId: userDto.githubId, githubLogin: userDto.githubLogin } as FilterQuery<IUser>);
+    async getGitHubUser(githubId: string): Promise<IUser> {
+        return await this.get({ githubId: githubId } as FilterQuery<IUser>);
     }
 
     async saveGitHubUser(userDto: UserDto): Promise<IUser> {
@@ -44,7 +44,7 @@ export class UserService extends DataService<IUser> {
             createdAt: new Date(),
             role: userDto.role || ACCOUNT_ROLES.USER,
             githubId: userDto.githubId,
-            githubLogin: userDto.githubLogin
+            githubUsername: userDto.githubUsername
         };
 
         return await this.save(user);

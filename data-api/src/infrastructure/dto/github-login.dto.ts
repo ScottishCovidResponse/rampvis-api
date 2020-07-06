@@ -6,5 +6,5 @@ export class GitHubLoginDto {
   githubId!: string;
 
   @IsString()
-  githubLogin!: string;
+  githubUsername!: string;
 }
