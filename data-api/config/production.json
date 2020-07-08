@@ -7,7 +7,7 @@
   "apiUrl": "/api/v1",
   "mongodb": {
     "url": "mongodb://192.168.251.20:27017",
-    "db": "ramp_vis",
+    "db": "rampvis",
     "collection": {
       "users": "users",
       "bookmarks": "bookmarks",
