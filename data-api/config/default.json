@@ -7,9 +7,9 @@
   "apiUrl": "/api/v1",
   "csv": "",
   "mongodb": {
-    "url": "mongodb+srv://dbuser:dbuserpass@cluster0.hil75.mongodb.net/development?retryWrites=true&w=majority",
+    "url": "mongodb+srv://rampvis_dev:DHBpwVe3vz27rLBs@cluster0-z3s0g.mongodb.net/<dbname>?retryWrites=true&w=majority",
     "__url": "mongodb://192.168.251.20:27017",
-    "db": "r_v",
+    "db": "rampvis",
     "collection": {
       "users": "users",
       "bookmarks": "bookmarks",

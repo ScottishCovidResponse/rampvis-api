@@ -6,7 +6,7 @@
   "apiUrl": "/api/v1",
   "mongodb": {
     "url": "mongodb://localhost:27017",
-    "db": "ramp_vis",
+    "db": "rampvis",
     "collection": {
       "users": "users",
       "bookmarks": "bookmarks",
