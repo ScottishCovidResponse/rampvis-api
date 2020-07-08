@@ -17,8 +17,8 @@
     }
   },
   "github": {
-    "clientId": "31434d90a9883982f7f4",
-    "clientSecret": "87703eaef4b371de51983d87858a72a1cc5b8708",
+    "clientId": "cbca0ff10ae66019dab4",
+    "clientSecret": "f08df3d31535c903d38f57dba0e790a346418496",
     "callbackUrl": "http://localhost:2000/api/v1/auth/github-callback",
     "successRedirect": "http://localhost:5000/github-callback",
     "failureRedirect": "http://localhost:5000/error-403"

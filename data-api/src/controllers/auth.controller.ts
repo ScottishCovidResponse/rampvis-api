@@ -28,6 +28,9 @@ export class AuthController {
                 @inject(TYPES.ActivityService) private activityService: ActivityService) {
     }
 
+    //
+    // GitHub OAuth
+    //
     @httpGet('/github-login', passport.authenticate('github'))
 
     @httpGet('/github-callback', passport.authenticate('github', { failureRedirect: `${config.get('github.failureRedirect')}` }))
@@ -42,34 +45,8 @@ export class AuthController {
 
 
     //
-    // TODO, unsecured and to be deprecated
-    // Login with GitHubLoginDto
+    // user/pass
     //
-    @httpPost('/github', dtoValidate(GitHubLoginDto))
-    public async auth(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const data: UserDto = request.body as any;
-
-        logger.error('AuthController: auth: data = ', data);
-
-        let user: IUser = await this.userService.getGitHubUser(<string>data.githubId);
-
-        if (!user) {
-            user = await this.userService.saveGitHubUser(data);
-            await this.activityService.createActivity(user, ACTIVITY_TYPE.USER, ACTIVITY_ACTION.CREATE, user._id.toString());
-            logger.error('AuthController: auth: created user = ', user);
-        } else {
-            await this.activityService.createActivity(user, ACTIVITY_TYPE.USER, ACTIVITY_ACTION.LOGIN, user._id.toString());
-            logger.error('AuthController: auth: login user = ', user);
-        }
-
-        // const permissions = await UserToken.getAllGrants(user.role);
-        const tokenData: ITokenData = UserToken.create(user, null);
-        response.status(200).send(tokenData);
-    }
-
-
-
-
     @httpPost('/login', dtoValidate(LoginDto))
     public async login(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const loginData: LoginDto = request.body as any;
