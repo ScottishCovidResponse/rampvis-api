@@ -21,6 +21,21 @@ curl --location --request GET 'http://vis.scrc.uk/api/v1/scotland/<table>/:<regi
 nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland`
 
 
+These APIs to be deprecated
+
+**Updated APIs**
+
+```
+<url>/api/v1/scotland/?table=<table_name>
+<url>/api/v1/scotland/?table=<table_name>&region=<region_name>
+```
+Accepted values of
+- `url`: `http://vis.scrc.uk/api/v1`
+- `table_name`: `cumulative_cases`, `hospital_confirmed`, `hospital_suspected`, `icu_patients`
+- `region_name`:  `nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian,
+nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland`
+
+
 ### Housekeeping / Stat APIs
 
 ```bash
