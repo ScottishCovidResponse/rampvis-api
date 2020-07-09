@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { validate, ValidationError } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
-import { InvalidQueryParametarsException } from '../exceptions/exception';
+import { InvalidQueryParametersException } from '../exceptions/exception';
 
 export function dtoValidate<T>(type: any, skipMissingProperties = false): RequestHandler {
   return (req, res, next) => {
@@ -13,7 +13,7 @@ export function dtoValidate<T>(type: any, skipMissingProperties = false): Reques
             const constraints: Array<any> = getNestedProperties(error);
             return constraints.map(constraint => Object.values(constraint));
           }).join(', ');
-          next(new InvalidQueryParametarsException(message));
+          next(new InvalidQueryParametersException(message));
         } else {
           next();
         }
@@ -27,7 +27,7 @@ export function queryParamValidate<T>(type: any, skipMissingProperties = false):
       .then((errors: ValidationError[]) => {
         if (errors.length > 0) {
           const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
-          next(new InvalidQueryParametarsException(message));
+          next(new InvalidQueryParametersException(message));
         } else {
           next();
         }
