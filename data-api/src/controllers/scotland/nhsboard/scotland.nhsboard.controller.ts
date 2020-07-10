@@ -1,3 +1,6 @@
+// TODO
+// Deprecate
+
 import {NextFunction} from 'connect';
 import {Response} from 'express-serve-static-core';
 import {controller, httpGet} from 'inversify-express-utils';
@@ -5,7 +8,7 @@ import {controller, httpGet} from 'inversify-express-utils';
 import {CsvParseError, InvalidQueryParametersException} from '../../../exceptions/exception';
 import {logger} from '../../../utils/logger';
 import {RequestWithUser} from '../../request-with-user.interface';
-import {ScotlandRegionNhs} from './scotland-regions-nhs.enum';
+import {ScotlandRegionNhs} from '../nhs-board.enum';
 import {readCSV} from '../../../services/csv.service';
 
 @controller('/scotland')
@@ -13,42 +16,6 @@ export class ScotlandNhsboardController {
 
     constructor() {
     }
-
-    //
-    // api/v1/scotland/?table=<>
-    // api/v1/scotland/?table=<>&region=<>
-    //
-    @httpGet('/')
-    public async getTable(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const table = request.query.table as string;
-        const region = request.query.region as string;
-        console.log('table = ', table, ', region = ', region);
-
-        if (!table && !region) {
-            return next(new InvalidQueryParametersException('Empty table and region'));
-        }
-
-        try {
-            const data: any[] = await readCSV(table + '.csv');
-
-            if (request.query.region) {
-                response.status(200).send(data.map((d: any) => {
-                    return {
-                        date: d.date,
-                        value: parseInt(d[region], 10),
-                    };
-                }));
-            } else {
-                response.status(200).send(data);
-            }
-        } catch (error) {
-            next(new CsvParseError(500, error.message));
-        }
-    }
-
-
-    // TODO
-    // Deprecate
     @httpGet('/cumulative')
     public async getAllCumulative(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         logger.debug('ScotlandNhsboardController: getAllCumulative:');
@@ -126,7 +93,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getAllHospitalConfirmed:');
 
         try {
-            const data: any[] = await readCSV('hospital_conformed.csv');
+            const data: any[] = await readCSV('hospital_confirmed.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -139,7 +106,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getHospitalConfirmed: nhsName  = ' + nhsName);
 
         try {
-            const data: any[] = await readCSV('hospital_conformed.csv');
+            const data: any[] = await readCSV('hospital_confirmed.csv');
             response.status(200).send(data.map((d: any) => {
                 return {
                     date: d.date,
