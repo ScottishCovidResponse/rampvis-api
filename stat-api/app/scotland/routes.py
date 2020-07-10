@@ -1,4 +1,4 @@
-from flask import current_app, Response
+from flask import current_app, Response, request, abort
 import os
 import json
 import pandas as pd
@@ -9,17 +9,39 @@ from algorithms.algorithm import mse, f_test, pearson_correlation
 CSV_DATA_PATH = '../../csv-data'
 
 
-@blueprint.route('/cumulative/mse', methods=['GET'])
+@blueprint.route('/nhs-board/', methods=['GET'])
+def query():
+    table = request.args.get('table', None)
+    metrics = request.args.get('metrics', None)
+
+    if table is None or metrics is None:
+        abort(400, 'Required parameters: table, metrics')
+
+    if metrics == 'mse':
+        return get_metric(mse, table + '.csv')
+    elif metrics == 'f_test':
+        return get_metric(f_test, table + '.csv')
+    elif metrics == 'pearson_correlation':
+        return get_metric(pearson_correlation, table + '.csv')
+    else:
+        abort(400, 'Not implemented parameters: metrics = ' + metrics)
+
+
+#
+# TODO
+# Deprecated
+#
+@blueprint.route('/region/cumulative/mse', methods=['GET'])
 def get_mse():
     return get_metric(mse, 'cumulative_cases.csv')
 
 
-@blueprint.route('/cumulative/f-test', methods=['GET'])
+@blueprint.route('/region/cumulative/f-test', methods=['GET'])
 def get_f_test():
     return get_metric(f_test, 'cumulative_cases.csv')
 
 
-@blueprint.route('/cumulative/pearson-correlation', methods=['GET'])
+@blueprint.route('/region/cumulative/pearson-correlation', methods=['GET'])
 def get_pearson_correlation():
     return get_metric(pearson_correlation, 'cumulative_cases.csv')
 

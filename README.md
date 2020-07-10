@@ -59,7 +59,7 @@ http://vis.scrc.uk /api/v1/scotland/covid-deaths/data-week/type
 ```
 Accepted values of
 - table_name: cumulative_cases
-- metrics: mse, f-test, pearson-correlation
+- metrics: mse, f_test, pearson_correlation
 
 
 Following APIs are deprecated.
