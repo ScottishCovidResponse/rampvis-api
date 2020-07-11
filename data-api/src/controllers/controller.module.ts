@@ -1,13 +1,19 @@
-import { UserAuthController } from './internal/auth/user.auth.controller';
-import { UserController } from './internal/user/user.controller';
-import { ActivityControllerInt } from './internal/activity/activity.controller';
+import { AuthController } from './auth.controller';
+import { UserController } from './user.controller';
+import { BookmarkController } from './bookmark.controller';
+import { ActivityControllerInt } from './activity.controller';
 import { ScotlandNhsboardController } from './scotland/nhsboard/scotland.nhsboard.controller';
 import { ScotlandCovidDeathsDataWeek } from './scotland/covid-deaths/data-week.controller';
+import { NhsBoardController } from './scotland/nhs-board.controller';
+import { CovidDeathsController } from './scotland/covid-deaths.controller';
 
 export {
-    UserAuthController,
+    AuthController,
+    BookmarkController,
     UserController,
     ActivityControllerInt,
-    ScotlandNhsboardController,
-    ScotlandCovidDeathsDataWeek,
+    ScotlandNhsboardController,     // TODO deprecate
+    ScotlandCovidDeathsDataWeek,    // TODO deprecate
+    NhsBoardController,
+    CovidDeathsController,
 };

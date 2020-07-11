@@ -1,18 +1,21 @@
+// TODO
+// Deprecate
+
 import {NextFunction} from 'connect';
 import {Response} from 'express-serve-static-core';
 import {controller, httpGet} from 'inversify-express-utils';
 
-import { CsvParseError } from '../../../exceptions/exception';
-import { logger } from '../../../utils/logger';
-import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
-import { ScotlandRegionNhs } from './scotland-regions-nhs.enum';
-import { readCSV } from '../../../services/csv.service';
+import {CsvParseError, InvalidQueryParametersException} from '../../../exceptions/exception';
+import {logger} from '../../../utils/logger';
+import {RequestWithUser} from '../../request-with-user.interface';
+import {ScotlandRegionNhs} from '../nhs-board.enum';
+import {readCSV} from '../../../services/csv.service';
 
 @controller('/scotland')
 export class ScotlandNhsboardController {
 
-    constructor() {}
-
+    constructor() {
+    }
     @httpGet('/cumulative')
     public async getAllCumulative(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         logger.debug('ScotlandNhsboardController: getAllCumulative:');
@@ -90,7 +93,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getAllHospitalConfirmed:');
 
         try {
-            const data: any[] = await readCSV('hospital_conformed.csv');
+            const data: any[] = await readCSV('hospital_confirmed.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -103,7 +106,7 @@ export class ScotlandNhsboardController {
         logger.debug('ScotlandNhsboardController: getHospitalConfirmed: nhsName  = ' + nhsName);
 
         try {
-            const data: any[] = await readCSV('hospital_conformed.csv');
+            const data: any[] = await readCSV('hospital_confirmed.csv');
             response.status(200).send(data.map((d: any) => {
                 return {
                     date: d.date,
