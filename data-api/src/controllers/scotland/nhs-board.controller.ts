@@ -34,7 +34,7 @@ export class NhsBoardController {
                 response.status(200).send(data.map((d: any) => {
                     return {
                         date: d.date,
-                        value: parseInt(d[region], 10),
+                        value: parseFloat(d[region].replace(/,/g, '')),
                     };
                 }));
             } else {
