@@ -1,43 +1,34 @@
 {
-    "allowOrigins": [
-        "http://localhost:4200",
-        "http://localhost"
-    ],
-    "apiUrl": "/api/v1",
-    "mongodb": {
-        "url": "mongodb://localhost:27017",
-        "internal": {
-            "db": "scrc_internal",
-            "collection": {
-                "users": "users",
-                "activities": "activities"
-            }
-        },
-        "indexes": {
-            "tracking_day": 86400
-        }
+  "allowOrigins": [
+    "http://localhost:4200",
+    "http://localhost"
+  ],
+  "apiUrl": "/api/v1",
+  "mongodb": {
+    "url": "mongodb://localhost:27017",
+    "db": "rampvis",
+    "collection": {
+      "users": "users",
+      "bookmarks": "bookmarks",
+      "activities": "activities"
     },
-    "redis" : {
-        "port": 6379,
-        "host": "localhost"
-    },
-    "pushy": {
-        "secretApiKey": "",
-        "prefix": "STAGE_"
-    },
-    "google": {
-        "geoCodeApi": "https://maps.googleapis.com/maps/api/geocode/json?address=",
-        "reverseGeoCodeApi": "https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "autocompleteApi": "https://maps.googleapis.com/maps/api/place/autocomplete/json?language=en&types=geocode&input=",
-        "placeApi": "https://maps.googleapis.com/maps/api/place/details/json?placeid=",
-        "apiKey": ""
-    },
-    "jwt": {
-        "algorithm": "HS256"
-    },
-    "session": {
-        "secret": "Qmg:z@nP(1GEdk(",
-        "pvtKey": "config/session/session-token.pvt.key",
-        "pubKey": "config/session/session-token.pub.key"
+    "indexes": {
+      "tracking_day": 86400
     }
+  },
+  "github": {
+    "clientId": "cbca0ff10ae66019dab4",
+    "clientSecret": "f08df3d31535c903d38f57dba0e790a346418496",
+    "callbackUrl": "http://localhost:2000/api/v1/auth/github-callback",
+    "successRedirect": "http://localhost:5000/github-callback",
+    "failureRedirect": "http://localhost:5000/error-403"
+  },
+  "jwt": {
+    "algorithm": "HS256"
+  },
+  "session": {
+    "secret": "Qmg:z@nP(1GEdk(",
+    "pvtKey": "config/session/session-token.pvt.key",
+    "pubKey": "config/session/session-token.pub.key"
+  }
 }

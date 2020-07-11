@@ -1,30 +1,29 @@
 import { FilterQuery, ObjectId } from "mongodb";
 import config from 'config';
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
-import { DbClient } from "../../infrastructure/db/mongodb.connection";
+import { DbClient } from "../infrastructure/db/mongodb.connection";
 import { injectable, inject } from "inversify";
-import { DataService } from "../data.service";
-import { TYPES } from "../config/types";
-import { IUser } from "../../infrastructure/entities/user.interface";
-import { IUserService } from "../interfaces/user.service.interface";
-import { PaginationVm } from "../../infrastructure/view-model/pagination.vm";
-import { IActivity, ACTIVITY_TYPE, ACTIVITY_ACTION } from "../../infrastructure/entities/activity.interface";
-import { IActivityService } from "../interfaces/activity.service.interface";
-import { ActivityFilterVm } from "../../infrastructure/view-model/activity-filters.vm";
-import { ActivityDto } from "../../infrastructure/dto/activity.dto";
-import { IAccount } from "../../infrastructure/entities/account.interface";
+import { DataService } from "./data.service";
+import { TYPES } from "./config/types";
+import { IUser } from "../infrastructure/entities/user.interface";
+import { PaginationVm } from "../infrastructure/view-model/pagination.vm";
+import { IActivity, ACTIVITY_TYPE, ACTIVITY_ACTION } from "../infrastructure/entities/activity.interface";
+import { ActivityFilterVm } from "../infrastructure/view-model/activity-filters.vm";
+import { ActivityDto } from "../infrastructure/dto/activity.dto";
+import {provide} from "inversify-binding-decorators";
+import {UserService} from "./user.service";
 
-@injectable()
-export class ActivityService extends DataService<IActivity> implements IActivityService {
+@provide(TYPES.ActivityService)
+export class ActivityService extends DataService<IActivity> {
     public constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
-        @inject(TYPES.IUserService) private userService: IUserService,
+        @inject(TYPES.UserService) private userService: UserService,
     ) {
         super(
             dbClient,
-            config.get('mongodb.internal.db'),
-            config.get('mongodb.internal.collection.activities')
+            config.get('mongodb.db'),
+            config.get('mongodb.collection.activities')
         );
     }
 
@@ -70,7 +69,7 @@ export class ActivityService extends DataService<IActivity> implements IActivity
         });
     }
 
-    async createActivity(account: IAccount, type: ACTIVITY_TYPE, action: ACTIVITY_ACTION, objectId: string): Promise<IActivity | void> {
+    async createActivity(user: IUser, type: ACTIVITY_TYPE, action: ACTIVITY_ACTION, objectId: string): Promise<IActivity | void> {
         try {
             const activity: IActivity = {
                 _id: new ObjectId(),
@@ -78,8 +77,8 @@ export class ActivityService extends DataService<IActivity> implements IActivity
                 action: action,
                 objectId: objectId,
                 createdAt: new Date(),
-                accountId: account._id.toString(),
-                accountRole: account.role
+                accountId: user._id.toString(),
+                accountRole: user.role
               };
           
               return await this.save(activity);

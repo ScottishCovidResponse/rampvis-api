@@ -3,30 +3,74 @@ import "reflect-metadata";
 import config from 'config';
 import { injectable, inject } from "inversify";
 import { ObjectId, FilterQuery } from 'mongodb';
+import {provide} from "inversify-binding-decorators";
 
-import { IUser } from "../../infrastructure/entities/user.interface";
-import { UserDto } from "../../infrastructure/dto/user.dto";
-import { UpdateUserDto } from '../../infrastructure/dto/updateUser.dto';
-import { TYPES } from '../config/types';
-import { IUserService } from '../interfaces/user.service.interface';
-import { DbClient } from '../../infrastructure/db/mongodb.connection';
-import { DataService } from '../data.service';
-import { UserPasswordDoesNotMatchException, RedundantUpdateErrorException, ObjectNotFoundException } from '../../exceptions/exception';
-import { ACCOUNT_ROLES } from '../../infrastructure/entities/account.interface';
-import { ERROR_CODES } from '../../exceptions/error.codes';
+import { IUser } from "../infrastructure/entities/user.interface";
+import { UserDto } from "../infrastructure/dto/user.dto";
+import { UpdateUserDto } from '../infrastructure/dto/updateUser.dto';
+import { TYPES } from './config/types';
+import { DbClient } from '../infrastructure/db/mongodb.connection';
+import { DataService } from './data.service';
+import { UserPasswordDoesNotMatchException, RedundantUpdateErrorException, ObjectNotFoundException } from '../exceptions/exception';
+import { ACCOUNT_ROLES } from '../infrastructure/entities/user.interface';
+import { ERROR_CODES } from '../exceptions/error.codes';
+import {logger} from "../utils/logger";
 
 
-@injectable()
-export class UserService extends DataService<IUser> implements IUserService {
+@provide(TYPES.UserService)
+export class UserService extends DataService<IUser> {
     public constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
     ) {
         super(
             dbClient,
-            config.get('mongodb.internal.db'),
-            config.get('mongodb.internal.collection.users')
+            config.get('mongodb.db'),
+            config.get('mongodb.collection.users')
         );
     }
+
+
+    //
+    // GitHub user
+    //
+
+    async getGitHubUser(githubId: string): Promise<IUser> {
+        return await this.get({ githubId: githubId } as FilterQuery<IUser>);
+    }
+
+    async saveGitHubUser(userDto: UserDto): Promise<IUser> {
+        const user: IUser = {
+            _id: new ObjectId(),
+            createdAt: new Date(),
+            role: userDto.role || ACCOUNT_ROLES.USER,
+            githubId: userDto.githubId,
+            githubUsername: userDto.githubUsername
+        };
+
+        return await this.save(user);
+    }
+
+    async getUser(id: string): Promise<IUser> {
+        logger.debug(`UserService: getUser: id = ${id}`);
+
+        const user: IUser = await this.get({ _id: new ObjectId(id) } as FilterQuery<IUser>);
+
+        logger.debug(`UserService: getUser: user = ${JSON.stringify(user)}`);
+
+        if(!user) {
+            logger.debug(`UserService: getUser: throw`);
+            throw new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND);
+        }
+
+        return user;
+    }
+
+
+
+    //
+    // email/pass user
+    // TODO refactor
+    //
 
 
     async getAllUsers(): Promise<Array<IUser>> {
@@ -40,16 +84,7 @@ export class UserService extends DataService<IUser> implements IUserService {
     }
 
 
-    async getUser(id: string): Promise<IUser> {
-        const user: IUser = await this.get({ _id: new ObjectId(id) } as FilterQuery<IUser>);
 
-        if(!user) {
-            throw new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND);
-        }
-
-        return user;
-    }
-    
 
     // Filter deleted user on login
     async getLoggedInUser(email: string): Promise<IUser> {
@@ -57,7 +92,7 @@ export class UserService extends DataService<IUser> implements IUserService {
         return await this.get({ email: email, deleted: { $in: [null, false] } } as FilterQuery<IUser>);
     }
 
-    
+
     isUser(accountRole: ACCOUNT_ROLES): boolean {
         return accountRole === ACCOUNT_ROLES.ADMIN
             || accountRole === ACCOUNT_ROLES.USER
@@ -78,7 +113,7 @@ export class UserService extends DataService<IUser> implements IUserService {
             createdAt: new Date(),
             email: userDto.email,
             phone: userDto.phone,
-            role: userDto.role,
+            role: userDto.role || ACCOUNT_ROLES.USER,
             password: hashedPassword,
             expireOn: userDto.expireOn ? new Date(userDto.expireOn) : new Date(new Date().setFullYear(new Date().getFullYear() + 30)),
             address: userDto.address,
@@ -92,7 +127,7 @@ export class UserService extends DataService<IUser> implements IUserService {
     async updatePassword(id: string, oldPassword: string, newPassword: string): Promise<IUser> {
         const user: IUser = await this.getUser(id);
 
-        const isPasswordMatching = await bcrypt.compare(oldPassword, user.password);
+        const isPasswordMatching = await bcrypt.compare(oldPassword, user.password as string);
         if (!isPasswordMatching) {
             throw new UserPasswordDoesNotMatchException();
         }
@@ -128,7 +163,7 @@ export class UserService extends DataService<IUser> implements IUserService {
             updateUser.role = updateUserDto.role;
         }
 
-        if (updateUserDto.password) {
+        if (updateUserDto.password && user.password) {
             const isPasswordMatching = await bcrypt.compare(updateUserDto.password, user.password);
             if (!isPasswordMatching) {
                 updateUser.password = await bcrypt.hash(updateUserDto.password, 10);
@@ -156,10 +191,5 @@ export class UserService extends DataService<IUser> implements IUserService {
     }
 
 
-    async getUserSubscriptionTopics(): Promise<Array<string>> {
-        const topics: Array<string> = [];
-        // TODO
-        return topics;
-    }
 
 }

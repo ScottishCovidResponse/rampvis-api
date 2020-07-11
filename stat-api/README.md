@@ -1,6 +1,6 @@
 ## Stat API - Python
 
-Getting started-
+Getting started
 ```
 # setup environment, e.g., using conda
 conda activate stat-api-env
