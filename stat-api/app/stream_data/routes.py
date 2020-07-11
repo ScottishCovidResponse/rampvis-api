@@ -2,18 +2,18 @@ import os
 from datetime import datetime, timedelta
 
 from flask import Response, current_app
+from app.stream_data import blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
-from app.stream_data import blueprint
 
-CSV_DATA_PATH = '../../csv-data'
-current_date = None
 LAST_DATE = datetime(2020, 5, 26)
+
+current_date = None
 
 # Will be assigned later for access outside of context
 root_path = None
 
-def generate_data(infolder='scotland', outfolder='scotland_dynamic'):
+def generate_data(infolder='../../csv-data/scotland', outfolder='../../csv-data-dynamic/scotland'):
     """
     Generate dynamic data.
 
@@ -26,9 +26,8 @@ def generate_data(infolder='scotland', outfolder='scotland_dynamic'):
         scheduler.pause()
         return 
 
-    infolder = os.path.join(root_path, CSV_DATA_PATH, infolder)
-    outfolder = os.path.join(root_path, CSV_DATA_PATH, outfolder)
-    print('infolder', infolder)
+    infolder = os.path.join(root_path, infolder)
+    outfolder = os.path.join(root_path, outfolder)
     for filename in os.listdir(infolder):
         extract_rows(os.path.join(infolder, filename), os.path.join(outfolder, filename), current_date)
 
@@ -94,6 +93,6 @@ def stop():
     return Response('Simulation of data stream has stopped.', mimetype='application/json')
 
 @blueprint.route('/resume', methods=['GET'])
-def reset():
+def resume():
     scheduler.resume()
     return Response(f'Simulation has resumed. Current date is {current_date:%d/%m/%Y}.', mimetype='application/json')
