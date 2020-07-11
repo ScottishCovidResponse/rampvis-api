@@ -1,8 +1,11 @@
+// TODO
+// Deprecate
+
 import {NextFunction} from 'connect';
 import {Response} from 'express-serve-static-core';
 import {controller, httpGet} from 'inversify-express-utils';
 
-import { RequestWithUser } from '../../internal/auth/requestWithUser.interface';
+import { RequestWithUser } from '../../request-with-user.interface';
 import { CsvParseError } from '../../../exceptions/exception';
 import { logger } from '../../../utils/logger';
 import { readCSV } from '../../../services/csv.service';
@@ -17,7 +20,7 @@ export class ScotlandCovidDeathsDataWeek {
         logger.debug('ScotlandCovidDeathsDataWeek: getGenderAge:');
 
         try {
-            const data: any[] = await readCSV('deaths-by-gender-age.csv');
+            const data: any[] = await readCSV('covid_deaths_gender_age.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -29,7 +32,7 @@ export class ScotlandCovidDeathsDataWeek {
         logger.debug('ScotlandCovidDeathsDataWeek: getLocation:');
 
         try {
-            const data: any[] = await readCSV('deaths-by-location.csv');
+            const data: any[] = await readCSV('covid_deaths_location.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));
@@ -41,7 +44,7 @@ export class ScotlandCovidDeathsDataWeek {
         logger.debug('ScotlandCovidDeathsDataWeek: getType:');
 
         try {
-            const data: any[] = await readCSV('deaths-by-type.csv');
+            const data: any[] = await readCSV('covid_deaths_type.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(500, error.message));

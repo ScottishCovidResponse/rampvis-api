@@ -4,24 +4,33 @@ import fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import moment from 'moment';
 import util from 'util';
+import {Container, inject} from "inversify";
+import getDecorators from "inversify-inject-decorators";
 
-import { RequestWithUser } from '../controllers/internal/auth/requestWithUser.interface';
-import { getUserGrants } from '../controllers/internal/user/userAccess.verify';
 import { AuthenticationTokenMissingException, DatabaseException, WrongAuthenticationTokenException } from '../exceptions/exception';
 import { IUser } from '../infrastructure/entities/user.interface';
-import { DIContainer } from '../services/config/inversify.config';
 import { TYPES } from '../services/config/types';
-import { IUserService } from '../services/interfaces/user.service.interface';
 import { logger } from '../utils/logger';
 import { IDataStoredInToken } from './data-stored-in-token.interface';
 import { ITokenData } from './token-data.interface';
+import {UserService} from "../services/user.service";
+import {RequestWithUser} from "../controllers/request-with-user.interface";
+import { DIContainer } from '../services/config/inversify.config';
+
+
 
 export class UserToken {
+
+
   private static jwtSign = util.promisify(jwt.sign);
   private static jwtVerify = util.promisify(jwt.verify);
 
   private static RSA_PVT_KEY: string = fs.readFileSync(config.get('session.pvtKey'), 'utf8');
   private static RSA_PUB_KEY: string = fs.readFileSync(config.get('session.pubKey'), 'utf8');
+
+  constructor() {
+  }
+
 
   public static create(user: IUser, permissions: any): ITokenData {
     const start = moment(user.createdAt);
@@ -48,7 +57,7 @@ export class UserToken {
   public static async verify(request: RequestWithUser, response: Response, next: NextFunction) {
 
     const authorizationHeader = request.headers.authorization;
-    logger.debug('UserToken: verify: ');
+    logger.debug(`UserToken: verify: authorizationHeader = ${authorizationHeader}`);
 
     if (!authorizationHeader) {
       return next(new AuthenticationTokenMissingException());
@@ -66,8 +75,11 @@ export class UserToken {
       return next(new WrongAuthenticationTokenException());
     }
 
-    try {
-      const userService: IUserService = DIContainer.get<IUserService>(TYPES.IUserService);
+    //try {
+      logger.debug(`UserToken: call user service id = ${userId}`);
+
+
+      const userService: UserService = DIContainer.get<UserService>(TYPES.UserService);
       const user: IUser = await userService.get(userId);
 
       if (user) {
@@ -76,16 +88,14 @@ export class UserToken {
       } else {
         next(new WrongAuthenticationTokenException());
       }
-    } catch (error) {
-       next(new DatabaseException(500, error.mess));
-    }
+    // } catch (error) {
+    //    next(new DatabaseException(500, error.mess));
+    // }
   }
 
   public static async getAllGrants(role: string) {
-    const userGrants = await getUserGrants(role);
-    const allGrants = { ...userGrants };
-
-    return allGrants;
+    return null
   }
 
 }
+

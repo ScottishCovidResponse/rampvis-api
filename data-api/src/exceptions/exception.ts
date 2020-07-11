@@ -22,7 +22,7 @@ class AssertionErrorException extends HttpException {
   }
 }
 
-class InvalidQueryParametarsException extends HttpException {
+class InvalidQueryParametersException extends HttpException {
   constructor(message: string) {
     super(400, message, ERROR_CODES.INVALID_QUERY_PARAMETERS);
   }
@@ -95,7 +95,7 @@ class CsvParseError extends HttpException {
 export {
   HttpException,
   AssertionErrorException,
-  InvalidQueryParametarsException,
+  InvalidQueryParametersException,
   ObjectNotFoundException,
   UserWithEmailAlreadyExistsException,
   UserPasswordDoesNotMatchException,
