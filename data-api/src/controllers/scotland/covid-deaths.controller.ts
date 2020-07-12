@@ -25,7 +25,7 @@ export class CovidDeathsController {
             const data: any[] = await readCSV(table + '_' + group + '.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
 
     }

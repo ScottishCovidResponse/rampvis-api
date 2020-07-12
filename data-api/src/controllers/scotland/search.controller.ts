@@ -32,9 +32,8 @@ export class SearchController {
         try {
             const res = await this.searchService.search(query);
             response.status(200).send(res);
-
         } catch (error) {
-            next(new SearchError(500, error.message));
+            next(new SearchError(error.message));
         }
     }
 }

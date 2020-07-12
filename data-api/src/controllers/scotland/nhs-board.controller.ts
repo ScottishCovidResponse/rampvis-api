@@ -41,7 +41,7 @@ export class NhsBoardController {
                 response.status(200).send(data);
             }
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 }
