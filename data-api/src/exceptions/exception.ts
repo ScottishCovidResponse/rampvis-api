@@ -91,6 +91,12 @@ class CsvParseError extends HttpException {
     super(code, message, ERROR_CODES.CSV_PARSE_ERROR);
   }
 }
+class SearchError extends HttpException {
+  constructor(code: number, message: string) {
+    super(code, message, ERROR_CODES.SEARCH_ERROR);
+  }
+}
+
 
 export {
   HttpException,
@@ -106,4 +112,5 @@ export {
   RedundantUpdateErrorException,
   AccessControlException,
   CsvParseError,
+  SearchError
 }
