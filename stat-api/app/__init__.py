@@ -1,7 +1,7 @@
 from flask import Flask, url_for
+from flask_cors import CORS
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
-
 
 def register_blueprints(app):
     for module_name in ('correlation', 'scotland', 'process_data', 'stream_data'):
@@ -22,8 +22,9 @@ def configure_logs(app):
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
     app.config.from_object(config)
-
+    
     register_blueprints(app)
     configure_logs(app)
+    CORS(app)
 
     return app
