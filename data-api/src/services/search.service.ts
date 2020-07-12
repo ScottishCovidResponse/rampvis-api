@@ -11,7 +11,7 @@ import {FilterQuery} from "mongodb";
 
 
 @provide(TYPES.SearchService)
-export class SearchService extends DataService<IPage>{
+export class SearchService extends DataService<IPage> {
     public constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
     ) {
@@ -22,7 +22,18 @@ export class SearchService extends DataService<IPage>{
         );
     }
 
-    async search(inputString: string): Promise<IPage[]> {
-        return this.getCollection().find({$text: {$search: inputString}}).toArray();
+    async search(queryStr: string): Promise<IPage[]> {
+        let pipeline = [
+            {
+                "$match": {
+                    "$text": {
+                        "$search": queryStr
+                    }
+                }
+            },
+            {"$sort": {"score": {"$meta": "textScore"}}}
+        ];
+        return this.getCollection().aggregate(pipeline).toArray();
+
     }
 }
