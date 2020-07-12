@@ -6,6 +6,7 @@ import { ScotlandNhsboardController } from './scotland/nhsboard/scotland.nhsboar
 import { ScotlandCovidDeathsDataWeek } from './scotland/covid-deaths/data-week.controller';
 import { NhsBoardController } from './scotland/nhs-board.controller';
 import { CovidDeathsController } from './scotland/covid-deaths.controller';
+import { SearchController } from './scotland/search.controller';
 
 export {
     AuthController,
@@ -16,4 +17,5 @@ export {
     ScotlandCovidDeathsDataWeek,    // TODO deprecate
     NhsBoardController,
     CovidDeathsController,
+    SearchController,
 };
