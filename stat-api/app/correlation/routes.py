@@ -8,6 +8,7 @@ from app.correlation import blueprint
 
 
 CSV_DATA_PATH = '../../csv-data'
+METRICS_PATH = '../../derived-metrics'
 
 
 @blueprint.route('/', methods=['GET'])
@@ -40,3 +41,20 @@ def query():
 def variable_to_df(var):
     filepath = os.path.join(current_app.root_path, CSV_DATA_PATH, var + '.csv')
     return pd.read_csv(filepath)
+
+
+@blueprint.route('/all', methods=['GET'])
+def all():
+    var1 = request.args.get('var1', None)
+    var2 = request.args.get('var2', None)
+
+    if var1 is None or var2 is None:
+        abort(400, 'Required parameters: var1, var2')
+
+    # Look up in the database
+    filename = var1.replace('/', '.') + '___' + var2.replace('/', '.')
+    filepath = os.path.join(current_app.root_path, METRICS_PATH, filename)
+    with open(filepath) as f:
+        # TODO: suspected vs confirmed NaN
+        response = Response(f.read(), mimetype='application/json')
+    return response
