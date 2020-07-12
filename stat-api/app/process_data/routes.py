@@ -1,28 +1,82 @@
-from flask import Response
+import os
 import json
-from apscheduler.schedulers.background import BackgroundScheduler
 
+from flask import Response, current_app
 from app.process_data import blueprint
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
+import pandas as pd
 
-count = 0
-def task():
-    global count
-    scheduler.print_jobs()
-    print('Count: ', count)
-    count += 1
+from algorithms.franck import compute_metrics
+
+METRICS = ['ZNCC', 'pearsonr', 'spearmanr', 'kendalltau', 'SSIM', 'PSNR', 'MSE', 'NRMSE', 'ME', 'MAE', 'MSLE', 'MedAE', 'f-test'] 
+WINDOW = 'none'
+
+# Will be assigned later for access outside of context
+root_path = None
+
+def save_metrics(infolder='../../csv-data-dynamic/scotland', outfolder='../../derived-metrics'):
+    """
+    Compute metrics for each pair of files in given folder and save the results.
+    """
+    global root_path
+
+    infolder = os.path.join(root_path, infolder)
+    for filename1 in os.listdir(infolder):
+        for filename2 in os.listdir(infolder):
+            filename = 'scotland.' + filename1.replace('.csv', '') + '___scotland.' + filename2.replace('.csv', '')
+            compute_one_pair(
+                os.path.join(infolder, filename1), 
+                os.path.join(infolder, filename2), 
+                os.path.join(root_path, outfolder, filename))
+
+def compute_one_pair(filename1, filename2, outfile):
+    "Compute metrics between the two given files and save the metrics to a new file."
+    df1 = pd.read_csv(filename1)
+    df2 = pd.read_csv(filename2)
+    
+    try:
+        result = compute_metrics(df1, df2, METRICS, WINDOW)
+        # Convert to list for serialisation
+        for m in METRICS:
+            result[m] = result[m].tolist()
+    except Exception as e:
+        result = str(e)
+
+    # Save to file
+    with open(outfile, 'w') as f:
+        json.dump(result, f)
 
 
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(task, 'interval', seconds=5)
+scheduler.add_job(save_metrics, 'interval', seconds=5)
 
 
 @blueprint.route('/start', methods=['GET'])
 def start():
-    scheduler.start()
-    return Response('Computing derived data has scheduled.', mimetype='application/json')
+    global root_path
+    root_path = current_app.root_path
 
+    scheduler.start()
+    return Response(f'Simulation of computing derived data has started.', mimetype='application/json')
+
+@blueprint.route('/status', methods=['GET'])
+def status():
+    if scheduler.state == STATE_STOPPED:
+        return Response('Simulation has not started.', mimetype='application/json')
+    
+    if scheduler.state == STATE_PAUSED:
+        return Response(f'Simulation has paused.', mimetype='application/json')
+    
+    if scheduler.state == STATE_RUNNING:
+        return Response('Simulation is running.', mimetype='application/json')
 
 @blueprint.route('/stop', methods=['GET'])
 def stop():
-    scheduler.shutdown()
-    return Response('Computing derived data has stopped.', mimetype='application/json')
+    scheduler.pause()
+    return Response('Simulation of computing derived data has stopped.', mimetype='application/json')
+
+@blueprint.route('/resume', methods=['GET'])
+def resume():
+    scheduler.resume()
+    return Response(f'Simulation has resumed.', mimetype='application/json')
