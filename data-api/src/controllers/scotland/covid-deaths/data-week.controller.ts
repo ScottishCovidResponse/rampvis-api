@@ -23,7 +23,7 @@ export class ScotlandCovidDeathsDataWeek {
             const data: any[] = await readCSV('covid_deaths_gender_age.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -35,7 +35,7 @@ export class ScotlandCovidDeathsDataWeek {
             const data: any[] = await readCSV('covid_deaths_location.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -47,7 +47,7 @@ export class ScotlandCovidDeathsDataWeek {
             const data: any[] = await readCSV('covid_deaths_type.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 

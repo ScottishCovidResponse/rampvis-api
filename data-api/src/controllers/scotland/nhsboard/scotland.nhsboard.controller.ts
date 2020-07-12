@@ -24,7 +24,7 @@ export class ScotlandNhsboardController {
             const data: any[] = await readCSV('cumulative_cases.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -54,7 +54,7 @@ export class ScotlandNhsboardController {
 
             }
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -66,7 +66,7 @@ export class ScotlandNhsboardController {
             const data: any[] = await readCSV('icu_patients.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -84,7 +84,7 @@ export class ScotlandNhsboardController {
                 };
             }));
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -96,7 +96,7 @@ export class ScotlandNhsboardController {
             const data: any[] = await readCSV('hospital_confirmed.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -114,7 +114,7 @@ export class ScotlandNhsboardController {
                 };
             }));
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -126,7 +126,7 @@ export class ScotlandNhsboardController {
             const data: any[] = await readCSV('hospital_suspected.csv');
             response.status(200).send(data);
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
@@ -144,7 +144,7 @@ export class ScotlandNhsboardController {
                 };
             }));
         } catch (error) {
-            next(new CsvParseError(500, error.message));
+            next(new CsvParseError(error.message));
         }
     }
 
