@@ -30,16 +30,16 @@ export class BookmarkService extends DataService<IBookmark> {
         const bookmark: IBookmark = {
              _id: new ObjectId(),
             userId: <string>user._id,
-
-            urlId: bookmarkDto.urlId,
-            url: bookmarkDto.url,
+            pageId: bookmarkDto.pageId,
             thumbnail: bookmarkDto.thumbnail,
-            visFunctionId: bookmarkDto.visFunctionId,
-            dataId: bookmarkDto.dataId,
         };
 
         logger.debug('BookmarkController: saveBookmark: bookmark = ', bookmark);
         return await this.save(bookmark);
+    }
+
+    async getBookmarkInfo(pageId: string): Promise<IBookmark> {
+        return await this.get({pageId: pageId});
     }
 
     async getAllBookmarks(user: IUser): Promise<IBookmark[]> {
