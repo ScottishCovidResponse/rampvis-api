@@ -15,6 +15,7 @@ import {DIContainer} from './services/config/inversify.config';
 
 // declare metadata by @controller annotation
 import './controllers/controller.module';
+import {SearchService} from "./services/search.service";
 
 export class App {
     public app!: express.Application;
@@ -62,8 +63,8 @@ export class App {
 
     private static async createDbIndexes(container: Container) {
         try {
-            // const xService: IXService = container.get<IXService>(TYPES.IXService);
-            // await xService.createIndex({first: 1}, config.get('mongodb.indexes.tracking_day') as number);
+            const searchService: SearchService = container.get<SearchService>(TYPES.SearchService);
+            await searchService.createTextIndex({ title: "text", description: "text" });
         } catch (err) {
             logger.error(`Error creating indexes, error: ${err}`);
             process.exit();
