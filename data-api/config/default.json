@@ -13,10 +13,12 @@
     "collection": {
       "users": "users",
       "bookmarks": "bookmarks",
-      "activities": "activities"
+      "activities": "activities",
+      "pages": "pages"
     },
     "indexes": {
-      "tracking_day": 86400
+      "title": "text",
+      "description": "text"
     }
   },
   "github": {
