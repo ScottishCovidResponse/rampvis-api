@@ -18,7 +18,6 @@ function configureAutoMapper() {
     automapper.createMap(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('thumbnail', (opts: AutoMapperJs.IMemberConfigurationOptions) => {
-            console.log(opts.sourceObject.thumbnail)
             if (opts.sourceObject.thumbnail === null)
                 return '';
             else {
