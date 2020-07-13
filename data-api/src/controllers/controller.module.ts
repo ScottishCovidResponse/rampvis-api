@@ -7,6 +7,7 @@ import { ScotlandCovidDeathsDataWeek } from './scotland/covid-deaths/data-week.c
 import { NhsBoardController } from './scotland/nhs-board.controller';
 import { NhsBoardDynamicController } from './scotland_dynamic/nhs-board.controller';
 import { CovidDeathsController } from './scotland/covid-deaths.controller';
+import { SearchController } from './scotland/search.controller';
 
 export {
     AuthController,
@@ -18,4 +19,5 @@ export {
     NhsBoardController,
     NhsBoardDynamicController,
     CovidDeathsController,
+    SearchController,
 };
