@@ -106,10 +106,10 @@ export class BookmarkController {
         }
     }
 
-    @httpDelete('/:id')
+    @httpDelete('/:pageId')
     public async removeBookmark(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const user: IUser = <IUser>request.user;
-        const bookmarkId = request.params.id;
+        const pageId = request.params.pageId;
 
         logger.debug('BookmarkController: getAllBookmarks: request.user = ' + JSON.stringify(request.user));
 
@@ -117,7 +117,7 @@ export class BookmarkController {
         if (!result) {
             next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
         } else {
-            const result: IBookmark = await this.bookmarkService.deleteBookmark(bookmarkId);
+            const result: IBookmark = await this.bookmarkService.deleteBookmark(user, pageId);
             const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
 
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.DELETE, user._id.toString());
