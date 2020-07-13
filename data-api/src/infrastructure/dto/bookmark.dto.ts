@@ -1,12 +1,12 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import { IsOptional, IsString} from "class-validator";
 
 export class BookmarkDto {
     @IsString()
     pageId!: string;
 
-    @IsString()
-    url!: string;
-
-    @IsNotEmpty()
+    @IsOptional()
     thumbnail!: any
+
+    @IsOptional()
+    userId: string;
 }
