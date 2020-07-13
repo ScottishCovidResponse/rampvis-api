@@ -18,7 +18,7 @@ Accepted values of
 - region_name:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian, nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
 
 ### Dynamic data
-Same as above but use `scotland_dynamic` instead of `scotland`.
+Same as above but use `scotland_dynamic` instead of `scotland`. The data will be cycled from 1st April to 26th May every 3 seconds.
 
 ### Following APIs are deprecated
 ```bash
