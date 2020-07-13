@@ -99,7 +99,7 @@ The API return a JSON object as follows
 # Simulation of stream data
 
 ### Overview
-A scheduler is used to simulate a data stream. A job will be run every 5 seconds to:
+A scheduler is used to simulate a data stream. A job will be run every 3 seconds to:
 - initially, the **current date** will be set to 1st April 2020
 - copy data for `csv-data/scotland` to `csv-data/scotland_dynamic` up to the current date
 - the current date will be increased by one

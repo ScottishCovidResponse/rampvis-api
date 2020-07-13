@@ -6,6 +6,8 @@ from app.stream_data import blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
 
+CSV_DATA = '../../csv-data/scotland'
+CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
 LAST_DATE = datetime(2020, 5, 26)
 
 current_date = None
@@ -13,7 +15,7 @@ current_date = None
 # Will be assigned later for access outside of context
 root_path = None
 
-def generate_data(infolder='../../csv-data/scotland', outfolder='../../csv-data-dynamic/scotland'):
+def generate_data(infolder=CSV_DATA, outfolder=CSV_DYNAMIC_DATA):
     """
     Generate dynamic data.
 
@@ -56,13 +58,16 @@ def extract_rows(infile, outfile, current_date):
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(generate_data, 'interval', seconds=5)
+scheduler.add_job(generate_data, 'interval', seconds=3)
 
 
 @blueprint.route('/start', methods=['GET'])
 def start():
     global current_date, root_path
     root_path = current_app.root_path
+
+    if not os.path.exists(os.path.join(root_path, CSV_DYNAMIC_DATA)):
+        os.makedirs(os.path.join(root_path, CSV_DYNAMIC_DATA))
 
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:
