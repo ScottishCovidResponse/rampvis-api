@@ -49,7 +49,7 @@ def compute_one_pair(filename1, filename2, outfile):
 
 
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(save_metrics, 'interval', seconds=5)
+scheduler.add_job(save_metrics, 'interval', seconds=3)
 
 
 @blueprint.route('/start', methods=['GET'])
