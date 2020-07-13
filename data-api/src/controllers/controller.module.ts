@@ -5,6 +5,7 @@ import { ActivityControllerInt } from './activity.controller';
 import { ScotlandNhsboardController } from './scotland/nhsboard/scotland.nhsboard.controller';
 import { ScotlandCovidDeathsDataWeek } from './scotland/covid-deaths/data-week.controller';
 import { NhsBoardController } from './scotland/nhs-board.controller';
+import { NhsBoardDynamicController } from './scotland_dynamic/nhs-board.controller';
 import { CovidDeathsController } from './scotland/covid-deaths.controller';
 
 export {
@@ -15,5 +16,6 @@ export {
     ScotlandNhsboardController,     // TODO deprecate
     ScotlandCovidDeathsDataWeek,    // TODO deprecate
     NhsBoardController,
+    NhsBoardDynamicController,
     CovidDeathsController,
 };
