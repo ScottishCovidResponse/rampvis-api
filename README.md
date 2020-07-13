@@ -8,18 +8,19 @@
 - `url`: `http://vis.scrc.uk`
 
 ## Source:  `COVID-19+data+by+NHS+Board+26+May+2020.xlsx` 
-
+### Latest data
 ```
 /api/v1/scotland/nhs-board?table=<table_name>
 /api/v1/scotland/nhs-board?table=<table_name>&region=<region_name>
 ```
 Accepted values of
 - table_name: cumulative_cases, hospital_confirmed, hospital_suspected, icu_patients
-- region_name:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian,
-nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
+- region_name:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian, nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
 
+### Dynamic data
+Same as above but use `scotland_dynamic` instead of `scotland`.
 
-Following APIs are deprecated.
+### Following APIs are deprecated
 ```bash
 /api/v1/scotland/<table>
 /api/v1/scotland/<table>/:<region>
@@ -27,8 +28,7 @@ Following APIs are deprecated.
 
 Accepted values of
 - table: cumulative, icupatients, hospconfirmed, hospsuspected
-- region:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian,
-nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
+- region:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian, nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
 
 ## Source: `covid-deaths-data-week-20.xlsx`
 
@@ -41,12 +41,11 @@ Accepted values of
 
 
 
-Following APIs are deprecated.
-
+### Following APIs are deprecated
 ```bash
 http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/gender-age
 http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/location
-http://vis.scrc.uk /api/v1/scotland/covid-deaths/data-week/type
+http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/type
 ```
 
 
