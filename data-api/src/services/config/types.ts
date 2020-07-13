@@ -3,8 +3,8 @@ const TYPES = {
 
     UserService: Symbol.for('UserService'),
     BookmarkService: Symbol.for('BookmarkService'),
+    SearchService: Symbol.for('SearchService'),
     ActivityService: Symbol.for('ActivityService'),
-
     DbClient: Symbol.for('DbClient'),
 };
 

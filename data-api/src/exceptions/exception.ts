@@ -69,8 +69,8 @@ class WrongAuthenticationTokenException extends HttpException {
 }
 
 class DatabaseException extends HttpException {
-  constructor(code: number, message: string) {
-    super(code, message, ERROR_CODES.SERVER_EXCEPTION);
+  constructor(message: string) {
+    super(500, message, ERROR_CODES.SERVER_EXCEPTION);
   }
 }
 
@@ -87,10 +87,23 @@ class AccessControlException extends HttpException {
 }
 
 class CsvParseError extends HttpException {
-  constructor(code: number, message: string) {
-    super(code, message, ERROR_CODES.CSV_PARSE_ERROR);
+  constructor(message: string) {
+    super(500, message, ERROR_CODES.CSV_PARSE_ERROR);
   }
 }
+
+class PageBookmarkError extends HttpException {
+  constructor(message: string) {
+    super(500, message, ERROR_CODES.PAGE_BOOKMARK);
+  }
+}
+
+class SearchError extends HttpException {
+  constructor(message: string) {
+    super(500, message, ERROR_CODES.SEARCH_ERROR);
+  }
+}
+
 
 export {
   HttpException,
@@ -106,4 +119,6 @@ export {
   RedundantUpdateErrorException,
   AccessControlException,
   CsvParseError,
+  PageBookmarkError,
+  SearchError
 }

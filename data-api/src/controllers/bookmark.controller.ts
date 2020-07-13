@@ -10,7 +10,7 @@ import {RequestWithUser} from './request-with-user.interface';
 import {UserToken} from '../security/user.token';
 
 import {logger} from '../utils/logger';
-import {ObjectNotFoundException} from '../exceptions/exception';
+import {ObjectNotFoundException, PageBookmarkError} from '../exceptions/exception';
 import {dtoValidate} from '../middleware/dto.validate';
 import {MAPPING_TYPES} from '../services/config/automapper.config';
 import {ACTIVITY_TYPE, ACTIVITY_ACTION} from '../infrastructure/entities/activity.interface';
@@ -48,14 +48,20 @@ export class BookmarkController {
 
         const result = await this.userService.getUser(<string>user._id);
         if (!result) {
-            next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
-        } else {
+            return next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
+        }
+
+        if (await this.bookmarkService.getBookmarkInfo(bookmarkDto.pageId)) {
+            return next(new PageBookmarkError('Page already bookmarked'));
+        }
+
+        else {
             const result: IBookmark = await this.bookmarkService.saveBookmark(bookmarkDto, user);
-            // TODO debug
-            // const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
+            const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
+
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.CREATE, user._id.toString());
 
-            response.status(200).send(result);
+            response.status(200).send(resultDto);
         }
 
     }
@@ -71,18 +77,39 @@ export class BookmarkController {
             next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
         } else {
             const result: IBookmark[] = await this.bookmarkService.getAllBookmarks(user);
-            // const resultDto: BookmarkDto[] = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
+            const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
 
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.READ, user._id.toString());
 
-            response.status(200).send(result);
+            // logger.debug('BookmarkController: getAllBookmarks: result = ' + JSON.stringify(resultDto));
+            response.status(200).send(resultDto);
         }
     }
 
-    @httpDelete('/:id')
+    @httpGet('/:pageId')
+    public async getBookmarkInfo(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        const user: IUser = <IUser>request.user;
+        const pageId = request.params.pageId;
+
+        logger.debug('BookmarkController: getBookmarkInfo: request.user = ' + JSON.stringify(request.user));
+
+        const result = await this.userService.getUser(<string>user._id);
+        if (!result) {
+            next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
+        } else {
+            const result: IBookmark = await this.bookmarkService.getBookmarkInfo(pageId);
+            const resultDto: BookmarkDto[] = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
+
+            await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.READ, user._id.toString());
+
+            response.status(200).send(resultDto);
+        }
+    }
+
+    @httpDelete('/:pageId')
     public async removeBookmark(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const user: IUser = <IUser>request.user;
-        const bookmarkId = request.params.id;
+        const pageId = request.params.pageId;
 
         logger.debug('BookmarkController: getAllBookmarks: request.user = ' + JSON.stringify(request.user));
 
@@ -90,12 +117,12 @@ export class BookmarkController {
         if (!result) {
             next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
         } else {
-            const result: IBookmark = await this.bookmarkService.deleteBookmark(bookmarkId);
-            // const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
+            const result: IBookmark = await this.bookmarkService.deleteBookmark(user, pageId);
+            const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
 
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.DELETE, user._id.toString());
 
-            response.status(200).send(result);
+            response.status(200).send(resultDto);
         }
     }
 

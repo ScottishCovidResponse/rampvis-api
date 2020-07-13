@@ -72,11 +72,11 @@ export class UserController {
 
                     response.status(200).send(resultDto);
                 } catch (error) {
-                    throw new DatabaseException(500, error.message);
+                    throw new DatabaseException(error.message);
                 }
             }
         } catch (error) {
-            next(new DatabaseException(500, error.message));
+            next(new DatabaseException(error.message));
         }
     }
 
@@ -94,7 +94,7 @@ export class UserController {
             logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
             response.status(200).send(resultDto);
         } catch (error) {
-            next(new DatabaseException(500, error.message));
+            next(new DatabaseException(error.message));
         }
     }
 
@@ -115,7 +115,7 @@ export class UserController {
 
             response.status(200).send(resultDto);
         } catch (error) {
-            next(new DatabaseException(500, error.message));
+            next(new DatabaseException(error.message));
         }
     }
 
@@ -134,7 +134,7 @@ export class UserController {
 
             response.status(200).send(resultDto);
         } catch (error) {
-            next(new DatabaseException(500, error.message));
+            next(new DatabaseException(error.message));
         }
     }
 

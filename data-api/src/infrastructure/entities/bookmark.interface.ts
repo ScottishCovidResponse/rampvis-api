@@ -3,11 +3,7 @@ import { ObjectId } from 'bson';
 export interface IBookmark {
     _id: string | ObjectId;
 
-    urlId: string;
-    url: string;
-    thumbnail: any
-    visFunctionId: string;
-    dataId: string;
-
+    pageId: string;
     userId: string;
+    thumbnail?: any
 }

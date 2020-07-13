@@ -147,6 +147,7 @@ export abstract class DataService<T extends { _id: any }> {
     }
 
     public async createIndex(field: any, expiry: number): Promise<boolean> {
+
         return new Promise<boolean>(async (resolve) => {
             try {
                 await this.getCollection().dropIndex(field);
@@ -156,6 +157,23 @@ export abstract class DataService<T extends { _id: any }> {
 
             this.getCollection().createIndex(field, {expireAfterSeconds: expiry},
                 (err, dbResult) => {
+                    if (err) { throw err; }
+                    resolve(true);
+                });
+        });
+    }
+
+    public async createTextIndex(obj: any): Promise<boolean> {
+        return new Promise<boolean>(async (resolve) => {
+            try {
+                for (const d of Object.keys(obj)) {
+                    console.log('DataService: createTextIndex: d : ', d);
+                    await this.getCollection().dropIndex(d);
+                }
+            } catch (e) {
+            }
+
+            this.getCollection().createIndex(obj, (err, dbResult) => {
                     if (err) { throw err; }
                     resolve(true);
                 });
