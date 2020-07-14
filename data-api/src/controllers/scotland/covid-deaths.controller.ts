@@ -5,12 +5,16 @@ import {controller, httpGet} from 'inversify-express-utils';
 import { RequestWithUser } from '../request-with-user.interface';
 import { CsvParseError } from '../../exceptions/exception';
 import { logger } from '../../utils/logger';
-import { readCSV } from '../../services/csv.service';
+import {CSVService } from '../../services/csv.service';
+import {inject} from "inversify";
+import {TYPES} from "../../services/config/types";
 
 @controller('/scotland/covid-deaths')
 export class CovidDeathsController {
 
-    constructor() {}
+    constructor(
+        @inject(TYPES.CSVService) private csvService: CSVService
+    ) {}
 
     //
     // /api/v1/scotland/covid-deaths?table=<>&group=<>,
@@ -22,7 +26,7 @@ export class CovidDeathsController {
         logger.info('CovidDeathsController: getCovidDeathsData: table = ', table, ', group = ', group);
 
         try {
-            const data: any[] = await readCSV(table + '_' + group + '.csv');
+            const data: any[] = await this.csvService.getData(table + '_' + group + '.csv');
             response.status(200).send(data);
         } catch (error) {
             next(new CsvParseError(error.message));
