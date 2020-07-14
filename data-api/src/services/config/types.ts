@@ -6,6 +6,8 @@ const TYPES = {
     SearchService: Symbol.for('SearchService'),
     ActivityService: Symbol.for('ActivityService'),
     DbClient: Symbol.for('DbClient'),
+
+    CSVService: Symbol.for('CSVService'),
 };
 
 export { TYPES };

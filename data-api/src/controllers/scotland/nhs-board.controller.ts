@@ -5,13 +5,16 @@ import {controller, httpGet} from 'inversify-express-utils';
 import {CsvParseError, InvalidQueryParametersException} from '../../exceptions/exception';
 import {logger} from '../../utils/logger';
 import {RequestWithUser} from '../request-with-user.interface';
-import {readCSV} from '../../services/csv.service';
+import {CSVService} from '../../services/csv.service';
+import {inject} from "inversify";
+import {TYPES} from "../../services/config/types";
 
 @controller('/scotland/nhs-board')
 export class NhsBoardController {
 
-    constructor() {
-    }
+    constructor(
+        @inject(TYPES.CSVService) private csvService: CSVService
+    ) {}
 
     //
     // api/v1/scotland/?table=<>
@@ -28,7 +31,7 @@ export class NhsBoardController {
         }
 
         try {
-            const data: any[] = await readCSV(table + '.csv');
+            const data: any[] = await this.csvService.getData(table + '.csv');
 
             if (request.query.region) {
                 response.status(200).send(data.map((d: any) => {
