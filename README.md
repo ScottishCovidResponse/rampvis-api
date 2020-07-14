@@ -1,11 +1,9 @@
 # Projects
-
 - data-api - NodeJS based REST API for data
 - stat-api - Python/Flask based REST API for housekeeping functions   
 
 # Data APIs 
-
-- `url`: `http://vis.scrc.uk`
+`url`: `http://vis.scrc.uk`
 
 ## Source:  `COVID-19+data+by+NHS+Board+26+May+2020.xlsx` 
 ### Latest data
@@ -31,15 +29,13 @@ Accepted values of
 - region:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian, nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
 
 ## Source: `covid-deaths-data-week-20.xlsx`
-
+### Latest data
 ```
 /api/v1/scotland/covid-deaths/?table=<table_name>&group=<group_name>
 ```
 Accepted values of
 - table_name: covid_deaths 
 - group_name: gender_age, location, type
-
-
 
 ### Following APIs are deprecated
 ```bash
@@ -48,11 +44,8 @@ http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/location
 http://vis.scrc.uk/api/v1/scotland/covid-deaths/data-week/type
 ```
 
-
 # Stat APIs 
-
 ## Source: `COVID 19 data by NHS Board 26 May 2020 XL sheet`
-
 ```
 /stat/v1/scotland/nhs-board/?table=<table_name>&metrics=<metrics>
 ```
@@ -69,7 +62,7 @@ Following APIs are deprecated.
 ```
 
 
-### Correlation metrics
+### Correlation metrics of static (latest) data
 #### API
 The API returns correlation metrics between two variables. The end point is `http://vis.scrc.uk/stat/v1/correlation/`. It takes on 4 parameters:
 - `var1` defines the first variable as `country/filename`
@@ -91,9 +84,17 @@ The API return a JSON object as follows
   metric1: [2d array],
   metric2: [2d array]
 }
-
 ```
 
+### Correlation metrics of dynamic data
+Return correlation metrics for the dynamic data stream. So, it will change every 3 seconds for testing.
+
+#### API
+- The API is the same as above but using this end point `http://vis.scrc.uk/stat/v1/correlation_dynamic/`. 
+- `smooth` is currently not supported.
+
+#### Example
+http://vis.scrc.uk/stat/v1/correlation_dynamic/?var1=scotland/hospital_confirmed&var2=scotland/hospital_confirmed&metrics=zncc,pearsonr,f-test
 
 # Simulation of stream data
 
@@ -109,3 +110,14 @@ A scheduler is used to simulate a data stream. A job will be run every 3 seconds
 - `/stat/v1/stream_data/stop` to pause the stream
 - `/stat/v1/stream_data/resume` to resume the stream (keep the current date as it is)
 - `/stat/v1/stream_data/status` displays the status of the stream
+
+# Simulation of deriving metrics dynamically
+
+### Overview
+A scheduler is used to compute metrics based on dynamic data stream. A job will be run every 3 seconds which is synchronized with the test stream.
+
+### How to run
+- `/stat/v1/process_data/start` to start the stream
+- `/stat/v1/process_data/stop` to pause the stream
+- `/stat/v1/process_data/resume` to resume the stream
+- `/stat/v1/process_data/status` displays the status of the stream
