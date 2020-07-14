@@ -62,6 +62,11 @@ def compute_metrics(df1, df2, metrics, window):
             if 'mae' in metrics: result['mae'][i][j] = getMAE(seriesX, seriesY)
             if 'msle' in metrics: result['msle'][i][j] = getMSLE(seriesX, seriesY)
             if 'medae' in metrics: result['medae'][i][j] = getMedAE(seriesX, seriesY)
+
+    # Note: added by Phong
+    # Replace NaN with 0 for serialisation
+    for m in metrics:
+        result[m] = np.nan_to_num(result[m])
     
     return result
 

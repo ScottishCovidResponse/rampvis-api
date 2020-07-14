@@ -12,10 +12,13 @@ from algorithms.franck import compute_metrics
 METRICS = ['ZNCC', 'pearsonr', 'spearmanr', 'kendalltau', 'SSIM', 'PSNR', 'MSE', 'NRMSE', 'ME', 'MAE', 'MSLE', 'MedAE', 'f-test'] 
 WINDOW = 'none'
 
+CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
+METRICS_PATH = '../../derived-metrics'
+
 # Will be assigned later for access outside of context
 root_path = None
 
-def save_metrics(infolder='../../csv-data-dynamic/scotland', outfolder='../../derived-metrics'):
+def save_metrics(infolder=CSV_DYNAMIC_DATA, outfolder=METRICS_PATH):
     """
     Compute metrics for each pair of files in given folder and save the results.
     """
@@ -40,13 +43,15 @@ def compute_one_pair(filename1, filename2, outfile):
         # Convert to list for serialisation
         for m in METRICS:
             result[m] = result[m].tolist()
+
+        # Added the last date of the data for reference
+        result['last_date'] = df1.iloc[-1]['date']
     except Exception as e:
         result = str(e)
 
     # Save to file
     with open(outfile, 'w') as f:
         json.dump(result, f)
-
 
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(save_metrics, 'interval', seconds=3)
@@ -56,6 +61,9 @@ scheduler.add_job(save_metrics, 'interval', seconds=3)
 def start():
     global root_path
     root_path = current_app.root_path
+
+    if not os.path.exists(os.path.join(root_path, METRICS_PATH)):
+        os.makedirs(os.path.join(root_path, METRICS_PATH))
 
     scheduler.start()
     return Response(f'Simulation of computing derived data has started.', mimetype='application/json')

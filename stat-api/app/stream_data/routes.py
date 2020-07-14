@@ -8,6 +8,7 @@ from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUS
 
 CSV_DATA = '../../csv-data/scotland'
 CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
+FIRST_DATE = datetime(2020, 4, 1)
 LAST_DATE = datetime(2020, 5, 26)
 
 current_date = None
@@ -24,9 +25,9 @@ def generate_data(infolder=CSV_DATA, outfolder=CSV_DYNAMIC_DATA):
     """
     global current_date, root_path
 
+    # Cycle FIRST_DATE -> LAST_DATE
     if current_date > LAST_DATE:
-        scheduler.pause()
-        return 
+        current_date = FIRST_DATE
 
     infolder = os.path.join(root_path, infolder)
     outfolder = os.path.join(root_path, outfolder)
@@ -60,7 +61,6 @@ def extract_rows(infile, outfile, current_date):
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(generate_data, 'interval', seconds=3)
 
-
 @blueprint.route('/start', methods=['GET'])
 def start():
     global current_date, root_path
@@ -71,15 +71,15 @@ def start():
 
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:
-        current_date = datetime(2020, 4, 1)
+        current_date = FIRST_DATE
         scheduler.start()
-        return Response(f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 5 seconds.', mimetype='application/json')
+        return Response(f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.', mimetype='application/json')
     
     # Resume if paused
     if scheduler.state == STATE_PAUSED:
-        current_date = datetime(2020, 4, 1)
+        current_date = FIRST_DATE
         scheduler.resume()
-        return Response(f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 5 seconds.', mimetype='application/json')
+        return Response(f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.', mimetype='application/json')
 
 @blueprint.route('/status', methods=['GET'])
 def status():
