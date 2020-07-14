@@ -9,7 +9,7 @@ config_mode = config_dict[get_config_mode.capitalize()]
 app = create_app(config_mode)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=3000, debug=True, threaded=True)
 
 
 @app.route('/stat/v1/health')
