@@ -1,13 +1,16 @@
 name: api-scrc-vis
 channels:
+  - anaconda
   - defaults
 dependencies:
   - apscheduler=3.6.3=py38_1
   - blas=1.0=mkl
   - ca-certificates=2020.6.24=0
   - certifi=2020.6.20=py38_0
+  - cffi=1.14.0=py38hc512035_1
   - click=7.1.2=py_0
   - cloudpickle=1.5.0=py_0
+  - cryptography=2.9.2=py38ha12b0ac_0
   - cycler=0.10.0=py38_0
   - cytoolz=0.10.1=py38h1de35cc_0
   - dask-core=2.20.0=py_0
@@ -15,6 +18,7 @@ dependencies:
   - flask=1.1.2=py_0
   - flask-cors=3.0.8=py_0
   - freetype=2.10.2=ha233b18_0
+  - idna=2.10=py_0
   - imageio=2.9.0=py_0
   - intel-openmp=2019.4=233
   - itsdangerous=1.1.0=py_0
@@ -47,6 +51,7 @@ dependencies:
   - pandas=1.0.4=py38h959d312_0
   - pillow=7.2.0=py38ha54b6ba_0
   - pip=20.1.1=py38_1
+  - pycparser=2.20=py_2
   - pyparsing=2.4.7=py_0
   - python=3.8.3=h26836e1_2
   - python-dateutil=2.8.1=py_0
@@ -74,5 +79,4 @@ dependencies:
   - pip:
     - blueprint==3.4.2
     - pyjwt==1.7.1
-prefix: /Users/saifulkhan/opt/anaconda3/envs/api-scrc-vis
 

@@ -5,7 +5,7 @@ Getting started
 ```
 # if using conda
 conda env create -f environment.yml
-conda activate stat-api-scrc-vis
+conda activate api-scrc-vis
 
 
 # start the server
