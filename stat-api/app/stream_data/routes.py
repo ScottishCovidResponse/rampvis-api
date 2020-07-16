@@ -1,10 +1,13 @@
 import os
 from datetime import datetime, timedelta
+import json
 
 from flask import Response, current_app
 from app.stream_data import blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
+
+from app.middleware.jwt_service import validate_token
 
 CSV_DATA = '../../csv-data/scotland'
 CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
@@ -15,6 +18,7 @@ current_date = None
 
 # Will be assigned later for access outside of context
 root_path = None
+
 
 def generate_data(infolder=CSV_DATA, outfolder=CSV_DYNAMIC_DATA):
     """
@@ -37,6 +41,7 @@ def generate_data(infolder=CSV_DATA, outfolder=CSV_DYNAMIC_DATA):
     # Prepare for next simulation 
     current_date += timedelta(days=1)
 
+
 def extract_rows(infile, outfile, current_date):
     "Extract rows and save file."
     with open(infile) as f:
@@ -44,24 +49,27 @@ def extract_rows(infile, outfile, current_date):
 
     header = inlines[0].strip()
     outlines = [header]
-    
+
     for line in inlines[1:]:
         date = datetime.strptime(line.split(',')[0], '%d/%m/%Y')
-        
+
         # Up to the current date
         if date > current_date:
             break
-        
+
         outlines.append(line.strip())
-    
+
     with open(outfile, 'w') as f:
         f.write('\n'.join(outlines))
+
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(generate_data, 'interval', seconds=3)
 
+
 @blueprint.route('/start', methods=['GET'])
+@validate_token
 def start():
     global current_date, root_path
     root_path = current_app.root_path
@@ -73,31 +81,39 @@ def start():
     if scheduler.state == STATE_STOPPED:
         current_date = FIRST_DATE
         scheduler.start()
-        return Response(f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.', mimetype='application/json')
-    
+        return Response(json.dumps({'message': f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.'}), mimetype='application/json')
+
     # Resume if paused
     if scheduler.state == STATE_PAUSED:
         current_date = FIRST_DATE
         scheduler.resume()
-        return Response(f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.', mimetype='application/json')
+        return Response(json.dumps({'message': f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.'}), mimetype='application/json')
+
 
 @blueprint.route('/status', methods=['GET'])
+@validate_token
 def status():
     if scheduler.state == STATE_STOPPED:
-        return Response(f'Simulation has not started.', mimetype='application/json')
-    
+        return Response(json.dumps({'message': f'Simulation has not started.'}), mimetype='application/json')
+
     if scheduler.state == STATE_PAUSED:
-        return Response(f'Simulation has paused. Current date is: {current_date:%d/%m/%Y}.', mimetype='application/json')
-    
+        return Response(json.dumps({'message': f'Simulation has paused. Current date is: {current_date:%d/%m/%Y}.'}),
+                        mimetype='application/json')
+
     if scheduler.state == STATE_RUNNING:
-        return Response(f'Simulation is running. Current date is: {current_date:%d/%m/%Y}.', mimetype='application/json')
+        return Response(json.dumps({'message': f'Simulation is running. Current date is: {current_date:%d/%m/%Y}.'}),
+                        mimetype='application/json')
+
 
 @blueprint.route('/stop', methods=['GET'])
+@validate_token
 def stop():
     scheduler.pause()
-    return Response('Simulation of data stream has stopped.', mimetype='application/json')
+    return Response(json.dumps({'message': 'Simulation of data stream has stopped.'}), mimetype='application/json')
+
 
 @blueprint.route('/resume', methods=['GET'])
+@validate_token
 def resume():
     scheduler.resume()
-    return Response(f'Simulation has resumed. Current date is {current_date:%d/%m/%Y}.', mimetype='application/json')
+    return Response(json.dumps({'message': f'Simulation has resumed. Current date is {current_date:%d/%m/%Y}.'}), mimetype='application/json')
