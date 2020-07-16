@@ -26,11 +26,11 @@
     "failureRedirect": "http://localhost:5000/error-403"
   },
   "jwt": {
-    "algorithm": "HS256"
+    "algorithm": "RS256",
+    "pvtKey": "config/keys/jwtRS256.key",
+    "pubKey": "config/keys/jwtRS256.key.pub"
   },
   "session": {
-    "secret": "Qmg:z@nP(1GEdk(",
-    "pvtKey": "config/session/session-token.pvt.key",
-    "pubKey": "config/session/session-token.pub.key"
+    "secret": "Qmg:z@nP(1GEdk("
   }
 }
