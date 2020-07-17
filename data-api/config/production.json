@@ -5,6 +5,7 @@
     "http://localhost"
   ],
   "apiUrl": "/api/v1",
+  "csv": "",
   "mongodb": {
     "url": "mongodb://192.168.251.20:27017",
     "db": "rampvis",
