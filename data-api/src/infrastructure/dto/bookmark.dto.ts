@@ -8,5 +8,5 @@ export class BookmarkDto {
     thumbnail!: any
 
     @IsOptional()
-    userId: string;
+    userId!: string;
 }
