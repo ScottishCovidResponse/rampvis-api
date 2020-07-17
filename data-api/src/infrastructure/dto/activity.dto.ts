@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 
 import { ACTIVITY_ACTION } from '../entities/activity.interface';
 import { ACTIVITY_TYPE } from '../entities/activity.interface';
-import { ACCOUNT_ROLES } from '../entities/account.interface';
+import { ACCOUNT_ROLES } from "../entities/user.interface";
 
 export class ActivityDto {
 
