@@ -25,8 +25,8 @@ export class UserToken {
   private static jwtSign = util.promisify(jwt.sign);
   private static jwtVerify = util.promisify(jwt.verify);
 
-  private static RSA_PVT_KEY: string = fs.readFileSync(config.get('session.pvtKey'), 'utf8');
-  private static RSA_PUB_KEY: string = fs.readFileSync(config.get('session.pubKey'), 'utf8');
+  private static RSA_PVT_KEY: string = fs.readFileSync(config.get('jwt.pvtKey'), 'utf8');
+  private static RSA_PUB_KEY: string = fs.readFileSync(config.get('jwt.pubKey'), 'utf8');
 
   constructor() {
   }
@@ -46,7 +46,7 @@ export class UserToken {
     };
 
     // RS256 accepts public and private key
-    const token = jwt.sign({ ...dataStoredInToken }, this.RSA_PVT_KEY, { algorithm: 'RS256', expiresIn: expInDays });
+    const token = jwt.sign({ ...dataStoredInToken }, this.RSA_PVT_KEY, { algorithm: config.get('jwt.algorithm'), expiresIn: expInDays });
 
     return {
       expireOn: user.expireOn,
