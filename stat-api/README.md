@@ -1,14 +1,15 @@
 ## Stat API - Python
 
 Getting started
-```
-# setup environment, e.g., using conda
-conda activate stat-api-env
 
-conda install --file requirements.txt
+```
+# if using conda
+conda env create -f environment.yml
+conda activate api-scrc-vis
+
 
 # start the server
-flask run
+./run.sh
 ```
 
 ## Deployment - Notes
