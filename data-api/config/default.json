@@ -8,7 +8,6 @@
   "csv": "",
   "mongodb": {
     "url": "mongodb+srv://rampvis_dev:DHBpwVe3vz27rLBs@cluster0-z3s0g.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "__url": "mongodb://192.168.251.20:27017",
     "db": "rampvis",
     "collection": {
       "users": "users",

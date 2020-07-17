@@ -19,10 +19,6 @@ module.exports = {
             PORT: 2000,
             NODE_ENV: "development"
         },
-        env_staging: {
-            PORT: 2000,
-            NODE_ENV: "staging",
-        },
         env_production: {
             PORT: 2000,
             NODE_ENV: "production",
