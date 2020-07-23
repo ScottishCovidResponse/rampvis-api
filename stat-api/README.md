@@ -3,9 +3,9 @@
 Getting started
 
 ```
-# if using conda
+# tested in conda environment
 conda env create -f environment.yml
-conda activate api-scrc-vis
+conda activate rampvis-api
 
 
 # start the server
