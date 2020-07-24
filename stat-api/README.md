@@ -14,7 +14,7 @@ conda activate rampvis-api
 
 ## Deployment - Notes
 ``` bash
-cd api-scrc-vis
+cd rampvis-api
 git pull
 
 cd stat-api

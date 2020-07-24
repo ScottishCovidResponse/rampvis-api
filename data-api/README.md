@@ -34,7 +34,7 @@ npm install -g copyfiles
 ```
 
 ```bash
-cd api-scrc-vis
+cd rampvis-api
 git pull
 
 cd data-api
