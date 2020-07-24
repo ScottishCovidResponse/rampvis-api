@@ -51,12 +51,12 @@ export class BookmarkController {
             return next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
         }
 
-        if (await this.bookmarkService.getBookmarkInfo(bookmarkDto.pageId)) {
+        if (await this.bookmarkService.getBookmarkInfo(user, bookmarkDto.pageId)) {
             return next(new PageBookmarkError('Page already bookmarked'));
         }
 
         else {
-            const result: IBookmark = await this.bookmarkService.saveBookmark(bookmarkDto, user);
+            const result: IBookmark = await this.bookmarkService.saveBookmark(user, bookmarkDto);
             const resultDto: BookmarkDto = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
 
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.CREATE, user._id.toString());
@@ -97,7 +97,7 @@ export class BookmarkController {
         if (!result) {
             next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
         } else {
-            const result: IBookmark = await this.bookmarkService.getBookmarkInfo(pageId);
+            const result: IBookmark = await this.bookmarkService.getBookmarkInfo(user, pageId);
             const resultDto: BookmarkDto[] = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
 
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.READ, user._id.toString());

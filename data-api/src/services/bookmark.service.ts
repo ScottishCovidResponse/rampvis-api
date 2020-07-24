@@ -27,7 +27,7 @@ export class BookmarkService extends DataService<IBookmark> {
     }
 
 
-    async saveBookmark(bookmarkDto: BookmarkDto, user: IUser): Promise<IBookmark> {
+    async saveBookmark(user: IUser, bookmarkDto: BookmarkDto): Promise<IBookmark> {
         const bookmark: IBookmark = {
              _id: new ObjectId(),
             userId: <string>user._id,
@@ -38,8 +38,8 @@ export class BookmarkService extends DataService<IBookmark> {
         return await this.save(bookmark);
     }
 
-    async getBookmarkInfo(pageId: string): Promise<IBookmark> {
-        return await this.get({pageId: pageId});
+    async getBookmarkInfo(user: IUser, pageId: string): Promise<IBookmark> {
+        return await this.get({userId: <string>user._id , pageId: pageId});
     }
 
     async getAllBookmarks(user: IUser): Promise<IBookmark[]> {
