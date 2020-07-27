@@ -6,7 +6,7 @@ import pandas as pd
 from algorithms.franck import compute_metrics
 from app.correlation import blueprint
 
-CSV_DATA_PATH = '../../csv-data'
+CSV_DATA_PATH = '../../csv-data/scotland'
 
 @blueprint.route('/', methods=['GET'])
 def query():

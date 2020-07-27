@@ -13,7 +13,7 @@ METRICS = ['ZNCC', 'pearsonr', 'spearmanr', 'kendalltau', 'SSIM', 'PSNR', 'MSE',
 WINDOW = 'none'
 
 CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
-METRICS_PATH = '../../derived-metrics'
+METRICS_PATH = '../../csv-data-derived-metrics/scotland'
 
 # Will be assigned later for access outside of context
 root_path = None

@@ -4,7 +4,7 @@ import os
 from algorithms.franck import compute_metrics
 from app.correlation_dynamic import blueprint
 
-METRICS_PATH = '../../derived-metrics'
+METRICS_PATH = '../../csv-data-derived-metrics/scotland'
 
 @blueprint.route('/', methods=['GET'])
 def query():
