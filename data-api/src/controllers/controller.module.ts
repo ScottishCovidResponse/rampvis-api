@@ -8,6 +8,7 @@ import { NhsBoardController } from './scotland/nhs-board.controller';
 import { NhsBoardDynamicController } from './scotland_dynamic/nhs-board.controller';
 import { CovidDeathsController } from './scotland/covid-deaths.controller';
 import { SearchController } from './scotland/search.controller';
+import { ThumbnailController } from './thumbnail.controller';
 
 export {
     AuthController,
@@ -20,4 +21,5 @@ export {
     NhsBoardDynamicController,
     CovidDeathsController,
     SearchController,
+    ThumbnailController,
 };
