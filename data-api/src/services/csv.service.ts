@@ -12,7 +12,7 @@ import {rejects, throws} from "assert";
 @provide(TYPES.CSVService)
 export class CSVService {
 
-    CSV_DATA_PATH = '../../../csv-data'
+    CSV_DATA_PATH = '../../../csv-data/scotland'
     CSV_DYNAMIC_DATA_PATH = '../../../csv-data-dynamic/scotland'
 
     public constructor() {}
