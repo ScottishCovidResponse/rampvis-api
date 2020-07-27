@@ -12,6 +12,7 @@
     "collection": {
       "users": "users",
       "bookmarks": "bookmarks",
+      "thumbnails": "thumbnails",
       "activities": "activities",
       "pages": "pages"
     },
