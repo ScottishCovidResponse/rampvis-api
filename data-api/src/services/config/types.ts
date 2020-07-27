@@ -1,10 +1,11 @@
 const TYPES = {
-    DataService: Symbol.for('DataService'),
-
-    UserService: Symbol.for('UserService'),
-    BookmarkService: Symbol.for('BookmarkService'),
-    SearchService: Symbol.for('SearchService'),
     ActivityService: Symbol.for('ActivityService'),
+    BookmarkService: Symbol.for('BookmarkService'),
+    DataService: Symbol.for('DataService'),
+    SearchService: Symbol.for('SearchService'),
+    ThumbnailService: Symbol.for('ThumbnailService'),
+    UserService: Symbol.for('UserService'),
+
     DbClient: Symbol.for('DbClient'),
 
     CSVService: Symbol.for('CSVService'),
