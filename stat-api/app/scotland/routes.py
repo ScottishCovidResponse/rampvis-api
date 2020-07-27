@@ -6,7 +6,7 @@ import pandas as pd
 from app.scotland import blueprint
 from algorithms.algorithm import mse, f_test, pearson_correlation
 
-CSV_DATA_PATH = '../../csv-data'
+CSV_DATA_PATH = '../../csv-data/scotland'
 
 
 @blueprint.route('/nhs-board/', methods=['GET'])
