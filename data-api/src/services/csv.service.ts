@@ -15,10 +15,12 @@ export class CSVService {
     CSV_DATA_PATH = '../../../csv-data/scotland'
     CSV_DYNAMIC_DATA_PATH = '../../../csv-data-dynamic/scotland'
 
-    public constructor() {}
+    public constructor() {
+    }
 
     public async getData(fileName: string): Promise<any[]> {
         const filePath = this.CSV_DATA_PATH;
+        console.log('CSVService: getData: file = ', path.resolve(__dirname, filePath, fileName));
         return await this.readCSV(filePath, fileName);
     }
 
@@ -31,25 +33,37 @@ export class CSVService {
         return new Promise((resolve: any, reject: any) => {
             const returnLit: any[] = [];
 
-                const  readStream = fs.createReadStream(path.resolve(__dirname, filePath, fileName))
-                const parseStream = readStream.pipe(csv.parse({headers: true}));
+            const readStream = fs.createReadStream(path.resolve(__dirname, filePath, fileName))
+            const parseStream = readStream.pipe(csv.parse({headers: true}));
 
-                readStream.on('error', (error: any) => {
-                    reject({message: `CSV read error ${JSON.stringify(error)}`});
-                });
+            readStream.on('error', (error: any) => {
+                reject({message: `CSV read error ${JSON.stringify(error)}`});
+            });
 
-                parseStream.on('error', (error: any) => {
-                    reject({message: `CSV parse error ${JSON.stringify(error)}`});
-                });
+            parseStream.on('error', (error: any) => {
+                reject({message: `CSV parse error ${JSON.stringify(error)}`});
+            });
 
-                parseStream.on('data', (row: any) => {
-                    returnLit.push(row);
-                });
+            parseStream.on('data', (row: any) => {
+                let cleanedRow = CSVService.clean(row);
 
-                parseStream.on('end', (rowCount: number) => {
-                    resolve(returnLit);
-                });
+                console.log('CSVService: readCSV: row = ', cleanedRow);
+                returnLit.push(row);
+            });
 
+            parseStream.on('end', (rowCount: number) => {
+                resolve(returnLit);
+            });
+
+        });
+
+    }
+
+    public static clean(obj: any) {
+        Object.keys(obj).forEach((key) => {
+            if (obj[key] === null || obj[key] === '*' || obj[key] === '' || obj[key] === ' ') {
+                obj[key] = '0';
+            }
         });
 
     }
