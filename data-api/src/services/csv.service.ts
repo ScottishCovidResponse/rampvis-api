@@ -45,9 +45,10 @@ export class CSVService {
             });
 
             parseStream.on('data', (row: any) => {
-                let cleanedRow = CSVService.clean(row);
+                console.log('CSVService: readCSV: row = ', row);
 
-                console.log('CSVService: readCSV: row = ', cleanedRow);
+                let cleanedRow = CSVService.clean(row);
+                console.log('CSVService: readCSV: cleanedRow = ', cleanedRow);
                 returnLit.push(row);
             });
 
@@ -66,6 +67,7 @@ export class CSVService {
             }
         });
 
-    }
+	return obj;
+   }
 
 }
