@@ -61,7 +61,7 @@ export class CSVService {
 
     public static clean(obj: any) {
         Object.keys(obj).forEach((key) => {
-            if (obj[key] === null || obj[key] === '*' || obj[key] === '' || obj[key] === ' ') {
+            if (obj[key] === null || obj[key] === '*' || obj[key] === '' || obj[key] === ' ' || obj[key] === 'N/A') {
                 obj[key] = '0';
             }
         });
