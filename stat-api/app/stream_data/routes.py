@@ -54,7 +54,7 @@ def extract_rows(infile, outfile, current_date):
     outlines = [header]
 
     for line in inlines[1:]:
-        print('infile = ', infile, line.split(',')[0])
+        # print('infile = ', infile, line.split(',')[0])
         date = datetime.strptime(line.split(',')[0], '%d/%m/%Y')
 
         # Up to the current date
