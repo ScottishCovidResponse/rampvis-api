@@ -56,7 +56,7 @@ export class ThumbnailController {
     }
 
     @httpGet('/:pageId')
-    public async getBookmarkInfo(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async getThumbnail(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const user: IUser = request.user as IUser;
         const pageId = request.params.pageId;
 
@@ -67,7 +67,6 @@ export class ThumbnailController {
             next(new ObjectNotFoundException(ERROR_CODES.USER_NOT_FOUND));
         } else {
             const result: any = await this.thumbnailService.getThumbnail(pageId);
-            // const resultDto: BookmarkDto[] = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
 
             await this.activityService.createActivity(user, ACTIVITY_TYPE.BOOKMARK, ACTIVITY_ACTION.READ, user._id.toString());
             response.status(200).send(result);

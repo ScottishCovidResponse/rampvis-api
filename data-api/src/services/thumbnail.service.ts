@@ -7,6 +7,7 @@ import {DbClient} from '../infrastructure/db/mongodb.connection';
 import {logger} from '../utils/logger';
 import {TYPES} from './config/types';
 import {DataService} from './data.service';
+import {IUser} from "../infrastructure/entities/user.interface";
 
 @provide(TYPES.ThumbnailService)
 export class ThumbnailService extends DataService<any> {
@@ -23,7 +24,15 @@ export class ThumbnailService extends DataService<any> {
     public async saveThumbnail(thumbnail: any): Promise<any> {
         logger.debug('ThumbnailService: saveThumbnail: thumbnail = ', thumbnail);
         const pageId = thumbnail.originalname.split('.')[0];
-        return await this.save( { ...thumbnail, pageId} );
+        if(!pageId) {
+            return {}
+        }
+        const exists = await this.get({pageId});
+        if (exists) {
+            return await this.updateAndGet(exists._id.toString(), thumbnail);
+        } else {
+            return await this.save( { ...thumbnail, pageId} );
+        }
     }
 
     public async getThumbnail(pageId: string): Promise<any> {
