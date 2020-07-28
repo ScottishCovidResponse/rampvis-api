@@ -1,13 +1,9 @@
 import * as csv from 'fast-csv';
 import fs from 'fs';
 import path from 'path';
-
 import {provide} from "inversify-binding-decorators";
 
 import {TYPES} from "./config/types";
-import {CsvParseError} from "../exceptions/exception";
-import {rejects, throws} from "assert";
-
 
 @provide(TYPES.CSVService)
 export class CSVService {
