@@ -26,7 +26,6 @@ export class BookmarkService extends DataService<IBookmark> {
         );
     }
 
-
     async saveBookmark(user: IUser, bookmarkDto: BookmarkDto): Promise<IBookmark> {
         const bookmark: IBookmark = {
              _id: new ObjectId(),

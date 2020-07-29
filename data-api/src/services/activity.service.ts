@@ -1,9 +1,8 @@
 import { FilterQuery, ObjectId } from "mongodb";
 import config from 'config';
-import { logger } from "../utils/logger";
+import { inject } from "inversify";
 
 import { DbClient } from "../infrastructure/db/mongodb.connection";
-import { injectable, inject } from "inversify";
 import { DataService } from "./data.service";
 import { TYPES } from "./config/types";
 import { IUser } from "../infrastructure/entities/user.interface";
@@ -13,6 +12,7 @@ import { ActivityFilterVm } from "../infrastructure/view-model/activity-filters.
 import { ActivityDto } from "../infrastructure/dto/activity.dto";
 import {provide} from "inversify-binding-decorators";
 import {UserService} from "./user.service";
+import { logger } from "../utils/logger";
 
 @provide(TYPES.ActivityService)
 export class ActivityService extends DataService<IActivity> {
@@ -25,48 +25,6 @@ export class ActivityService extends DataService<IActivity> {
             config.get('mongodb.db'),
             config.get('mongodb.collection.activities')
         );
-    }
-
-
-    async getActivities(activityFilterVm: ActivityFilterVm): Promise<PaginationVm<ActivityDto>> {
-        const page: number = activityFilterVm.page ? parseInt(activityFilterVm.page) : 0;
-        let pageCount: number = activityFilterVm.pageCount ? parseInt(activityFilterVm.pageCount) : 1;
-        let filter: string = activityFilterVm.filter || "";
-        let query: FilterQuery<IActivity> = { };
-
-        return new Promise<PaginationVm<ActivityDto>>(async (resolve) => {
-
-            if (filter.length > 0) {
-                filter = filter.toLowerCase();
-                query.$or = [
-                    { type: new RegExp(filter, 'i') },
-                    { action: new RegExp(filter, 'i') }
-                ]
-            }
-
-            if (activityFilterVm.startDt && activityFilterVm.endDt) {
-                const startDate: Date = new Date(activityFilterVm.startDt);
-                const endDate: Date = new Date(activityFilterVm.endDt);
-                query.createdAt = { $gte: startDate, $lte: endDate }
-            }
-
-            const activitiesCount: number = await this.getCollection()
-                .find(query).count();
-
-            await this.getCollection()
-                .find(query)
-                .sort({ createdAt: -1 })
-                .skip(pageCount * page)
-                .limit(pageCount)
-                .toArray(async (err, activities) => {
-                    if (err) {
-                        throw err;
-                    }
-
-                    // TODO
-                });
-
-        });
     }
 
     async createActivity(user: IUser, type: ACTIVITY_TYPE, action: ACTIVITY_ACTION, objectId: string): Promise<IActivity | void> {
@@ -93,4 +51,8 @@ export class ActivityService extends DataService<IActivity> {
         return result.deletedCount as number;
     }
 
+    // TODO
+    async getActivities(activityFilterVm: ActivityFilterVm): Promise<PaginationVm<ActivityDto>> {
+        return Promise.resolve([] as any);
+    }
 }
