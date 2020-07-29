@@ -7,7 +7,6 @@ import {DbClient} from '../infrastructure/db/mongodb.connection';
 import {logger} from '../utils/logger';
 import {TYPES} from './config/types';
 import {DataService} from './data.service';
-import {IUser} from "../infrastructure/entities/user.interface";
 
 @provide(TYPES.ThumbnailService)
 export class ThumbnailService extends DataService<any> {

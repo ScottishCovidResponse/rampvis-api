@@ -3,7 +3,6 @@ import express from 'express';
 import {Application} from 'express-serve-static-core';
 import {Container} from 'inversify';
 import {InversifyExpressServer} from 'inversify-express-utils';
-import {buildProviderModule} from "inversify-binding-decorators";
 
 import {DbClient, getDatabaseClient} from './infrastructure/db/mongodb.connection';
 import {GlobalMiddleware} from './middleware/global.middleware';
@@ -12,8 +11,6 @@ import {configureAutoMapper} from './services/config/automapper.config';
 import {TYPES} from './services/config/types';
 import {logger} from './utils/logger';
 import {DIContainer} from './services/config/inversify.config';
-
-// declare metadata by @controller annotation
 import './controllers/controller.module';
 import {SearchService} from "./services/search.service";
 
@@ -24,7 +21,6 @@ export class App {
     }
 
     public async init() {
-        // set up container
         let container: Container = DIContainer;
 
         await App.initDatabase(container);
@@ -40,13 +36,6 @@ export class App {
             })
             .build();
     }
-
-    // private static setupContainer(): Container {
-    //     let container = new Container();
-    //     // Reflects all decorators provided by this package and packages them into a module to be loaded by the container
-    //     container.load(buildProviderModule());
-    //     return container;
-    // }
 
     private static async initDatabase(container: Container) {
         const url: string = config.get('mongodb.url');
