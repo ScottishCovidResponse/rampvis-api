@@ -1,6 +1,10 @@
-## Stat API - Python
+## Stat API 
 
-Getting started
+Key dependencies:
+- Python
+- Flask
+
+Start development instance:
 
 ```
 # tested in conda environment
@@ -12,7 +16,10 @@ conda activate rampvis-api
 ./run.sh
 ```
 
-## Deployment - Notes
+## Deployment
+ 
+Steps:
+
 ``` bash
 cd rampvis-api
 git pull

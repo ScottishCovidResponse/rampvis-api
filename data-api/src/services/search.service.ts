@@ -6,9 +6,6 @@ import {IPage} from "../infrastructure/entities/page.interface";
 import {inject} from "inversify";
 import {DbClient} from "../infrastructure/db/mongodb.connection";
 import config from "config";
-import {IUser} from "../infrastructure/entities/user.interface";
-import {FilterQuery} from "mongodb";
-
 
 @provide(TYPES.SearchService)
 export class SearchService extends DataService<IPage> {

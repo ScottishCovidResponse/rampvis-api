@@ -4,10 +4,8 @@ import fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import moment from 'moment';
 import util from 'util';
-import {Container, inject} from "inversify";
-import getDecorators from "inversify-inject-decorators";
 
-import { AuthenticationTokenMissingException, DatabaseException, WrongAuthenticationTokenException } from '../exceptions/exception';
+import { AuthenticationTokenMissingException, WrongAuthenticationTokenException } from '../exceptions/exception';
 import { IUser } from '../infrastructure/entities/user.interface';
 import { TYPES } from '../services/config/types';
 import { logger } from '../utils/logger';
@@ -17,11 +15,7 @@ import {UserService} from "../services/user.service";
 import {RequestWithUser} from "../controllers/request-with-user.interface";
 import { DIContainer } from '../services/config/inversify.config';
 
-
-
 export class UserToken {
-
-
   private static jwtSign = util.promisify(jwt.sign);
   private static jwtVerify = util.promisify(jwt.verify);
 
@@ -30,7 +24,6 @@ export class UserToken {
 
   constructor() {
   }
-
 
   public static create(user: IUser, permissions: any): ITokenData {
     const start = moment(user.createdAt);
@@ -55,7 +48,6 @@ export class UserToken {
   }
 
   public static async verify(request: RequestWithUser, response: Response, next: NextFunction) {
-
     const authorizationHeader = request.headers.authorization;
     logger.debug(`UserToken: verify: authorizationHeader = ${authorizationHeader}`);
 
@@ -88,9 +80,6 @@ export class UserToken {
       } else {
         next(new WrongAuthenticationTokenException());
       }
-    // } catch (error) {
-    //    next(new DatabaseException(500, error.mess));
-    // }
   }
 
   public static async getAllGrants(role: string) {

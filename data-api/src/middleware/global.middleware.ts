@@ -63,10 +63,9 @@ function GlobalMiddleware(app: express.Application) {
         origin: (origin, callback) => {
             logger.debug('appMiddleware: cross origin = ' + origin);
 
-            // TODO - allowed all users as different vis developers use different setup
-            return callback(null, true);
+            // Allow all
+            // return callback(null, true);
 
-            /*
             const allowedOrigins: string[] = config.get('allowOrigins');
             // allow requests with no origin, e.g., like mobile apps or curl requests
             if (!origin) {
@@ -81,7 +80,6 @@ function GlobalMiddleware(app: express.Application) {
                 const msg = 'The CORS policy for this site does not allow access from the specified origin.';
                 return callback(new Error(msg), false);
             }
-            */
         },
     }));
 
