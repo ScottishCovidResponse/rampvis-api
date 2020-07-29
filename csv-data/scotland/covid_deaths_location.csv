@@ -1,4 +1,4 @@
-Week,Care Home,Home / Non-institution,Hospital,Other institution
+﻿Week,Care Home,Home / Non-institution,Hospital,Other institution
 30-Dec-19,0,0,0,0
 06-Jan-20,0,0,0,0
 13-Jan-20,0,0,0,0
@@ -10,12 +10,22 @@ Week,Care Home,Home / Non-institution,Hospital,Other institution
 24-Feb-20,0,0,0,0
 02-Mar-20,0,0,0,0
 09-Mar-20,0,0,0,0
-16-Mar-20,0,2,8,0
+16-Mar-20,1,2,8,0
 23-Mar-20,5,14,43,0
 30-Mar-20,49,39,193,1
-06-Apr-20,189,64,357,0
+06-Apr-20,189,63,357,0
 13-Apr-20,303,36,311,0
-20-Apr-20,340,42,277,0
-27-Apr-20,315,17,194,0
+20-Apr-20,341,43,277,0
+27-Apr-20,316,17,194,0
 04-May-20,238,22,154,1
-11-May-20,184,19,127,2
+11-May-20,187,19,128,2
+18-May-20,124,9,95,2
+25-May-20,69,7,55,0
+01-Jun-20,42,7,39,1
+08-Jun-20,35,7,27,0
+15-Jun-20,20,1,28,0
+22-Jun-20,16,3,16,0
+29-Jun-20,5,1,12,0
+06-Jul-20,7,1,5,0
+13-Jul-20,3,0,3,0
+20-Jul-20,2,2,4,0
