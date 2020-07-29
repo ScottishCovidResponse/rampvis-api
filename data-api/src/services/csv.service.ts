@@ -1,13 +1,8 @@
 import * as csv from 'fast-csv';
 import fs from 'fs';
 import path from 'path';
-
 import {provide} from "inversify-binding-decorators";
-
 import {TYPES} from "./config/types";
-import {CsvParseError} from "../exceptions/exception";
-import {rejects, throws} from "assert";
-
 
 @provide(TYPES.CSVService)
 export class CSVService {
@@ -45,11 +40,10 @@ export class CSVService {
             });
 
             parseStream.on('data', (row: any) => {
-                console.log('CSVService: readCSV: row = ', row);
-
+                // console.log('CSVService: readCSV: row = ', row);
                 let cleanedRow = CSVService.clean(row);
-                console.log('CSVService: readCSV: cleanedRow = ', cleanedRow);
-                returnLit.push(row);
+                // console.log('CSVService: readCSV: cleanedRow = ', cleanedRow);
+                returnLit.push(cleanedRow);
             });
 
             parseStream.on('end', (rowCount: number) => {

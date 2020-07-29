@@ -1,7 +1,5 @@
 
-# Data API - Node.js
-
-## Quick start
+# Data API
 
 Key dependencies:
 
@@ -14,34 +12,22 @@ Start development instance:
 npm install
 
 export PORT=2000
-export NODE_ENV='development' # other options are 'staging', 'production'
+export NODE_ENV='development'
 npm run dev
 ```
 
-Inject seed data:
 
-```bash
-npm run dev-seed
-```
+## Deployment
 
-This will create a test user to allow login, user: `admin@test.com` and password: `pass123`
-
-## Deployment - Notes 
-
-
-```
-npm install -g copyfiles
-```
+Steps:
 
 ```bash
 cd rampvis-api
 git pull
-
 cd data-api
 
 pm2 stop data-api
 pm2 delete data-api
-
 
 npm install
 npm run build 

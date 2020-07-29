@@ -11,8 +11,9 @@ from app.middleware.jwt_service import validate_token
 
 CSV_DATA = '../../csv-data/scotland'
 CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
+CSV_FILES = ['cumulative_cases.csv', 'hospital_confirmed.csv', 'hospital_suspected.csv', 'icu_patients.csv']
 FIRST_DATE = datetime(2020, 4, 1)
-LAST_DATE = datetime(2020, 5, 26)
+LAST_DATE = datetime(2020, 7, 21)
 
 current_date = None
 
@@ -35,7 +36,9 @@ def generate_data(infolder=CSV_DATA, outfolder=CSV_DYNAMIC_DATA):
 
     infolder = os.path.join(root_path, infolder)
     outfolder = os.path.join(root_path, outfolder)
-    for filename in os.listdir(infolder):
+
+    #for filename in os.listdir(infolder):
+    for filename in CSV_FILES:
         extract_rows(os.path.join(infolder, filename), os.path.join(outfolder, filename), current_date)
 
     # Prepare for next simulation 
@@ -51,6 +54,7 @@ def extract_rows(infile, outfile, current_date):
     outlines = [header]
 
     for line in inlines[1:]:
+        # print('infile = ', infile, line.split(',')[0])
         date = datetime.strptime(line.split(',')[0], '%d/%m/%Y')
 
         # Up to the current date
