@@ -1,4 +1,4 @@
-import {inject, injectable, unmanaged} from 'inversify';
+import {inject, unmanaged} from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 
 import {
@@ -23,8 +23,7 @@ export abstract class DataService<T extends { _id: any }> {
     private readonly dbName: string;
     private readonly collectionName: string;
 
-
-    public constructor(
+    protected constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
         @unmanaged() dbName: string,
         @unmanaged() collectionName: string,
@@ -34,13 +33,10 @@ export abstract class DataService<T extends { _id: any }> {
         this.db = dbClient.db(this.dbName).collection<T>(this.collectionName);
     }
 
-
     public getCollection(): Collection<T> {
         return this.db;
     }
 
-
-    // TODO id? query?
     public async get(id: string | FilterQuery<T>): Promise<T> {
 
         let doc: T;     // typeof _id = ObjectId
@@ -58,23 +54,18 @@ export abstract class DataService<T extends { _id: any }> {
         return result;
     }
 
-
     public async getAll(query: FilterQuery<T> = {}, options: FindOneOptions = {}): Promise<T[]> {
         const docs: any[] = await this.db.find(query, options).toArray();
         const results: T[] = automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, docs);
         return results;
     }
 
-    // Get latest numDocs number of document from a collection passing the query
     public async getLatest(query: FilterQuery<T> = {}, numDocs: number = 1): Promise<T> {
-        // Auto created _id field it has a date embedded in it (_id: 1) or use natural order ($natural: 1)
-        // 1 will sort ascending (oldest to newest) and -1 will sort descending (newest to oldest.)
         const docs: any[] = await this.db.find(query).sort({$natural: -1}).limit(numDocs).toArray();
         const result: T = automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, docs)[0];
         return result;
     }
 
-    // get or create and get object
     public async getOrCreate(query: FilterQuery<T> = {}, entity: T): Promise<T> {
         const res: FindAndModifyWriteOpResultObject<T> = await this.getCollection().findOneAndUpdate(
             query,
@@ -89,13 +80,11 @@ export abstract class DataService<T extends { _id: any }> {
         return result as T;
     }
 
-
     public async save(entity: T): Promise<T> {
         const res = await this.db.insertOne(entity as any);
         const result: T = automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.ops[0]);
         return result;
     }
-
 
     public async delete(id: string): Promise<T> {
         const res: FindAndModifyWriteOpResultObject<T> = await this.db.findOneAndDelete({_id: new ObjectId(id)} as FilterQuery<T>);
@@ -103,8 +92,6 @@ export abstract class DataService<T extends { _id: any }> {
         return result;
     }
 
-
-    // update and get update status
     public async update(id: string, entity: T): Promise<boolean> {
         const res: UpdateWriteOpResult = await this.db.updateOne(
             {_id: new ObjectId(id)} as FilterQuery<T>,
@@ -116,8 +103,6 @@ export abstract class DataService<T extends { _id: any }> {
         return res.result.ok === 1;
     }
 
-
-    // update and get the updated doc
     public async updateAndGet(id: string, entity: T): Promise<T> {
         const res: FindAndModifyWriteOpResultObject<T> = await this.getCollection().findOneAndUpdate(
             { _id: new ObjectId(id) } as FilterQuery<T>,
@@ -132,11 +117,9 @@ export abstract class DataService<T extends { _id: any }> {
         return result as T;
     }
 
-
     public aggregate(pipeline: object[]): AggregationCursor<T> {
         return this.db.aggregate(pipeline);
     }
-
 
     public async aggregateOne(pipeline: object[]): Promise<T | null> {
         const cur = this.aggregate(pipeline);
