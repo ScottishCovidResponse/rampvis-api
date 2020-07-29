@@ -6,7 +6,8 @@ import pandas as pd
 from algorithms.franck import compute_metrics
 from app.correlation import blueprint
 
-CSV_DATA_PATH = '../../csv-data/scotland'
+CSV_DATA_PATH = '../../csv-data'
+
 
 @blueprint.route('/', methods=['GET'])
 def query():
@@ -18,8 +19,12 @@ def query():
     if var1 is None or var2 is None or metrics is None:
         abort(400, 'Required parameters: var1, var2, metrics')
 
-    df1 = variable_to_df(var1)
-    df2 = variable_to_df(var2)
+    try:
+        df1 = variable_to_df(var1)
+        df2 = variable_to_df(var2)
+    except IOError:
+        return Response(json.dumps({'message': f'Something went wrong.'}), mimetype='application/json')
+
     metrics = metrics.split(',')
 
     try:
@@ -33,6 +38,7 @@ def query():
 
     response = Response(json.dumps(result), mimetype='application/json')
     return response
+
 
 def variable_to_df(var):
     filepath = os.path.join(current_app.root_path, CSV_DATA_PATH, var + '.csv')

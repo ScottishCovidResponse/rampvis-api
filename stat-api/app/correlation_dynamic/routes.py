@@ -1,10 +1,11 @@
 from flask import current_app, Response, request, abort
 import os
+import json
 
 from algorithms.franck import compute_metrics
 from app.correlation_dynamic import blueprint
 
-METRICS_PATH = '../../csv-data-derived-metrics/scotland'
+METRICS_PATH = '../../csv-data-derived-metrics'
 
 @blueprint.route('/', methods=['GET'])
 def query():
@@ -17,7 +18,11 @@ def query():
     # Look up in the database
     filename = var1.replace('/', '.') + '___' + var2.replace('/', '.')
     filepath = os.path.join(current_app.root_path, METRICS_PATH, filename)
-    with open(filepath) as f:
-        # TODO: suspected vs confirmed NaN
+
+    try:
+        f = open(filepath)
         response = Response(f.read(), mimetype='application/json')
+    except IOError:
+        response = Response(json.dumps({'message': f'Something went wrong.'}), mimetype='application/json')
+
     return response
