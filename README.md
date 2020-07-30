@@ -34,7 +34,7 @@ Accepted values of
 
 ## Source 2
 
-Source name:  `covid-deaths-data-week-20.xlsx`
+Source name:  `covid-deaths-data-week-30.xlsx`
 
 ### Endpoints
 
