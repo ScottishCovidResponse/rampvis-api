@@ -23,7 +23,7 @@ def query():
         df1 = variable_to_df(var1)
         df2 = variable_to_df(var2)
     except IOError:
-        return Response(json.dumps({'message': f'Something went wrong.'}), mimetype='application/json')
+        return Response(json.dumps({'message': f'Data is not available'}), mimetype='application/json')
 
     metrics = metrics.split(',')
 

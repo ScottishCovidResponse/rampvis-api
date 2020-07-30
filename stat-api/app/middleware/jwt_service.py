@@ -30,23 +30,21 @@ def validate_token(f):
 
         bearer_token = request.headers.get('Authorization')
         if not bearer_token:
-            return jsonify({'message': 'Missing authentication token'}), 403
+            return jsonify({'message': 'Access denied'}), 403
 
         token = bearer_token.split(' ')[1]
         if not token:
-            return jsonify({'message': 'Missing authentication token'}), 403
+            return jsonify({'message': 'Access denied'}), 403
 
-        print(f'received token = {token}')
-
+        # print(f'received token = {token}')
         if not token and not bearer_token:
-            return jsonify({'message': 'Missing authentication token'}), 403
+            return jsonify({'message': 'Access denied'}), 403
 
         try:
             decoded = jwt.decode(token, public_key)
-            print(f'decoded with public key : {decoded}')
-
+            # print(f'decoded with public key : {decoded}')
         except:
-            return jsonify({'message': 'Invalid authentication token'}), 403
+            return jsonify({'message': 'Access denied'}), 403
 
         return f(*args, **kwargs)
 
