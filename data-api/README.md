@@ -16,21 +16,4 @@ export NODE_ENV='development'
 npm run dev
 ```
 
-
-## Deployment
-
-Steps:
-
-```bash
-cd rampvis-api
-git pull
-cd data-api
-
-pm2 stop data-api
-pm2 delete data-api
-
-npm install
-npm run build 
-pm2 start --env production
-```
- 
+**Note** In order to access the content or the structure of the `config` folder please contact administrator.
