@@ -1,6 +1,6 @@
 # Projects
-- data-api - NodeJS based REST API for data
-- stat-api - Python/Flask based REST API for housekeeping functions   
+- [data-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/data-api) - REST API for data
+- [stat-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/stat-api) - REST API for stat/housekeeping functions   
 
 # Data APIs 
 
