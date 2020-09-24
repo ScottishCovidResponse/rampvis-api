@@ -18,4 +18,6 @@ dependencies:
   - pip:
     - blueprint==3.4.2
     - pyjwt==1.7.1
+    - data-pipeline-api
+    - fsspec
 

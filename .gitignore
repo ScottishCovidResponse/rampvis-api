@@ -9,5 +9,10 @@ temp
 logs
 __pycache__
 error.log
-stat-api/error.log
+
 csv-data-dynamic
+
+stat-api/data
+stat-api/error.log
+
+data-api/logs
