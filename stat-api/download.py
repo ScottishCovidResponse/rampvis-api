@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from pathlib import Path
 
 import h5py
@@ -22,11 +23,15 @@ def generate_components(f):
                 components.append(k + '/' + k2)
     return components
 
+def clean_column_name(s):
+    return s.lower().replace(' - ', '_').replace('-', '_').replace(' ', '_')
+
 def to_df(f, key):
     dates = [d.decode() for d in f[key]['Dimension_2_names']]
     columns = [d.decode() for d in f[key]['Dimension_1_names']]
     values = np.array(f[key]['array'])
     df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
+    df.columns = [clean_column_name(c) for c in df.columns]
     df.index.name = 'date'
     return df
 
@@ -36,7 +41,7 @@ def process_h5(path):
     for c in components:
         df = to_df(f, c)
         folder = Path(os.path.dirname(path))
-        filename = c.replace('/', '--') + '.csv'
+        filename = re.sub('[\-/]', '_', c) + '.csv'
         df.to_csv(folder/filename)
     
 def download_to_csvs(product_name):
@@ -47,7 +52,8 @@ def download_to_csvs(product_name):
 
     folder = Path(DATA_DOWNLOAD_PATH)/product_name
     folder = folder/max(os.listdir(folder))
-    filename = os.listdir(folder)[0]
+    h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
+    filename = h5s[0]
     process_h5(folder/filename)
 
 if __name__ == '__main__':
