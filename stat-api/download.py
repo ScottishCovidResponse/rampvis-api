@@ -9,7 +9,8 @@ import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
 
-DATA_DOWNLOAD_PATH = '../data'
+DATA_RAW_PATH = '../data/raw'
+DATA_LIVE_PATH = '../data/live'
 
 def generate_components(f):
     components = []
@@ -31,7 +32,7 @@ def to_df(f, key):
     columns = [d.decode() for d in f[key]['Dimension_1_names']]
     values = np.array(f[key]['array'])
     df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
-    df.columns = [clean_column_name(c) for c in df.columns]
+    #df.columns = [clean_column_name(c) for c in df.columns]
     df.index.name = 'date'
     return df
 
@@ -40,17 +41,17 @@ def process_h5(path):
     components = generate_components(f)
     for c in components:
         df = to_df(f, c)
-        folder = Path(os.path.dirname(path))
+        # folder = Path(os.path.dirname(path))
         filename = re.sub('[\-/]', '_', c) + '.csv'
-        df.to_csv(folder/filename)
+        df.to_csv(Path(DATA_LIVE_PATH) / filename)
     
 def download_to_csvs(product_name):
     "Download the latest file of a data product, convert h5 to csv and save it."
-    downloader = Downloader(data_directory=DATA_DOWNLOAD_PATH)
+    downloader = Downloader(data_directory=DATA_RAW_PATH)
     downloader.add_data_product(namespace='SCRC', data_product=product_name)
     downloader.download()
 
-    folder = Path(DATA_DOWNLOAD_PATH)/product_name
+    folder = Path(DATA_RAW_PATH) / product_name
     folder = folder/max(os.listdir(folder))
     h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
     filename = h5s[0]
