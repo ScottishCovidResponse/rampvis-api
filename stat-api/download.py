@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 
@@ -6,6 +7,8 @@ import pandas as pd
 import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
+
+DATA_DOWNLOAD_PATH = '../data'
 
 def generate_components(f):
     components = []
@@ -38,11 +41,11 @@ def process_h5(path):
     
 def download_to_csvs(product_name):
     "Download the latest file of a data product, convert h5 to csv and save it."
-    downloader = Downloader(data_directory='data')
+    downloader = Downloader(data_directory=DATA_DOWNLOAD_PATH)
     downloader.add_data_product(namespace='SCRC', data_product=product_name)
     downloader.download()
 
-    folder = Path('data')/product_name
+    folder = Path(DATA_DOWNLOAD_PATH)/product_name
     folder = folder/max(os.listdir(folder))
     filename = os.listdir(folder)[0]
     process_h5(folder/filename)
