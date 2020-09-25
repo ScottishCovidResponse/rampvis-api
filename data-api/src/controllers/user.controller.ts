@@ -19,7 +19,7 @@ import {UserService} from "../services/user.service";
 import {ActivityService} from "../services/activity.service";
 import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
-@controller('/v1/user', UserToken.verify)
+@controller('/user', UserToken.verify)
 export class UserController {
 
     constructor(@inject(TYPES.UserService) private userService: UserService,

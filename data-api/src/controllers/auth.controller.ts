@@ -21,7 +21,7 @@ import {GitHubLoginDto} from "../infrastructure/dto/github-login.dto";
 import {UserDto} from "../infrastructure/dto/user.dto";
 import {IUser} from "../infrastructure/entities/user.interface";
 
-@controller('/v1/auth')
+@controller('/auth')
 export class AuthController {
 
     constructor(@inject(TYPES.UserService) private userService: UserService,

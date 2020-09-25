@@ -20,7 +20,7 @@ import { RequestWithUser } from '../infrastructure/entities/request-with-user.in
 
 const upload = multer();
 
-@controller('/v1/thumbnail', UserToken.verify)
+@controller('/thumbnail', UserToken.verify)
 export class ThumbnailController {
 
 

@@ -22,7 +22,7 @@ import { RequestWithUser } from '../infrastructure/entities/request-with-user.in
 
 const upload = multer();
 
-@controller('/v1/bookmark', UserToken.verify)
+@controller('/bookmark', UserToken.verify)
 export class BookmarkController {
 
 

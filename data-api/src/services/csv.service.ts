@@ -1,26 +1,36 @@
 import * as csv from 'fast-csv';
 import fs from 'fs';
 import path from 'path';
-import {provide} from "inversify-binding-decorators";
-import {TYPES} from "./config/types";
+import { provide } from "inversify-binding-decorators";
+import config from 'config';
+
+import { TYPES } from "./config/types";
+import { logger } from '../utils/logger';
+
 
 @provide(TYPES.CSVService)
 export class CSVService {
 
-    CSV_DATA_PATH = '../../../csv-data/scotland'
-    CSV_DYNAMIC_DATA_PATH = '../../../csv-data-dynamic/scotland'
+    PATH_DATA_V04 = '../../../data/v04';
+    PATH_DATA_V04_DYNAMIC = '../../../data/v04-dynamic';
+    PATH_DATA_LIVE = '../../../data/live';
 
     public constructor() {
     }
 
-    public async getData(fileName: string): Promise<any[]> {
-        const filePath = this.CSV_DATA_PATH;
-        console.log('CSVService: getData: file = ', path.resolve(__dirname, filePath, fileName));
-        return await this.readCSV(filePath, fileName);
+
+    public async getLiveData(dataStreamName: string) {
+        logger.info(`CSVService: getLiveData: dataStreamName = ${dataStreamName}`);
+        return await this.readCSV(this.PATH_DATA_LIVE, `${dataStreamName}.csv`);
     }
 
-    public async getDynamicData(fileName: string): Promise<any[]> {
-        const filePath = this.CSV_DYNAMIC_DATA_PATH;
+    public async getDataV04(fileName: string): Promise<any[]> {
+        console.log('CSVService: getDataV04: fileName = ', fileName);
+        return await this.readCSV(this.PATH_DATA_V04, fileName);
+    }
+
+    public async getDynamicDataV04(fileName: string): Promise<any[]> {
+        const filePath = this.PATH_DATA_V04_DYNAMIC;
         return await this.readCSV(filePath, fileName);
     }
 
@@ -28,15 +38,19 @@ export class CSVService {
         return new Promise((resolve: any, reject: any) => {
             const returnLit: any[] = [];
 
-            const readStream = fs.createReadStream(path.resolve(__dirname, filePath, fileName))
-            const parseStream = readStream.pipe(csv.parse({headers: true}));
+            const file = path.resolve(__dirname, filePath, fileName);
+            logger.info(`CSVService: readCSV: file = ${JSON.stringify(file)}`);
+
+
+            const readStream = fs.createReadStream(file)
+            const parseStream = readStream.pipe(csv.parse({ headers: true }));
 
             readStream.on('error', (error: any) => {
-                reject({message: `CSV read error ${JSON.stringify(error)}`});
+                reject({ message: `CSV read error ${JSON.stringify(error)}` });
             });
 
             parseStream.on('error', (error: any) => {
-                reject({message: `CSV parse error ${JSON.stringify(error)}`});
+                reject({ message: `CSV parse error ${JSON.stringify(error)}` });
             });
 
             parseStream.on('data', (row: any) => {
@@ -61,7 +75,7 @@ export class CSVService {
             }
         });
 
-	return obj;
-   }
+        return obj;
+    }
 
 }

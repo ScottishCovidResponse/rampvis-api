@@ -9,7 +9,7 @@ import {inject} from "inversify";
 import {TYPES} from "../services/config/types";
 import {SearchService} from "../services/search.service";
 
-@controller('/v1/scotland/search')
+@controller('/scotland/search')
 export class SearchController {
 
     constructor(

@@ -12,7 +12,7 @@ import { ActivityDto } from '../infrastructure/dto/activity.dto';
 import {ActivityService} from "../services/activity.service";
 import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
-@controller('/v1/internal/activities', UserToken.verify)
+@controller('/internal/activities', UserToken.verify)
 export class ActivityControllerInt {
 
     constructor(@inject(TYPES.ActivityService) private activityService: ActivityService) {

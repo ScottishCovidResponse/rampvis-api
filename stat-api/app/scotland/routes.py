@@ -6,7 +6,7 @@ import pandas as pd
 from app.scotland import blueprint
 from algorithms.algorithm import mse, f_test, pearson_correlation
 
-CSV_DATA_PATH = '../../csv-data/scotland'
+DATA_PATH_V04 = '../../data/v04'
 
 
 @blueprint.route('/nhs-board/', methods=['GET'])
@@ -56,7 +56,7 @@ def get_metric(metric_fn, filename):
 
 def process_csv_data(filename: str):
     """Return a dataframe from a relative filename."""
-    filepath = os.path.join(current_app.root_path, CSV_DATA_PATH, filename)
+    filepath = os.path.join(current_app.root_path, DATA_PATH_V04, filename)
     df = pd.read_csv(filepath)
     df.replace('*', 0, inplace=True)
     df.drop(columns=['date'], axis=1, inplace=True)
