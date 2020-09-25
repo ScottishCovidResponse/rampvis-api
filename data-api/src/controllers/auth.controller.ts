@@ -7,7 +7,7 @@ import { Request, Response } from 'express-serve-static-core';
 import config from "config";
 import passport from "passport";
 
-import { RequestWithUser } from './request-with-user.interface';
+import { RequestWithUser } from './../infrastructure/entities/request-with-user.interface';
 import { WrongCredentialsException } from '../exceptions/exception';
 import { dtoValidate } from '../middleware/dto.validate';
 import { LoginDto } from '../infrastructure/dto/login.dto';
@@ -21,7 +21,7 @@ import {GitHubLoginDto} from "../infrastructure/dto/github-login.dto";
 import {UserDto} from "../infrastructure/dto/user.dto";
 import {IUser} from "../infrastructure/entities/user.interface";
 
-@controller('/auth')
+@controller('/v1/auth')
 export class AuthController {
 
     constructor(@inject(TYPES.UserService) private userService: UserService,

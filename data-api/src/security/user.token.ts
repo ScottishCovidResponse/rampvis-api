@@ -9,10 +9,10 @@ import { AuthenticationTokenMissingException, WrongAuthenticationTokenException 
 import { IUser } from '../infrastructure/entities/user.interface';
 import { TYPES } from '../services/config/types';
 import { logger } from '../utils/logger';
-import { IDataStoredInToken } from './data-stored-in-token.interface';
+import { IDataStoredInToken } from '../infrastructure/entities/data-stored-in-token.interface';
 import { ITokenData } from './token-data.interface';
 import {UserService} from "../services/user.service";
-import {RequestWithUser} from "../controllers/request-with-user.interface";
+import {RequestWithUser} from '../infrastructure/entities/request-with-user.interface';
 import { DIContainer } from '../services/config/inversify.config';
 
 export class UserToken {

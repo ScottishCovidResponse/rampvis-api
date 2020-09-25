@@ -7,12 +7,12 @@ import { queryParamValidate } from '../middleware/dto.validate';
 import { UserToken } from '../security/user.token';
 import { TYPES } from '../services/config/types';
 import { logger } from '../utils/logger';
-import { RequestWithUser } from './request-with-user.interface';
  import { ActivityFilterVm } from '../infrastructure/view-model/activity-filters.vm';
 import { ActivityDto } from '../infrastructure/dto/activity.dto';
 import {ActivityService} from "../services/activity.service";
+import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
-@controller('/internal/activities', UserToken.verify)
+@controller('/v1/internal/activities', UserToken.verify)
 export class ActivityControllerInt {
 
     constructor(@inject(TYPES.ActivityService) private activityService: ActivityService) {

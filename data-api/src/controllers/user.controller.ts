@@ -5,7 +5,6 @@ import {inject} from 'inversify';
 
 import {TYPES} from '../services/config/types';
 import {IUser} from '../infrastructure/entities/user.interface';
-import {RequestWithUser} from './request-with-user.interface';
 import {UserToken} from '../security/user.token';
 
 import {logger} from '../utils/logger';
@@ -18,8 +17,9 @@ import {UpdatePasswordDto} from '../infrastructure/dto/updatePassword.dto';
 import {ACTIVITY_TYPE, ACTIVITY_ACTION} from '../infrastructure/entities/activity.interface';
 import {UserService} from "../services/user.service";
 import {ActivityService} from "../services/activity.service";
+import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
-@controller('/user', UserToken.verify)
+@controller('/v1/user', UserToken.verify)
 export class UserController {
 
     constructor(@inject(TYPES.UserService) private userService: UserService,

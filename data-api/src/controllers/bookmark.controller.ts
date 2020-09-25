@@ -6,9 +6,7 @@ import multer from 'multer';
 
 import {TYPES} from '../services/config/types';
 import {IUser} from '../infrastructure/entities/user.interface';
-import {RequestWithUser} from './request-with-user.interface';
 import {UserToken} from '../security/user.token';
-
 import {logger} from '../utils/logger';
 import {ObjectNotFoundException, PageBookmarkError} from '../exceptions/exception';
 import {dtoValidate} from '../middleware/dto.validate';
@@ -20,10 +18,11 @@ import {BookmarkDto} from "../infrastructure/dto/bookmark.dto";
 import {ERROR_CODES} from "../exceptions/error.codes";
 import {IBookmark} from "../infrastructure/entities/bookmark.interface";
 import {BookmarkService} from "../services/bookmark.service";
+import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
 const upload = multer();
 
-@controller('/bookmark', UserToken.verify)
+@controller('/v1/bookmark', UserToken.verify)
 export class BookmarkController {
 
 

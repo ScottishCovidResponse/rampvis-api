@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { IUser } from '../infrastructure/entities/user.interface';
+import { IUser } from './user.interface';
 
 interface RequestWithUser extends Request {
   user?: IUser;

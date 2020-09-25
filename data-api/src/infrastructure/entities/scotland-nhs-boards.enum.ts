@@ -1,4 +1,4 @@
-export enum ScotlandRegionNhs  {
+export enum ScotlandNHSBoards  {
     nhs_ayrshire_arran = 'nhs_ayrshire_arran',
     nhs_borders = 'nhs_borders',
     nhs_dumfries_galloway = 'nhs_dumfries_galloway',
