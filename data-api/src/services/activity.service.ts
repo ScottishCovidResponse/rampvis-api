@@ -47,7 +47,7 @@ export class ActivityService extends DataService<IActivity> {
     }
 
     async removeActivitiesOfAccount(accountId: string): Promise<number> {
-        const result = await this.getCollection().deleteMany({ accountId: accountId } as FilterQuery<IActivity>);
+        const result = await this.getDbCollection().deleteMany({ accountId: accountId } as FilterQuery<IActivity>);
         return result.deletedCount as number;
     }
 

@@ -30,7 +30,7 @@ export class SearchService extends DataService<IPage> {
             },
             {"$sort": {"score": {"$meta": "textScore"}}}
         ];
-        return this.getCollection().aggregate(pipeline).toArray();
+        return this.getDbCollection().aggregate(pipeline).toArray();
 
     }
 }

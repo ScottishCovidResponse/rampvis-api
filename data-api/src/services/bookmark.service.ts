@@ -46,7 +46,7 @@ export class BookmarkService extends DataService<IBookmark> {
     }
 
     async deleteBookmark(user: IUser, pageId: string): Promise<IBookmark> {
-        const res: FindAndModifyWriteOpResultObject<IBookmark> = await this.getCollection().findOneAndDelete({userId: <string>user._id , pageId: pageId } as FilterQuery<IBookmark>);
+        const res: FindAndModifyWriteOpResultObject<IBookmark> = await this.getDbCollection().findOneAndDelete({userId: <string>user._id , pageId: pageId } as FilterQuery<IBookmark>);
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
     }
 

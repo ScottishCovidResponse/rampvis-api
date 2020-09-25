@@ -21,17 +21,22 @@ export function dtoValidate<T>(type: any, skipMissingProperties = false): Reques
   };
 }
 
+// TODO - remove duplicate code
 export function queryParamValidate<T>(type: any, skipMissingProperties = false): RequestHandler {
+
   return (req, res, next) => {
-    validate(plainToClass(type, req.query), { skipMissingProperties })
-      .then((errors: ValidationError[]) => {
-        if (errors.length > 0) {
-          const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
-          next(new InvalidQueryParametersException(message));
-        } else {
-          next();
-        }
-      });
+      validate(plainToClass(type, req.query), {skipMissingProperties})
+          .then((errors: ValidationError[]) => {
+              if (errors.length > 0) {
+                  const message = errors.map((error: ValidationError) => {
+                      const constraints: any[] = getNestedProperties(error);
+                      return constraints.map((constraint: any) => Object.values(constraint));
+                  }).join(', ');
+                  next(new InvalidQueryParametersException(message));
+              } else {
+                  next();
+              }
+          });
   };
 }
 
