@@ -2,7 +2,7 @@ from flask import current_app, Response, request, abort, Blueprint
 import os
 import json
 import pandas as pd
-from app.services.algorithms.algorithm import mse, f_test, pearson_correlation
+from app.service.algorithms.algorithm import mse, f_test, pearson_correlation
 
 scotland_bp = Blueprint(
     'scotland_bp',

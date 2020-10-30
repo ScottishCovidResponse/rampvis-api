@@ -6,7 +6,7 @@ from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUS
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 import pandas as pd
 
-from app.services.algorithms.franck import compute_metrics
+from app.service.algorithms.franck import compute_metrics
 from app.utils.jwt_service import validate_token
 
 process_data_bp = Blueprint(
