@@ -9,7 +9,8 @@ correlation_dynamic_bp = Blueprint(
 )
 
 # TODO set from config
-METRICS_PATH = '../../csv-data-derived-metrics'
+METRICS_PATH = '../../data/v04/csv-data-derived-metrics'
+
 
 @correlation_dynamic_bp.route('/', methods=['GET'])
 def query():

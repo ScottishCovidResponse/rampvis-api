@@ -20,8 +20,8 @@ METRICS = ['ZNCC', 'pearsonr', 'spearmanr', 'kendalltau', 'SSIM', 'PSNR', 'MSE',
            'f-test']
 WINDOW = 'none'
 
-CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
-METRICS_PATH = '../../csv-data-derived-metrics/scotland'
+CSV_DYNAMIC_DATA = '../../data/v04/csv-data-dynamic/scotland'
+METRICS_PATH = '../../data/v04/csv-data-derived-metrics/scotland'
 
 # Will be assigned later for access outside of context
 root_path = None

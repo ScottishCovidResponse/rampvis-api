@@ -1,5 +1,4 @@
 import os
-from os import environ
 
 
 class Config(object):
@@ -11,8 +10,10 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
 
+
 class ProductionConfig(Config):
     DEBUG = False
+
 
 config_by_name = dict(
     development=DevelopmentConfig,

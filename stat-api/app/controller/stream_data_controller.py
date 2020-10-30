@@ -15,8 +15,8 @@ stream_data_bp = Blueprint(
 
 
 # TODO: set from Config
-CSV_DATA = '../../csv-data/scotland'
-CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
+CSV_DATA = '../../data/v04/csv-data/scotland'
+CSV_DYNAMIC_DATA = '../../data/v04/csv-data-dynamic/scotland'
 CSV_FILES = ['cumulative_cases.csv', 'hospital_confirmed.csv', 'hospital_suspected.csv', 'icu_patients.csv']
 FIRST_DATE = datetime(2020, 4, 1)
 LAST_DATE = datetime(2020, 7, 21)

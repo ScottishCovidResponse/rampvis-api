@@ -15,5 +15,5 @@ conda activate data-mining-api
 ./run-dev.sh
 ```
 
-Open http://127.0.0.1:5000/api-py/v1/health to check health.
+Open http://127.0.0.1:5000/api-py/v1/hello to check!
 
