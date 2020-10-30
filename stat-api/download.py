@@ -31,8 +31,11 @@ def to_df(f, key):
     dates = [d.decode() for d in f[key]['Dimension_2_names']]
     columns = [d.decode() for d in f[key]['Dimension_1_names']]
     values = np.array(f[key]['array'])
-    df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
-    #df.columns = [clean_column_name(c) for c in df.columns]
+    # Try Int64 first which is the same as int but can store NaN
+    try:
+        df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
+    except Exception:
+        df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Float64')
     df.index.name = 'date'
     return df
 
@@ -41,7 +44,6 @@ def process_h5(path):
     components = generate_components(f)
     for c in components:
         df = to_df(f, c)
-        # folder = Path(os.path.dirname(path))
         filename = re.sub('[\-/]', '_', c) + '.csv'
         df.to_csv(Path(DATA_LIVE_PATH) / filename)
     

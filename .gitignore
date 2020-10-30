@@ -11,8 +11,6 @@ __pycache__
 error.log
 
 csv-data-dynamic
-
-stat-api/data
 stat-api/error.log
 data-api/logs
 data/raw
