@@ -1,15 +1,19 @@
-from flask import current_app, Response, request, abort
+from flask import current_app, Response, request, abort, Blueprint
 import os
 import json
 import pandas as pd
+from app.services.algorithms.algorithm import mse, f_test, pearson_correlation
 
-from app.scotland import blueprint
-from algorithms.algorithm import mse, f_test, pearson_correlation
+scotland_bp = Blueprint(
+    'scotland_bp',
+    __name__,
+    url_prefix='/stat/v1/scotland/',
+)
 
-DATA_PATH_V04 = '../../data/v04'
+config = current_app.config
 
 
-@blueprint.route('/nhs-board/', methods=['GET'])
+@scotland_bp.route('/nhs-board/', methods=['GET'])
 def query():
     table = request.args.get('table', None)
     metrics = request.args.get('metrics', None)
@@ -27,25 +31,6 @@ def query():
         abort(400, 'Not implemented parameters: metrics = ' + metrics)
 
 
-#
-# TODO
-# Deprecated
-#
-@blueprint.route('/region/cumulative/mse', methods=['GET'])
-def get_mse():
-    return get_metric(mse, 'cumulative_cases.csv')
-
-
-@blueprint.route('/region/cumulative/f-test', methods=['GET'])
-def get_f_test():
-    return get_metric(f_test, 'cumulative_cases.csv')
-
-
-@blueprint.route('/region/cumulative/pearson-correlation', methods=['GET'])
-def get_pearson_correlation():
-    return get_metric(pearson_correlation, 'cumulative_cases.csv')
-
-
 def get_metric(metric_fn, filename):
     """Return a response applying a function on a data file."""
     df = process_csv_data(filename)
@@ -56,7 +41,7 @@ def get_metric(metric_fn, filename):
 
 def process_csv_data(filename: str):
     """Return a dataframe from a relative filename."""
-    filepath = os.path.join(current_app.root_path, DATA_PATH_V04, filename)
+    filepath = os.path.join(config.get('DATA_PATH_V04'), filename)
     df = pd.read_csv(filepath)
     df.replace('*', 0, inplace=True)
     df.drop(columns=['date'], axis=1, inplace=True)

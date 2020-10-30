@@ -1,15 +1,19 @@
-from flask import current_app, Response, request, abort
+from flask import current_app, Response, request, abort, Blueprint
 import os
 import json
 import pandas as pd
+from app.services.algorithms.franck import compute_metrics
 
-from algorithms.franck import compute_metrics
-from app.correlation import blueprint
+correlation_bp = Blueprint(
+    'correlation_bp',
+    __name__,
+    url_prefix='/stat/v1/correlation',
+)
 
-CSV_DATA_PATH = '../../csv-data'
+config = current_app.config
 
 
-@blueprint.route('/', methods=['GET'])
+@correlation_bp.route('/', methods=['GET'])
 def query():
     var1 = request.args.get('var1', None)
     var2 = request.args.get('var2', None)
@@ -41,5 +45,6 @@ def query():
 
 
 def variable_to_df(var):
-    filepath = os.path.join(current_app.root_path, CSV_DATA_PATH, var + '.csv')
+    filepath = os.path.join(config.get('DATA_PATH_V04'), var + '.csv')
+    print(filepath)
     return pd.read_csv(filepath)

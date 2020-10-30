@@ -6,7 +6,7 @@ import multer from 'multer';
 
 import {TYPES} from '../services/config/types';
 import {IUser} from '../infrastructure/entities/user.interface';
-import {UserToken} from '../security/user.token';
+import {JwtToken} from '../middleware/jwt.token';
 import {logger} from '../utils/logger';
 import {ObjectNotFoundException, PageBookmarkError} from '../exceptions/exception';
 import {dtoValidate} from '../middleware/dto.validate';
@@ -22,7 +22,7 @@ import { RequestWithUser } from '../infrastructure/entities/request-with-user.in
 
 const upload = multer();
 
-@controller('/bookmark', UserToken.verify)
+@controller('/bookmark', JwtToken.verify)
 export class BookmarkController {
 
 

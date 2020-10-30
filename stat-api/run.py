@@ -1,16 +1,13 @@
 from os import environ
 
 from app import create_app
-from config import config_dict
+from config import config_by_name
 
-get_config_mode = environ.get('', 'Debug')
-config_mode = config_dict[get_config_mode.capitalize()]
-
-app = create_app(config_mode)
+env = environ.get('FLASK_ENV', 'development')
+app = create_app(config_by_name[env])
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3000, debug=True, threaded=True)
-
+    app.run(host="0.0.0.0", port=3000, threaded=True)
 
 @app.route('/stat/v1/health')
 def index():

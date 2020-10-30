@@ -4,7 +4,7 @@ import { controller, httpGet } from 'inversify-express-utils';
 
 import { PaginationVm } from '../infrastructure/view-model/pagination.vm';
 import { queryParamValidate } from '../middleware/dto.validate';
-import { UserToken } from '../security/user.token';
+import { JwtToken } from '../middleware/jwt.token';
 import { TYPES } from '../services/config/types';
 import { logger } from '../utils/logger';
  import { ActivityFilterVm } from '../infrastructure/view-model/activity-filters.vm';
@@ -12,7 +12,7 @@ import { ActivityDto } from '../infrastructure/dto/activity.dto';
 import {ActivityService} from "../services/activity.service";
 import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
-@controller('/internal/activities', UserToken.verify)
+@controller('/internal/activities', JwtToken.verify)
 export class ActivityControllerInt {
 
     constructor(@inject(TYPES.ActivityService) private activityService: ActivityService) {

@@ -1,14 +1,20 @@
 import os
 from datetime import datetime, timedelta
 import json
-
-from flask import Response, current_app
-from app.stream_data import blueprint
+from flask import Response, current_app, Blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
 
-from app.middleware.jwt_service import validate_token
+from app.utils.jwt_service import validate_token
 
+stream_data_bp = Blueprint(
+    'stream_data_bp',
+    __name__,
+    url_prefix='/stat/v1/stream_data/',
+)
+
+
+# TODO: set from Config
 CSV_DATA = '../../csv-data/scotland'
 CSV_DYNAMIC_DATA = '../../csv-data-dynamic/scotland'
 CSV_FILES = ['cumulative_cases.csv', 'hospital_confirmed.csv', 'hospital_suspected.csv', 'icu_patients.csv']
@@ -72,7 +78,7 @@ scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(generate_data, 'interval', seconds=3)
 
 
-@blueprint.route('/start', methods=['GET'])
+@stream_data_bp.route('/start', methods=['GET'])
 @validate_token
 def start():
     global current_date, root_path
@@ -94,7 +100,7 @@ def start():
         return Response(json.dumps({'message': f'Simulation of data stream has started. Starting from {current_date:%d/%m/%Y}, daily data will come every 3 seconds.'}), mimetype='application/json')
 
 
-@blueprint.route('/status', methods=['GET'])
+@stream_data_bp.route('/status', methods=['GET'])
 @validate_token
 def status():
     if scheduler.state == STATE_STOPPED:
@@ -109,14 +115,14 @@ def status():
                         mimetype='application/json')
 
 
-@blueprint.route('/stop', methods=['GET'])
+@stream_data_bp.route('/stop', methods=['GET'])
 @validate_token
 def stop():
     scheduler.pause()
     return Response(json.dumps({'message': 'Simulation of data stream has stopped.'}), mimetype='application/json')
 
 
-@blueprint.route('/resume', methods=['GET'])
+@stream_data_bp.route('/resume', methods=['GET'])
 @validate_token
 def resume():
     scheduler.resume()

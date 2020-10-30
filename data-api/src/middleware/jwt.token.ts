@@ -10,12 +10,12 @@ import { IUser } from '../infrastructure/entities/user.interface';
 import { TYPES } from '../services/config/types';
 import { logger } from '../utils/logger';
 import { IDataStoredInToken } from '../infrastructure/entities/data-stored-in-token.interface';
-import { ITokenData } from './token-data.interface';
+import { ITokenData } from '../infrastructure/token/token-data.interface';
 import {UserService} from "../services/user.service";
 import {RequestWithUser} from '../infrastructure/entities/request-with-user.interface';
 import { DIContainer } from '../services/config/inversify.config';
 
-export class UserToken {
+export class JwtToken {
   private static jwtSign = util.promisify(jwt.sign);
   private static jwtVerify = util.promisify(jwt.verify);
 
@@ -26,11 +26,12 @@ export class UserToken {
   }
 
   public static create(user: IUser, permissions: any): ITokenData {
-    const start = moment(user.createdAt);
-    // If expiry date is missing, create a month valid token
+    const start = user.createdAt ? moment(user.createdAt) : moment();
+    // If expiry lastPostDate is missing, create a month valid token
     const end = user.expireOn ? moment(user.expireOn) : moment().add(1, 'months');
     const expInDays: string = moment.duration(end.diff(start)).asDays() + 'd';
-    logger.debug(`UserToken: create: expiresIn = ${expInDays}, user = ${JSON.stringify(user)}`);
+
+    logger.debug(`JwtToken: create: expiresIn = ${expInDays}, user = ${JSON.stringify(user)}`);
 
     const dataStoredInToken: IDataStoredInToken = {
       id: user._id as string,
@@ -49,7 +50,7 @@ export class UserToken {
 
   public static async verify(request: RequestWithUser, response: Response, next: NextFunction) {
     const authorizationHeader = request.headers.authorization;
-    logger.debug(`UserToken: verify: authorizationHeader = ${authorizationHeader}`);
+    logger.debug(`JwtToken: verify: authorizationHeader = ${authorizationHeader}`);
 
     if (!authorizationHeader) {
       return next(new AuthenticationTokenMissingException());
@@ -59,16 +60,16 @@ export class UserToken {
     let userId: string;
 
     try {
-      const verificationResponse = await UserToken.jwtVerify(token, UserToken.RSA_PUB_KEY) as IDataStoredInToken;
+      const verificationResponse = await JwtToken.jwtVerify(token, JwtToken.RSA_PUB_KEY) as IDataStoredInToken;
       userId = verificationResponse.id;
-      logger.debug('UserToken: verify: DataStoredInToken = ' + JSON.stringify(verificationResponse));
+      logger.debug('JwtToken: verify: DataStoredInToken = ' + JSON.stringify(verificationResponse));
     } catch (error) {
-      logger.debug(`UserToken: verify: error = ${error.message}`);
+      logger.debug(`JwtToken: verify: error = ${error.message}`);
       return next(new WrongAuthenticationTokenException());
     }
 
     //try {
-      logger.debug(`UserToken: call user service id = ${userId}`);
+      logger.debug(`JwtToken: call user service id = ${userId}`);
 
 
       const userService: UserService = DIContainer.get<UserService>(TYPES.UserService);

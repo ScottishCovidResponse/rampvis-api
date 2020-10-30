@@ -5,7 +5,7 @@ import {controller, httpDelete, httpGet, httpPost, httpPut} from 'inversify-expr
 import multer from 'multer';
 
 import {IUser} from '../infrastructure/entities/user.interface';
-import {UserToken} from '../security/user.token';
+import {JwtToken} from '../middleware/jwt.token';
 import {TYPES} from '../services/config/types';
 import {ERROR_CODES} from '../exceptions/error.codes';
 import {ObjectNotFoundException} from '../exceptions/exception';
@@ -20,7 +20,7 @@ import { RequestWithUser } from '../infrastructure/entities/request-with-user.in
 
 const upload = multer();
 
-@controller('/thumbnail', UserToken.verify)
+@controller('/thumbnail', JwtToken.verify)
 export class ThumbnailController {
 
 

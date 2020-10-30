@@ -22,16 +22,6 @@ Accepted values of
 Same as above but use `scotland_dynamic` instead of `scotland`. The data will be cycled from 1st April to 26th May every 3 seconds.
 
 
-**Following APIs are deprecated**
-```bash
-<url>/api/v1/scotland/<table>
-<url>/api/v1/scotland/<table>/:<region>
-```
-Accepted values of
-- url: http://vis.scrc.uk
-- table: cumulative, icupatients, hospconfirmed, hospsuspected
-- region:  nhs_ayrshire_arran, nhs_borders, nhs_dumfries_galloway, nhs_fife, nhs_forth_valley, nhs_grampian, nhs_greater_glasgow_clyde, nhs_highland, nhs_lanarkshire, nhs_lothian, nhs_orkney, nhs_shetland, nhs_tayside, nhs_western_isles_scotland, golden_jubilee_nationalhospital, scotland
-
 ## Source 2
 
 Source name:  `covid-deaths-data-week-30.xlsx`
@@ -46,15 +36,7 @@ Accepted values of
 - table_name: covid_deaths 
 - group_name: gender_age, location, type
 
-**Following APIs are deprecated**
-```bash
-<url>/api/v1/scotland/covid-deaths/data-week/gender-age
-<url>/api/v1/scotland/covid-deaths/data-week/location
-<url>/api/v1/scotland/covid-deaths/data-week/type
-```
-Accepted values of
-- url: http://vis.scrc.uk
-
+ 
 
 # Stat APIs 
 
@@ -73,14 +55,7 @@ Accepted values of
 - table_name: cumulative_cases
 - metrics: mse, f_test, pearson_correlation
 
-
-**Following APIs are deprecated**
-```bash
-/stat/v1/scotland/region/cumulative/mse
-/stat/v1/scotland/region/cumulative/f-test
-/stat/v1/scotland/region/cumulative/pearson-correlation
-```
-
+ 
 
 ## Correlation metrics of static (latest) data
 

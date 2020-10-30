@@ -5,7 +5,7 @@ import {inject} from 'inversify';
 
 import {TYPES} from '../services/config/types';
 import {IUser} from '../infrastructure/entities/user.interface';
-import {UserToken} from '../security/user.token';
+import {JwtToken} from '../middleware/jwt.token';
 
 import {logger} from '../utils/logger';
 import {DatabaseException, ObjectNotFoundException, UserWithEmailAlreadyExistsException} from '../exceptions/exception';
@@ -19,7 +19,7 @@ import {UserService} from "../services/user.service";
 import {ActivityService} from "../services/activity.service";
 import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
 
-@controller('/user', UserToken.verify)
+@controller('/user', JwtToken.verify)
 export class UserController {
 
     constructor(@inject(TYPES.UserService) private userService: UserService,

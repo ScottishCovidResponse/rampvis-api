@@ -1,14 +1,17 @@
-from flask import current_app, Response, request, abort
+from flask import current_app, Response, request, abort, Blueprint
 import os
 import json
 
-from algorithms.franck import compute_metrics
-from app.correlation_dynamic import blueprint
+correlation_dynamic_bp = Blueprint(
+    'correlation_dynamic_bp',
+    __name__,
+    url_prefix='/stat/v1/correlation_dynamic',
+)
 
+# TODO set from config
 METRICS_PATH = '../../csv-data-derived-metrics'
 
-
-@blueprint.route('/', methods=['GET'])
+@correlation_dynamic_bp.route('/', methods=['GET'])
 def query():
     var1 = request.args.get('var1', None)
     var2 = request.args.get('var2', None)

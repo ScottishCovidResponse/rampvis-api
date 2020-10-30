@@ -1,15 +1,20 @@
 import os
 import json
-
-from flask import Response, current_app
-from app.process_data import blueprint
+from flask import Response, current_app, Blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 import pandas as pd
 
-from algorithms.franck import compute_metrics
-from app.middleware.jwt_service import validate_token
+from app.services.algorithms.franck import compute_metrics
+from app.utils.jwt_service import validate_token
+
+process_data_bp = Blueprint(
+    'process_data_bp',
+    __name__,
+    url_prefix='/stat/v1/process_data/',
+)
+
 
 METRICS = ['ZNCC', 'pearsonr', 'spearmanr', 'kendalltau', 'SSIM', 'PSNR', 'MSE', 'NRMSE', 'ME', 'MAE', 'MSLE', 'MedAE',
            'f-test']
@@ -74,7 +79,7 @@ scheduler.add_listener(scheduler_exception_listener, EVENT_JOB_EXECUTED | EVENT_
 scheduler.add_job(save_metrics, 'interval', seconds=3)
 
 
-@blueprint.route('/start', methods=['GET'])
+@process_data_bp.route('/start', methods=['GET'])
 @validate_token
 def start():
     if scheduler.state == STATE_RUNNING:
@@ -90,7 +95,7 @@ def start():
     return Response(f'Simulation of computing derived data has started.', mimetype='application/json')
 
 
-@blueprint.route('/status', methods=['GET'])
+@process_data_bp.route('/status', methods=['GET'])
 @validate_token
 def status():
     if scheduler.state == STATE_STOPPED:
@@ -103,14 +108,14 @@ def status():
         return Response('Simulation is running.', mimetype='application/json')
 
 
-@blueprint.route('/stop', methods=['GET'])
+@process_data_bp.route('/stop', methods=['GET'])
 @validate_token
 def stop():
     scheduler.pause()
     return Response('Simulation of computing derived data has stopped.', mimetype='application/json')
 
 
-@blueprint.route('/resume', methods=['GET'])
+@process_data_bp.route('/resume', methods=['GET'])
 @validate_token
 def resume():
     scheduler.resume()

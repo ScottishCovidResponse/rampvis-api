@@ -7,11 +7,13 @@ Key dependencies:
 Start development instance:
 
 ```
-# tested in conda environment
+conda remove --name data-mining-api --all
 conda env create -f environment.yml
-conda activate rampvis-api
+conda activate data-mining-api
 
-
-# start the server
-./run.sh
+# development start
+./run-dev.sh
 ```
+
+Open http://127.0.0.1:5000/api-py/v1/health to check health.
+

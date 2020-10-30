@@ -11,8 +11,8 @@ import { RequestWithUser } from './../infrastructure/entities/request-with-user.
 import { WrongCredentialsException } from '../exceptions/exception';
 import { dtoValidate } from '../middleware/dto.validate';
 import { LoginDto } from '../infrastructure/dto/login.dto';
-import { UserToken } from '../security/user.token';
-import { ITokenData } from '../security/token-data.interface';
+import { JwtToken } from '../middleware/jwt.token';
+import { ITokenData } from '../infrastructure/token/token-data.interface';
 import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../infrastructure/entities/activity.interface';
 import {logger} from "../utils/logger";
 import {UserService} from "../services/user.service";
@@ -38,7 +38,7 @@ export class AuthController {
         const currentUser = (request as any).currentUser;
         logger.debug('AuthController: callback: currentUser = ', currentUser);
 
-        const tokenData: ITokenData = UserToken.create(currentUser, null);
+        const tokenData: ITokenData = JwtToken.create(currentUser, null);
 
         response.redirect(`${config.get('github.successRedirect')}/?token=${tokenData.token}`)
     }
@@ -61,8 +61,8 @@ export class AuthController {
             const isPasswordMatching = await bcrypt.compare(loginData.password, user.password as string);
             if (isPasswordMatching) {
                 user.password = "";
-                const permissions = await UserToken.getAllGrants(user.role);
-                const tokenData: ITokenData = UserToken.create(user, permissions);
+                const permissions = await JwtToken.getAllGrants(user.role);
+                const tokenData: ITokenData = JwtToken.create(user, permissions);
 
                 await this.activityService.createActivity(user, ACTIVITY_TYPE.USER, ACTIVITY_ACTION.LOGIN, user._id.toString());
 

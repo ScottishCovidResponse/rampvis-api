@@ -3,29 +3,18 @@ from os import environ
 
 
 class Config(object):
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    # This will create a file in <app> FOLDER
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
-    # For 'in memory' database, please use:
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    RSA_PUB_KEY = BASE_DIR + '/' + '../data-api/config/keys/jwtRS256.key.pub'
+    DATA_PATH_V04 = BASE_DIR + '/' + '../data/v04'
+
+
+class DevelopmentConfig(Config):
+    DEBUG = True
 
 class ProductionConfig(Config):
     DEBUG = False
 
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    # This will create a file in <app> FOLDER
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
-    # For 'in memory' database, please use:
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-
-class DebugConfig(Config):
-    DEBUG = True
-
-
-config_dict = {
-    'Production': ProductionConfig,
-    'Debug': DebugConfig
-}
+config_by_name = dict(
+    development=DevelopmentConfig,
+    production=ProductionConfig
+)

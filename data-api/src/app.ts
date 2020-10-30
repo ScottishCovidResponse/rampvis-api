@@ -1,3 +1,4 @@
+import os from 'os';
 import config from 'config';
 import express from 'express';
 import {Application} from 'express-serve-static-core';
@@ -21,6 +22,10 @@ export class App {
     }
 
     public async init() {
+
+        process.env['UV_THREADPOOL_SIZE'] = os.cpus().length.toString();    
+        logger.info(`App: init: UV_THREADPOOL_SIZE = ${JSON.stringify(process.env.UV_THREADPOOL_SIZE)}, CPUs = ${os.cpus().length}`);
+
         let container: Container = DIContainer;
 
         await App.initDatabase(container);
