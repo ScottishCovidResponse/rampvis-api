@@ -28,9 +28,9 @@ class OntologyDB:
         try:
             self.driver = GraphDatabase.driver(f'{config_params.get("bolt")}:{config_params.get("bolt_port")}',
                                                auth=(config_params.get('user'), config_params.get('password')))
+            # self.driver = Graph(**config_params)
         except Exception as e:
             print('OntologyDB: Failed to initialise, error =', e)
-
         else:
             print('OntologyDB: initialised.')
             app.extensions['ontology'] = self
@@ -49,7 +49,7 @@ class OntologyDB:
                            'current context')
 
     @property
-    def graph(self, app=None):
+    def ontology(self, app=None):
         app = self.get_app(app)
         return app.extensions['ontology']
 
@@ -81,7 +81,7 @@ class OntologyDB:
 
         try:
             session = self.driver.session(database=db) if db is not None else self.driver.session()
-            response = session.run(query, parameters=parameters).data()
+            response = list(session.run(query, parameters=parameters))
         except Exception as e:
             print('OntologyDB: Query failed:', e)
         finally:

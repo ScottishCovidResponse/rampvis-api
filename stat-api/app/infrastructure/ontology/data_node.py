@@ -11,12 +11,12 @@ class DataNode:
                  header: str,
                  description: str,
                  source: SourceEnum,
-                 data_type: DataTypeEnum = None,
-                 type_val: Union[ModelEnum, AnalyticsEnum] = None) -> None:
+                 type: DataTypeEnum = None,
+                 type_name: Union[ModelEnum, AnalyticsEnum] = None) -> None:
 
         self.endpoint = endpoint
         self.description = description
         self.header = header
-        self.data_type = data_type
-        self.type_val = type_val
+        self.type = type
+        self.type_name = type_name
         self.source = source

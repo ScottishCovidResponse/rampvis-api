@@ -1,4 +1,5 @@
 from flask import current_app
+
 from ..infrastructure.ontology import DataNode, AnalyticsEnum, ModelEnum, SourceEnum
 
 config = current_app.config
@@ -11,7 +12,9 @@ class OntologyService:
         self._init_database()
         self._init_constraints()
         self._init_indexes()
-        self._init_nodes()
+        self._init_type_nodes()
+
+        # self.create_data()
 
     def _init_database(self):
         ontology.query(f'CREATE OR REPLACE DATABASE {self.db}')
@@ -33,7 +36,7 @@ class OntologyService:
 
         # TODO: index on vis description
 
-    def _init_nodes(self):
+    def _init_type_nodes(self):
         for d in AnalyticsEnum:
             ontology.query_parameter("CREATE (:Analytics {name: $name})", parameters={'name': d.value}, db=self.db)
 
@@ -43,11 +46,25 @@ class OntologyService:
         for d in SourceEnum:
             ontology.query_parameter("CREATE (:Source {name: $name})", parameters={'name': d.value}, db=self.db)
 
-    def create_data(self, data_node: DataNode):
-        query = "CREATE (:Data {endpoint: $endpoint, description: $description, header:$header})" \
-                ""
-        param = {"endpoint"}
-        # TODO
+    def create_data(self, data_node: DataNode = None):
+        param = {
+            "endpoint": 'a',
+            "description": 'b',
+            "header": 'c'
+        }
+
+        # if data_node.type:
+        param = {
+            **param,
+            'name': 'Analytics'
+        }
+
+        print('OntologyService: param = ', param)
+        query = 'MATCH (a: Analytics {name: "Similarity"})' \
+                'CREATE (:Data {endpoint: $endpoint, description: $description, header:$header})' \
+                '-[:TYPE {name: $name}]->' \
+                '(a)'
+
         ontology.query_parameter(query, param, self.db)
 
         print('OntologyService: register_data: data_node = ', data_node)
@@ -62,6 +79,3 @@ class OntologyService:
 
     def create_analytics_node(self):
         pass
-
-    def close(self):
-        ontology.close()

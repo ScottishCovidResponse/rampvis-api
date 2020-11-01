@@ -34,6 +34,10 @@ def register_extensions(app):
     CacheDB(app)
     OntologyDB(app)
 
+    # TODO close db
+    # @app.teardown_appcontext
+    #
+
 
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
