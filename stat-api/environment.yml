@@ -21,4 +21,5 @@ dependencies:
     - data-pipeline-api
     - fsspec
     - flask_caching==1.9.0
+    - neo4j==4.1.1
 

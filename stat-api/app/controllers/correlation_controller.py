@@ -1,4 +1,6 @@
-from flask import current_app, Response, request, abort, Blueprint
+from flask import Response, request, abort, Blueprint
+from flask import current_app
+
 import os
 import json
 import pandas as pd
