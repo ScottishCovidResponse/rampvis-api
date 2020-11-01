@@ -64,7 +64,24 @@ class OntologyDB:
 
         try:
             session = self.driver.session(database=db) if db is not None else self.driver.session()
-            response = list(session.run(query))
+            # response = list(session.run(query))
+            response = session.run(query).data()
+        except Exception as e:
+            print('OntologyDB: Query failed:', e)
+        finally:
+            if session is not None:
+                session.close()
+
+        return response
+
+    def query_parameter(self, query, parameters, db=None):
+        assert self.driver is not None, 'OntologyDB: Driver not initialized!'
+        session = None
+        response = None
+
+        try:
+            session = self.driver.session(database=db) if db is not None else self.driver.session()
+            response = session.run(query, parameters=parameters).data()
         except Exception as e:
             print('OntologyDB: Query failed:', e)
         finally:

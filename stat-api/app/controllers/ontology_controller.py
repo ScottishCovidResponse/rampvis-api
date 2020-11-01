@@ -13,9 +13,8 @@ ontology_bp = Blueprint(
 ontology_service = OntologyService()
 
 
-@ontology_bp.route('/', methods=['GET'])
+@ontology_bp.route('/data/create', methods=['GET'])
 @validate_token
 def query():
     print('ontology_controller: ')
-    ontology_service.test()
     return Response(json.dumps({'message': f'ontology_controller'}), mimetype='application/json')
