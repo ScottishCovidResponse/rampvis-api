@@ -2,7 +2,7 @@ from flask import current_app, Response, request, abort, Blueprint
 import os
 import json
 import pandas as pd
-from app.service.algorithms.franck import compute_metrics
+from ..algorithms import compute_metrics
 
 correlation_bp = Blueprint(
     'correlation_bp',

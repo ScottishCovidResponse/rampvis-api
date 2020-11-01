@@ -1,4 +1,4 @@
-name: rampvis-api
+name: ramp-vis-api
 channels:
   - anaconda
   - defaults

@@ -1,25 +1,22 @@
-from flask import Flask, url_for, g
+from flask import Flask, g
 from flask_cors import CORS
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 
-from app.utils.cache_service import cache
+from .utils import cache
+
 
 def register_blueprints(app):
     """
     Import parts of our application
     Register Blueprints
     """
-    from app.controller.correlation_controller import correlation_bp
-    from app.controller.correlation_dynamic_controller import correlation_dynamic_bp
-    from app.controller.process_data_controller import process_data_bp
-    from app.controller.scotland_controller import scotland_bp
-    from app.controller.stream_data_controller import stream_data_bp
+    from .controllers import correlation_bp, process_data_bp, scotland_bp, stream_data_bp
 
     app.register_blueprint(correlation_bp)
-    app.register_blueprint(correlation_dynamic_bp)
     app.register_blueprint(process_data_bp)
     app.register_blueprint(scotland_bp)
     app.register_blueprint(stream_data_bp)
+
 
 def configure_logs(app):
     """
@@ -31,6 +28,7 @@ def configure_logs(app):
         logger.addHandler(StreamHandler())
     except:
         pass
+
 
 def register_extensions(app):
     cache.init_app(app, config={'CACHE_TYPE': 'simple'})

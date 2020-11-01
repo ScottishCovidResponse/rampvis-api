@@ -1,13 +1,10 @@
-import os
 import json
-from datetime import datetime, timedelta
 
 from flask import Response, current_app, Blueprint
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
-from app.utils.jwt_service import validate_token
-
-from download import download_to_csvs
+from ..utils import validate_token
+from ..services import download_to_csvs
 
 stream_data_bp = Blueprint(
     'stream_data_bp',
@@ -17,18 +14,21 @@ stream_data_bp = Blueprint(
 
 config = current_app.config
 
+
 def download_data():
     """
     Download data products from https://data.scrc.uk/.
     """
-    download_to_csvs('records/SARS-CoV-2/scotland/cases-and-management/testing', 
-                     config.get('DATA_PATH_RAW'), 
-                     config.get('DATA_PATH_LIVE')) 
+    download_to_csvs('records/SARS-CoV-2/scotland/cases-and-management/testing',
+                     config.get('DATA_PATH_RAW'),
+                     config.get('DATA_PATH_LIVE'))
+
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(download_data, 'cron', hour=0, minute=0, second=0)
 scheduler.start()
+
 
 @stream_data_bp.route('/start', methods=['GET'])
 @validate_token

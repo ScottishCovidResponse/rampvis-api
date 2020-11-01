@@ -7,9 +7,9 @@ Key dependencies:
 Start development instance:
 
 ```
-conda remove --name data-mining-api --all
+conda remove --name ramp-vis-api --all
 conda env create -f environment.yml
-conda activate data-mining-api
+conda activate ramp-vis-api
 
 # development start
 ./run-dev.sh

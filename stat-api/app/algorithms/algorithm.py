@@ -1,6 +1,5 @@
 import pandas as pd
 import scipy.stats as stats
-import numpy as np
 
 
 def mse(df: pd.DataFrame):
