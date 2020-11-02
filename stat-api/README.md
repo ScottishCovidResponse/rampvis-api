@@ -1,10 +1,10 @@
 ## Stat API 
 
-Key dependencies:
-- Python 3.x
-- Flask
+Requirements
+- Python 3.8.3
+- conda 
 
-Start development instance:
+Start development instance
 
 ```
 conda remove --name ramp-vis-api --all

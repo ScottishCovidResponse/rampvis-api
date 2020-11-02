@@ -14,7 +14,7 @@ class OntologyService:
         self._init_indexes()
         self._init_type_nodes()
 
-        # self.create_data()
+        self.create_data()
 
     def _init_database(self):
         ontology.query(f'CREATE OR REPLACE DATABASE {self.db}')
@@ -60,14 +60,13 @@ class OntologyService:
         }
 
         print('OntologyService: param = ', param)
-        query = 'MATCH (a: Analytics {name: "Similarity"})' \
-                'CREATE (:Data {endpoint: $endpoint, description: $description, header:$header})' \
-                '-[:TYPE {name: $name}]->' \
-                '(a)'
+        query = 'MERGE (d: Data {endpoint: $endpoint, description: $description, header:$header})' \
+                'MERGE (a: Analytics {name: "Similarity"})' \
+                'MERGE (d)-[:TYPE {name: $name}]->(a)' \
 
         ontology.query_parameter(query, param, self.db)
 
-        print('OntologyService: register_data: data_node = ', data_node)
+        print('OntologyService: register_data: data_node = ', data_node, ', param = ', param)
 
         pass
 
