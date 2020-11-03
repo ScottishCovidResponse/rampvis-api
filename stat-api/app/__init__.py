@@ -1,7 +1,7 @@
-from flask import Flask, g
+from flask import Flask
 from flask_cors import CORS
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
-from .database import CacheDB, OntologyDB
+from app.infrastructure.database import CacheDB, GraphDB
 
 
 def register_blueprints(app):
@@ -32,7 +32,7 @@ def configure_logs(app):
 
 def register_extensions(app):
     CacheDB(app)
-    OntologyDB(app)
+    GraphDB(app)
 
     # TODO close db
     # @app.teardown_appcontext

@@ -22,4 +22,5 @@ dependencies:
     - fsspec
     - flask_caching==1.9.0
     - neo4j==4.1.1
+    - py2neo==2020.7b8
 
