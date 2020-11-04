@@ -13,8 +13,8 @@ class SourceEnum(Enum):
 
 class ModelEnum(Enum):
     IC = 'ic'
-    ONE_KM2 = '1km2',
-    LHSTM = 'lhstm',
+    ONE_KM2 = '1km2'
+    LHSTM = 'lhstm'
     CT = 'c&t'
 
 
@@ -23,7 +23,7 @@ class AnalyticsEnum(Enum):
     UNCERTAINTY = 'uncertainty'
 
 
-class DataNodeDto:
+class DataNode:
     def __init__(self,
                  endpoint: str,
                  header: str,
@@ -40,3 +40,13 @@ class DataNodeDto:
         self.type = type
         self.type_val = type_val
         self.source = source
+
+    @staticmethod
+    def deserialize(json_obj):
+        return DataNode(endpoint=json_obj.get('endpoint'),
+                        url_prefix=json_obj.get('url_prefix'),
+                        header=json_obj.get('header'),
+                        description=json_obj.get('description'),
+                        type=json_obj.get('type'),
+                        type_val=json_obj.get('type_val'),
+                        source=json_obj.get('source'))
