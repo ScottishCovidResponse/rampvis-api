@@ -1,5 +1,2 @@
-from .analytics_enum import AnalyticsEnum
-from .data_node import DataNode
-from .data_type_enum import DataTypeEnum
-from .model_enum import ModelEnum
-from .source_enum import SourceEnum
+from .data_node import AnalyticsEnum, SourceEnum, DataTypeEnum, ModelEnum, DataNodeDto
+from .vis_node import VisTypeEnum, VisNodeDto

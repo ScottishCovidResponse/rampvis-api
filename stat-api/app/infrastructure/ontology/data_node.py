@@ -1,22 +1,42 @@
+from enum import Enum
 from typing import Union
-from .analytics_enum import AnalyticsEnum
-from .data_type_enum import DataTypeEnum
-from .model_enum import ModelEnum
-from .source_enum import SourceEnum
 
 
-class DataNode:
+class DataTypeEnum(Enum):
+    MODEL = 'model'
+    ANALYTICS = 'analytics'
+
+
+class SourceEnum(Enum):
+    SCOTLAND = 'scotland'
+
+
+class ModelEnum(Enum):
+    IC = 'ic'
+    ONE_KM2 = '1km2',
+    LHSTM = 'lhstm',
+    CT = 'c&t'
+
+
+class AnalyticsEnum(Enum):
+    SIMILARITY = 'similarity'
+    UNCERTAINTY = 'uncertainty'
+
+
+class DataNodeDto:
     def __init__(self,
                  endpoint: str,
                  header: str,
                  description: str,
-                 source: SourceEnum,
+                 url_prefix: str,
                  type: DataTypeEnum = None,
-                 type_name: Union[ModelEnum, AnalyticsEnum] = None) -> None:
-
+                 type_val: Union[ModelEnum, AnalyticsEnum] = None,
+                 source: SourceEnum = None) -> None:
+        self.label = 'Data'
         self.endpoint = endpoint
         self.description = description
         self.header = header
+        self.url_prefix = url_prefix
         self.type = type
-        self.type_name = type_name
+        self.type_val = type_val
         self.source = source
