@@ -34,17 +34,17 @@ CREATE (:VisType {name: 'plot'});
 
 
 //
-// Create data
+// Create data_node
 //
-MERGE (d: Data {url_prefix: 'API_N', endpoint: "/scotland/nhs-board/?", description: "COVID 19 data by NHS Board 22 July 2020 xlsx", header:""})
+MERGE (d: Data {url_prefix: 'API_N', endpoint: "/data/scotland/nhs-board/?", description: "COVID 19 data_node by NHS Board 22 July 2020 xlsx", header:""})
   MERGE (s:Source {name: 'scotland'})
   MERGE (d)-[:SOURCE]->(s);
 
-MERGE (d: Data {url_prefix: 'API_N', endpoint: "/scotland/covid-deaths/?", description: "covid deaths data week 30 xlsx", header:""})
+MERGE (d: Data {url_prefix: 'API_N', endpoint: "/data/scotland/covid-deaths/?", description: "covid deaths data_node week 30 xlsx", header:""})
   MERGE (s:Source {name: 'scotland'})
   MERGE (d)-[:SOURCE]->(s);
 
-MERGE (d: Data {url_prefix: 'API_P', endpoint: "/scotland/nhs-board/?", description: "COVID 19 data by NHS Board 26 May 2020 XL sheet", header:""})
+MERGE (d: Data {url_prefix: 'API_P', endpoint: "/stat/scotland/nhs-board/?", description: "COVID 19 data_node by NHS Board 26 May 2020 XL sheet", header:""})
   MERGE (s:Source {name: 'scotland'})
   MERGE (d)-[:SOURCE]->(s)
   MERGE (a:Analytics {name: 'similarity'})

@@ -1,10 +1,10 @@
 import json
-
-from flask import Response, request, Blueprint
+from flask import request, Blueprint, Response
 from marshmallow import ValidationError
 
-from ..infrastructure.ontology import DataNode, DataSchema
+from ..infrastructure.ontology import DataNode, DataSchema, VisSchema, VisNode
 from ..services import OntologyService
+from ..utils import validate_token
 
 ontology_bp = Blueprint(
     'ontology_bp',
@@ -14,23 +14,55 @@ ontology_bp = Blueprint(
 
 ontology_service = OntologyService()
 data_schema = DataSchema()
+vis_schema = VisSchema()
 
 
 @ontology_bp.route('/data/create', methods=['POST'])
 # @validate_token
-def query():
+def create_data():
     req = request.get_json()
-    print('ontology_controller: req = ', req)
+    print('ontology_controller: create_data: req = ', req)
 
     if not req:
         return {"message": "No input data provided"}, 400
     try:
-        data = data_schema.load(req)
-        print('ontology_controller: data = ', data)
+        data = data_schema.load(req)  # validation
     except ValidationError as err:
         return err.messages, 422
     else:
-        print('ontology_controller: data = ', data)
+        print('ontology_controller: create_data: data = ', data)
         data_node = DataNode.deserialize(data)
-        print(data_schema.dumps(data_node))
-        return Response(json.dumps({'message': f'ontology_controller'}), mimetype='application/json')
+        OntologyService.create_data_node(data_node)
+        return {"message": "Created"}, 200
+
+
+@ontology_bp.route('/data/get', methods=['GET'])
+# @validate_token
+def get_data():
+    data = OntologyService.get_data_nodes()
+    return Response(json.dumps(data), mimetype='application/json')
+
+
+@ontology_bp.route('/vis/create', methods=['POST'])
+# @validate_token
+def create_vis():
+    req = request.get_json()
+    print('ontology_controller: create_vis: req = ', req)
+
+    if not req:
+        return {"message": "No input data provided"}, 400
+    try:
+        vis = vis_schema.load(req)  # validation
+    except ValidationError as err:
+        return err.messages, 422
+    else:
+        print('ontology_controller: create_vis: vis = ', vis)
+        vis_node = VisNode.deserialize(vis)
+        OntologyService.create_vis_node(vis_node)
+        return {"message": "Created"}, 200
+
+
+@ontology_bp.route('/data/get', methods=['GET'])
+# @validate_token
+def get_vis():
+    pass

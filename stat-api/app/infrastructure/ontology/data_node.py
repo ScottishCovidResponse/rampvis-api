@@ -1,14 +1,13 @@
 from enum import Enum
-from typing import Union
+
+
+class SourceEnum(Enum):
+    SCOTLAND = 'scotland'
 
 
 class DataTypeEnum(Enum):
     MODEL = 'model'
     ANALYTICS = 'analytics'
-
-
-class SourceEnum(Enum):
-    SCOTLAND = 'scotland'
 
 
 class ModelEnum(Enum):
@@ -25,14 +24,13 @@ class AnalyticsEnum(Enum):
 
 class DataNode:
     def __init__(self,
+                 url_prefix: str,
                  endpoint: str,
                  header: str,
                  description: str,
-                 url_prefix: str,
-                 type: DataTypeEnum = None,
-                 type_val: Union[ModelEnum, AnalyticsEnum] = None,
-                 source: SourceEnum = None) -> None:
-        self.label = 'Data'
+                 type: str = None,
+                 type_val: str = None,
+                 source: str = None) -> None:
         self.endpoint = endpoint
         self.description = description
         self.header = header
@@ -42,11 +40,11 @@ class DataNode:
         self.source = source
 
     @staticmethod
-    def deserialize(json_obj):
-        return DataNode(endpoint=json_obj.get('endpoint'),
-                        url_prefix=json_obj.get('url_prefix'),
-                        header=json_obj.get('header'),
-                        description=json_obj.get('description'),
-                        type=json_obj.get('type'),
-                        type_val=json_obj.get('type_val'),
-                        source=json_obj.get('source'))
+    def deserialize(obj):
+        return DataNode(endpoint=obj.get('endpoint'),
+                        url_prefix=obj.get('url_prefix'),
+                        header=obj.get('header'),
+                        description=obj.get('description'),
+                        type=obj.get('type'),
+                        type_val=obj.get('type_val'),
+                        source=obj.get('source'))

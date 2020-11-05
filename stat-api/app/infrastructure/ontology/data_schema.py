@@ -1,4 +1,5 @@
 from marshmallow import Schema, fields, validate
+
 from .data_node import DataTypeEnum, SourceEnum, ModelEnum, AnalyticsEnum
 
 
