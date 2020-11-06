@@ -1,15 +1,15 @@
 ## Stat API 
 
-Key dependencies:
-- Python 3.x
-- Flask
+Requirements
+- Python 3.8.3
+- conda 
 
-Start development instance:
+Start development instance
 
 ```
-conda remove --name data-mining-api --all
+conda remove --name ramp-vis-api --all
 conda env create -f environment.yml
-conda activate data-mining-api
+conda activate ramp-vis-api
 
 # development start
 ./run-dev.sh

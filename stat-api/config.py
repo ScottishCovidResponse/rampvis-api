@@ -8,6 +8,11 @@ class Config(object):
     DATA_PATH_RAW = BASE_DIR + '/' + '../data/raw'
     DATA_PATH_LIVE = BASE_DIR + '/' + '../data/live'
 
+    NEO4J_BOLT = 'bolt://localhost'
+    NEO4J_BOLT_PORT = 7687
+    NEO4J_USER = 'neo4j'
+    NEO4J_PASSWORD = 'pass123'
+
 
 class DevelopmentConfig(Config):
     DEBUG = True

@@ -5,10 +5,9 @@ from functools import wraps
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 
-config = current_app.config
-
 
 def validate_token(f):
+    config = current_app.config
 
     @wraps(f)
     def decorated(*args, **kwargs):

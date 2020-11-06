@@ -9,6 +9,7 @@ app = create_app(config_by_name[env])
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000, threaded=True)
 
+
 @app.route('/stat/v1/hello')
 def index():
     return "Hello World!"
