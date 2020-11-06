@@ -8,19 +8,18 @@ import { CovidDeathsController } from './scotland/covid-deaths.controller';
 import { SearchController } from './search.controller';
 import { ThumbnailController } from './thumbnail.controller';
 import { ScotlandLiveController } from './scotland/scotland-live.controller';
+import { OntologyController } from './ontology/ontology.controller';
 
 export {
     AuthController,
     BookmarkController,
     UserController,
     ActivityControllerInt,
-    
     SearchController,
     ThumbnailController,
-
     NhsBoardController,
     NhsBoardDynamicController,
     CovidDeathsController,
-    
     ScotlandLiveController,
+    OntologyController,
 };

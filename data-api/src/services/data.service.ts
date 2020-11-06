@@ -38,12 +38,12 @@ export abstract class DataService<T extends { _id: any }> {
     }
 
     public async get(arg: string | FilterQuery<T>): Promise<T> {
-        let doc: T;     // typeof _id = ObjectId
+        let doc: T; // typeof _id = ObjectId
 
         if (typeof arg === 'string') {
-            doc = await this.dbCollection.findOne({ _id: new ObjectId(arg) } as FilterQuery<T>) as T;
+            doc = (await this.dbCollection.findOne({ _id: new ObjectId(arg) } as FilterQuery<T>)) as T;
         } else if (typeof arg === 'object') {
-            doc = await this.dbCollection.findOne(arg as FilterQuery<T>) as T;
+            doc = (await this.dbCollection.findOne(arg as FilterQuery<T>)) as T;
         } else {
             return null as any;
         }
@@ -70,7 +70,7 @@ export abstract class DataService<T extends { _id: any }> {
             query,
             { $setOnInsert: entity } as UpdateQuery<T>,
             {
-                returnOriginal: false,  // When false, returns the updated document rather than the original. The default is true.
+                returnOriginal: false, // When false, returns the updated document rather than the original. The default is true.
                 upsert: true,
             } as FindOneAndUpdateOption<T>,
         );
@@ -78,13 +78,15 @@ export abstract class DataService<T extends { _id: any }> {
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
     }
 
-    public async save(entity: T): Promise<T> {
+    public async create(entity: T): Promise<T> {
         const res = await this.dbCollection.insertOne(entity as any);
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.ops[0]);
     }
 
     public async delete(id: string): Promise<T> {
-        const res: FindAndModifyWriteOpResultObject<T> = await this.dbCollection.findOneAndDelete({ _id: new ObjectId(id) } as FilterQuery<T>);
+        const res: FindAndModifyWriteOpResultObject<T> = await this.dbCollection.findOneAndDelete({
+            _id: new ObjectId(id),
+        } as FilterQuery<T>);
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
     }
 
@@ -106,7 +108,7 @@ export abstract class DataService<T extends { _id: any }> {
             { _id: new ObjectId(id) } as FilterQuery<T>,
             { $set: entity } as UpdateQuery<T>,
             {
-                returnOriginal: false,  // When false, returns the updated document rather than the original. The default is true.
+                returnOriginal: false, // When false, returns the updated document rather than the original. The default is true.
                 upsert: false,
             } as FindOneAndUpdateOption<T>,
         );
@@ -135,14 +137,10 @@ export abstract class DataService<T extends { _id: any }> {
                 //
             }
 
-            this.getDbCollection().createIndex(field,
-                { expireAfterSeconds: expiry },
-                (err, dbResult) => {
-                    if (err) {
-                        throw err;
-                    }
-                    resolve(true);
-                });
+            this.getDbCollection().createIndex(field, { expireAfterSeconds: expiry }, (err, dbResult) => {
+                if (err) throw err;
+                resolve(true);
+            });
         });
     }
 
@@ -153,14 +151,12 @@ export abstract class DataService<T extends { _id: any }> {
                     console.log('DataService: createTextIndex: d : ', d);
                     await this.getDbCollection().dropIndex(d);
                 }
-            } catch (e) {
-            }
+            } catch (e) {}
 
             this.getDbCollection().createIndex(obj, (err, dbResult) => {
-                    if (err) { throw err; }
-                    resolve(true);
-                });
+                if (err) throw err;
+                resolve(true);
+            });
         });
     }
-
 }

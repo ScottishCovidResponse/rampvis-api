@@ -5,9 +5,10 @@ const TYPES = {
     SearchService: Symbol.for('SearchService'),
     ThumbnailService: Symbol.for('ThumbnailService'),
     UserService: Symbol.for('UserService'),
-
+    OntologyVisService: Symbol.for('OntologyVisService'),
+    OntologyDataService: Symbol.for('OntologyDataService'),
+    OntologyPageService: Symbol.for('OntologyPageService'),
     DbClient: Symbol.for('DbClient'),
-
     CSVService: Symbol.for('CSVService'),
 };
 
