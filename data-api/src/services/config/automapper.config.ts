@@ -15,6 +15,8 @@ const MAPPING_TYPES = {
 
     IVis: 'IVis',
     VisDto: 'VisDto',
+    IData: 'IData',
+    DataDto: 'DataDto',
 };
 
 function configureAutoMapper() {
@@ -41,6 +43,10 @@ function configureAutoMapper() {
 
     automapper
         .createMap(MAPPING_TYPES.IVis, MAPPING_TYPES.VisDto)
+        .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'));
+
+    automapper
+        .createMap(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'));
 }
 

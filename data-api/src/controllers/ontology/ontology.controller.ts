@@ -12,11 +12,16 @@ import { IVis } from '../../infrastructure/ontology/vis.interface';
 import { OntologyVisService } from '../../services/ontology-vis.service';
 import { VisDto } from '../../infrastructure/ontology/vis.dto';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
+import { DataVm } from '../../infrastructure/ontology/data.vm';
+import { OntologyDataService } from '../../services/ontology-data.service';
+import { IData } from '../../infrastructure/ontology/data.interface';
+import { DataDto } from '../../infrastructure/ontology/data.dto';
 
 @controller('/ontology', JwtToken.verify)
 export class OntologyController {
     constructor(
         @inject(TYPES.OntologyVisService) private ontologyVisService: OntologyVisService,
+        @inject(TYPES.OntologyDataService) private ontologyDataService: OntologyDataService,
     ) {}
 
     //
@@ -34,5 +39,17 @@ export class OntologyController {
         response.status(200).send(visDto);
     }
 
+    //
+    // Data
+    //
+    @httpPost('/data/create', vmValidate(DataVm))
+    public async createData(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataVm: DataVm = request.body as any;
+        logger.info(`OntologyController: createData: dataVm = ${JSON.stringify(dataVm)}`);
 
+        const data: IData = await this.ontologyDataService.createData(dataVm);
+        const dataDto: DataDto = automapper.map(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto, data);
+        logger.info(`OntologyController: createData: dataDto = ${dataDto}`);
+        response.status(200).send(dataDto);
+    }
 }

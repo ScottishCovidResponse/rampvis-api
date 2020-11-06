@@ -2,6 +2,9 @@ import { IsEnum, IsOptional, IsString, IsUrl } from 'class-validator';
 import { VIS_TYPE } from './vis-type.enum';
 
 export class VisVm {
+    @IsOptional()
+    @IsString()
+    public id!: string;
     @IsString()
     public function!: string;
     @IsEnum(VIS_TYPE)

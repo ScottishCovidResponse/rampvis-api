@@ -8,16 +8,12 @@ import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { IVis } from '../infrastructure/ontology/vis.interface';
 import { VisVm } from '../infrastructure/ontology/vis.vm';
-import { VisIdDoesNotExist } from '../exceptions/exception';
+import { IdDoesNotExist } from '../exceptions/exception';
 
 @provide(TYPES.OntologyVisService)
 export class OntologyVisService extends DataService<IVis> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.ontology_vis'));
-    }
-
-    public async getMultiple(ids: string[]): Promise<IVis[]> {
-        return await this.getAll({ _id: { $in: ids.map((id) => new ObjectId(id)) } });
     }
 
     public async createVis(visVm: VisVm): Promise<IVis> {
@@ -40,7 +36,7 @@ export class OntologyVisService extends DataService<IVis> {
 
     public async updateVis(visId: string, visVm: VisVm): Promise<IVis> {
         let vis: IVis = await this.get(visId);
-        if (!vis) throw new VisIdDoesNotExist(visId);
+        if (!vis) throw new IdDoesNotExist(visId);
 
         const updateVis: IVis = {
             function: visVm.function,

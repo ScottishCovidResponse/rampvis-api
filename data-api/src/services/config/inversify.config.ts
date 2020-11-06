@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import { ActivityService } from '../activity.service';
 import { BookmarkService } from '../bookmark.service';
 import { CSVService } from '../csv.service';
+import { OntologyDataService } from '../ontology-data.service';
 import { OntologyVisService } from '../ontology-vis.service';
 import { SearchService } from '../search.service';
 import { ThumbnailService } from '../thumbnail.service';
@@ -19,7 +20,7 @@ DIContainer.bind<BookmarkService>(TYPES.BookmarkService).to(BookmarkService);
 DIContainer.bind<ThumbnailService>(TYPES.ThumbnailService).to(ThumbnailService);
 DIContainer.bind<SearchService>(TYPES.SearchService).to(SearchService);
 DIContainer.bind<OntologyVisService>(TYPES.OntologyVisService).to(OntologyVisService);
-// DIContainer.bind<OntologyDataService>(TYPES.OntologyDataService).to(OntologyDataService);
+DIContainer.bind<OntologyDataService>(TYPES.OntologyDataService).to(OntologyDataService);
 // DIContainer.bind<OntologyPageService>(TYPES.OntologyVisService).to(OntologyPageService);
 
 export { DIContainer };

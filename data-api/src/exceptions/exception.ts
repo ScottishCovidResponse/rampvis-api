@@ -101,10 +101,10 @@ class SearchError extends HttpException {
     }
 }
 
-class VisIdDoesNotExist extends HttpException {
+class IdDoesNotExist extends HttpException {
     constructor(id: string) {
         const data: object = { id };
-        super(400, `Vis with id ${id} does not exist`, ERROR_CODES.VIS_ID_DOES_NOT_EXIST, data);
+        super(400, `Object with id ${id} does not exist`, ERROR_CODES.ID_DOES_NOT_EXIST, data);
     }
 }
 
@@ -124,5 +124,5 @@ export {
     CsvParseError,
     PageBookmarkError,
     SearchError,
-    VisIdDoesNotExist,
+    IdDoesNotExist,
 };
