@@ -1,0 +1,77 @@
+[
+    {
+        "product": "records/SARS-CoV-2/scotland/cases-and-management/testing",
+        "components": [
+            {
+                "name": "date-country-new_cases_as_percentage_of_people_newly_tested",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-new_cases_reported",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-people_with_first_test_results_in_last_7_days",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-positive_cases_reported_in_last_7_days",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-positive_tests_reported_in_last_7_days",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-test_positivity_percent_of_tests_that_are_positive",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-test_positivity_rate_in_last_7_days",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-tests_in_last_7_days_per_1000_population",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-tests_reported_in_last_7_days",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-total_daily_number_of_positive_tests_reported",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "date-country-total_daily_tests_reported",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "test_result/date-people_tested_for_covid19-cumulative",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "testing_location/date-covid19_tests_carried_out-cumulative",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "testing_location/date-covid19_tests_carried_out-daily",
+                "location": "scotland",
+                "type": "raw"
+            }
+        ]
+    }
+]

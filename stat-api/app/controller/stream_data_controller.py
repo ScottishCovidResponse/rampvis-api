@@ -21,14 +21,17 @@ def download_data():
     """
     Download data products from https://data.scrc.uk/.
     """
-    download_to_csvs('records/SARS-CoV-2/scotland/cases-and-management/testing', 
-                     config.get('DATA_PATH_RAW'), 
-                     config.get('DATA_PATH_LIVE')) 
+    with open('manifest.json') as f:
+        manifest = json.load(f)
+        download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE')) 
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(download_data, 'cron', hour=0, minute=0, second=0)
 scheduler.start()
+
+# Download immediately
+download_data()
 
 @stream_data_bp.route('/start', methods=['GET'])
 @validate_token

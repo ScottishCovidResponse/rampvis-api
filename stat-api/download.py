@@ -9,6 +9,7 @@ import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
 
+# Components will be specified manually, probably don't need this any more
 def generate_components(f):
     components = []
     for k in f:
@@ -36,22 +37,26 @@ def to_df(f, key):
     df.index.name = 'date'
     return df
 
-def process_h5(path, live_path):
+def process_h5(path, live_path, component_names):
     f = h5py.File(path, 'r')
-    components = generate_components(f)
-    for c in components:
+    for c in component_names:
         df = to_df(f, c)
         filename = re.sub('[\-/]', '_', c) + '.csv'
         df.to_csv(Path(live_path) / filename)
     
-def download_to_csvs(product_name, raw_path, live_path):
+def download_to_csvs(manifest, raw_path, live_path):
     "Download the latest file of a data product, convert h5 to csv and save it."
-    # downloader = Downloader(data_directory=raw_path)
-    # downloader.add_data_product(namespace='SCRC', data_product=product_name)
-    # downloader.download()
+    for p in manifest:
+        component_names = [c['name'] for c in p['components']]
+        download_product(p['product'], component_names, raw_path, live_path)
+
+def download_product(product_name, component_names, raw_path, live_path):
+    downloader = Downloader(data_directory=raw_path)
+    downloader.add_data_product(namespace='SCRC', data_product=product_name)
+    downloader.download()
 
     folder = Path(raw_path) / product_name
     folder = folder/max(os.listdir(folder))
     h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
     filename = h5s[0]
-    process_h5(folder/filename, live_path)
+    process_h5(folder/filename, live_path, component_names)
