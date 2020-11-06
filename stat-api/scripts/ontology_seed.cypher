@@ -21,7 +21,7 @@ CREATE INDEX idx_vis IF NOT EXISTS FOR (v:Vis) ON (v.description);
 CREATE (:Analytics {name: 'similarity'});
 CREATE (:Analytics {name: 'uncertainty'});
 
-CREATE (:Model {name: 'ic-model'});
+CREATE (:Model {name: 'ic'});
 CREATE (:Model {name: '1km2'});
 CREATE (:Model {name: 'lhstm'});
 CREATE (:Model {name: 'c&t'});

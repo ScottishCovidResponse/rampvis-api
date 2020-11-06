@@ -3,22 +3,22 @@ from flask import request, Blueprint, Response
 from marshmallow import ValidationError
 
 from ..infrastructure.ontology import DataNode, DataSchema, VisSchema, VisNode
-from ..services import OntologyService
+from ..services import GraphService
 from ..utils import validate_token
 
-ontology_bp = Blueprint(
-    'ontology_bp',
+graph_bp = Blueprint(
+    'graph_bp',
     __name__,
-    url_prefix='/stat/v1/ontology',
+    url_prefix='/stat/v1/graph',
 )
 
-ontology_service = OntologyService()
+graph_service = GraphService()
 data_schema = DataSchema()
 vis_schema = VisSchema()
 
 
-@ontology_bp.route('/data/create', methods=['POST'])
-# @validate_token
+@graph_bp.route('/data/create', methods=['POST'])
+@validate_token
 def create_data():
     req = request.get_json()
     print('ontology_controller: create_data: req = ', req)
@@ -32,19 +32,19 @@ def create_data():
     else:
         print('ontology_controller: create_data: data = ', data)
         data_node = DataNode.deserialize(data)
-        OntologyService.create_data_node(data_node)
+        GraphService.create_data_node(data_node)
         return {"message": "Created"}, 200
 
 
-@ontology_bp.route('/data/get', methods=['GET'])
-# @validate_token
+@graph_bp.route('/data/get', methods=['GET'])
+@validate_token
 def get_data():
-    data = OntologyService.get_data_nodes()
+    data = GraphService.get_data_nodes()
     return Response(json.dumps(data), mimetype='application/json')
 
 
-@ontology_bp.route('/vis/create', methods=['POST'])
-# @validate_token
+@graph_bp.route('/vis/create', methods=['POST'])
+@validate_token
 def create_vis():
     req = request.get_json()
     print('ontology_controller: create_vis: req = ', req)
@@ -58,11 +58,11 @@ def create_vis():
     else:
         print('ontology_controller: create_vis: vis = ', vis)
         vis_node = VisNode.deserialize(vis)
-        OntologyService.create_vis_node(vis_node)
+        GraphService.create_vis_node(vis_node)
         return {"message": "Created"}, 200
 
 
-@ontology_bp.route('/data/get', methods=['GET'])
-# @validate_token
+@graph_bp.route('/data/get', methods=['GET'])
+@validate_token
 def get_vis():
     pass
