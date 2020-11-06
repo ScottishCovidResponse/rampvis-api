@@ -12,7 +12,7 @@ import {configureGithubStrategy} from "./passport-github";
 import {UserService} from "../services/user.service";
 import {DIContainer} from "../services/config/inversify.config";
 import {TYPES} from "../services/config/types";
-import {IUser} from "../infrastructure/entities/user.interface";
+import {IUser} from "../infrastructure/user/user.interface";
 
 function GlobalMiddleware(app: express.Application) {
     logger.info('Initialize global middleware.');

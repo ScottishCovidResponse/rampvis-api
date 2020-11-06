@@ -1,27 +1,23 @@
-import {NextFunction} from 'connect';
-import {Response} from 'express-serve-static-core';
-import {controller, httpGet} from 'inversify-express-utils';
+import { NextFunction } from 'connect';
+import { Response } from 'express-serve-static-core';
+import { controller, httpGet } from 'inversify-express-utils';
 
-import { InvalidQueryParametersException, SearchError} from '../exceptions/exception';
-import {logger} from '../utils/logger';
-import {RequestWithUser} from '../infrastructure/entities/request-with-user.interface';
-import {inject} from "inversify";
-import {TYPES} from "../services/config/types";
-import {SearchService} from "../services/search.service";
+import { InvalidQueryParametersException, SearchError } from '../exceptions/exception';
+import { logger } from '../utils/logger';
+import { IRequestWithUser } from '../infrastructure/user/request-with-user.interface';
+import { inject } from 'inversify';
+import { TYPES } from '../services/config/types';
+import { SearchService } from '../services/search.service';
 
 @controller('/scotland/search')
 export class SearchController {
-
-    constructor(
-        @inject(TYPES.SearchService) private searchService: SearchService
-    ) {
-    }
+    constructor(@inject(TYPES.SearchService) private searchService: SearchService) {}
 
     //
     // api/v1/scotland/search/?query=
     //
     @httpGet('/')
-    public async search(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async search(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const query = request.query.query as string;
         logger.info('SearchController: search: query = ', query);
 
@@ -37,6 +33,3 @@ export class SearchController {
         }
     }
 }
-
-
-

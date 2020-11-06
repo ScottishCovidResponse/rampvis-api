@@ -1,27 +1,24 @@
-import {NextFunction} from 'connect';
-import {Response} from 'express-serve-static-core';
-import {controller, httpGet} from 'inversify-express-utils';
+import { NextFunction } from 'connect';
+import { Response } from 'express-serve-static-core';
+import { controller, httpGet } from 'inversify-express-utils';
 
-import {CsvParseError, InvalidQueryParametersException} from '../../exceptions/exception';
-import {logger} from '../../utils/logger';
-import {RequestWithUser} from '../../infrastructure/entities/request-with-user.interface';
-import {CSVService} from '../../services/csv.service';
-import {inject} from "inversify";
-import {TYPES} from "../../services/config/types";
+import { CsvParseError, InvalidQueryParametersException } from '../../exceptions/exception';
+import { logger } from '../../utils/logger';
+import { IRequestWithUser } from '../../infrastructure/user/request-with-user.interface';
+import { CSVService } from '../../services/csv.service';
+import { inject } from 'inversify';
+import { TYPES } from '../../services/config/types';
 
 @controller('/scotland/nhs-board')
 export class NhsBoardController {
-
-    constructor(
-        @inject(TYPES.CSVService) private csvService: CSVService
-    ) {}
+    constructor(@inject(TYPES.CSVService) private csvService: CSVService) {}
 
     //
     // api/v1/scotland/?table=<>
     // api/v1/scotland/?table=<>&region=<>
     //
     @httpGet('/')
-    public async getNhsBoardData(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async getNhsBoardData(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const table = request.query.table as string;
         const region = request.query.region as string;
         logger.info('RegionDataController: getTableData: table = ', table, ', region = ', region);
@@ -34,12 +31,14 @@ export class NhsBoardController {
             const data: any[] = await this.csvService.getDataV04(table + '.csv');
 
             if (request.query.region) {
-                response.status(200).send(data.map((d: any) => {
-                    return {
-                        date: d.date,
-                        value: parseFloat(d[region].replace(/,/g, '')),
-                    };
-                }));
+                response.status(200).send(
+                    data.map((d: any) => {
+                        return {
+                            date: d.date,
+                            value: parseFloat(d[region].replace(/,/g, '')),
+                        };
+                    }),
+                );
             } else {
                 response.status(200).send(data);
             }
@@ -48,6 +47,3 @@ export class NhsBoardController {
         }
     }
 }
-
-
-

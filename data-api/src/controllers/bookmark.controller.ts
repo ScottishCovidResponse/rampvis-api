@@ -5,19 +5,20 @@ import { inject } from 'inversify';
 import multer from 'multer';
 
 import { TYPES } from '../services/config/types';
-import { IUser } from '../infrastructure/entities/user.interface';
+import { IUser } from '../infrastructure/user/user.interface';
 import { JwtToken } from '../middleware/jwt.token';
 import { logger } from '../utils/logger';
 import { ObjectNotFoundException, PageBookmarkError } from '../exceptions/exception';
 import { MAPPING_TYPES } from '../services/config/automapper.config';
-import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../infrastructure/entities/activity.interface';
 import { UserService } from '../services/user.service';
 import { ActivityService } from '../services/activity.service';
 import { BookmarkDto } from '../infrastructure/dto/bookmark.dto';
 import { ERROR_CODES } from '../exceptions/error.codes';
 import { IBookmark } from '../infrastructure/entities/bookmark.interface';
 import { BookmarkService } from '../services/bookmark.service';
-import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
+import { IRequestWithUser } from '../infrastructure/user/request-with-user.interface';
+import { ACTIVITY_TYPE } from '../infrastructure/activity/activity.interface';
+import { ACTIVITY_ACTION } from '../infrastructure/activity/activity.interface';
 
 const upload = multer();
 
@@ -34,7 +35,7 @@ export class BookmarkController {
     //
 
     @httpPost('/', upload.single('thumbnail')) // dtoValidate(BookmarkDto) - body - form-data
-    public async createBookmark(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async createBookmark(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const bookmarkDto: BookmarkDto = <any>request.body;
         const user: IUser = <IUser>request.user;
         bookmarkDto.thumbnail = <any>request.file;
@@ -66,7 +67,7 @@ export class BookmarkController {
     }
 
     @httpGet('/')
-    public async getAllBookmarks(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async getAllBookmarks(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const user: IUser = <IUser>request.user;
 
         logger.debug('BookmarkController: getAllBookmarks: request.user = ' + JSON.stringify(request.user));
@@ -81,7 +82,7 @@ export class BookmarkController {
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.BOOKMARK,
-                ACTIVITY_ACTION.READ,
+                ACTIVITY_ACTION.CREATE,
                 user._id.toString(),
             );
 
@@ -91,7 +92,7 @@ export class BookmarkController {
     }
 
     @httpGet('/:pageId')
-    public async getBookmarkInfo(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async getBookmarkInfo(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const user: IUser = <IUser>request.user;
         const pageId = request.params.pageId;
 
@@ -103,20 +104,12 @@ export class BookmarkController {
         } else {
             const result: IBookmark = await this.bookmarkService.getBookmarkInfo(user, pageId);
             const resultDto: BookmarkDto[] = automapper.map(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto, result);
-
-            await this.activityService.createActivity(
-                user,
-                ACTIVITY_TYPE.BOOKMARK,
-                ACTIVITY_ACTION.READ,
-                user._id.toString(),
-            );
-
             response.status(200).send(resultDto);
         }
     }
 
     @httpDelete('/:pageId')
-    public async removeBookmark(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async removeBookmark(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const user: IUser = <IUser>request.user;
         const pageId = request.params.pageId;
 

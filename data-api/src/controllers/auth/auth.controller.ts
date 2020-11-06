@@ -1,25 +1,26 @@
 import * as bcrypt from 'bcryptjs';
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
-import { TYPES } from '../services/config/types';
+import { TYPES } from '../../services/config/types';
 import { inject } from 'inversify';
 import { NextFunction } from 'connect';
 import { Request, Response } from 'express-serve-static-core';
 import config from 'config';
 import passport from 'passport';
 
-import { RequestWithUser } from './../infrastructure/entities/request-with-user.interface';
-import { WrongCredentialsException } from '../exceptions/exception';
-import { vmValidate } from '../middleware/validators';
-import { LoginDto } from '../infrastructure/dto/login.dto';
-import { JwtToken } from '../middleware/jwt.token';
-import { ITokenData } from '../infrastructure/token/token-data.interface';
-import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../infrastructure/entities/activity.interface';
-import { logger } from '../utils/logger';
-import { UserService } from '../services/user.service';
-import { ActivityService } from '../services/activity.service';
-import { GitHubLoginDto } from '../infrastructure/dto/github-login.dto';
-import { UserDto } from '../infrastructure/dto/user.dto';
-import { IUser } from '../infrastructure/entities/user.interface';
+import { IRequestWithUser } from '../../infrastructure/user/request-with-user.interface';
+import { WrongCredentialsException } from '../../exceptions/exception';
+import { vmValidate } from '../../middleware/validators';
+import { LoginVm } from '../../infrastructure/user/login.vm';
+import { JwtToken } from '../../middleware/jwt.token';
+import { ITokenData } from '../../infrastructure/token/token-data.interface';
+import { logger } from '../../utils/logger';
+import { UserService } from '../../services/user.service';
+import { ActivityService } from '../../services/activity.service';
+import { GitHubLoginDto } from '../../infrastructure/dto/github-login.dto';
+import { UserVm } from '../../infrastructure/user/user.vm';
+import { IUser } from '../../infrastructure/user/user.interface';
+import { ACTIVITY_TYPE } from '../../infrastructure/activity/activity.interface';
+import { ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
 
 @controller('/auth')
 export class AuthController {
@@ -40,17 +41,16 @@ export class AuthController {
         const currentUser = (request as any).currentUser;
         logger.debug('AuthController: callback: currentUser = ', currentUser);
 
-        const tokenData: ITokenData = JwtToken.create(currentUser, null);
-
+        const tokenData: ITokenData = await JwtToken.create(currentUser);
         response.redirect(`${config.get('github.successRedirect')}/?token=${tokenData.token}`);
     }
 
     //
     // user/pass
     //
-    @httpPost('/login', vmValidate(LoginDto))
-    public async login(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const loginData: LoginDto = request.body as any;
+    @httpPost('/login', vmValidate(LoginVm))
+    public async login(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        const loginData: LoginVm = request.body as any;
 
         logger.error('AuthController: login: loginData = ', loginData);
 
@@ -62,8 +62,7 @@ export class AuthController {
             const isPasswordMatching = await bcrypt.compare(loginData.password, user.password as string);
             if (isPasswordMatching) {
                 user.password = '';
-                const permissions = await JwtToken.getAllGrants(user.role);
-                const tokenData: ITokenData = JwtToken.create(user, permissions);
+                const tokenData: ITokenData = await JwtToken.create(user);
 
                 await this.activityService.createActivity(
                     user,
@@ -71,7 +70,6 @@ export class AuthController {
                     ACTIVITY_ACTION.LOGIN,
                     user._id.toString(),
                 );
-
                 response.status(200).send(tokenData);
             } else {
                 next(new WrongCredentialsException(loginData.email));

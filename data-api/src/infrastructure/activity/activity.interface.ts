@@ -1,17 +1,19 @@
 import { ObjectId } from 'bson';
-import { ACCOUNT_ROLES } from './user.interface';
+import { ROLES } from '../user/roles.enum';
 
 export interface IActivity {
     _id: string | ObjectId;
     type: ACTIVITY_TYPE;
     action: ACTIVITY_ACTION;
-    objectId: string;       // Represent the id of the object for which the activity is generated, e.g., userId
+    // Id of the object for which the activity is generated, e.g., userId, collectionId, etc.
+    objectId: string;
     createdAt: Date;
-    accountId: string;
-    accountRole: ACCOUNT_ROLES;
+    userId: string;
+    role: ROLES;
 }
 
 export enum ACTIVITY_TYPE {
+    LOGIN = 'login',
     USER = 'user',
     BOOKMARK = 'bookmark',
 }
@@ -19,8 +21,6 @@ export enum ACTIVITY_TYPE {
 export enum ACTIVITY_ACTION {
     CREATE = 'create',
     UPDATE = 'update',
-    READ = 'read',
     DELETE = 'delete',
     LOGIN = 'login',
-
 }

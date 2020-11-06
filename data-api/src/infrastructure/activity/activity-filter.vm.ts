@@ -1,23 +1,24 @@
 import { IsDateString, IsOptional, IsString } from 'class-validator';
 
 export class ActivityFilterVm {
-    @IsOptional()
-    @IsString()
-    page!: string;
 
     @IsOptional()
     @IsString()
-    pageCount!: string;
+    public page!: string;
 
     @IsOptional()
     @IsString()
-    filter!: string;
+    public pageCount!: string;
+
+    @IsOptional()
+    @IsString()
+    public filter!: string;
 
     @IsOptional()
     @IsDateString()
-    startDt!: Date;
+    public startDt!: Date;
 
     @IsOptional()
     @IsDateString()
-    endDt!: Date;
+    public endDt!: Date;
 }

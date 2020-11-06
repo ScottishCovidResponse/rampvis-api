@@ -1,5 +1,5 @@
-import { AuthController } from './auth.controller';
-import { UserController } from './user.controller';
+import { AuthController } from './auth/auth.controller';
+import { UserController } from './user/user.controller';
 import { BookmarkController } from './bookmark.controller';
 import { ActivityControllerInt } from './activity.controller';
 import { NhsBoardController } from './scotland/nhs-board.controller';

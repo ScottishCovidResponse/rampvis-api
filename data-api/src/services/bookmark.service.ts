@@ -9,7 +9,7 @@ import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { DataService } from './data.service';
 import { BookmarkDto } from '../infrastructure/dto/bookmark.dto';
 import { IBookmark } from '../infrastructure/entities/bookmark.interface';
-import { IUser } from '../infrastructure/entities/user.interface';
+import { IUser } from '../infrastructure/user/user.interface';
 import { logger } from '../utils/logger';
 import { MAPPING_TYPES } from './config/automapper.config';
 
