@@ -27,6 +27,15 @@ export class OntologyController {
     //
     // Vis
     //
+    @httpGet('/vis')
+    public async getAllVis(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const visList: IVis[] = await this.ontologyVisService.getAll();
+        const visDtos: VisDto[] = automapper.map(MAPPING_TYPES.IVis, MAPPING_TYPES.VisDto, visList);
+
+        logger.info(`OntologyController: getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
+        response.status(200).send(visDtos);
+    }
+
     @httpPost('/vis/create', vmValidate(VisVm))
     public async createVis(request: Request, response: Response, next: NextFunction): Promise<void> {
         const visVm: VisVm = request.body as any;
@@ -42,6 +51,15 @@ export class OntologyController {
     //
     // Data
     //
+    @httpGet('/data')
+    public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataList: IData[] = await this.ontologyDataService.getAll();
+        const dataDtos: DataDto[] = automapper.map(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto, dataList);
+
+        logger.info(`OntologyController: getAllData: dataDtos = ${JSON.stringify(dataDtos)}`);
+        response.status(200).send(dataDtos);
+    }
+
     @httpPost('/data/create', vmValidate(DataVm))
     public async createData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataVm: DataVm = request.body as any;
