@@ -1,12 +1,17 @@
-import { ANALYTICS, MODEL, SOURCE } from "./data-types";
+import { ANALYTICS, MODEL, SOURCE } from './data-types';
+
+export class QueryParamsDto {
+    query: string = '';
+    params: string[] = [];
+}
 
 export class DataDto {
     public id: string = '';
     public url: string = '';
     public endpoint: string = '';
-    public query_params?: {[key: string]: Array<string>} = undefined as any;
+    public query_params?: QueryParamsDto[] = [];
     public description: string = '';
-    public source?: SOURCE = undefined as any;
-    public model?: MODEL = undefined as any;
-    public analytics?: ANALYTICS = undefined as any;
+    public source?: SOURCE = '' as any;
+    public model?: MODEL = '' as any;
+    public analytics?: ANALYTICS = '' as any;
 }

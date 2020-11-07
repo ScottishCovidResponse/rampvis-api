@@ -55,6 +55,7 @@ function configureAutoMapper() {
     automapper
         .createMap(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
+        .forMember('query_params', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('query_params'))
         .convertToType(DataDto);
 }
 

@@ -67,7 +67,8 @@ export class OntologyController {
 
         const data: IData = await this.ontologyDataService.createData(dataVm);
         const dataDto: DataDto = automapper.map(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto, data);
-        logger.info(`OntologyController: createData: dataDto = ${dataDto}`);
+        logger.info(`OntologyController: createData: data = ${JSON.stringify(data)}`);
+        logger.info(`OntologyController: createData: dataDto = ${JSON.stringify(dataDto)}`);
         response.status(200).send(dataDto);
     }
 }

@@ -1,5 +1,13 @@
-import { IsArray, IsEnum, IsObject, IsOptional, IsString, IsUrl } from 'class-validator';
+import { IsArray, IsEnum, IsObject, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ANALYTICS, MODEL, SOURCE } from './data-types';
+
+export class QueryParamsVm {
+    @IsString()
+    public query!: string;
+    @IsArray()
+    public params!: string[];
+}
 
 export class DataVm {
     @IsOptional()
@@ -11,9 +19,12 @@ export class DataVm {
     public endpoint!: string;
     @IsString()
     public description!: string;
+
     @IsOptional()
-    @IsObject()
-    public query_params!: {[key: string]: Array<string>};
+    @Type(() => QueryParamsVm)
+    @ValidateNested({ each: true })
+    public query_params!: QueryParamsVm[];
+
     @IsOptional()
     @IsEnum(SOURCE)
     public source!: SOURCE;

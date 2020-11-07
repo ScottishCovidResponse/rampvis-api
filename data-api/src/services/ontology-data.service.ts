@@ -25,7 +25,7 @@ export class OntologyDataService extends DataService<IData> {
         let data: IData = await this.get({ endpoint: dataVm.endpoint, url: dataVm.url });
         if (data) return data;
 
-         data = {
+        data = {
             _id: new ObjectId(),
             url: dataVm.url,
             endpoint: dataVm.endpoint,
