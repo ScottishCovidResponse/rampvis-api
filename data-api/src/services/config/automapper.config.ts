@@ -1,7 +1,7 @@
 import 'automapper-ts';
 import { ActivityDto } from '../../infrastructure/activity/activity.dto';
-import { DataDto } from '../../infrastructure/ontology/data.dto';
-import { VisDto } from '../../infrastructure/ontology/vis.dto';
+import { OntoDataDto } from '../../infrastructure/ontology/onto-data.dto';
+import { OntoVisDto } from '../../infrastructure/ontology/onto-vis.dto';
 import { UserDto } from '../../infrastructure/user/user.dto';
 
 const MAPPING_TYPES = {
@@ -17,10 +17,10 @@ const MAPPING_TYPES = {
     MongoDbObjectId: 'MongoDbObjectId',
     TsString: 'TsString',
 
-    IVis: 'IVis',
-    VisDto: 'VisDto',
-    IData: 'IData',
-    DataDto: 'DataDto',
+    IOntoVis: 'IOntoVis',
+    OntoVisDto: 'OntoVisDto',
+    IOntoData: 'IOntoData',
+    OntoDataDto: 'OntoDataDto',
 };
 
 function configureAutoMapper() {
@@ -48,15 +48,15 @@ function configureAutoMapper() {
         .convertToType(ActivityDto);
 
     automapper
-        .createMap(MAPPING_TYPES.IVis, MAPPING_TYPES.VisDto)
+        .createMap(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
-        .convertToType(VisDto);
+        .convertToType(OntoVisDto);
 
     automapper
-        .createMap(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto)
+        .createMap(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('query_params', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('query_params'))
-        .convertToType(DataDto);
+        .convertToType(OntoDataDto);
 }
 
 export { configureAutoMapper, MAPPING_TYPES };

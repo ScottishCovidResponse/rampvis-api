@@ -1,15 +1,9 @@
 import { IsArray, IsEnum, IsObject, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ANALYTICS, MODEL, SOURCE } from './data-types';
+import { ANALYTICS, MODEL, SOURCE } from './onto-data-types';
+import { QueryParamsVm } from './query-params.vm';
 
-export class QueryParamsVm {
-    @IsString()
-    public query!: string;
-    @IsArray()
-    public params!: string[];
-}
-
-export class DataVm {
+export class OntoDataVm {
     @IsOptional()
     @IsString()
     public id!: string;
@@ -21,6 +15,7 @@ export class DataVm {
     public description!: string;
 
     @IsOptional()
+    @IsArray()
     @Type(() => QueryParamsVm)
     @ValidateNested({ each: true })
     public query_params!: QueryParamsVm[];

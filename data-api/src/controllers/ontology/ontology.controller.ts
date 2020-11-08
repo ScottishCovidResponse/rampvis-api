@@ -1,21 +1,21 @@
 import { NextFunction } from 'connect';
 import { Request, Response } from 'express-serve-static-core';
-import { controller, httpGet, httpPost } from 'inversify-express-utils';
+import { controller, httpGet, httpPost, httpPut } from 'inversify-express-utils';
 import { inject } from 'inversify';
 
 import { logger } from '../../utils/logger';
 import { TYPES } from '../../services/config/types';
 import { vmValidate } from '../../middleware/validators';
-import { VisVm } from '../../infrastructure/ontology/vis.vm';
+import { OntoVisVm } from '../../infrastructure/ontology/onto-vis.vm';
 import { JwtToken } from '../../middleware/jwt.token';
-import { IVis } from '../../infrastructure/ontology/vis.interface';
+import { IOntoVis } from '../../infrastructure/ontology/onto-vis.interface';
 import { OntologyVisService } from '../../services/ontology-vis.service';
-import { VisDto } from '../../infrastructure/ontology/vis.dto';
+import { OntoVisDto } from '../../infrastructure/ontology/onto-vis.dto';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
-import { DataVm } from '../../infrastructure/ontology/data.vm';
+import { OntoDataVm } from '../../infrastructure/ontology/onto-data.vm';
 import { OntologyDataService } from '../../services/ontology-data.service';
-import { IData } from '../../infrastructure/ontology/data.interface';
-import { DataDto } from '../../infrastructure/ontology/data.dto';
+import { IOntoData } from '../../infrastructure/ontology/onto-data.interface';
+import { OntoDataDto } from '../../infrastructure/ontology/onto-data.dto';
 
 @controller('/ontology', JwtToken.verify)
 export class OntologyController {
@@ -29,22 +29,31 @@ export class OntologyController {
     //
     @httpGet('/vis')
     public async getAllVis(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const visList: IVis[] = await this.ontologyVisService.getAll();
-        const visDtos: VisDto[] = automapper.map(MAPPING_TYPES.IVis, MAPPING_TYPES.VisDto, visList);
-
+        const visList: IOntoVis[] = await this.ontologyVisService.getAll();
+        const visDtos: OntoVisDto[] = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, visList);
         logger.info(`OntologyController: getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
         response.status(200).send(visDtos);
     }
 
-    @httpPost('/vis/create', vmValidate(VisVm))
+    @httpPost('/vis/create', vmValidate(OntoVisVm))
     public async createVis(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const visVm: VisVm = request.body as any;
+        const visVm: OntoVisVm = request.body as any;
         logger.info(`OntologyController: createVis: visVm = ${JSON.stringify(visVm)}`);
 
-        const vis: IVis = await this.ontologyVisService.createVis(visVm);
-        const visDto: VisDto = automapper.map(MAPPING_TYPES.IVis, MAPPING_TYPES.VisDto, vis);
+        const vis: IOntoVis = await this.ontologyVisService.createVis(visVm);
+        const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
         logger.info(`OntologyController: createVis: visDto = ${visDto}`);
+        response.status(200).send(visDto);
+    }
 
+    @httpPut('/vis/update', vmValidate(OntoVisVm))
+    public async updateVis(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const visVm: OntoVisVm = request.body as any;
+        logger.info(`OntologyController: updateVis: visVm = ${JSON.stringify(visVm)}`);
+
+        const vis: IOntoVis = await this.ontologyVisService.updateVis(visVm.id, visVm);
+        const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
+        logger.info(`OntologyController: updateVis: visDto = ${visDto}`);
         response.status(200).send(visDto);
     }
 
@@ -53,22 +62,46 @@ export class OntologyController {
     //
     @httpGet('/data')
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const dataList: IData[] = await this.ontologyDataService.getAll();
-        const dataDtos: DataDto[] = automapper.map(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto, dataList);
-
+        const dataList: IOntoData[] = await this.ontologyDataService.getAll();
+        const dataDtos: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, dataList);
         logger.info(`OntologyController: getAllData: dataDtos = ${JSON.stringify(dataDtos)}`);
         response.status(200).send(dataDtos);
     }
 
-    @httpPost('/data/create', vmValidate(DataVm))
+    @httpPost('/data/create', vmValidate(OntoDataVm))
     public async createData(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const dataVm: DataVm = request.body as any;
+        const dataVm: OntoDataVm = request.body as any;
         logger.info(`OntologyController: createData: dataVm = ${JSON.stringify(dataVm)}`);
 
-        const data: IData = await this.ontologyDataService.createData(dataVm);
-        const dataDto: DataDto = automapper.map(MAPPING_TYPES.IData, MAPPING_TYPES.DataDto, data);
-        logger.info(`OntologyController: createData: data = ${JSON.stringify(data)}`);
+        const data: IOntoData = await this.ontologyDataService.createData(dataVm);
+        const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
         logger.info(`OntologyController: createData: dataDto = ${JSON.stringify(dataDto)}`);
         response.status(200).send(dataDto);
     }
+
+    @httpPut('/data/update', vmValidate(OntoDataVm))
+    public async updateData(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataVm: OntoDataVm = request.body as any;
+        logger.info(`OntologyController: updateData: dataVm = ${JSON.stringify(dataVm)}`);
+
+        const data: IOntoData = await this.ontologyDataService.updateData(dataVm.id, dataVm);
+        const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+        logger.info(`OntologyController: updateData: dataDto = ${JSON.stringify(dataDto)}`);
+        response.status(200).send(dataDto);
+    }
+
+    //
+    // Page
+    //
+    @httpPost('/data/page', vmValidate(OntoDataVm))
+    public async createPage(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataVm: OntoDataVm = request.body as any;
+        logger.info(`OntologyController: createData: dataVm = ${JSON.stringify(dataVm)}`);
+
+        const data: IOntoData = await this.ontologyDataService.createData(dataVm);
+        const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+        logger.info(`OntologyController: createData: dataDto = ${JSON.stringify(dataDto)}`);
+        response.status(200).send(dataDto);
+    }
+
 }

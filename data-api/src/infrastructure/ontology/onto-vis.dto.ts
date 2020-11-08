@@ -1,6 +1,6 @@
-import { VIS_TYPE } from './vis-type.enum';
+import { VIS_TYPE } from './onto-vis-type.enum';
 
-export class VisDto {
+export class OntoVisDto {
     public id: string = '';
     public function: string = '';
     public type: VIS_TYPE = undefined as any;

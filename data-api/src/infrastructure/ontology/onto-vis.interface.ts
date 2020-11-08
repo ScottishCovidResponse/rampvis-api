@@ -1,7 +1,7 @@
 import { ObjectId } from 'bson';
-import { VIS_TYPE } from './vis-type.enum';
+import { VIS_TYPE } from './onto-vis-type.enum';
 
-export interface IVis {
+export interface IOntoVis {
     _id: string | ObjectId;
     function: string;
     type: VIS_TYPE;

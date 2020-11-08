@@ -1,11 +1,7 @@
-import { ANALYTICS, MODEL, SOURCE } from './data-types';
+import { ANALYTICS, MODEL, SOURCE } from './onto-data-types';
+import { QueryParamsDto } from './query-params.dto';
 
-export class QueryParamsDto {
-    query: string = '';
-    params: string[] = [];
-}
-
-export class DataDto {
+export class OntoDataDto {
     public id: string = '';
     public url: string = '';
     public endpoint: string = '';

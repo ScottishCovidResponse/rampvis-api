@@ -1,12 +1,8 @@
 import { ObjectId } from 'bson';
-import { ANALYTICS, MODEL, SOURCE } from './data-types';
+import { ANALYTICS, MODEL, SOURCE } from './onto-data-types';
+import { IQueryParams } from './query-params.interface';
 
-export interface IQueryParams {
-    query: string;
-    params: string[];
-}
-
-export interface IData {
+export interface IOntoData {
     _id: string | ObjectId;
     url: string;
     endpoint: string;

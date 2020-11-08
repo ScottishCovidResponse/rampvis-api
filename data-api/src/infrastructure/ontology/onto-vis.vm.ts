@@ -1,7 +1,7 @@
 import { IsEnum, IsOptional, IsString, IsUrl } from 'class-validator';
-import { VIS_TYPE } from './vis-type.enum';
+import { VIS_TYPE } from './onto-vis-type.enum';
 
-export class VisVm {
+export class OntoVisVm {
     @IsOptional()
     @IsString()
     public id!: string;
