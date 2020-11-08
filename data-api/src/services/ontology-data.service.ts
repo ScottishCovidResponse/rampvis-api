@@ -6,11 +6,11 @@ import { provide } from 'inversify-binding-decorators';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { IOntoData } from '../infrastructure/ontology/onto-data.interface';
-import { OntoDataVm } from '../infrastructure/ontology/onto-data.vm';
+import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
+import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
 import { IdDoesNotExist } from '../exceptions/exception';
 import { logger } from '../utils/logger';
-import { QueryParamsVm } from '../infrastructure/ontology/query-params.vm';
+import { QueryParamsVm } from '../infrastructure/onto-data/query-params.vm';
 
 @provide(TYPES.OntologyDataService)
 export class OntologyDataService extends DataService<IOntoData> {

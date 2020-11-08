@@ -6,16 +6,16 @@ import { inject } from 'inversify';
 import { logger } from '../../utils/logger';
 import { TYPES } from '../../services/config/types';
 import { vmValidate } from '../../middleware/validators';
-import { OntoVisVm } from '../../infrastructure/ontology/onto-vis.vm';
 import { JwtToken } from '../../middleware/jwt.token';
-import { IOntoVis } from '../../infrastructure/ontology/onto-vis.interface';
+import { IOntoVis } from '../../infrastructure/onto-vis/onto-vis.interface';
+import { OntoVisVm } from '../../infrastructure/onto-vis/onto-vis.vm';
+import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { OntologyVisService } from '../../services/ontology-vis.service';
-import { OntoVisDto } from '../../infrastructure/ontology/onto-vis.dto';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
-import { OntoDataVm } from '../../infrastructure/ontology/onto-data.vm';
+import { OntoDataVm } from '../../infrastructure/onto-data/onto-data.vm';
 import { OntologyDataService } from '../../services/ontology-data.service';
-import { IOntoData } from '../../infrastructure/ontology/onto-data.interface';
-import { OntoDataDto } from '../../infrastructure/ontology/onto-data.dto';
+import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
+import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
 
 @controller('/ontology', JwtToken.verify)
 export class OntologyController {

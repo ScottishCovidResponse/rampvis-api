@@ -1,7 +1,7 @@
 import 'automapper-ts';
 import { ActivityDto } from '../../infrastructure/activity/activity.dto';
-import { OntoDataDto } from '../../infrastructure/ontology/onto-data.dto';
-import { OntoVisDto } from '../../infrastructure/ontology/onto-vis.dto';
+import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
+import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { UserDto } from '../../infrastructure/user/user.dto';
 
 const MAPPING_TYPES = {

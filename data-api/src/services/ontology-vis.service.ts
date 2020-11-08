@@ -6,8 +6,8 @@ import { provide } from 'inversify-binding-decorators';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { IOntoVis } from '../infrastructure/ontology/onto-vis.interface';
-import { OntoVisVm } from '../infrastructure/ontology/onto-vis.vm';
+import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
+import { OntoVisVm } from '../infrastructure/onto-vis/onto-vis.vm';
 import { IdDoesNotExist } from '../exceptions/exception';
 
 @provide(TYPES.OntologyVisService)
