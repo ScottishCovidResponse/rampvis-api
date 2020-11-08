@@ -16,8 +16,6 @@ import { ITokenData } from '../../infrastructure/token/token-data.interface';
 import { logger } from '../../utils/logger';
 import { UserService } from '../../services/user.service';
 import { ActivityService } from '../../services/activity.service';
-import { GitHubLoginDto } from '../../infrastructure/dto/github-login.dto';
-import { UserVm } from '../../infrastructure/user/user.vm';
 import { IUser } from '../../infrastructure/user/user.interface';
 import { ACTIVITY_TYPE } from '../../infrastructure/activity/activity.interface';
 import { ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';

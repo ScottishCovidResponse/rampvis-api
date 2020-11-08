@@ -2,7 +2,7 @@ import { provide } from 'inversify-binding-decorators';
 
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { IPage } from '../infrastructure/entities/page.interface';
+import { IPage } from '../infrastructure/search/page.interface';
 import { inject } from 'inversify';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import config from 'config';

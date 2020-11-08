@@ -9,7 +9,6 @@ import { JwtToken } from '../middleware/jwt.token';
 import { TYPES } from '../services/config/types';
 import { ERROR_CODES } from '../exceptions/error.codes';
 import { ObjectNotFoundException } from '../exceptions/exception';
-import { BookmarkDto } from '../infrastructure/dto/bookmark.dto';
 import { ActivityService } from '../services/activity.service';
 import { MAPPING_TYPES } from '../services/config/automapper.config';
 import { ThumbnailService } from '../services/thumbnail.service';

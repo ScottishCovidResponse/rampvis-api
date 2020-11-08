@@ -7,8 +7,8 @@ import { FilterQuery, FindAndModifyWriteOpResultObject, ObjectId } from 'mongodb
 import { TYPES } from './config/types';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { DataService } from './data.service';
-import { BookmarkDto } from '../infrastructure/dto/bookmark.dto';
-import { IBookmark } from '../infrastructure/entities/bookmark.interface';
+import { BookmarkDto } from '../infrastructure/bookmark/bookmark.dto';
+import { IBookmark } from '../infrastructure/bookmark/bookmark.interface';
 import { IUser } from '../infrastructure/user/user.interface';
 import { logger } from '../utils/logger';
 import { MAPPING_TYPES } from './config/automapper.config';

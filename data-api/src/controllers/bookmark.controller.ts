@@ -12,9 +12,9 @@ import { ObjectNotFoundException, PageBookmarkError } from '../exceptions/except
 import { MAPPING_TYPES } from '../services/config/automapper.config';
 import { UserService } from '../services/user.service';
 import { ActivityService } from '../services/activity.service';
-import { BookmarkDto } from '../infrastructure/dto/bookmark.dto';
+import { BookmarkDto } from '../infrastructure/bookmark/bookmark.dto';
 import { ERROR_CODES } from '../exceptions/error.codes';
-import { IBookmark } from '../infrastructure/entities/bookmark.interface';
+import { IBookmark } from '../infrastructure/bookmark/bookmark.interface';
 import { BookmarkService } from '../services/bookmark.service';
 import { IRequestWithUser } from '../infrastructure/user/request-with-user.interface';
 import { ACTIVITY_TYPE } from '../infrastructure/activity/activity.interface';
