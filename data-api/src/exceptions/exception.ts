@@ -15,6 +15,13 @@ class HttpException extends Error {
     }
 }
 
+// Any generic exceptions
+class SomethingWentWrong extends HttpException {
+    constructor(message: string) {
+        super(500, message, ERROR_CODES.SERVER_EXCEPTION);
+    }
+}
+
 // Generic assertion error
 class AssertionErrorException extends HttpException {
     constructor(message: string) {
@@ -65,12 +72,6 @@ class WrongAuthenticationTokenException extends HttpException {
     }
 }
 
-class DatabaseException extends HttpException {
-    constructor(message: string) {
-        super(500, message, ERROR_CODES.SERVER_EXCEPTION);
-    }
-}
-
 class RedundantUpdateErrorException extends HttpException {
     constructor(message: string = 'No updated values provided') {
         super(412, message, ERROR_CODES.REDUNDANT_UPDATE);
@@ -118,7 +119,7 @@ export {
     WrongCredentialsException,
     AuthenticationTokenMissingException,
     WrongAuthenticationTokenException,
-    DatabaseException,
+    SomethingWentWrong,
     RedundantUpdateErrorException,
     AccessControlException,
     CsvParseError,

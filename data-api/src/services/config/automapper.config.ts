@@ -1,4 +1,5 @@
 import 'automapper-ts';
+import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { ActivityDto } from '../../infrastructure/activity/activity.dto';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
 import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
@@ -21,6 +22,8 @@ const MAPPING_TYPES = {
     OntoVisDto: 'OntoVisDto',
     IOntoData: 'IOntoData',
     OntoDataDto: 'OntoDataDto',
+    IOntoPage: 'IOntoPage',
+    OntoPageDto: 'OntoPageDto',
 };
 
 function configureAutoMapper() {
@@ -55,8 +58,14 @@ function configureAutoMapper() {
     automapper
         .createMap(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
-        .forMember('query_params', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('query_params'))
+        .forMember('queryParams', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('queryParams'))
         .convertToType(OntoDataDto);
+
+    automapper
+        .createMap(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto)
+        .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
+        .forMember('bindVis', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('bindVis'))
+        .convertToType(OntoPageDto);
 }
 
 export { configureAutoMapper, MAPPING_TYPES };

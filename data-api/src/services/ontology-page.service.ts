@@ -6,48 +6,45 @@ import { provide } from 'inversify-binding-decorators';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
-import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
 import { IdDoesNotExist } from '../exceptions/exception';
 import { logger } from '../utils/logger';
+import { IOntoPage } from '../infrastructure/onto-page/onto-page.interface';
+import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
 
 @provide(TYPES.OntologyPageService)
-export class OntologyPageService extends DataService<IOntoData> {
+export class OntologyPageService extends DataService<IOntoPage> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.ontology_page'));
     }
 
-    public async getMultiple(ids: string[]): Promise<IOntoData[]> {
-        return await this.getAll({ _id: { $in: ids.map((id) => new ObjectId(id)) } });
-    }
+    public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {
+        // TODO
+        // let ontoPage: IOntoPage = check if exist based on some condition
+        // if (ontoPage) return data;
 
-    public async createPage(dataVm: OntoDataVm): Promise<IOntoData> {
-        let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, url: dataVm.url });
-        if (data) return data;
-
-        data = {
+        // TODO
+        // check pageId
+        // check dataId, query, & params
+        
+        let ontoPage = {
             _id: new ObjectId(),
-            url: dataVm.url,
-            endpoint: dataVm.endpoint,
-            query_params: dataVm?.query_params,
-            description: dataVm.description,
-            source: dataVm?.source,
-            model: dataVm?.model,
-            analytics: dataVm?.analytics,
+            title: ontoPageVm.title,
+            bindVis: ontoPageVm.bindVis,
+            nrow: ontoPageVm?.nrow,
         };
-        return await this.create(data);
+        return await this.create(ontoPage);
     }
 
-    public async deletePage(dataId: string): Promise<IOntoData> {
+    public async updatePage(pageId: string, ontoPageVm: OntoPageVm): Promise<IOntoPage> {
+        let data: IOntoPage = await this.get(pageId);
+        if (!data) throw new IdDoesNotExist(pageId);
+
+        const { id, ...updateDataVm } = ontoPageVm;
+        return await this.updateAndGet(pageId, updateDataVm as IOntoPage);
+    }
+
+    public async deletePage(dataId: string): Promise<IOntoPage> {
         // TODO
         return Promise.resolve(null as any);
-    }
-
-    public async updatePage(dataId: string, dataVm: OntoDataVm): Promise<IOntoData> {
-        let data: IOntoData = await this.get(dataId);
-        if (!data) throw new IdDoesNotExist(dataId);
-
-        const { id, ...updateDataVm } = dataVm;
-        return await this.updateAndGet(dataId, updateDataVm as IOntoData);
     }
 }

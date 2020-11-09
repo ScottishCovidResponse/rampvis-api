@@ -7,10 +7,9 @@ import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
-import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
+import { OntoDataVm, QueryParamsVm1 } from '../infrastructure/onto-data/onto-data.vm';
 import { IdDoesNotExist } from '../exceptions/exception';
 import { logger } from '../utils/logger';
-import { QueryParamsVm } from '../infrastructure/onto-data/query-params.vm';
 
 @provide(TYPES.OntologyDataService)
 export class OntologyDataService extends DataService<IOntoData> {
@@ -30,7 +29,7 @@ export class OntologyDataService extends DataService<IOntoData> {
             _id: new ObjectId(),
             url: dataVm.url,
             endpoint: dataVm.endpoint,
-            query_params: dataVm?.query_params as QueryParamsVm[],
+            queryParams: dataVm?.queryParams as QueryParamsVm1[],
             description: dataVm.description,
             source: dataVm?.source,
             model: dataVm?.model,

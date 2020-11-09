@@ -8,11 +8,7 @@ import { IUser } from '../../infrastructure/user/user.interface';
 import { JwtToken } from '../../middleware/jwt.token';
 
 import { logger } from '../../utils/logger';
-import {
-    DatabaseException,
-    ObjectNotFoundException,
-    UserWithEmailAlreadyExistsException,
-} from '../../exceptions/exception';
+import { SomethingWentWrong, UserWithEmailAlreadyExistsException } from '../../exceptions/exception';
 import { vmValidate } from '../../middleware/validators';
 import { UserVm } from '../../infrastructure/user/user.vm';
 import { UpdateUserVm } from '../../infrastructure/user/update-user.vm';
@@ -78,11 +74,11 @@ export class UserController {
 
                     response.status(200).send(resultDto);
                 } catch (error) {
-                    throw new DatabaseException(error.message);
+                    throw new SomethingWentWrong(error.message);
                 }
             }
         } catch (error) {
-            next(new DatabaseException(error.message));
+            next(new SomethingWentWrong(error.message));
         }
     }
 
@@ -99,7 +95,7 @@ export class UserController {
             logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
             response.status(200).send(resultDto);
         } catch (error) {
-            next(new DatabaseException(error.message));
+            next(new SomethingWentWrong(error.message));
         }
     }
 
@@ -124,7 +120,7 @@ export class UserController {
 
             response.status(200).send(resultDto);
         } catch (error) {
-            next(new DatabaseException(error.message));
+            next(new SomethingWentWrong(error.message));
         }
     }
 
@@ -147,7 +143,7 @@ export class UserController {
 
             response.status(200).send(resultDto);
         } catch (error) {
-            next(new DatabaseException(error.message));
+            next(new SomethingWentWrong(error.message));
         }
     }
 }

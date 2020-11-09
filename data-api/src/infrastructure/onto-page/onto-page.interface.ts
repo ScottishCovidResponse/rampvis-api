@@ -1,9 +1,19 @@
-import { IBinding } from "../onto-vis/binding.interface";
-import { IQueryParams } from "../onto-data/query-params.interface";
+import { ObjectId } from 'mongodb';
+import { IQueryParams } from '../onto-data/onto-data.interface';
+
+export interface IBindData {
+    dataId: string;
+    queryParams: IQueryParams[];
+}
+
+export interface IBindVis {
+    visId: string;
+    bindData: IBindData[];
+}
 
 export class IOntoPage {
-    public id: string = '';
+    public _id: string | ObjectId = '';
     public title: string = '';
-    public bindings: IBinding[] = [];
-    public nrows: number = 0;
+    public bindVis: IBindVis[] = [];
+    public nrow: number = 0;
 }

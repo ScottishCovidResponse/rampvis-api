@@ -16,12 +16,18 @@ import { OntoDataVm } from '../../infrastructure/onto-data/onto-data.vm';
 import { OntologyDataService } from '../../services/ontology-data.service';
 import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
+import { OntoPageVm } from '../../infrastructure/onto-page/onto-page.vm';
+import { OntologyPageService } from '../../services/ontology-page.service';
+import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
+import { SomethingWentWrong } from '../../exceptions/exception';
 
 @controller('/ontology', JwtToken.verify)
 export class OntologyController {
     constructor(
         @inject(TYPES.OntologyVisService) private ontologyVisService: OntologyVisService,
         @inject(TYPES.OntologyDataService) private ontologyDataService: OntologyDataService,
+        @inject(TYPES.OntologyPageService) private ontologyPageService: OntologyPageService,
     ) {}
 
     //
@@ -73,10 +79,15 @@ export class OntologyController {
         const dataVm: OntoDataVm = request.body as any;
         logger.info(`OntologyController: createData: dataVm = ${JSON.stringify(dataVm)}`);
 
-        const data: IOntoData = await this.ontologyDataService.createData(dataVm);
-        const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
-        logger.info(`OntologyController: createData: dataDto = ${JSON.stringify(dataDto)}`);
-        response.status(200).send(dataDto);
+        try {
+            const data: IOntoData = await this.ontologyDataService.createData(dataVm);
+            const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+            logger.info(`OntologyController: createData: dataDto = ${JSON.stringify(dataDto)}`);
+            response.status(200).send(dataDto);
+        } catch (e) {
+            logger.error(`OntologyController: createData: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     @httpPut('/data/update', vmValidate(OntoDataVm))
@@ -93,15 +104,30 @@ export class OntologyController {
     //
     // Page
     //
-    @httpPost('/data/page', vmValidate(OntoDataVm))
-    public async createPage(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const dataVm: OntoDataVm = request.body as any;
-        logger.info(`OntologyController: createData: dataVm = ${JSON.stringify(dataVm)}`);
 
-        const data: IOntoData = await this.ontologyDataService.createData(dataVm);
-        const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
-        logger.info(`OntologyController: createData: dataDto = ${JSON.stringify(dataDto)}`);
-        response.status(200).send(dataDto);
+    @httpGet('/page')
+    public async getAllPage(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const ontoPages: IOntoPage[] = await this.ontologyPageService.getAll();
+        const dataDtos: OntoPageDto[] = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPages);
+        logger.info(`OntologyController: getAllPage: dataDtos = ${JSON.stringify(dataDtos)}`);
+        response.status(200).send(dataDtos);
+    }
+
+    @httpPost('/page/create', vmValidate(OntoPageVm))
+    public async createPage(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const ontoPageVm: OntoPageVm = request.body as any;
+        logger.info(`OntologyController: createPage: dataVm = ${JSON.stringify(ontoPageVm)}`);
+
+        const ontoPage: IOntoPage = await this.ontologyPageService.createPage(ontoPageVm);
+        const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+        logger.info(`OntologyController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
+        response.status(200).send(ontoPageDto);
+    }
+
+    @httpPut('/page/create', vmValidate(OntoPageVm)) 
+    public async updatePage(request: Request, response: Response, next: NextFunction): Promise<void> {
+        // TODO
+        response.status(200).send({});
     }
 
 }

@@ -1,32 +1,54 @@
-import { IsArray, IsEnum, IsObject, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
+import { IsArray, IsEnum, IsNumber, IsObject, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ANALYTICS, MODEL, SOURCE } from '../onto-data/onto-data-types';
-import { QueryParamsVm } from '../onto-data/query-params.vm';
+
+export class QueryParamsVm2 {
+    @IsString()
+    public query!: string;
+
+    @IsString()
+    public params!: string;
+}
+
+export class BindDataVm {
+    @IsString()
+    dataId!: string;
+
+    @IsOptional()
+    @IsArray()
+    @Type(() => QueryParamsVm2)
+    @ValidateNested({ each: true })
+    queryParams!: QueryParamsVm2[];
+}
+
+export class BindVisVm {
+    @IsString()
+    visId!: string;
+
+    @IsArray()
+    @Type(() => BindDataVm)
+    @ValidateNested({ each: true })
+    bindData!: BindDataVm[];
+}
 
 export class OntoPageVm {
     @IsOptional()
     @IsString()
     public id!: string;
-    @IsString()
-    public url!: string;
-    @IsString()
-    public endpoint!: string;
-    @IsString()
-    public description!: string;
 
-    @IsOptional()
     @IsArray()
-    @Type(() => QueryParamsVm)
+    @Type(() => BindVisVm)
     @ValidateNested({ each: true })
-    public query_params!: QueryParamsVm[];
+    bindVis!: BindVisVm[];
 
     @IsOptional()
-    @IsEnum(SOURCE)
-    public source!: SOURCE;
+    @IsString()
+    public title!: string;
+
     @IsOptional()
-    @IsEnum(MODEL)
-    public model!: MODEL;
-    @IsOptional()
-    @IsEnum(ANALYTICS)
-    public analytics!: ANALYTICS;
+    @IsNumber()
+    public nrow!: number;
+
+    // @IsArray()
+    // @IsOptional()
+    // links
 }
