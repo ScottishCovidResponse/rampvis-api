@@ -30,9 +30,11 @@ export class OntoDataVm {
     @IsOptional()
     @IsEnum(SOURCE)
     public source!: SOURCE;
+
     @IsOptional()
     @IsEnum(MODEL)
     public model!: MODEL;
+    
     @IsOptional()
     @IsEnum(ANALYTICS)
     public analytics!: ANALYTICS;

@@ -35,10 +35,15 @@ export class OntologyController {
     //
     @httpGet('/vis')
     public async getAllVis(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const visList: IOntoVis[] = await this.ontologyVisService.getAll();
-        const visDtos: OntoVisDto[] = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, visList);
-        logger.info(`OntologyController: getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
-        response.status(200).send(visDtos);
+        try {
+            const visList: IOntoVis[] = await this.ontologyVisService.getAll();
+            const visDtos: OntoVisDto[] = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, visList);
+            logger.info(`OntologyController: getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
+            response.status(200).send(visDtos);
+        } catch (e) {
+            logger.error(`OntologyController: getAllVis: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     @httpPost('/vis/create', vmValidate(OntoVisVm))
@@ -46,10 +51,15 @@ export class OntologyController {
         const visVm: OntoVisVm = request.body as any;
         logger.info(`OntologyController: createVis: visVm = ${JSON.stringify(visVm)}`);
 
-        const vis: IOntoVis = await this.ontologyVisService.createVis(visVm);
-        const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
-        logger.info(`OntologyController: createVis: visDto = ${visDto}`);
-        response.status(200).send(visDto);
+        try {
+            const vis: IOntoVis = await this.ontologyVisService.createVis(visVm);
+            const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
+            logger.info(`OntologyController: createVis: visDto = ${visDto}`);
+            response.status(200).send(visDto);
+        } catch (e) {
+            logger.error(`OntologyController: createVis: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     @httpPut('/vis/update', vmValidate(OntoVisVm))
@@ -57,10 +67,15 @@ export class OntologyController {
         const visVm: OntoVisVm = request.body as any;
         logger.info(`OntologyController: updateVis: visVm = ${JSON.stringify(visVm)}`);
 
-        const vis: IOntoVis = await this.ontologyVisService.updateVis(visVm.id, visVm);
-        const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
-        logger.info(`OntologyController: updateVis: visDto = ${visDto}`);
-        response.status(200).send(visDto);
+        try {
+            const vis: IOntoVis = await this.ontologyVisService.updateVis(visVm.id, visVm);
+            const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
+            logger.info(`OntologyController: updateVis: visDto = ${visDto}`);
+            response.status(200).send(visDto);
+        } catch (e) {
+            logger.error(`OntologyController: updateVis: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     //
@@ -68,10 +83,15 @@ export class OntologyController {
     //
     @httpGet('/data')
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const dataList: IOntoData[] = await this.ontologyDataService.getAll();
-        const dataDtos: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, dataList);
-        logger.info(`OntologyController: getAllData: dataDtos = ${JSON.stringify(dataDtos)}`);
-        response.status(200).send(dataDtos);
+        try {
+            const dataList: IOntoData[] = await this.ontologyDataService.getAll();
+            const dataDtos: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, dataList);
+            logger.info(`OntologyController: getAllData: dataDtos = ${JSON.stringify(dataDtos)}`);
+            response.status(200).send(dataDtos);
+        } catch (e) {
+            logger.error(`OntologyController: getAllData: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     @httpPost('/data/create', vmValidate(OntoDataVm))
@@ -94,11 +114,15 @@ export class OntologyController {
     public async updateData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataVm: OntoDataVm = request.body as any;
         logger.info(`OntologyController: updateData: dataVm = ${JSON.stringify(dataVm)}`);
-
-        const data: IOntoData = await this.ontologyDataService.updateData(dataVm.id, dataVm);
-        const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
-        logger.info(`OntologyController: updateData: dataDto = ${JSON.stringify(dataDto)}`);
-        response.status(200).send(dataDto);
+        try {
+            const data: IOntoData = await this.ontologyDataService.updateData(dataVm.id, dataVm);
+            const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+            logger.info(`OntologyController: updateData: dataDto = ${JSON.stringify(dataDto)}`);
+            response.status(200).send(dataDto);
+        } catch (e) {
+            logger.error(`OntologyController: updateData: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     //
@@ -107,10 +131,15 @@ export class OntologyController {
 
     @httpGet('/page')
     public async getAllPage(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const ontoPages: IOntoPage[] = await this.ontologyPageService.getAll();
-        const dataDtos: OntoPageDto[] = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPages);
-        logger.info(`OntologyController: getAllPage: dataDtos = ${JSON.stringify(dataDtos)}`);
-        response.status(200).send(dataDtos);
+        try {
+            const ontoPages: IOntoPage[] = await this.ontologyPageService.getAll();
+            const dataDtos: OntoPageDto[] = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPages);
+            logger.info(`OntologyController: getAllPage: dataDtos = ${JSON.stringify(dataDtos)}`);
+            response.status(200).send(dataDtos);
+        } catch (e) {
+            logger.error(`OntologyController: getAllPage: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
     @httpPost('/page/create', vmValidate(OntoPageVm))
@@ -118,16 +147,31 @@ export class OntologyController {
         const ontoPageVm: OntoPageVm = request.body as any;
         logger.info(`OntologyController: createPage: dataVm = ${JSON.stringify(ontoPageVm)}`);
 
-        const ontoPage: IOntoPage = await this.ontologyPageService.createPage(ontoPageVm);
-        const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
-        logger.info(`OntologyController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
-        response.status(200).send(ontoPageDto);
+        try {
+            const ontoPage: IOntoPage = await this.ontologyPageService.createPage(ontoPageVm);
+            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            logger.info(`OntologyController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
+            response.status(200).send(ontoPageDto);
+        } catch (e) {
+            logger.error(`OntologyController: createPage: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
-    @httpPut('/page/create', vmValidate(OntoPageVm)) 
+    @httpPut('/page/update', vmValidate(OntoPageVm)) 
     public async updatePage(request: Request, response: Response, next: NextFunction): Promise<void> {
-        // TODO
-        response.status(200).send({});
+        const ontoPageVm: OntoPageVm = request.body as any;
+        logger.info(`OntologyController: updatePage: dataVm = ${JSON.stringify(ontoPageVm)}`);
+
+        try {
+            const ontoPage: IOntoPage = await this.ontologyPageService.updatePage(ontoPageVm.id, ontoPageVm);
+            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            logger.info(`OntologyController:updatePage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
+            response.status(200).send(ontoPageDto);
+        } catch (e) {
+            logger.error(`OntologyController: updatePage: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
     }
 
 }
