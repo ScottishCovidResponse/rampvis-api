@@ -30,7 +30,7 @@ export class OntologyPageService extends DataService<IOntoPage> {
             _id: new ObjectId(),
             title: ontoPageVm.title,
             bindVis: ontoPageVm.bindVis,
-            nrow: ontoPageVm?.nrow,
+            nrow: ontoPageVm.nrow,
         };
         return await this.create(ontoPage);
     }

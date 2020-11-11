@@ -35,18 +35,17 @@ export class OntoPageVm {
     @IsString()
     public id!: string;
 
-    @IsArray()
-    @Type(() => BindVisVm)
-    @ValidateNested({ each: true })
-    bindVis!: BindVisVm[];
-
     @IsOptional()
     @IsString()
     public title!: string;
 
-    @IsOptional()
     @IsNumber()
     public nrow!: number;
+
+    @IsArray()
+    @Type(() => BindVisVm)
+    @ValidateNested({ each: true })
+    bindVis!: BindVisVm[];
 
     // @IsArray()
     // @IsOptional()

@@ -1,11 +1,14 @@
 import { plainToClass } from 'class-transformer';
 import { registerDecorator, validate, ValidationError, ValidationOptions } from 'class-validator';
 import { RequestHandler } from 'express';
+import { logger } from '../utils/logger';
 
 import { InvalidQueryParametersException } from '../exceptions/exception';
 
 export function vmValidate<T>(type: any, skipMissingProperties = false): RequestHandler {
     return (req, res, next) => {
+        // debug purpose
+        // logger.debug('vmValidate: body = ', req.body);
         validate(plainToClass(type, req.body), { skipMissingProperties }).then((errors: ValidationError[]) => {
             if (errors.length > 0) {
                 const message = errors
