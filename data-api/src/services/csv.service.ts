@@ -1,23 +1,28 @@
 import * as csv from 'fast-csv';
 import fs from 'fs';
 import path from 'path';
-import { provide } from "inversify-binding-decorators";
+import { provide } from 'inversify-binding-decorators';
 import config from 'config';
 
-import { TYPES } from "./config/types";
+import { TYPES } from './config/types';
 import { logger } from '../utils/logger';
-
+import { MODEL } from '../infrastructure/onto-data/onto-data-types';
+import { FileNotAvailableError, CsvParseError } from '../exceptions/exception';
 
 @provide(TYPES.CSVService)
 export class CSVService {
-
     PATH_DATA_V04 = '../../../data/v04';
     PATH_DATA_V04_DYNAMIC = '../../../data/v04-dynamic';
     PATH_DATA_LIVE = '../../../data/live';
+    PATH_SCOTLAND_MODEL = '../../../data/scotland/model';
 
-    public constructor() {
+    public constructor() {}
+
+    public async getScotlandModelData(modelName: MODEL, component: string) {
+        const fileName = `${modelName}-${component}.csv`;
+        logger.info(`CSVService: getModelData: fileName = ${fileName}`);
+        return await this.readCSV(this.PATH_SCOTLAND_MODEL, fileName);
     }
-
 
     public async getLiveData(dataStreamName: string) {
         logger.info(`CSVService: getLiveData: dataStreamName = ${dataStreamName}`);
@@ -39,18 +44,20 @@ export class CSVService {
             const returnLit: any[] = [];
 
             const file = path.resolve(__dirname, filePath, fileName);
+            if (!fs.existsSync(file)) {
+                throw new FileNotAvailableError(`File ${file} is not available`);
+            }
             logger.info(`CSVService: readCSV: file = ${JSON.stringify(file)}`);
 
-
-            const readStream = fs.createReadStream(file)
+            const readStream = fs.createReadStream(file);
             const parseStream = readStream.pipe(csv.parse({ headers: true }));
 
             readStream.on('error', (error: any) => {
-                reject({ message: `CSV read error ${JSON.stringify(error)}` });
+                throw new CsvParseError(`CSV read error ${JSON.stringify(error)}`);
             });
 
             parseStream.on('error', (error: any) => {
-                reject({ message: `CSV parse error ${JSON.stringify(error)}` });
+                throw new CsvParseError(`CSV parse error ${JSON.stringify(error)}`);
             });
 
             parseStream.on('data', (row: any) => {
@@ -63,9 +70,7 @@ export class CSVService {
             parseStream.on('end', (rowCount: number) => {
                 resolve(returnLit);
             });
-
         });
-
     }
 
     public static clean(obj: any) {
@@ -77,5 +82,4 @@ export class CSVService {
 
         return obj;
     }
-
 }

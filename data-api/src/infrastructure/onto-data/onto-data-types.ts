@@ -8,6 +8,7 @@ export enum MODEL {
     ONEKM2 = '1km2',
     LHSTM = 'lhstm',
     CT = 'c&t',
+    EERA = 'eera',
 }
 
 export enum ANALYTICS {

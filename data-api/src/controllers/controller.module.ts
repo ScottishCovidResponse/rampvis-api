@@ -9,6 +9,7 @@ import { SearchController } from './search.controller';
 import { ThumbnailController } from './thumbnail.controller';
 import { ScotlandLiveController } from './scotland/scotland-live.controller';
 import { OntologyController } from './ontology/ontology.controller';
+import { ScotlandCovidModelController } from './scotland/covid-model.controller';
 
 export {
     AuthController,
@@ -21,5 +22,6 @@ export {
     NhsBoardDynamicController,
     CovidDeathsController,
     ScotlandLiveController,
+    ScotlandCovidModelController,
     OntologyController,
 };

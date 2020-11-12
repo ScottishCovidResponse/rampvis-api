@@ -84,6 +84,12 @@ class AccessControlException extends HttpException {
     }
 }
 
+class FileNotAvailableError extends HttpException {
+    constructor(message: string) {
+        super(500, message, ERROR_CODES.FILE_NOT_AVAILABLE);
+    }
+}
+
 class CsvParseError extends HttpException {
     constructor(message: string) {
         super(500, message, ERROR_CODES.CSV_PARSE_ERROR);
@@ -123,6 +129,7 @@ export {
     RedundantUpdateErrorException,
     AccessControlException,
     CsvParseError,
+    FileNotAvailableError,
     PageBookmarkError,
     SearchError,
     IdDoesNotExist,
