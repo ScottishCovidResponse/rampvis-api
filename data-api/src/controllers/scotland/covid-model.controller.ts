@@ -24,7 +24,7 @@ export class ScotlandCovidModelController {
         let col = request.query.col as Array<string>;
         if (typeof col === 'string' ) col = [col]
 
-        // console.log(col, typeof col)
+        console.log(col, typeof col)
         logger.info( `ScotlandCovidModelController: getModelComponent: modelName = ${modelName}, component = ${component}`);
 
         let data: any[] = await this.csvService.getScotlandModelData(modelName, component);

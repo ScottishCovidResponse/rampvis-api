@@ -8,4 +8,7 @@ export class UserDto {
     public expireOn: Date = undefined as any;
     public role: ROLES = undefined as any;
     public deleted: boolean = undefined as any;
+
+    public githubId?: string = '';
+    public githubUsername?: string = '';
 }
