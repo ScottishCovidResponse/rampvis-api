@@ -45,18 +45,21 @@ export class CSVService {
 
             const file = path.resolve(__dirname, filePath, fileName);
             if (!fs.existsSync(file)) {
+                logger.error(`CSVService: readCSV: file ${JSON.stringify(file)} is not available`);
                 throw new FileNotAvailableError(`File ${file} is not available`);
             }
             logger.info(`CSVService: readCSV: file = ${JSON.stringify(file)}`);
 
             const readStream = fs.createReadStream(file);
-            const parseStream = readStream.pipe(csv.parse({ headers: true }));
-
+            let parseStream = readStream.pipe(csv.parse({ headers: true }));
+          
             readStream.on('error', (error: any) => {
+                logger.error(`CSVService: readCSV: CSV read error = ${JSON.stringify(error)}`);
                 throw new CsvParseError(`CSV read error ${JSON.stringify(error)}`);
             });
 
             parseStream.on('error', (error: any) => {
+                logger.error(`CSVService: readCSV: CSV parse error = ${JSON.stringify(error)}`);
                 throw new CsvParseError(`CSV parse error ${JSON.stringify(error)}`);
             });
 
