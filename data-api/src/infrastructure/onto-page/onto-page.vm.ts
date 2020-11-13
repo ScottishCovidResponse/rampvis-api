@@ -1,12 +1,33 @@
-import { IsArray, IsEnum, IsNumber, IsObject, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
+import {
+    IsArray,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Validate,
+    ValidateNested,
+    ValidationArguments,
+    ValidatorConstraint,
+    ValidatorConstraintInterface,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class QueryParamsVm2 {
-    @IsString()
-    public query!: string;
+@ValidatorConstraint()
+export class CustomQueryParamValidate implements ValidatorConstraintInterface {
+    validate(input: Array<Map<string, string>>, validationArguments: ValidationArguments) {
+        // debug - 
+        // console.log('CustomQueryParamsValidate: input = ', input, 'validationArguments = ', validationArguments)
 
-    @IsString()
-    public params!: string;
+        for (let queryParam of input) {
+            // check each object has there is only one key value pair, i.e., one query and its parameter
+            if (Object.keys(queryParam).length != 1) return false;
+
+            const param = Object.values(queryParam)[0];
+            // check parameters a valid string
+            if (!param || (typeof param !== 'string') || param === '') return false;
+        }
+
+        return Array.isArray(input) && input.length > 0;
+    }
 }
 
 export class BindDataVm {
@@ -14,10 +35,11 @@ export class BindDataVm {
     dataId!: string;
 
     @IsOptional()
-    @IsArray()
-    @Type(() => QueryParamsVm2)
-    @ValidateNested({ each: true })
-    queryParams!: QueryParamsVm2[];
+    @Validate(CustomQueryParamValidate, [], {
+        message: 'Wrong queryparam vm',
+    })
+    public queryParam!: Array<Map<string, string>>;
+
 }
 
 export class BindVisVm {

@@ -1,9 +1,8 @@
 import { ObjectId } from 'mongodb';
-import { IQueryParams } from '../onto-data/onto-data.interface';
 
 export interface IBindData {
     dataId: string;
-    queryParams: IQueryParams[];
+    queryParam: Array<Map<string, string>>;
 }
 
 export interface IBindVis {

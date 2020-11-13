@@ -1,3 +1,7 @@
+/**
+ * Deprecate
+ */
+
 import { NextFunction } from 'connect';
 import { Response } from 'express-serve-static-core';
 import { controller, httpGet } from 'inversify-express-utils';

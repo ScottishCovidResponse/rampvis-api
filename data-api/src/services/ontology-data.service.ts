@@ -7,7 +7,7 @@ import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
-import { OntoDataVm, QueryParamsVm1 } from '../infrastructure/onto-data/onto-data.vm';
+import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
 import { IdDoesNotExist } from '../exceptions/exception';
 import { logger } from '../utils/logger';
 
@@ -29,7 +29,7 @@ export class OntologyDataService extends DataService<IOntoData> {
             _id: new ObjectId(),
             url: dataVm.url,
             endpoint: dataVm.endpoint,
-            queryParams: dataVm?.queryParams as QueryParamsVm1[],
+            queryParams: dataVm?.queryParams,
             description: dataVm.description,
             source: dataVm?.source,
             model: dataVm?.model,
@@ -48,6 +48,7 @@ export class OntologyDataService extends DataService<IOntoData> {
         if (!data) throw new IdDoesNotExist(dataId);
 
         const { id, ...updateDataVm } = dataVm;
-        return await this.updateAndGet(dataId, updateDataVm as IOntoData);
+        //return await this.updateAndGet(dataId, updateDataVm as IOntoData);
+        return Promise.resolve(null as any)
     }
 }

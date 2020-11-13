@@ -1,7 +1,3 @@
-/**
- * Deprecate
- */
-
 import { NextFunction } from 'connect';
 import { Response } from 'express-serve-static-core';
 import { controller, httpGet } from 'inversify-express-utils';
@@ -13,19 +9,19 @@ import { CSVService } from '../../services/csv.service';
 import { inject } from 'inversify';
 import { TYPES } from '../../services/config/types';
 
-@controller('/scotland/nhs-board')
-export class NhsBoardController {
+@controller('/scotland/raw')
+export class ScotlandRawDataController {
     constructor(@inject(TYPES.CSVService) private csvService: CSVService) {}
 
     //
-    // api/v1/scotland/?table=<>
-    // api/v1/scotland/?table=<>&region=<>
+    // ?table=<>
+    // ?table=<>&region=<>
     //
-    @httpGet('/')
-    public async getNhsBoardData(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    @httpGet('/xl/nhs-board')
+    public async getNHSBoardDataV04(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const table = request.query.table as string;
         const region = request.query.region as string;
-        logger.info('RegionDataController: getTableData: table = ', table, ', region = ', region);
+        logger.info('RegionDataController: getXlData: table = ', table, ', region = ', region);
 
         if (!table && !region) {
             return next(new InvalidQueryParametersException('Empty table and region'));
@@ -34,7 +30,7 @@ export class NhsBoardController {
         try {
             const data: any[] = await this.csvService.getDataV04(table + '.csv');
 
-            if (request.query.region) {
+            if (region) {
                 response.status(200).send(
                     data.map((d: any) => {
                         return {
@@ -50,4 +46,27 @@ export class NhsBoardController {
             next(new CsvParseError(error.message));
         }
     }
+
+    //
+    // ?table=<>&group=<>
+    //
+    @httpGet('/xl/covid-deaths')
+    public async getCovidDeathsDataV04( request: IRequestWithUser, response: Response, next: NextFunction, ): Promise<void> {
+        const table = request.query.table as string;
+        const group = request.query.group as string;
+        logger.info('CovidDeathsController: getCovidDeathsData: table = ', table, ', group = ', group);
+
+        try {
+            const data: any[] = await this.csvService.getDataV04(table + '_' + group + '.csv');
+            response.status(200).send(data);
+        } catch (error) {
+            next(new CsvParseError(error.message));
+        }
+    }
+
+    //
+    // ?col=<>
+    //
+    @httpGet('/:product/:component')
+    public async getXX(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {}
 }
