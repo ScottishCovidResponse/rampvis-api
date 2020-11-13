@@ -48,7 +48,6 @@ export class OntologyDataService extends DataService<IOntoData> {
         if (!data) throw new IdDoesNotExist(dataId);
 
         const { id, ...updateDataVm } = dataVm;
-        //return await this.updateAndGet(dataId, updateDataVm as IOntoData);
-        return Promise.resolve(null as any)
+        return await this.updateAndGet(dataId, updateDataVm as IOntoData);
     }
 }
