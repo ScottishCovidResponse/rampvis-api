@@ -1,8 +1,8 @@
+import { QueryParamsDto } from "../onto-data/onto-data.dto";
 
 export class BindDataDto {
     public dataId: string = '';
-    public queryParam:  Array<Map<string, string>> = [];
-}
+    public queryParams: QueryParamsDto[] = [];}
 
 export class BindVisDto {
     public visId: string = '';
