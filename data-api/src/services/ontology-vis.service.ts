@@ -8,7 +8,7 @@ import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../infrastructure/onto-vis/onto-vis.vm';
-import { IdDoesNotExist } from '../exceptions/exception';
+import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 
 @provide(TYPES.OntologyVisService)
 export class OntologyVisService extends DataService<IOntoVis> {
@@ -18,7 +18,7 @@ export class OntologyVisService extends DataService<IOntoVis> {
 
     public async createVis(visVm: OntoVisVm): Promise<IOntoVis> {
         let vis: IOntoVis = await this.get({ function: visVm.function });
-        if (vis) return vis;
+        if (vis) throw new DuplicateEntry(visVm.function);
 
         vis = {
             _id: new ObjectId(),
@@ -29,13 +29,11 @@ export class OntologyVisService extends DataService<IOntoVis> {
         return await this.create(vis);
     }
 
-    public async deleteVis(visId: string): Promise<IOntoVis> {
-        // TODO
-        return Promise.resolve(null as any);
-    }
-
     public async updateVis(visId: string, visVm: OntoVisVm): Promise<IOntoVis> {
-        let vis: IOntoVis = await this.get(visId);
+        let vis: IOntoVis = await this.get({ 'function': visVm.function });
+        if (vis && vis._id !== visId) throw new DuplicateEntry(`${visVm.function}`);
+
+        vis = await this.get(visId);
         if (!vis) throw new IdDoesNotExist(visId);
 
         const updateVis: IOntoVis = {

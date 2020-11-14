@@ -115,6 +115,12 @@ class IdDoesNotExist extends HttpException {
     }
 }
 
+class DuplicateEntry extends HttpException {
+    constructor(message: string) {
+        super(400, `Duplicate ${message}`, ERROR_CODES.ID_DOES_NOT_EXIST);
+    }
+}
+
 export {
     HttpException,
     AssertionErrorException,
@@ -133,4 +139,5 @@ export {
     PageBookmarkError,
     SearchError,
     IdDoesNotExist,
+    DuplicateEntry,
 };

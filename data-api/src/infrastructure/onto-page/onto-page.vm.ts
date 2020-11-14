@@ -3,11 +3,7 @@ import {
     IsNumber,
     IsOptional,
     IsString,
-    Validate,
     ValidateNested,
-    ValidationArguments,
-    ValidatorConstraint,
-    ValidatorConstraintInterface,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -49,7 +45,7 @@ export class OntoPageVm {
     public title!: string;
 
     @IsNumber()
-    public nrow!: number;
+    public nrows!: number;
 
     @IsArray()
     @Type(() => BindVisVm)

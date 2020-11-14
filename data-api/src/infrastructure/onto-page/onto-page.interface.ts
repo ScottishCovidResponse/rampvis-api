@@ -15,5 +15,5 @@ export class IOntoPage {
     public _id: string | ObjectId = '';
     public title: string = '';
     public bindVis: IBindVis[] = [];
-    public nrow: number = 0;
+    public nrows: number = 0;
 }
