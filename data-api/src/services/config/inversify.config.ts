@@ -8,6 +8,7 @@ import { OntologyDataService } from '../ontology-data.service';
 import { OntologyPageService } from '../ontology-page.service';
 import { OntologyVisService } from '../ontology-vis.service';
 import { SearchService } from '../search.service';
+import { TemplateService } from '../template.service';
 import { ThumbnailService } from '../thumbnail.service';
 import { UserService } from '../user.service';
 import { TYPES } from './types';
@@ -23,5 +24,6 @@ DIContainer.bind<SearchService>(TYPES.SearchService).to(SearchService);
 DIContainer.bind<OntologyVisService>(TYPES.OntologyVisService).to(OntologyVisService);
 DIContainer.bind<OntologyDataService>(TYPES.OntologyDataService).to(OntologyDataService);
 DIContainer.bind<OntologyPageService>(TYPES.OntologyPageService).to(OntologyPageService);
+DIContainer.bind<TemplateService>(TYPES.TemplateService).to(TemplateService);
 
 export { DIContainer };

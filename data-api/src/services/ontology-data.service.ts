@@ -38,11 +38,6 @@ export class OntologyDataService extends DataService<IOntoData> {
         return await this.create(data);
     }
 
-    public async deleteData(dataId: string): Promise<IOntoData> {
-        // TODO
-        return Promise.resolve(null as any);
-    }
-
     public async updateData(dataId: string, dataVm: OntoDataVm): Promise<IOntoData> {
         let data: IOntoData = await this.get(dataId);
         if (!data) throw new IdDoesNotExist(dataId);

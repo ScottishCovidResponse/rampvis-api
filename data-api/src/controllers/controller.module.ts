@@ -10,6 +10,7 @@ import { ThumbnailController } from './thumbnail.controller';
 import { ScotlandLiveController } from './scotland/scotland-live.controller';
 import { OntologyController } from './ontology/ontology.controller';
 import { ScotlandCovidModelController } from './scotland/covid-model.controller';
+import { TemplateController } from './ontology/template.controller';
 
 export {
     AuthController,
@@ -24,4 +25,5 @@ export {
     ScotlandLiveController,
     ScotlandCovidModelController,
     OntologyController,
+    TemplateController,
 };

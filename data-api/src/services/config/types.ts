@@ -8,6 +8,7 @@ const TYPES = {
     OntologyVisService: Symbol.for('OntologyVisService'),
     OntologyDataService: Symbol.for('OntologyDataService'),
     OntologyPageService: Symbol.for('OntologyPageService'),
+    TemplateService: Symbol.for('TemplateService'),
     DbClient: Symbol.for('DbClient'),
     CSVService: Symbol.for('CSVService'),
 };
