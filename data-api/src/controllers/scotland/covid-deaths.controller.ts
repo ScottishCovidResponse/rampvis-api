@@ -1,26 +1,27 @@
-import {NextFunction} from 'connect';
-import {Response} from 'express-serve-static-core';
-import {controller, httpGet} from 'inversify-express-utils';
+/**
+ * Deprecate
+ */
 
-import { RequestWithUser } from '../../infrastructure/entities/request-with-user.interface';
+import { NextFunction } from 'connect';
+import { Response } from 'express-serve-static-core';
+import { controller, httpGet } from 'inversify-express-utils';
+
+import { IRequestWithUser } from '../../infrastructure/user/request-with-user.interface';
 import { CsvParseError } from '../../exceptions/exception';
 import { logger } from '../../utils/logger';
-import {CSVService } from '../../services/csv.service';
-import {inject} from "inversify";
-import {TYPES} from "../../services/config/types";
+import { CSVService } from '../../services/csv.service';
+import { inject } from 'inversify';
+import { TYPES } from '../../services/config/types';
 
 @controller('/scotland/covid-deaths')
 export class CovidDeathsController {
-
-    constructor(
-        @inject(TYPES.CSVService) private csvService: CSVService
-    ) {}
+    constructor(@inject(TYPES.CSVService) private csvService: CSVService) {}
 
     //
     // /api/v1/scotland/covid-deaths?table=<>&group=<>,
     //
     @httpGet('/')
-    public async getCovidDeathsData(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async getCovidDeathsData(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const table = request.query.table as string;
         const group = request.query.group as string;
         logger.info('CovidDeathsController: getCovidDeathsData: table = ', table, ', group = ', group);
@@ -31,8 +32,5 @@ export class CovidDeathsController {
         } catch (error) {
             next(new CsvParseError(error.message));
         }
-
     }
-
 }
-

@@ -15,5 +15,5 @@ conda activate ramp-vis-api
 ./run-dev.sh
 ```
 
-Open http://127.0.0.1:5000/api-py/v1/hello to check!
+Open http://localhost:3000/stat/v1/hello to check!
 

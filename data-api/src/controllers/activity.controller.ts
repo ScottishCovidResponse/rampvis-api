@@ -2,24 +2,22 @@ import { NextFunction, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
 
-import { PaginationVm } from '../infrastructure/view-model/pagination.vm';
-import { queryParamValidate } from '../middleware/dto.validate';
+import { PaginationVm } from '../infrastructure/pagination.vm';
+import { queryParamValidate } from '../middleware/validators';
 import { JwtToken } from '../middleware/jwt.token';
 import { TYPES } from '../services/config/types';
 import { logger } from '../utils/logger';
- import { ActivityFilterVm } from '../infrastructure/view-model/activity-filters.vm';
-import { ActivityDto } from '../infrastructure/dto/activity.dto';
-import {ActivityService} from "../services/activity.service";
-import { RequestWithUser } from '../infrastructure/entities/request-with-user.interface';
+import { ActivityService } from '../services/activity.service';
+import { IRequestWithUser } from '../infrastructure/user/request-with-user.interface';
+import { ActivityFilterVm } from '../infrastructure/activity/activity-filter.vm';
+import { ActivityDto } from '../infrastructure/activity/activity.dto';
 
-@controller('/internal/activities', JwtToken.verify)
+@controller('/activities', JwtToken.verify)
 export class ActivityControllerInt {
-
-    constructor(@inject(TYPES.ActivityService) private activityService: ActivityService) {
-    }
+    constructor(@inject(TYPES.ActivityService) private activityService: ActivityService) {}
 
     @httpGet('/', queryParamValidate(ActivityFilterVm))
-    public async getAllActivities(request: RequestWithUser, response: Response, next: NextFunction): Promise<void> {
+    public async getAllActivities(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         logger.debug(`ActivityControllerInt: getAllActivities: request.user = ${JSON.stringify(request.user)}`);
         const query: ActivityFilterVm = request.query as any;
 
@@ -27,5 +25,4 @@ export class ActivityControllerInt {
         logger.debug('ActivityControllerInt: getAllActivities: result = ' + JSON.stringify(result));
         response.status(200).send(result);
     }
-
 }

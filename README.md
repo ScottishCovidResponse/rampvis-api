@@ -124,3 +124,28 @@ A scheduler is used to compute metrics based on dynamic data stream. A job will 
 - `/stat/v1/process_data/stop` to pause the stream
 - `/stat/v1/process_data/resume` to resume the stream
 - `/stat/v1/process_data/status` displays the status of the stream
+
+
+# Model 
+
+## Scotland EERA model data
+
+1. 
+```
+"endpoint": "/api/v1/scotland/model/eera/outcome-cases-hosp-death-aggregated/",
+"col": ["iter","day","inc_case","inc_death_hospital","inc_death"],
+```
+
+2. 
+```
+"endpoint": "/api/v1/scotland/model/eera/outcome-hosp-rec-death-age-groups/"
+"col": ["iter","day","H","R","D"],
+```
+
+ Example:
+```
+# To get all columns no need to specify any query params, e.g. 
+/api/v1/scotland/model/eera/outcome-cases-hosp-death-aggregated/ : will return all columns
+
+# You can specify column names, e.g.,  /api/v1/scotland/model/eera/outcome-cases-hosp-death-aggregated/?col=iter&col=day&col=inc_case : will return iter, day, inc_case columns
+```
