@@ -1,8 +1,10 @@
-import { QueryParamsDto } from "../onto-data/onto-data.dto";
+import { QueryParamsDto } from '../onto-data/onto-data.dto';
+import { PUBLISH_TYPE } from './onto-page.interface';
 
 export class BindDataDto {
     public dataId: string = '';
-    public queryParams: QueryParamsDto[] = [];}
+    public queryParams: QueryParamsDto[] = [];
+}
 
 export class BindVisDto {
     public visId: string = '';
@@ -14,4 +16,5 @@ export class OntoPageDto {
     public title: string = '';
     public bindVis: BindVisDto[] = [];
     public nrow: number = 0;
+    public publishType: PUBLISH_TYPE = undefined as any;
 }

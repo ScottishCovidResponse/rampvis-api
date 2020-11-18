@@ -9,9 +9,16 @@ import { logger } from '../../utils/logger';
 import { IPageTemplate } from '../../infrastructure/onto-page/page-template.interface';
 import { SomethingWentWrong } from '../../exceptions/exception';
 import { TemplateService } from '../../services/template.service';
-import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage, PUBLISH_TYPE } from '../../infrastructure/onto-page/onto-page.interface';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
+import { queryParamValidate } from '../../middleware/validators';
+import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
+import { PaginationVm } from '../../infrastructure/pagination.vm';
+
+//
+// Un-guarded - only support GET
+//
 
 @controller('/template')
 export class TemplateController {
@@ -20,15 +27,25 @@ export class TemplateController {
         @inject(TYPES.OntologyPageService) private ontologyPageService: OntologyPageService,
     ) {}
 
-    @httpGet('/pages')
-    public async getPageTemplates(request: Request, response: Response, next: NextFunction): Promise<void> {
+    @httpGet('/pages', queryParamValidate(OntoPageFilterVm))
+    public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const query: OntoPageFilterVm = request.query as any;
+        logger.info(`TemplateController:getPages: query = ${JSON.stringify(query)}`);
+
         try {
-            const ontoPages: IOntoPage[] = await this.ontologyPageService.getAll();
-            const pageDtos: OntoPageDto[] = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPages);
-            logger.info(`TemplateController:getPageTemplates: pageDtos = ${JSON.stringify(pageDtos)}`);
-            response.status(200).send(pageDtos);
+            const result: PaginationVm<IOntoPage> = await this.ontologyPageService.getAllPages(query);
+
+            const resultDto: PaginationVm<OntoPageDto> = {
+                data: automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data),
+                page: result.page,
+                pageCount: result.pageCount,
+                totalCount: result.totalCount,
+            } as PaginationVm<OntoPageDto>;
+
+            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
         } catch (e) {
-            logger.error(`TemplateController:getPageTemplates: error = ${JSON.stringify(e)}`);
+            logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }

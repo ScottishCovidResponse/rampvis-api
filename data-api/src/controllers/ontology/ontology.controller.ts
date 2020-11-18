@@ -5,7 +5,7 @@ import { inject } from 'inversify';
 
 import { logger } from '../../utils/logger';
 import { TYPES } from '../../services/config/types';
-import { vmValidate } from '../../middleware/validators';
+import { queryParamValidate, vmValidate } from '../../middleware/validators';
 import { JwtToken } from '../../middleware/jwt.token';
 import { IOntoVis } from '../../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../../infrastructure/onto-vis/onto-vis.vm';
@@ -21,6 +21,8 @@ import { OntologyPageService } from '../../services/ontology-page.service';
 import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { SomethingWentWrong } from '../../exceptions/exception';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
+import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
+import { PaginationVm } from '../../infrastructure/pagination.vm';
 
 @controller('/ontology', JwtToken.verify)
 export class OntologyController {
@@ -179,19 +181,30 @@ export class OntologyController {
     // Page
     //
 
-    @httpGet('/page')
-    public async getAllPage(request: Request, response: Response, next: NextFunction): Promise<void> {
+    @httpGet('/pages', queryParamValidate(OntoPageFilterVm))
+    public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const query: OntoPageFilterVm = request.query as any;
+        logger.info(`OntologyController:getPages: query = ${JSON.stringify(query)}`);
+
         try {
-            const ontoPages: IOntoPage[] = await this.ontologyPageService.getAll();
-            const pageDtos: OntoPageDto[] = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPages);
-            logger.info(`OntologyController:getAllPage: pageDtos = ${JSON.stringify(pageDtos)}`);
-            response.status(200).send(pageDtos);
+            const result: PaginationVm<IOntoPage> = await this.ontologyPageService.getAllPages(query);
+
+            const resultDto: PaginationVm<OntoPageDto> = {
+                data: automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data),
+                page: result.page,
+                pageCount: result.pageCount,
+                totalCount: result.totalCount,
+            } as PaginationVm<OntoPageDto>;
+
+            logger.info(`OntologyController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
         } catch (e) {
-            logger.error(`OntologyController:getAllPage: error = ${JSON.stringify(e)}`);
+            logger.error(`OntologyController:getPages: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
 
+    
     @httpPost('/page', vmValidate(OntoPageVm))
     public async createPage(request: Request, response: Response, next: NextFunction): Promise<void> {
         const ontoPageVm: OntoPageVm = request.body as any;
