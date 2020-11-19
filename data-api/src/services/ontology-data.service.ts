@@ -8,8 +8,7 @@ import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
 import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
-import { IdDoesNotExist } from '../exceptions/exception';
-import { logger } from '../utils/logger';
+import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 
 @provide(TYPES.OntologyDataService)
 export class OntologyDataService extends DataService<IOntoData> {
@@ -23,7 +22,7 @@ export class OntologyDataService extends DataService<IOntoData> {
 
     public async createData(dataVm: OntoDataVm): Promise<IOntoData> {
         let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, url: dataVm.url });
-        if (data) return data;
+        if (data) throw new DuplicateEntry(`${dataVm.url}${dataVm.endpoint}`);
 
         data = {
             _id: new ObjectId(),
@@ -39,7 +38,10 @@ export class OntologyDataService extends DataService<IOntoData> {
     }
 
     public async updateData(dataId: string, dataVm: OntoDataVm): Promise<IOntoData> {
-        let data: IOntoData = await this.get(dataId);
+        let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, url: dataVm.url });
+        if (data && data._id !== dataId) throw new DuplicateEntry(`${dataVm.url}${dataVm.endpoint}`);
+        
+        data = await this.get(dataId);
         if (!data) throw new IdDoesNotExist(dataId);
 
         const { id, ...updateDataVm } = dataVm;

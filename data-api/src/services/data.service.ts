@@ -51,6 +51,10 @@ export abstract class DataService<T extends { _id: any }> {
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, doc);
     }
 
+    public async matchAny(arg: any): Promise<T> {
+        return (await this.dbCollection.findOne({$or: arg})) as T;
+    }
+
     public async getAll(query: FilterQuery<T> = {}, options: FindOneOptions<any> = {}): Promise<T[]> {
         const docs: any[] = await this.dbCollection.find(query).project(options).toArray();
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, docs);

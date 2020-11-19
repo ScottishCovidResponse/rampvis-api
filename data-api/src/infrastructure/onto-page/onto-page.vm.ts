@@ -1,15 +1,6 @@
-import {
-    IsArray,
-    IsNumber,
-    IsOptional,
-    IsString,
-    Validate,
-    ValidateNested,
-    ValidationArguments,
-    ValidatorConstraint,
-    ValidatorConstraintInterface,
-} from 'class-validator';
+import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PUBLISH_TYPE } from './onto-page.interface';
 
 export class QueryParamVm {
     @IsString()
@@ -49,7 +40,10 @@ export class OntoPageVm {
     public title!: string;
 
     @IsNumber()
-    public nrow!: number;
+    public nrows!: number;
+
+    @IsEnum(PUBLISH_TYPE)
+    public publishType!: PUBLISH_TYPE;
 
     @IsArray()
     @Type(() => BindVisVm)
