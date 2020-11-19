@@ -9,19 +9,6 @@ import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
 
-# Components will be specified manually, probably don't need this any more
-def generate_components(f):
-    components = []
-    for k in f:
-        one_level = all(isinstance(f[k][k2], h5py.Dataset) for k2 in f[k])
-        if one_level:
-            components.append(k)
-        else:
-            # Assume that if it's not one level, it's two level
-            for k2 in f[k]:
-                components.append(k + '/' + k2)
-    return components
-
 def clean_column_name(s):
     return s.lower().replace(' - ', '_').replace('-', '_').replace(' ', '_')
 
