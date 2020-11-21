@@ -16,11 +16,21 @@ def to_df(f, key):
     dates = [d.decode() for d in f[key]['Dimension_2_names']]
     columns = [d.decode() for d in f[key]['Dimension_1_names']]
     values = np.array(f[key]['array'])
-    # Try Int64 first which is the same as int but can store NaN
-    try:
-        df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
-    except Exception:
-        df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Float64')
+    if 'Dimension_3_names' in f[key]:
+        extra_columns = [d.decode() for d in f[key]['Dimension_3_names']]
+        dfs = []
+        for c in extra_columns:
+            df = pd.DataFrame(data=values[0], index=dates, columns=columns, dtype=int)
+            if key == 'age_group/week/gender-country-covid_related_deaths':
+                df['Gender'] = c
+            dfs.append(df)
+        df = pd.concat(dfs)
+    else:
+        # Try Int64 first which is the same as int but can store NaN
+        try:
+            df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
+        except Exception:
+            df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Float64')
     df.index.name = 'date'
     return df
 

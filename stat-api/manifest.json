@@ -28,6 +28,11 @@
         "product": "records/SARS-CoV-2/scotland/human-mortality",
         "components": [
             {
+                "name": "age_group/week/gender-country-covid_related_deaths",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
                 "name": "location_type/week-covid_related_deaths",
                 "location": "scotland",
                 "type": "raw"
