@@ -1,4 +1,4 @@
-import { ANALYTICS, MODEL, SOURCE } from './onto-data-types';
+import { ANALYTICS, DATA_TYPE, MODEL, SOURCE } from './onto-data-types';
 
 export class QueryParamsDto {
     query: string = '';
@@ -6,12 +6,13 @@ export class QueryParamsDto {
 }
 
 export class OntoDataDto {
-    public id: string = '';
-    public url: string = '';
-    public endpoint: string = '';
-    public queryParams?:  QueryParamsDto[] = [];
-    public description: string = '';
-    public source?: SOURCE = '' as any;
-    public model?: MODEL = '' as any;
-    public analytics?: ANALYTICS = '' as any;
+    public id: string = undefined as any;
+    public urlCode: string = undefined as any;
+    public endpoint: string = undefined as any;
+    public dataType: DATA_TYPE = undefined as any;
+    public source?: SOURCE;
+    public model?: MODEL;
+    public analytics?: ANALYTICS;
+    public description: string = undefined as any;
+    public queryParams?:  QueryParamsDto[];
 }

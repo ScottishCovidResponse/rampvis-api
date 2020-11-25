@@ -10,10 +10,10 @@ import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
 import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 
-@provide(TYPES.OntologyDataService)
-export class OntologyDataService extends DataService<IOntoData> {
+@provide(TYPES.OntoDataService)
+export class OntoDataService extends DataService<IOntoData> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
-        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.ontology_data'));
+        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_data'));
     }
 
     public async getMultiple(ids: string[]): Promise<IOntoData[]> {
@@ -21,25 +21,26 @@ export class OntologyDataService extends DataService<IOntoData> {
     }
 
     public async createData(dataVm: OntoDataVm): Promise<IOntoData> {
-        let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, url: dataVm.url });
-        if (data) throw new DuplicateEntry(`${dataVm.url}${dataVm.endpoint}`);
+        let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, urlCode: dataVm.urlCode });
+        if (data) throw new DuplicateEntry(`${dataVm.urlCode}${dataVm.endpoint}`);
 
         data = {
             _id: new ObjectId(),
-            url: dataVm.url,
+            urlCode: dataVm.urlCode,
             endpoint: dataVm.endpoint,
-            queryParams: dataVm?.queryParams,
+            dataType: dataVm.dataType,
             description: dataVm.description,
             source: dataVm?.source,
             model: dataVm?.model,
             analytics: dataVm?.analytics,
+            queryParams: dataVm.queryParams,
         };
         return await this.create(data);
     }
 
     public async updateData(dataId: string, dataVm: OntoDataVm): Promise<IOntoData> {
-        let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, url: dataVm.url });
-        if (data && data._id !== dataId) throw new DuplicateEntry(`${dataVm.url}${dataVm.endpoint}`);
+        let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, urlCode: dataVm.urlCode });
+        if (data && data._id !== dataId) throw new DuplicateEntry(`${dataVm.urlCode}${dataVm.endpoint}`);
         
         data = await this.get(dataId);
         if (!data) throw new IdDoesNotExist(dataId);

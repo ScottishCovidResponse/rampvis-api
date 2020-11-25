@@ -10,7 +10,7 @@ import config from 'config';
 @provide(TYPES.SearchService)
 export class SearchService extends DataService<IPage> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
-        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.ontology_page'));
+        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.pages'));
     }
 
     async search(queryStr: string): Promise<IPage[]> {

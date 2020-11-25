@@ -1,5 +1,5 @@
 import { ObjectId } from 'bson';
-import { ANALYTICS, MODEL, SOURCE } from './onto-data-types';
+import { ANALYTICS, DATA_TYPE, MODEL, SOURCE } from './onto-data-types';
 
 export interface IQueryParams {
     query: string;
@@ -8,11 +8,13 @@ export interface IQueryParams {
 
 export interface IOntoData {
     _id: string | ObjectId;
-    url: string;
+    urlCode: string;
     endpoint: string;
-    queryParams?: IQueryParams[];
-    description: string;
+    dataType: DATA_TYPE;
     source?: SOURCE;
     model?: MODEL;
     analytics?: ANALYTICS;
+    description: string;
+
+    queryParams?: IQueryParams[];
 }

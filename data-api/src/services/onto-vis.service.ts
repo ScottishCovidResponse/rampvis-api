@@ -10,10 +10,10 @@ import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../infrastructure/onto-vis/onto-vis.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 
-@provide(TYPES.OntologyVisService)
-export class OntologyVisService extends DataService<IOntoVis> {
+@provide(TYPES.OntoVisService)
+export class OntoVisService extends DataService<IOntoVis> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
-        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.ontology_vis'));
+        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_vis'));
     }
 
     public async createVis(visVm: OntoVisVm): Promise<IOntoVis> {
@@ -25,6 +25,7 @@ export class OntologyVisService extends DataService<IOntoVis> {
             function: visVm.function,
             type: visVm.type,
             description: visVm.description,
+            dataTypes: visVm.dataTypes,
         };
         return await this.create(vis);
     }
@@ -40,7 +41,9 @@ export class OntologyVisService extends DataService<IOntoVis> {
             function: visVm.function,
             type: visVm.type,
             description: visVm.description,
-        } as IOntoVis;
+            dataTypes: visVm.dataTypes,
+        } as any;
+
         return await this.updateAndGet(visId, updateVis);
     }
 }
