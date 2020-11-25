@@ -4,6 +4,7 @@ import { PUBLISH_TYPE } from './onto-page.interface';
 export enum SORT_BY_FILTER_ONTOPAGE {
     TITLE = 'title',
     PUBLISH_TYPE = 'publishType',
+    DATE = 'date',
 }
 
 export enum SORT_ORDER_FILTER {

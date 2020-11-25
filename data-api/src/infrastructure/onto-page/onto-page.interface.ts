@@ -1,26 +1,22 @@
 import { ObjectId } from 'mongodb';
-import { IQueryParams } from '../onto-data/onto-data.interface';
 
 export enum PUBLISH_TYPE {
-    TEST = 'test',
+    EXAMPLE = 'example',
     REVIEW = 'review',
     RELEASE = 'release',
 }
 
-export interface IBindData {
-    dataId: string;
-    queryParams: IQueryParams[];
-}
-
-export interface IBindVis {
+export interface IBinding {
     visId: string;
-    bindData: IBindData[];
+    dataIds: string[];
 }
 
 export class IOntoPage {
-    public _id: string | ObjectId = '';
-    public title: string = '';
-    public bindVis: IBindVis[] = [];
-    public nrows: number = 0;
-    public publishType: PUBLISH_TYPE = undefined as any;
+    public _id!: string | ObjectId;
+    public title!: string;
+    public nrows!: number;
+    public publishType!: PUBLISH_TYPE;
+    public date!: Date;
+
+    public bindings!: IBinding[];
 }

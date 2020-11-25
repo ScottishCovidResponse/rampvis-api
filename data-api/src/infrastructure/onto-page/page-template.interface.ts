@@ -5,6 +5,7 @@ export interface IPageTemplate {
         nrows: number;
         title: string;
         description: string;
+        date: Date;
     };
     bind: {
         function: string;

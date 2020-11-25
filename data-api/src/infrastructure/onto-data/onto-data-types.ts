@@ -1,3 +1,8 @@
+export enum DATA_TYPE {
+    TIMESERIES = 'timeseries',
+    MATRIX = 'matrix',
+}
+
 export enum SOURCE {
     SCOTLAND = 'scotland',
     HOSPITAL = 'hospital',

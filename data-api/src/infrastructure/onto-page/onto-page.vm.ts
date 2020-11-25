@@ -1,33 +1,13 @@
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { PUBLISH_TYPE } from './onto-page.interface';
 
-export class QueryParamVm {
-    @IsString()
-    public query!: string;
-    @IsString()
-    public params!: string;
-}
-
-export class BindDataVm {
-    @IsString()
-    dataId!: string;
-
-    @IsOptional()
-    @IsArray()
-    @Type(() => QueryParamVm)
-    @ValidateNested({ each: true })
-    queryParams!: QueryParamVm[];
-}
-
-export class BindVisVm {
+export class BindingVm {
     @IsString()
     visId!: string;
 
-    @IsArray()
-    @Type(() => BindDataVm)
-    @ValidateNested({ each: true })
-    bindData!: BindDataVm[];
+    @IsString({ each: true })
+    dataIds!: string[];
 }
 
 export class OntoPageVm {
@@ -46,11 +26,7 @@ export class OntoPageVm {
     public publishType!: PUBLISH_TYPE;
 
     @IsArray()
-    @Type(() => BindVisVm)
+    @Type(() => BindingVm)
     @ValidateNested({ each: true })
-    bindVis!: BindVisVm[];
-
-    // @IsArray()
-    // @IsOptional()
-    // links
+    bindings!: BindingVm[];
 }

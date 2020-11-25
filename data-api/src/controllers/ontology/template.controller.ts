@@ -4,7 +4,7 @@ import { controller, httpGet } from 'inversify-express-utils';
 import { Request, Response } from 'express-serve-static-core';
 
 import { TYPES } from '../../services/config/types';
-import { OntologyPageService } from '../../services/ontology-page.service';
+import { OntoPageService } from '../../services/onto-page.service';
 import { logger } from '../../utils/logger';
 import { IPageTemplate } from '../../infrastructure/onto-page/page-template.interface';
 import { SomethingWentWrong } from '../../exceptions/exception';
@@ -24,7 +24,7 @@ import { PaginationVm } from '../../infrastructure/pagination.vm';
 export class TemplateController {
     constructor(
         @inject(TYPES.TemplateService) private templateService: TemplateService,
-        @inject(TYPES.OntologyPageService) private ontologyPageService: OntologyPageService,
+        @inject(TYPES.OntoPageService) private ontologyPageService: OntoPageService,
     ) {}
 
     @httpGet('/pages', queryParamValidate(OntoPageFilterVm))
@@ -42,6 +42,7 @@ export class TemplateController {
                 totalCount: result.totalCount,
             } as PaginationVm<OntoPageDto>;
 
+            resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
             logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {

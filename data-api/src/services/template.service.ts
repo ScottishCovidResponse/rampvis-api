@@ -4,18 +4,18 @@ import config from 'config';
 
 import { TYPES } from './config/types';
 import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
-import { OntologyVisService } from './ontology-vis.service';
-import { OntologyDataService } from './ontology-data.service';
-import { OntologyPageService } from './ontology-page.service';
+import { OntoVisService } from './onto-vis.service';
+import { OntoDataService } from './onto-data.service';
+import { OntoPageService } from './onto-page.service';
 import { IPageTemplate } from '../infrastructure/onto-page/page-template.interface';
 import { IOntoPage } from '../infrastructure/onto-page/onto-page.interface';
 
 @provide(TYPES.TemplateService)
 export class TemplateService {
     public constructor(
-        @inject(TYPES.OntologyVisService) private ontologyVisService: OntologyVisService,
-        @inject(TYPES.OntologyDataService) private ontologyDataService: OntologyDataService,
-        @inject(TYPES.OntologyPageService) private ontologyPageService: OntologyPageService,
+        @inject(TYPES.OntoVisService) private ontologyVisService: OntoVisService,
+        @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
+        @inject(TYPES.OntoPageService) private ontologyPageService: OntoPageService,
     ) {}
 
     public async buildPageTemplate(pageId: string): Promise<IPageTemplate> {
@@ -24,9 +24,10 @@ export class TemplateService {
         const getVisFunction = async (visId: string) => {
             return (await this.ontologyVisService.get(visId)).function;
         };
+
         const getQueryparams = (queryParams: any) => {
             let fqQueryparams = '';
-            // console.log('queryParams = ', queryParams);
+            console.log('queryParams = ', queryParams);
             if (queryParams && queryParams.length > 0) {
                 for (let d1 of queryParams) {
                     fqQueryparams += d1.query + '=' + d1.params + '&';
@@ -35,13 +36,14 @@ export class TemplateService {
             // console.log(fqQueryparams)
             return fqQueryparams;
         };
+
         const getEndPoints = async (bindData: any) => {
             // return (await this.ontologyVisService.get(visId)).function;
             return await Promise.all(
                 bindData.map(async (d: any) => {
                     const ontoData: IOntoData = await this.ontologyDataService.get(d.dataId);
                     // console.log('ontoData = ', ontoData);
-                    let fqEndpoint = config.get(`urlCode.${ontoData.url}`)  + ontoData.endpoint;
+                    let fqEndpoint = config.get(`urlCode.${ontoData.urlCode}`)  + ontoData.endpoint;
                     let fqQueryparams = getQueryparams(d.queryParams);
                     if (fqQueryparams && fqQueryparams !== '') {
                         fqEndpoint = fqEndpoint + '/?' + fqQueryparams;
@@ -51,8 +53,12 @@ export class TemplateService {
             );
         };
 
+        // TODO commented for bypass compilation error
+        let bind = [] as any;
+
+        /*
         const bind = await Promise.all(
-            ontoPage.bindVis.map(async (d) => {
+            ontoPage.bindingIds.map(async (d) => {
                 let endpoint: any = await getEndPoints(d.bindData);
                 return {
                     function: await getVisFunction(d.visId),
@@ -60,16 +66,18 @@ export class TemplateService {
                 };
             }),
         );
+        */
 
         const result: IPageTemplate = {
             page: {
                 id: ontoPage._id as any,
                 title: ontoPage.title,
-                description: '',
-                nrows: 0,
+                nrows: ontoPage.nrows,
                 type: '',
+                description: '',
+                date: ontoPage.date,
             },
-            bind: bind as any,
+            bind: bind,
             links: {},
         };
         console.log('result = ', JSON.stringify(result));

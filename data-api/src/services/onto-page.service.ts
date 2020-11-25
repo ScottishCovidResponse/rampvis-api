@@ -16,10 +16,10 @@ import {
 } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 
-@provide(TYPES.OntologyPageService)
-export class OntologyPageService extends DataService<IOntoPage> {
+@provide(TYPES.OntoPageService)
+export class OntoPageService extends DataService<IOntoPage> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
-        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.ontology_page'));
+        super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_page'));
     }
 
     async getAllPages( alertFilterVm: OntoPageFilterVm, query?: FilterQuery<IOntoPage>): Promise<PaginationVm<IOntoPage>> {
@@ -43,29 +43,43 @@ export class OntologyPageService extends DataService<IOntoPage> {
         // check pageId
         // check dataId, query, & params
 
-        let ontoPage = {
+        /*
+        let ontoPage: IOntoPage = {
             _id: new ObjectId(),
             title: ontoPageVm.title,
-            bindVis: ontoPageVm.bindVis,
+            bindingIds: ontoPageVm.bindingIds,
             nrows: ontoPageVm.nrows,
             publishType: ontoPageVm.publishType,
+            date: new Date(),
         };
         return await this.create(ontoPage);
+        */
+       return Promise.resolve(null as any)
     }
 
     public async updatePage(pageId: string, ontoPageVm: OntoPageVm): Promise<IOntoPage> {
         let data: IOntoPage = await this.get(pageId);
         if (!data) throw new IdDoesNotExist(pageId);
 
-        const { id, ...updateDataVm } = ontoPageVm;
-        return await this.updateAndGet(pageId, updateDataVm as IOntoPage);
+        /*
+        let ontoPage: IOntoPage= {
+            title: ontoPageVm.title,
+            bindVis: ontoPageVm.bindingIds,
+            nrows: ontoPageVm.nrows,
+            publishType: ontoPageVm.publishType,
+            date: new Date(),
+        } as any;
+
+        return await this.updateAndGet(pageId, ontoPage);
+        */
+       return Promise.resolve(null as any)
     }
 
     // Private Functions
 
     private getPaginatedOntoPages(ontoPages: Array<IOntoPage>, ontoPageFilterVm: OntoPageFilterVm, ): PaginationVm<IOntoPage> {
         const page: number = ontoPageFilterVm.page ? parseInt(ontoPageFilterVm.page) : 0;
-        let pageCount: number = ontoPageFilterVm.pageCount ? parseInt(ontoPageFilterVm.pageCount) : 1;
+        let pageCount: number | undefined = ontoPageFilterVm.pageCount ? parseInt(ontoPageFilterVm.pageCount) : undefined; // undefined => return all to Flask UI
         const sortBy: SORT_BY_FILTER_ONTOPAGE = ontoPageFilterVm.sortBy || SORT_BY_FILTER_ONTOPAGE.TITLE;
         const sortOrder: SORT_ORDER_FILTER = ontoPageFilterVm.sortOrder || SORT_ORDER_FILTER.ASC;
 
@@ -86,6 +100,11 @@ export class OntologyPageService extends DataService<IOntoPage> {
                 if (a.publishType >= b.publishType) return 1;
                 return -1;
             });
+        } else if (sortBy == SORT_BY_FILTER_ONTOPAGE.DATE) {
+            result = result.sort((a, b) => {
+                if (a.date >= b.date) return 1;
+                return -1;
+            });
         }
 
         if (sortOrder == SORT_ORDER_FILTER.DESC) {
@@ -100,7 +119,8 @@ export class OntologyPageService extends DataService<IOntoPage> {
         } as PaginationVm<IOntoPage>;
     }
 
-    private paginate(array: Array<IOntoPage>, page_size: number, page_number: number): Array<IOntoPage> {
-        return array.slice(page_number * page_size, (page_number + 1) * page_size);
+    private paginate(array: Array<IOntoPage>, page_size: number | undefined, page_number: number): Array<IOntoPage> {
+        if (!page_size) return array; // undefined => return all to Flask UI
+        else return array.slice(page_number * page_size, (page_number + 1) * page_size);
     }
 }

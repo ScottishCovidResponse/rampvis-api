@@ -8,9 +8,11 @@ import { CovidDeathsController } from './scotland/covid-deaths.controller';
 import { SearchController } from './search.controller';
 import { ThumbnailController } from './thumbnail.controller';
 import { ScotlandLiveController } from './scotland/scotland-live.controller';
-import { OntologyController } from './ontology/ontology.controller';
 import { ScotlandCovidModelController } from './scotland/covid-model.controller';
 import { TemplateController } from './ontology/template.controller';
+import { OntoVisController } from './ontology/onto-vis.controller';
+import { OntoDataController } from './ontology/onto-data.controller';
+import { OntoPageController } from './ontology/onto-page.controller';
 
 export {
     AuthController,
@@ -24,6 +26,8 @@ export {
     CovidDeathsController,
     ScotlandLiveController,
     ScotlandCovidModelController,
-    OntologyController,
+    OntoVisController,
+    OntoDataController,
+    OntoPageController,
     TemplateController,
 };
