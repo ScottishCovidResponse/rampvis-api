@@ -45,7 +45,7 @@ def generate_aggregated_file(df):
 
     with open('percentiles.json', 'w') as f:
         json.dump(results, f)
-        
+
 def generate_age_group_file(df, col, n_groups=8):
     "Generate data for visualisation, using only `col` variable."
     df['group'] = df.index % n_groups
@@ -61,10 +61,11 @@ def generate_age_group_file(df, col, n_groups=8):
     results['percentiles'] = [f'{q:.0%}' for q in quantiles]
 
     results['ys'] = []
+    labels = ['Under 20', '20-29', '30-39', '40-49', '50-59', '60-69', '70+', 'Health Care Workers']
     for c in range(n_groups):
         g = df.query('group == @c')
         results['ys'].append({
-            'label': c,
+            'label': labels[c],
             'values': [g.groupby('day')[col].quantile(q).tolist() for q in quantiles]
         })
 
@@ -75,4 +76,3 @@ def generate_age_group_file(df, col, n_groups=8):
                 
     with open('group_percentiles.json', 'w') as f:
         json.dump(results, f)
-        
