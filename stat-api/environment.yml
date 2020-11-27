@@ -23,5 +23,4 @@ dependencies:
       - fsspec==0.8.4
       - data-pipeline-api
       - neo4j==4.1.1
-      - py2neo==2020.7b8
       - marshmallow==3.9.0
