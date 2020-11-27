@@ -13,7 +13,6 @@ export interface IBinding {
 
 export class IOntoPage {
     public _id!: string | ObjectId;
-    public title!: string;
     public nrows!: number;
     public publishType!: PUBLISH_TYPE;
     public date!: Date;

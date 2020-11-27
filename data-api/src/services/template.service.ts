@@ -71,7 +71,7 @@ export class TemplateService {
         const result: IPageTemplate = {
             page: {
                 id: ontoPage._id as any,
-                title: ontoPage.title,
+                title: ontoPage._id as any,
                 nrows: ontoPage.nrows,
                 type: '',
                 description: '',

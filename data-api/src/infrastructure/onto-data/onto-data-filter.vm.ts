@@ -1,7 +1,7 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
-import { PUBLISH_TYPE } from './onto-page.interface';
 
-export enum ONTOPAGE_SORT_BY {
+export enum ONTODATA_SORT_BY {
+    TITLE = 'title',
     PUBLISH_TYPE = 'publishType',
     DATE = 'date',
 }
@@ -11,9 +11,10 @@ export enum SORT_ORDER {
     DESC = 'desc',
 }
 
-export class OntoPageFilterVm {
-    @IsEnum(PUBLISH_TYPE)
-    publishType!: PUBLISH_TYPE;
+export class OntoDataFilterVm {
+    // @IsEnum(PUBLISH_TYPE)
+    // publishType!: PUBLISH_TYPE;
+
 
     @IsOptional()
     @IsString()
@@ -24,8 +25,8 @@ export class OntoPageFilterVm {
     pageCount!: string;
 
     @IsOptional()
-    @IsEnum(ONTOPAGE_SORT_BY)
-    sortBy!: ONTOPAGE_SORT_BY;
+    @IsEnum(ONTODATA_SORT_BY)
+    sortBy!: ONTODATA_SORT_BY;
 
     @IsOptional()
     @IsEnum(SORT_ORDER)

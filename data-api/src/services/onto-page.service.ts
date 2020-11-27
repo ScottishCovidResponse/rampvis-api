@@ -9,11 +9,7 @@ import { DataService } from './data.service';
 import { IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
 import { IOntoPage, PUBLISH_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
-import {
-    OntoPageFilterVm,
-    SORT_BY_FILTER_ONTOPAGE,
-    SORT_ORDER_FILTER,
-} from '../infrastructure/onto-page/onto-page-filter.vm';
+import { OntoPageFilterVm, ONTOPAGE_SORT_BY, SORT_ORDER, } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 
 @provide(TYPES.OntoPageService)
@@ -25,7 +21,6 @@ export class OntoPageService extends DataService<IOntoPage> {
     async getAllPages( alertFilterVm: OntoPageFilterVm, query?: FilterQuery<IOntoPage>): Promise<PaginationVm<IOntoPage>> {
         let ontoPages: IOntoPage[] = [];
 
-        
         if (Object.values(PUBLISH_TYPE).includes(alertFilterVm.publishType)) {
             // filtered pages
             ontoPages = await this.getAll({ publishType: alertFilterVm.publishType })
@@ -42,72 +37,61 @@ export class OntoPageService extends DataService<IOntoPage> {
         // if (ontoPage) return data;
         // check pageId
         // check dataId, query, & params
-
-        /*
+       
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),
-            title: ontoPageVm.title,
-            bindingIds: ontoPageVm.bindingIds,
             nrows: ontoPageVm.nrows,
             publishType: ontoPageVm.publishType,
             date: new Date(),
+            bindings: ontoPageVm.bindings,
         };
         return await this.create(ontoPage);
-        */
-       return Promise.resolve(null as any)
     }
 
     public async updatePage(pageId: string, ontoPageVm: OntoPageVm): Promise<IOntoPage> {
         let data: IOntoPage = await this.get(pageId);
         if (!data) throw new IdDoesNotExist(pageId);
-
-        /*
+        
         let ontoPage: IOntoPage= {
-            title: ontoPageVm.title,
-            bindVis: ontoPageVm.bindingIds,
             nrows: ontoPageVm.nrows,
             publishType: ontoPageVm.publishType,
             date: new Date(),
+            bindings: ontoPageVm.bindings,
         } as any;
 
         return await this.updateAndGet(pageId, ontoPage);
-        */
-       return Promise.resolve(null as any)
     }
 
+    //
     // Private Functions
+    //
 
     private getPaginatedOntoPages(ontoPages: Array<IOntoPage>, ontoPageFilterVm: OntoPageFilterVm, ): PaginationVm<IOntoPage> {
         const page: number = ontoPageFilterVm.page ? parseInt(ontoPageFilterVm.page) : 0;
         let pageCount: number | undefined = ontoPageFilterVm.pageCount ? parseInt(ontoPageFilterVm.pageCount) : undefined; // undefined => return all to Flask UI
-        const sortBy: SORT_BY_FILTER_ONTOPAGE = ontoPageFilterVm.sortBy || SORT_BY_FILTER_ONTOPAGE.TITLE;
-        const sortOrder: SORT_ORDER_FILTER = ontoPageFilterVm.sortOrder || SORT_ORDER_FILTER.ASC;
+        const sortBy: ONTOPAGE_SORT_BY = ontoPageFilterVm.sortBy || ONTOPAGE_SORT_BY.DATE; // default
+        const sortOrder: SORT_ORDER = ontoPageFilterVm.sortOrder || SORT_ORDER.ASC;
 
         let result: Array<IOntoPage> = ontoPages;
 
         if (ontoPageFilterVm.filter && ontoPageFilterVm.filter.length > 0) {
             const filter = ontoPageFilterVm.filter.toLowerCase();
-            result = result.filter((a) => a.title.match(new RegExp(filter, 'i')));
+            result = result.filter((a) => a._id.toString().match(new RegExp(filter, 'i')));
         }
 
-        if (sortBy == SORT_BY_FILTER_ONTOPAGE.TITLE) {
-            result = result.sort((a, b) => {
-                if (a.title >= b.title) return 1;
-                return -1;
-            });
-        } else if (sortBy == SORT_BY_FILTER_ONTOPAGE.PUBLISH_TYPE) {
+        if (sortBy == ONTOPAGE_SORT_BY.PUBLISH_TYPE) {
             result = result.sort((a, b) => {
                 if (a.publishType >= b.publishType) return 1;
                 return -1;
             });
-        } else if (sortBy == SORT_BY_FILTER_ONTOPAGE.DATE) {
+        } else if (sortBy == ONTOPAGE_SORT_BY.DATE) {
             result = result.sort((a, b) => {
                 if (a.date >= b.date) return 1;
                 return -1;
             });
         }
 
-        if (sortOrder == SORT_ORDER_FILTER.DESC) {
+        if (sortOrder == SORT_ORDER.DESC) {
             result = result.reverse();
         }
 

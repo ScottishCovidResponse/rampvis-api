@@ -16,13 +16,13 @@ import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../../infrastructure/pagination.vm';
 
-@controller('/ontology/page', JwtToken.verify)
+@controller('/ontology', JwtToken.verify)
 export class OntoPageController {
     constructor(
         @inject(TYPES.OntoPageService) private ontologyPageService: OntoPageService,
     ) {}
 
-    @httpGet('/', queryParamValidate(OntoPageFilterVm))
+    @httpGet('/pages', queryParamValidate(OntoPageFilterVm))
     public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
         const query: OntoPageFilterVm = request.query as any;
         logger.info(`OntoPageController:getPages: query = ${JSON.stringify(query)}`);
@@ -37,6 +37,8 @@ export class OntoPageController {
                 totalCount: result.totalCount,
             } as PaginationVm<OntoPageDto>;
 
+            logger.info(`OntoPageController:getPages: result = ${JSON.stringify(result)}`);
+
             logger.info(`OntoPageController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
@@ -46,7 +48,7 @@ export class OntoPageController {
     }
 
     
-    @httpPost('/', vmValidate(OntoPageVm))
+    @httpPost('/page', vmValidate(OntoPageVm))
     public async createPage(request: Request, response: Response, next: NextFunction): Promise<void> {
         const ontoPageVm: OntoPageVm = request.body as any;
         logger.info(`OntoPageController:createPage: dataVm = ${JSON.stringify(ontoPageVm)}`);
@@ -62,7 +64,7 @@ export class OntoPageController {
         }
     }
 
-    @httpPut('/:pageId', vmValidate(OntoPageVm)) 
+    @httpPut('/page/:pageId', vmValidate(OntoPageVm)) 
     public async updatePage(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
         const ontoPageVm: OntoPageVm = request.body as any;
@@ -79,7 +81,7 @@ export class OntoPageController {
         }
     }
 
-    @httpDelete('/:pageId') 
+    @httpDelete('/page/:pageId') 
     public async deletePage(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
         logger.info(`OntoPageController:deletePage: pageId = ${pageId}`);

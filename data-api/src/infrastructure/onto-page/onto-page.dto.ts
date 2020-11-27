@@ -1,16 +1,14 @@
 import { PUBLISH_TYPE } from './onto-page.interface';
 
 export class BindingDto {
-    public visId!: string;
-    public dataIds!: string[];
+    public visId: string = undefined as any;
+    public dataIds: string[] = undefined as any;
 }
 
 export class OntoPageDto {
-    public id!: string;
-    public title!: string;
-    public nrows!: number;
-    public publishType!: PUBLISH_TYPE;
-    public date!: Date;
-
-    public bindings!: BindingDto[];
+    public id: string = undefined as any;
+    public nrows: number = undefined as any;
+    public publishType: PUBLISH_TYPE = undefined as any;
+    public date: Date = undefined as any;
+    public bindings: BindingDto[]  = undefined as any;
 }

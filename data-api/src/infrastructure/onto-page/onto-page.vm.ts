@@ -15,10 +15,6 @@ export class OntoPageVm {
     @IsString()
     public id!: string;
 
-    @IsOptional()
-    @IsString()
-    public title!: string;
-
     @IsNumber()
     public nrows!: number;
 
