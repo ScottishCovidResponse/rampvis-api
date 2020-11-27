@@ -14,10 +14,16 @@ analytics_bp = Blueprint(
 config = current_app.config
 
 
-@analytics_bp.route('/percentiles', methods=['GET'])
+@analytics_bp.route('/percentiles/model/eera/age-groups/', methods=['GET'])
 def query():
-    response = Response('from analytics', mimetype='application/json')
-    return response
+    col = request.args.get('col', None)
+    if col not in {'H', 'R', 'D'}:
+        abort(400, '`col` parameter should be one of [H, R, D]')
+
+    filepath = os.path.join(config.get('DATA_MODEL'), 'eera-outcome-hosp-rec-death-age-groups.csv')
+    df = pd.read_csv(filepath)
+    result = generate_age_group_file(df, col)
+    return Response(json.dumps(result), mimetype='application/json')
 
 def generate_aggregated_file(df):
     results = {}
@@ -43,8 +49,7 @@ def generate_aggregated_file(df):
             for i in range(4):
                 assert ys['values'][i] > ys['values'][i + 1]
 
-    with open('percentiles.json', 'w') as f:
-        json.dump(results, f)
+    return results
 
 def generate_age_group_file(df, col, n_groups=8):
     "Generate data for visualisation, using only `col` variable."
@@ -74,5 +79,4 @@ def generate_age_group_file(df, col, n_groups=8):
             for i in range(4):
                 assert ys['values'][i] > ys['values'][i + 1]
                 
-    with open('group_percentiles.json', 'w') as f:
-        json.dump(results, f)
+    return results

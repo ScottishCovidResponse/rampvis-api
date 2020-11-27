@@ -7,6 +7,7 @@ class Config(object):
     DATA_PATH_V04 = BASE_DIR + '/' + '../data/v04'
     DATA_PATH_RAW = BASE_DIR + '/' + '../data/raw'
     DATA_PATH_LIVE = BASE_DIR + '/' + '../data/live'
+    DATA_MODEL = BASE_DIR + '/' + '../data/scotland/model'
 
     NEO4J_BOLT = 'bolt://localhost'
     NEO4J_BOLT_PORT = 7687
