@@ -5,7 +5,7 @@ import { ActivityControllerInt } from './activity.controller';
 import { NhsBoardController } from './scotland/nhs-board.controller';
 import { NhsBoardDynamicController } from './scotland/nhs-board.controller-dynamic';
 import { CovidDeathsController } from './scotland/covid-deaths.controller';
-import { SearchController } from './search.controller';
+import { SearchControllerV05 } from './search.controller.v0.5';
 import { ThumbnailController } from './thumbnail.controller';
 import { ScotlandLiveController } from './scotland/scotland-live.controller';
 import { ScotlandCovidModelController } from './scotland/covid-model.controller';
@@ -19,7 +19,7 @@ export {
     BookmarkController,
     UserController,
     ActivityControllerInt,
-    SearchController,
+    SearchControllerV05,
     ThumbnailController,
     NhsBoardController,
     NhsBoardDynamicController,

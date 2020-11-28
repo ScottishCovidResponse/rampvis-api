@@ -61,7 +61,7 @@ function GlobalMiddleware(app: express.Application) {
     app.use(cors({
         credentials: false,
         origin: (origin, callback) => {
-            logger.debug('appMiddleware: cross origin = ' + origin);
+            logger.debug(`GlobalMiddleware: origin = ${origin}`);
 
             // Allow all
             // return callback(null, true);
@@ -69,14 +69,14 @@ function GlobalMiddleware(app: express.Application) {
             const allowedOrigins: string[] = config.get('allowOrigins');
             // allow requests with no origin, e.g., like mobile apps or curl requests
             if (!origin) {
-                logger.error('appMiddleware: cross origin = ' + origin + ' - allowed');
+                logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
                 return callback(null, true);
             }
             if (allowedOrigins.indexOf(origin) !== -1) {
-                logger.error('appMiddleware: cross origin = ' + origin + ' - allowed');
+                logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
                 return callback(null, true);
             } else {
-                logger.error('appMiddleware: cross origin = ' + origin + ' - denied. allowedOrigins = ' + allowedOrigins);
+                logger.debug(`GlobalMiddleware: origin = ${origin}, denied.`);
                 const msg = 'The CORS policy for this site does not allow access from the specified origin.';
                 return callback(new Error(msg), false);
             }

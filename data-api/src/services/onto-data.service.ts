@@ -105,4 +105,21 @@ export class OntoDataService extends DataService<IOntoData> {
         if (!page_size) return array; // undefined => return all
         else return array.slice(page_number * page_size, (page_number + 1) * page_size);
     }
+
+    //
+    // search
+    //
+    async search(queryStr: string): Promise<IOntoData[]> {
+        let pipeline = [
+            {
+                $match: {
+                    $text: {
+                        $search: queryStr,
+                    },
+                },
+            },
+            { $sort: { score: { $meta: 'textScore' } } },
+        ];
+        return this.getDbCollection().aggregate(pipeline).toArray();
+    }
 }

@@ -13,7 +13,10 @@ import { TYPES } from './services/config/types';
 import { logger } from './utils/logger';
 import { DIContainer } from './services/config/inversify.config';
 import './controllers/controller.module';
-import { SearchService } from './services/search.service';
+import { SearchServiceV05 } from './services/search.service.v0.5';
+import { SearchClient, getSearchClient } from './infrastructure/db/elasticsearch.connection';
+import { OntoDataService } from './services/onto-data.service';
+import { OntoPageSearchService } from './services/onto-page-search.service';
 
 export class App {
     public app!: express.Application;
@@ -27,7 +30,10 @@ export class App {
         let container: Container = DIContainer;
 
         await App.initDatabase(container);
-        await App.createDbIndexes(container);
+        await App.createDbSearchIndexes(container);
+
+        await App.initElasticsearch(container);
+        await App.createElasticsearchIndexes(container);
 
         const server = new InversifyExpressServer(container, null, { rootPath: config.get('apiUrl') });
         this.app = server
@@ -43,7 +49,6 @@ export class App {
 
     private static async initDatabase(container: Container) {
         const url: string = config.get('mongodb.url');
-
         try {
             const dbClient = await getDatabaseClient(url);
             container.bind<DbClient>(TYPES.DbClient).toConstantValue(dbClient);
@@ -54,10 +59,39 @@ export class App {
         }
     }
 
-    private static async createDbIndexes(container: Container) {
+    private static async createDbSearchIndexes(container: Container) {
         try {
-            const searchService: SearchService = container.get<SearchService>(TYPES.SearchService);
-            await searchService.createTextIndex({ title: 'text', description: 'text' });
+            // v0.5
+            // Manually create pages collection from v0.5 pages.json file
+            const searchServiceV05: SearchServiceV05 = container.get<SearchServiceV05>(TYPES.SearchServiceV05);
+            await searchServiceV05.createTextIndex({ title: 'text', description: 'text' });
+
+            const ontoDataService: OntoDataService = container.get<OntoDataService>(TYPES.OntoDataService);
+            await ontoDataService.createTextIndex({ description: 'text' });
+
+        } catch (err) {
+            logger.error(`Error creating indexes, error: ${err}`);
+            process.exit();
+        }
+    }
+
+    private static async initElasticsearch(container: Container) {
+        const host: string = config.get('es.host');
+        try {
+            const searchClient = await getSearchClient(host);
+            container.bind<SearchClient>(TYPES.SearchClient).toConstantValue(searchClient);
+            logger.info(`Connected to Elasticsearch, host: ${host}`);
+        } catch (err) {
+            logger.error(`Error connecting to Elasticsearch, host: ${host}`);
+            process.exit();
+        }
+    }
+
+    private static async createElasticsearchIndexes(container: Container) {
+        try {
+            // We may perform search on OntoPage using ES
+            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(TYPES.OntoPageSearchService);
+            await ontoPageSearchService.createIndexes();
         } catch (err) {
             logger.error(`Error creating indexes, error: ${err}`);
             process.exit();

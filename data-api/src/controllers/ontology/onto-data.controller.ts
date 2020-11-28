@@ -12,14 +12,14 @@ import { OntoDataVm } from '../../infrastructure/onto-data/onto-data.vm';
 import { OntoDataService } from '../../services/onto-data.service';
 import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
-import { SomethingWentWrong } from '../../exceptions/exception';
+import { InvalidQueryParametersException, SearchError, SomethingWentWrong } from '../../exceptions/exception';
+import { DATA_TYPE } from '../../infrastructure/onto-data/onto-data-types';
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
         @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
     ) {}
-
    
     @httpGet('/')
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -32,6 +32,27 @@ export class OntoDataController {
             logger.error(`OntoDataController:getAllData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
+    }
+
+    @httpGet('/search') 
+    public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataType = request.query.dataType as DATA_TYPE;
+        const query = request.query.query as string;
+        logger.info(`OntoDataController: search: query = ${query}, dataType = ${dataType}`);
+
+        if (!query || !dataType) {
+            return next(new InvalidQueryParametersException('Missing dataType or query.'));
+        }
+
+        try {
+            const data = await this.ontologyDataService.search(query);
+            const filteredData = data.filter(d => d.dataType === dataType);
+            const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, filteredData);
+            logger.info(`OntoDataController:getData: search = ${JSON.stringify(dataDto)}`);
+            response.status(200).send(dataDto);
+        } catch (error) {
+            next(new SearchError(error.message));
+        } 
     }
 
     @httpGet('/:dataId')
@@ -97,4 +118,5 @@ export class OntoDataController {
             next(new SomethingWentWrong(e.message));
         }
     }
+
 }

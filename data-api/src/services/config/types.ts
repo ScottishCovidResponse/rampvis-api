@@ -2,7 +2,6 @@ const TYPES = {
     ActivityService: Symbol.for('ActivityService'),
     BookmarkService: Symbol.for('BookmarkService'),
     DataService: Symbol.for('DataService'),
-    SearchService: Symbol.for('SearchService'),
     ThumbnailService: Symbol.for('ThumbnailService'),
     UserService: Symbol.for('UserService'),
     OntoVisService: Symbol.for('OntoVisService'),
@@ -10,6 +9,10 @@ const TYPES = {
     OntoPageService: Symbol.for('OntoPageService'),
     TemplateService: Symbol.for('TemplateService'),
     DbClient: Symbol.for('DbClient'),
+    SearchClient: Symbol.for('SearchClient'),
+    SearchService: Symbol.for('SearchService'),
+    OntoPageSearchService: Symbol.for('OntoDataSearchService'),
+    SearchServiceV05: Symbol.for('SearchServiceV05'),
     CSVService: Symbol.for('CSVService'),
 };
 
