@@ -18,17 +18,17 @@ export class OntoPageService extends DataService<IOntoPage> {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_page'));
     }
 
-    async getAllPages( alertFilterVm: OntoPageFilterVm, query?: FilterQuery<IOntoPage>): Promise<PaginationVm<IOntoPage>> {
+    async getAllPages(ontoPageFilterVm: OntoPageFilterVm): Promise<PaginationVm<IOntoPage>> {
         let ontoPages: IOntoPage[] = [];
 
-        if (Object.values(PUBLISH_TYPE).includes(alertFilterVm.publishType)) {
+        if (Object.values(PUBLISH_TYPE).includes(ontoPageFilterVm.publishType)) {
             // filtered pages
-            ontoPages = await this.getAll({ publishType: alertFilterVm.publishType })
+            ontoPages = await this.getAll({ publishType: ontoPageFilterVm.publishType })
         } else {
             throw new SomethingWentWrong('Wrong page publish type');
         }
 
-        return this.getPaginatedOntoPages(ontoPages, alertFilterVm);
+        return this.getPaginatedOntoPages(ontoPages, ontoPageFilterVm);
     }
 
     public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {

@@ -5,7 +5,7 @@ import { inject } from 'inversify';
 
 import { logger } from '../../utils/logger';
 import { TYPES } from '../../services/config/types';
-import { vmValidate } from '../../middleware/validators';
+import { queryParamValidate, vmValidate } from '../../middleware/validators';
 import { JwtToken } from '../../middleware/jwt.token';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { OntoDataVm } from '../../infrastructure/onto-data/onto-data.vm';
@@ -14,6 +14,8 @@ import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
 import { InvalidQueryParametersException, SearchError, SomethingWentWrong } from '../../exceptions/exception';
 import { DATA_TYPE } from '../../infrastructure/onto-data/onto-data-types';
+import { OntoDataFilterVm } from '../../infrastructure/onto-data/onto-data-filter.vm';
+import { PaginationVm } from '../../infrastructure/pagination.vm';
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
@@ -21,13 +23,21 @@ export class OntoDataController {
         @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
     ) {}
    
-    @httpGet('/')
+    @httpGet('/', queryParamValidate(OntoDataFilterVm))
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const query: OntoDataFilterVm = request.query as any;
+        logger.info(`OntoDataController:getAllData: query = ${JSON.stringify(query)}`);
+
         try {
-            const dataList: IOntoData[] = await this.ontologyDataService.getAll();
-            const dataDtos: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, dataList);
-            logger.info(`OntoDataController:getAllData: dataDtos = ${JSON.stringify(dataDtos)}`);
-            response.status(200).send(dataDtos);
+            const result: PaginationVm<IOntoData> = await this.ontologyDataService.getAllData(query);
+            const resultDto: PaginationVm<OntoDataDto> = {
+                data: automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, result.data),
+                page: result.page,
+                pageCount: result.pageCount,
+                totalCount: result.totalCount,
+            };
+            logger.info(`OntoDataController:getAllData: resultDto = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`OntoDataController:getAllData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));

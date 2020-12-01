@@ -11,11 +11,27 @@ import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 import { OntoDataFilterVm, ONTODATA_SORT_BY, SORT_ORDER } from '../infrastructure/onto-data/onto-data-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
+import { DATA_TYPE } from '../infrastructure/onto-data/onto-data-types';
+import { logger } from '../utils/logger';
 
 @provide(TYPES.OntoDataService)
 export class OntoDataService extends DataService<IOntoData> {
     public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_data'));
+    }
+
+    public async getAllData(ontoDataFilterVm: OntoDataFilterVm): Promise<PaginationVm<IOntoData>> {
+        let result: IOntoData[] =  [];
+
+        // Filter by dataType
+        if (ontoDataFilterVm.dataType && Object.values(DATA_TYPE).includes(ontoDataFilterVm.dataType)) {
+            result = await this.getAll({ dataType: ontoDataFilterVm.dataType })
+        } else {
+            result = await this.getAll()
+        }
+
+        logger.debug(`getAllData: result = ${JSON.stringify(result)}`)
+        return this.getPaginatedOntoDataList(result, ontoDataFilterVm);
     }
 
     public async getMultiple(ids: string[]): Promise<IOntoData[]> {
@@ -31,10 +47,12 @@ export class OntoDataService extends DataService<IOntoData> {
             urlCode: dataVm.urlCode,
             endpoint: dataVm.endpoint,
             dataType: dataVm.dataType,
-            description: dataVm.description,
+            productDesc: dataVm.productDesc,
+            streamDesc: dataVm.streamDesc,
             source: dataVm?.source,
             model: dataVm?.model,
             analytics: dataVm?.analytics,
+            date: new Date(),
             queryParams: dataVm.queryParams,
         };
         return await this.create(data);
@@ -47,8 +65,20 @@ export class OntoDataService extends DataService<IOntoData> {
         data = await this.get(dataId);
         if (!data) throw new IdDoesNotExist(dataId);
 
-        const { id, ...updateDataVm } = dataVm;
-        return await this.updateAndGet(dataId, updateDataVm as IOntoData);
+        data = {
+            urlCode: dataVm.urlCode,
+            endpoint: dataVm.endpoint,
+            dataType: dataVm.dataType,
+            productDesc: dataVm.productDesc,
+            streamDesc: dataVm.streamDesc,
+            source: dataVm?.source,
+            model: dataVm?.model,
+            analytics: dataVm?.analytics,
+            date: new Date(),
+            queryParams: dataVm.queryParams,
+        } as any;
+
+        return await this.updateAndGet(dataId, data);
     }
 
     //
@@ -57,40 +87,42 @@ export class OntoDataService extends DataService<IOntoData> {
 
     private getPaginatedOntoDataList(ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm, ): PaginationVm<IOntoData> {
         const page: number = ontoDataFilterVm.page ? parseInt(ontoDataFilterVm.page) : 0;
-        let pageCount: number | undefined = ontoDataFilterVm.pageCount ? parseInt(ontoDataFilterVm.pageCount) : undefined; // undefined => return all to Flask UI
-        const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.TITLE;
+        let pageCount: number = ontoDataFilterVm.pageCount ? parseInt(ontoDataFilterVm.pageCount) : Infinity;
+        const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
         const sortOrder: SORT_ORDER = ontoDataFilterVm.sortOrder || SORT_ORDER.ASC;
 
         let result: Array<IOntoData> = ontoDataList;
 
-        // TODO complete it
-        /*
         if (ontoDataFilterVm.filter && ontoDataFilterVm.filter.length > 0) {
             const filter = ontoDataFilterVm.filter.toLowerCase();
-            result = result.filter((a) => a.title.match(new RegExp(filter, 'i')));
+            result = result.filter((a) => a.productDesc.match(new RegExp(filter, 'i')) || a.streamDesc.match(new RegExp(filter, 'i')) );
         }
 
-        if (sortBy == SORT_BY_FILTER_ONTOPAGE.TITLE) {
+        if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
             result = result.sort((a, b) => {
-                if (a.title >= b.title) return 1;
+                if (a.dataType >= b.dataType) return 1;
                 return -1;
             });
-        } else if (sortBy == SORT_BY_FILTER_ONTOPAGE.PUBLISH_TYPE) {
+        } else if (sortBy == ONTODATA_SORT_BY.PROD_DESC) {
             result = result.sort((a, b) => {
-                if (a.publishType >= b.publishType) return 1;
+                if (a.productDesc >= b.productDesc) return 1;
                 return -1;
             });
-        } else if (sortBy == SORT_BY_FILTER_ONTOPAGE.DATE) {
+        } else if (sortBy == ONTODATA_SORT_BY.STREAM_DESC) {
+            result = result.sort((a, b) => {
+                if (a.streamDesc >= b.streamDesc) return 1;
+                return -1;
+            });
+        } else if (sortBy == ONTODATA_SORT_BY.DATE) {
             result = result.sort((a, b) => {
                 if (a.date >= b.date) return 1;
                 return -1;
             });
         }
 
-        if (sortOrder == SORT_ORDER_FILTER.DESC) {
+        if (sortOrder == SORT_ORDER.DESC) {
             result = result.reverse();
         }
-        */
 
         return {
             data: this.paginate(result, pageCount, page),
@@ -101,9 +133,9 @@ export class OntoDataService extends DataService<IOntoData> {
         
     }
 
-    private paginate(array: Array<IOntoData>, page_size: number | undefined, page_number: number): Array<IOntoData> {
-        if (!page_size) return array; // undefined => return all
-        else return array.slice(page_number * page_size, (page_number + 1) * page_size);
+    private paginate(list: IOntoData[], pageCount: number, page: number): Array<IOntoData> {
+        logger.debug(`paginate: list = ${JSON.stringify(list)}`)
+        return list.slice(page * pageCount, (page + 1) * pageCount);
     }
 
     //

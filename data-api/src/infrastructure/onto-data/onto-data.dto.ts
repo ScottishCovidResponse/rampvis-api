@@ -13,6 +13,8 @@ export class OntoDataDto {
     public source?: SOURCE = undefined as any;
     public model?: MODEL = undefined as any;
     public analytics?: ANALYTICS = undefined as any;
-    public description: string = undefined as any;
+    public productDesc: string = undefined as any;
+    public streamDesc: string = undefined as any;
+    public date: Date = undefined as any;
     public queryParams?: QueryParamsDto[] = undefined as any;
 }

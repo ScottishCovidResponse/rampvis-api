@@ -24,7 +24,10 @@ export class OntoDataVm {
     public dataType!: DATA_TYPE;
 
     @IsString()
-    public description!: string;
+    public productDesc!: string;
+
+    @IsString()
+    public streamDesc!: string;
 
     @IsOptional()
     @IsEnum(SOURCE)

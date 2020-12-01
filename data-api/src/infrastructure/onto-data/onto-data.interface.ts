@@ -14,7 +14,8 @@ export interface IOntoData {
     source?: SOURCE;
     model?: MODEL;
     analytics?: ANALYTICS;
-    description: string;
-
+    productDesc: string;
+    streamDesc: string;
+    date: Date;
     queryParams?: IQueryParams[];
 }

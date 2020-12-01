@@ -1,8 +1,10 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
+import { DATA_TYPE } from './onto-data-types';
 
 export enum ONTODATA_SORT_BY {
-    TITLE = 'title',
-    PUBLISH_TYPE = 'publishType',
+    DATA_TYPE = 'dataType',
+    PROD_DESC = 'productDesc',
+    STREAM_DESC = 'streamDesc',
     DATE = 'date',
 }
 
@@ -12,9 +14,9 @@ export enum SORT_ORDER {
 }
 
 export class OntoDataFilterVm {
-    // @IsEnum(PUBLISH_TYPE)
-    // publishType!: PUBLISH_TYPE;
-
+    @IsOptional()
+    @IsEnum(DATA_TYPE)
+    dataType!: DATA_TYPE;
 
     @IsOptional()
     @IsString()

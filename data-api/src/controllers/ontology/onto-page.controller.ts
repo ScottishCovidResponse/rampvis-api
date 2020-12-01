@@ -35,10 +35,7 @@ export class OntoPageController {
                 page: result.page,
                 pageCount: result.pageCount,
                 totalCount: result.totalCount,
-            } as PaginationVm<OntoPageDto>;
-
-            logger.info(`OntoPageController:getPages: result = ${JSON.stringify(result)}`);
-
+            };
             logger.info(`OntoPageController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
