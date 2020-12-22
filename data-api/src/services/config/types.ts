@@ -11,7 +11,7 @@ const TYPES = {
     DbClient: Symbol.for('DbClient'),
     SearchClient: Symbol.for('SearchClient'),
     SearchService: Symbol.for('SearchService'),
-    OntoPageSearchService: Symbol.for('OntoDataSearchService'),
+    OntoDataSearchService: Symbol.for('OntoDataSearchService'),
     SearchServiceV05: Symbol.for('SearchServiceV05'),
     CSVService: Symbol.for('CSVService'),
 };

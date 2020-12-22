@@ -16,7 +16,7 @@ import './controllers/controller.module';
 import { SearchServiceV05 } from './services/search.service.v0.5';
 import { SearchClient, getSearchClient } from './infrastructure/db/elasticsearch.connection';
 import { OntoDataService } from './services/onto-data.service';
-import { OntoPageSearchService } from './services/onto-page-search.service';
+import { OntoDataSearchService } from './services/onto-data-search.service';
 
 export class App {
     public app!: express.Application;
@@ -33,7 +33,8 @@ export class App {
         await App.createDbSearchIndexes(container);
 
         await App.initElasticsearch(container);
-        await App.createElasticsearchIndexes(container);
+        await App.createSearchIndexes(container);
+        await App.putSearchMappings(container);
 
         const server = new InversifyExpressServer(container, null, { rootPath: config.get('apiUrl') });
         this.app = server
@@ -67,10 +68,10 @@ export class App {
             await searchServiceV05.createTextIndex({ title: 'text', description: 'text' });
 
             const ontoDataService: OntoDataService = container.get<OntoDataService>(TYPES.OntoDataService);
-            await ontoDataService.createTextIndex({ description: 'text' });
+            await ontoDataService.createTextIndex({ productDesc: 'text', streamDesc: 'text' });
 
         } catch (err) {
-            logger.error(`Error creating indexes, error: ${err}`);
+            logger.error(`Error creating indexes, error= ${JSON.stringify(err)}`);
             process.exit();
         }
     }
@@ -87,13 +88,24 @@ export class App {
         }
     }
 
-    private static async createElasticsearchIndexes(container: Container) {
+    private static async createSearchIndexes(container: Container) {
         try {
-            // We may perform search on OntoPage using ES
-            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(TYPES.OntoPageSearchService);
+            const ontoPageSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
             await ontoPageSearchService.createIndexes();
+            logger.info(`Created search indexes.`);
         } catch (err) {
             logger.error(`Error creating indexes, error: ${err}`);
+            process.exit();
+        }
+    }
+
+    private static async putSearchMappings(container: Container) {
+        try {
+            const ontoPageSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
+            await ontoPageSearchService.putMapping();
+            logger.info(`Created search mappings.`);
+        } catch (err) {
+            logger.error(`Error creating mappings, error: ${err}`);
             process.exit();
         }
     }

@@ -10,17 +10,19 @@ import { JwtToken } from '../../middleware/jwt.token';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { OntoDataVm } from '../../infrastructure/onto-data/onto-data.vm';
 import { OntoDataService } from '../../services/onto-data.service';
-import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
-import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
+import { IOntoData, IOntoDataSearch } from '../../infrastructure/onto-data/onto-data.interface';
+import { OntoDataDto, OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data.dto';
 import { InvalidQueryParametersException, SearchError, SomethingWentWrong } from '../../exceptions/exception';
 import { DATA_TYPE } from '../../infrastructure/onto-data/onto-data-types';
 import { OntoDataFilterVm } from '../../infrastructure/onto-data/onto-data-filter.vm';
 import { PaginationVm } from '../../infrastructure/pagination.vm';
+import { OntoDataSearchService } from '../../services/onto-data-search.service';
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
         @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
+        @inject(TYPES.OntoDataSearchService) private ontoPageSearchService: OntoDataSearchService,
     ) {}
    
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
@@ -44,25 +46,48 @@ export class OntoDataController {
         }
     }
 
-    @httpGet('/search') 
-    public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
+    @httpGet('/suggest') 
+    public async suggest(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataType = request.query.dataType as DATA_TYPE;
-        const query = request.query.query as string;
-        logger.info(`OntoDataController: search: query = ${query}, dataType = ${dataType}`);
+        const queryStr = request.query.query as string;
+        logger.info(`OntoDataController: search: query = ${queryStr}, dataType = ${dataType}`);
 
-        if (!query || !dataType) {
+        if (!queryStr) {
             return next(new InvalidQueryParametersException('Missing dataType or query.'));
         }
 
         try {
-            const data = await this.ontologyDataService.search(query);
-            const filteredData = data.filter(d => d.dataType === dataType);
-            const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, filteredData);
-            logger.info(`OntoDataController:getData: search = ${JSON.stringify(dataDto)}`);
+            const data: IOntoDataSearch[] = await this.ontoPageSearchService.searchAsYouType(queryStr, dataType);
+            const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
+
+            logger.info(`OntoDataController:suggest: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
-        } catch (error) {
-            next(new SearchError(error.message));
-        } 
+        } catch (e) {
+            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
+    }
+
+    @httpGet('/search') 
+    public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataType = request.query.dataType as DATA_TYPE;
+        const queryStr = request.query.query as string;
+        logger.info(`OntoDataController:search: query = ${queryStr}, dataType = ${dataType}`);
+
+        if (!queryStr) {
+            return next(new InvalidQueryParametersException('Missing dataType or query.'));
+        }
+
+        try {
+            const data: IOntoDataSearch[] = await this.ontoPageSearchService.searchAsYouType(queryStr, dataType);
+            const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
+
+            logger.info(`OntoDataController:search: dataDto = ${JSON.stringify(dataDto)}`);
+            response.status(200).send(dataDto);
+        } catch (e) {
+            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
     }
 
     @httpGet('/:dataId')

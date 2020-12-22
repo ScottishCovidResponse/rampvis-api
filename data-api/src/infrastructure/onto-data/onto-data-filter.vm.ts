@@ -3,8 +3,7 @@ import { DATA_TYPE } from './onto-data-types';
 
 export enum ONTODATA_SORT_BY {
     DATA_TYPE = 'dataType',
-    PROD_DESC = 'productDesc',
-    STREAM_DESC = 'streamDesc',
+    DESC = 'description',
     DATE = 'date',
 }
 

@@ -24,15 +24,11 @@ export class OntoVisController {
         @inject(TYPES.OntoPageService) private ontologyPageService: OntoPageService,
     ) {}
 
-    //
-    // Vis
-    //
     @httpGet('/')
     public async getAllVis(request: Request, response: Response, next: NextFunction): Promise<void> {
         try {
             const visList: IOntoVis[] = await this.ontologyVisService.getAll();
             const visDtos: OntoVisDto[] = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, visList);
-            logger.info(`OntoVisController:getAllVis: visList = ${JSON.stringify(visList)}`);
             logger.info(`OntoVisController:getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
             response.status(200).send(visDtos);
         } catch (e) {
@@ -56,6 +52,21 @@ export class OntoVisController {
             next(new SomethingWentWrong(e.message));
         }
     }
+
+    @httpGet('/:visId')
+    public async getVis(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const visId: string = request.params.visId;
+        try {
+            const ontoVis: IOntoVis = await this.ontologyVisService.get(visId);
+            const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
+            logger.info(`OntoVisController:getVis: visDto = ${JSON.stringify(visDto)}`);
+            response.status(200).send(visDto);
+        } catch (e) {
+            logger.error(`OntoVisController:getVis: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
+    }
+
 
     @httpPut('/:visId', vmValidate(OntoVisVm))
     public async updateVis(request: Request, response: Response, next: NextFunction): Promise<void> {

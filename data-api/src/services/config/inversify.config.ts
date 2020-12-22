@@ -12,7 +12,7 @@ import { OntoDataService } from '../onto-data.service';
 import { OntoPageService } from '../onto-page.service';
 import { OntoVisService } from '../onto-vis.service';
 import { TYPES } from './types';
-import { OntoPageSearchService } from '../onto-page-search.service';
+import { OntoDataSearchService } from '../onto-data-search.service';
 
 const DIContainer = new Container();
 
@@ -26,6 +26,6 @@ DIContainer.bind<OntoVisService>(TYPES.OntoVisService).to(OntoVisService);
 DIContainer.bind<OntoDataService>(TYPES.OntoDataService).to(OntoDataService);
 DIContainer.bind<OntoPageService>(TYPES.OntoPageService).to(OntoPageService);
 DIContainer.bind<TemplateService>(TYPES.TemplateService).to(TemplateService);
-DIContainer.bind<OntoPageSearchService>(TYPES.OntoPageSearchService).to(OntoPageSearchService);
+DIContainer.bind<OntoDataSearchService>(TYPES.OntoDataSearchService).to(OntoDataSearchService);
 
 export { DIContainer };

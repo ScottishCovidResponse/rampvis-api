@@ -138,8 +138,7 @@ export abstract class DataService<T extends { _id: any }> {
             try {
                 await this.getDbCollection().dropIndex(field);
             } catch (e) {
-                // TODO
-                //throw(e);
+                resolve(true);
             }
 
             this.getDbCollection().createIndex(field, { expireAfterSeconds: expiry }, (err, dbResult) => {
@@ -149,21 +148,13 @@ export abstract class DataService<T extends { _id: any }> {
         });
     }
 
-    public async createTextIndex(obj: any): Promise<boolean> {
-        return new Promise<boolean>(async (resolve) => {
-            try {
-                for (const d of Object.keys(obj)) {
-                    await this.getDbCollection().dropIndex(d);
-                }
-            } catch (e) {
-                // TODO
-                //throw(e);
-            }
-
-            this.getDbCollection().createIndex(obj, (err, dbResult) => {
-                if (err) throw err;
-                resolve(true);
-            });
-        });
+    public async createTextIndex(obj: any): Promise<void> {
+        try {
+            await Promise.all(Object.keys(obj).map(async (d) => await this.getDbCollection().dropIndex(d) ));
+        } catch (e) {
+            Promise.resolve();
+        }
+        
+        await this.getDbCollection().createIndex(obj,);
     }
 }

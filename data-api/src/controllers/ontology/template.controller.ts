@@ -9,7 +9,7 @@ import { logger } from '../../utils/logger';
 import { IPageTemplate } from '../../infrastructure/onto-page/page-template.interface';
 import { SomethingWentWrong } from '../../exceptions/exception';
 import { TemplateService } from '../../services/template.service';
-import { IOntoPage, PUBLISH_TYPE } from '../../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage, BINDING_TYPE } from '../../infrastructure/onto-page/onto-page.interface';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { queryParamValidate } from '../../middleware/validators';

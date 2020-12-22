@@ -5,11 +5,12 @@ import config from 'config';
 import { SearchClient } from '../infrastructure/db/elasticsearch.connection';
 import { TYPES } from './config/types';
 import { logger } from '../utils/logger';
+import { IndicesPutMappingParams } from 'elasticsearch';
 
 @provide(TYPES.SearchService)
 export abstract class SearchService<T extends { _id: any }> {
     public constructor(
-        @inject(TYPES.SearchClient) private searchClient: SearchClient, 
+        @inject(TYPES.SearchClient) private searchClient: SearchClient,
         @unmanaged() private index: string,
     ) {}
 
@@ -44,7 +45,7 @@ export abstract class SearchService<T extends { _id: any }> {
         return this.searchClient.index({
             index: this.index,
             id: _id.toString(),
-            type: this.index + 'type',
+            type: '_doc',
             body: body,
         });
     }
@@ -55,8 +56,8 @@ export abstract class SearchService<T extends { _id: any }> {
         await this.searchClient.update({
             index: this.index,
             id: _id.toString(),
-            type: this.index + 'type',
-            body: { doc: body, doc_as_upsert: true},
+            type: '_doc',
+            body: { doc: body, doc_as_upsert: true },
         });
     }
 
@@ -64,13 +65,46 @@ export abstract class SearchService<T extends { _id: any }> {
         await this.searchClient.delete({
             index: this.index,
             id: id,
-            type: this.index + 'type',
+            type: '_doc',
         });
     }
 
     public async deleteAll() {
         await this.searchClient.indices.delete({
-            index: this.index
+            index: this.index,
+        });
+    }
+
+    public async _putMapping(mappingProps: any) {
+        return await this.searchClient.indices.putMapping({
+            index: this.index,
+            body: {
+                properties: mappingProps,
+            },
+        } as IndicesPutMappingParams);
+    }
+
+    public async _search(dsl: any): Promise<any> {
+        return await this.searchClient.search({
+            index: this.index,
+            type: '_doc',
+            body: dsl,
+        });
+    }
+
+    public async _searchAsYouType(dsl: any): Promise<any> {
+        console.log('_searchAsYouType dsl = ', dsl, ', index = ', this.index);
+        return this.searchClient.search({
+            index: this.index,
+            body: dsl,
+        });
+    }
+
+    public async _suggestCompletion(dsl: any): Promise<any> {
+        console.log('suggest dsl = ', dsl, ', index = ', this.index);
+        return this.searchClient.search({
+            index: this.index,
+            body: dsl,
         });
     }
 }

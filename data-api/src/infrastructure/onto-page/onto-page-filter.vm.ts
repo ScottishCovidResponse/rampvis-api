@@ -1,8 +1,8 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
-import { PUBLISH_TYPE } from './onto-page.interface';
+import { BINDING_TYPE } from './onto-page.interface';
 
 export enum ONTOPAGE_SORT_BY {
-    PUBLISH_TYPE = 'publishType',
+    BINDING_TYPE = 'bindingType',
     DATE = 'date',
 }
 
@@ -12,8 +12,8 @@ export enum SORT_ORDER {
 }
 
 export class OntoPageFilterVm {
-    @IsEnum(PUBLISH_TYPE)
-    publishType!: PUBLISH_TYPE;
+    @IsEnum(BINDING_TYPE)
+    bindingType!: BINDING_TYPE;
 
     @IsOptional()
     @IsString()

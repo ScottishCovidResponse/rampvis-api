@@ -7,7 +7,7 @@ import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
-import { IOntoPage, PUBLISH_TYPE } from '../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage, BINDING_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
 import { OntoPageFilterVm, ONTOPAGE_SORT_BY, SORT_ORDER, } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
@@ -21,13 +21,14 @@ export class OntoPageService extends DataService<IOntoPage> {
     async getAllPages(ontoPageFilterVm: OntoPageFilterVm): Promise<PaginationVm<IOntoPage>> {
         let ontoPages: IOntoPage[] = [];
 
-        if (Object.values(PUBLISH_TYPE).includes(ontoPageFilterVm.publishType)) {
+        if (Object.values(BINDING_TYPE).includes(ontoPageFilterVm.bindingType)) {
             // filtered pages
-            ontoPages = await this.getAll({ publishType: ontoPageFilterVm.publishType })
+            ontoPages = await this.getAll({ bindingType: ontoPageFilterVm.bindingType })
         } else {
             throw new SomethingWentWrong('Wrong page publish type');
         }
 
+        console.log(ontoPages)
         return this.getPaginatedOntoPages(ontoPages, ontoPageFilterVm);
     }
 
@@ -41,7 +42,7 @@ export class OntoPageService extends DataService<IOntoPage> {
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),
             nrows: ontoPageVm.nrows,
-            publishType: ontoPageVm.publishType,
+            publishType: ontoPageVm.bindingType,
             date: new Date(),
             bindings: ontoPageVm.bindings,
         };
@@ -54,17 +55,13 @@ export class OntoPageService extends DataService<IOntoPage> {
         
         let ontoPage: IOntoPage= {
             nrows: ontoPageVm.nrows,
-            publishType: ontoPageVm.publishType,
+            bindingType: ontoPageVm.bindingType,
             date: new Date(),
             bindings: ontoPageVm.bindings,
         } as any;
 
         return await this.updateAndGet(pageId, ontoPage);
     }
-
-    //
-    // Private Functions
-    //
 
     private getPaginatedOntoPages(ontoPages: Array<IOntoPage>, ontoPageFilterVm: OntoPageFilterVm, ): PaginationVm<IOntoPage> {
         const page: number = ontoPageFilterVm.page ? parseInt(ontoPageFilterVm.page) : 0;
@@ -79,7 +76,7 @@ export class OntoPageService extends DataService<IOntoPage> {
             result = result.filter((a) => a._id.toString().match(new RegExp(filter, 'i')));
         }
 
-        if (sortBy == ONTOPAGE_SORT_BY.PUBLISH_TYPE) {
+        if (sortBy == ONTOPAGE_SORT_BY.BINDING_TYPE) {
             result = result.sort((a, b) => {
                 if (a.publishType >= b.publishType) return 1;
                 return -1;

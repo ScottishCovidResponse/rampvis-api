@@ -1,11 +1,15 @@
 
 # Data API
 
-Key dependencies:
+## Development 
+
+Prerequisites
 
 - Node version 12.17.0
+- `data-api/config` - please contact GitHub administrator for access
 - Mongodb 4.2.6
-- Elasticsearch
+- Elasticsearch - requires a local instance of Elasticsearch
+ 
 
 Start development instance:
 
@@ -17,15 +21,11 @@ export NODE_ENV='development'
 npm run dev
 ```
 
+### Config
 
----
+`data-api/config` folder and configuration files structure:
 
-**Note** In order to access the content or the structure of the `config` folder please contact administrator.
-
-
-`config` folder and configuration files structure:
-
-```
+```bash
 config
 ├── default.json
 ├── production.json
@@ -35,10 +35,9 @@ config
 
 ```
 
-`config/default.json` & `config/production.json` file structure/example:
+`data-api/config/default.json` & `data-api/config/production.json` file structure/example:
 
-```
-
+```json
 {
   "allowOrigins": [
     "http://vis.scrc.uk",

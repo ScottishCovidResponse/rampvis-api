@@ -1,20 +1,15 @@
-import { ANALYTICS, DATA_TYPE, MODEL, SOURCE } from './onto-data-types';
-
-export class QueryParamsDto {
-    query: string = '';
-    params: string[] | string = undefined as any;
-}
+import { DATA_TYPE } from './onto-data-types';
 
 export class OntoDataDto {
     public id: string = undefined as any;
     public urlCode: string = undefined as any;
     public endpoint: string = undefined as any;
     public dataType: DATA_TYPE = undefined as any;
-    public source?: SOURCE = undefined as any;
-    public model?: MODEL = undefined as any;
-    public analytics?: ANALYTICS = undefined as any;
-    public productDesc: string = undefined as any;
-    public streamDesc: string = undefined as any;
     public date: Date = undefined as any;
-    public queryParams?: QueryParamsDto[] = undefined as any;
+    public description: string = undefined as any;
+    public keywords: string[] = undefined as any;
+}
+
+export class OntoDataSearchDto extends OntoDataDto {
+    public score: number = undefined as any;
 }

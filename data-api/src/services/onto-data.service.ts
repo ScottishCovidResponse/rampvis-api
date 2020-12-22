@@ -21,16 +21,16 @@ export class OntoDataService extends DataService<IOntoData> {
     }
 
     public async getAllData(ontoDataFilterVm: OntoDataFilterVm): Promise<PaginationVm<IOntoData>> {
-        let result: IOntoData[] =  [];
+        let result: IOntoData[] = [];
 
         // Filter by dataType
         if (ontoDataFilterVm.dataType && Object.values(DATA_TYPE).includes(ontoDataFilterVm.dataType)) {
-            result = await this.getAll({ dataType: ontoDataFilterVm.dataType })
+            result = await this.getAll({ dataType: ontoDataFilterVm.dataType });
         } else {
-            result = await this.getAll()
+            result = await this.getAll();
         }
 
-        logger.debug(`getAllData: result = ${JSON.stringify(result)}`)
+        logger.debug(`getAllData: result = ${JSON.stringify(result)}`);
         return this.getPaginatedOntoDataList(result, ontoDataFilterVm);
     }
 
@@ -47,13 +47,9 @@ export class OntoDataService extends DataService<IOntoData> {
             urlCode: dataVm.urlCode,
             endpoint: dataVm.endpoint,
             dataType: dataVm.dataType,
-            productDesc: dataVm.productDesc,
-            streamDesc: dataVm.streamDesc,
-            source: dataVm?.source,
-            model: dataVm?.model,
-            analytics: dataVm?.analytics,
+            keywords: dataVm.keywords.join(', '),
+            description: dataVm.description,
             date: new Date(),
-            queryParams: dataVm.queryParams,
         };
         return await this.create(data);
     }
@@ -61,7 +57,7 @@ export class OntoDataService extends DataService<IOntoData> {
     public async updateData(dataId: string, dataVm: OntoDataVm): Promise<IOntoData> {
         let data: IOntoData = await this.get({ endpoint: dataVm.endpoint, urlCode: dataVm.urlCode });
         if (data && data._id !== dataId) throw new DuplicateEntry(`${dataVm.urlCode}${dataVm.endpoint}`);
-        
+
         data = await this.get(dataId);
         if (!data) throw new IdDoesNotExist(dataId);
 
@@ -69,23 +65,18 @@ export class OntoDataService extends DataService<IOntoData> {
             urlCode: dataVm.urlCode,
             endpoint: dataVm.endpoint,
             dataType: dataVm.dataType,
-            productDesc: dataVm.productDesc,
-            streamDesc: dataVm.streamDesc,
-            source: dataVm?.source,
-            model: dataVm?.model,
-            analytics: dataVm?.analytics,
+            description: dataVm.description,
+            keywords:  dataVm.keywords.join(', '),
             date: new Date(),
-            queryParams: dataVm.queryParams,
         } as any;
 
         return await this.updateAndGet(dataId, data);
     }
 
-    //
-    // Private Functions
-    //
-
-    private getPaginatedOntoDataList(ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm, ): PaginationVm<IOntoData> {
+    private getPaginatedOntoDataList(
+        ontoDataList: Array<IOntoData>,
+        ontoDataFilterVm: OntoDataFilterVm,
+    ): PaginationVm<IOntoData> {
         const page: number = ontoDataFilterVm.page ? parseInt(ontoDataFilterVm.page) : 0;
         let pageCount: number = ontoDataFilterVm.pageCount ? parseInt(ontoDataFilterVm.pageCount) : Infinity;
         const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
@@ -95,7 +86,9 @@ export class OntoDataService extends DataService<IOntoData> {
 
         if (ontoDataFilterVm.filter && ontoDataFilterVm.filter.length > 0) {
             const filter = ontoDataFilterVm.filter.toLowerCase();
-            result = result.filter((a) => a.productDesc.match(new RegExp(filter, 'i')) || a.streamDesc.match(new RegExp(filter, 'i')) );
+            result = result.filter(
+                (a) => a?.description?.match(new RegExp(filter, 'i')) || a?.description?.match(new RegExp(filter, 'i')),
+            );
         }
 
         if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
@@ -103,14 +96,9 @@ export class OntoDataService extends DataService<IOntoData> {
                 if (a.dataType >= b.dataType) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.PROD_DESC) {
+        } else if (sortBy == ONTODATA_SORT_BY.DESC) {
             result = result.sort((a, b) => {
-                if (a.productDesc >= b.productDesc) return 1;
-                return -1;
-            });
-        } else if (sortBy == ONTODATA_SORT_BY.STREAM_DESC) {
-            result = result.sort((a, b) => {
-                if (a.streamDesc >= b.streamDesc) return 1;
+                if (a.description >= b.description) return 1;
                 return -1;
             });
         } else if (sortBy == ONTODATA_SORT_BY.DATE) {
@@ -130,17 +118,13 @@ export class OntoDataService extends DataService<IOntoData> {
             pageCount: pageCount,
             totalCount: result.length,
         } as PaginationVm<IOntoData>;
-        
     }
 
     private paginate(list: IOntoData[], pageCount: number, page: number): Array<IOntoData> {
-        logger.debug(`paginate: list = ${JSON.stringify(list)}`)
+        logger.debug(`paginate: list = ${JSON.stringify(list)}`);
         return list.slice(page * pageCount, (page + 1) * pageCount);
     }
 
-    //
-    // search
-    //
     async search(queryStr: string): Promise<IOntoData[]> {
         let pipeline = [
             {
