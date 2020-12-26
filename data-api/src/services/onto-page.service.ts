@@ -9,7 +9,7 @@ import { DataService } from './data.service';
 import { IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
 import { IOntoPage, BINDING_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
-import { OntoPageFilterVm, ONTOPAGE_SORT_BY, SORT_ORDER, } from '../infrastructure/onto-page/onto-page-filter.vm';
+import { OntoPageFilterVm, ONTOPAGE_SORT_BY, SORT_ORDER } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 
 @provide(TYPES.OntoPageService)
@@ -23,12 +23,12 @@ export class OntoPageService extends DataService<IOntoPage> {
 
         if (Object.values(BINDING_TYPE).includes(ontoPageFilterVm.bindingType)) {
             // filtered pages
-            ontoPages = await this.getAll({ bindingType: ontoPageFilterVm.bindingType })
+            ontoPages = await this.getAll({ bindingType: ontoPageFilterVm.bindingType });
         } else {
             throw new SomethingWentWrong('Wrong page publish type');
         }
 
-        console.log(ontoPages)
+        console.log(ontoPages);
         return this.getPaginatedOntoPages(ontoPages, ontoPageFilterVm);
     }
 
@@ -38,11 +38,11 @@ export class OntoPageService extends DataService<IOntoPage> {
         // if (ontoPage) return data;
         // check pageId
         // check dataId, query, & params
-       
+
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),
             nrows: ontoPageVm.nrows,
-            publishType: ontoPageVm.bindingType,
+            bindingType: ontoPageVm.bindingType,
             date: new Date(),
             bindings: ontoPageVm.bindings,
         };
@@ -52,8 +52,8 @@ export class OntoPageService extends DataService<IOntoPage> {
     public async updatePage(pageId: string, ontoPageVm: OntoPageVm): Promise<IOntoPage> {
         let data: IOntoPage = await this.get(pageId);
         if (!data) throw new IdDoesNotExist(pageId);
-        
-        let ontoPage: IOntoPage= {
+
+        let ontoPage: IOntoPage = {
             nrows: ontoPageVm.nrows,
             bindingType: ontoPageVm.bindingType,
             date: new Date(),
@@ -63,9 +63,11 @@ export class OntoPageService extends DataService<IOntoPage> {
         return await this.updateAndGet(pageId, ontoPage);
     }
 
-    private getPaginatedOntoPages(ontoPages: Array<IOntoPage>, ontoPageFilterVm: OntoPageFilterVm, ): PaginationVm<IOntoPage> {
+    private getPaginatedOntoPages( ontoPages: Array<IOntoPage>, ontoPageFilterVm: OntoPageFilterVm, ): PaginationVm<IOntoPage> {
         const page: number = ontoPageFilterVm.page ? parseInt(ontoPageFilterVm.page) : 0;
-        let pageCount: number | undefined = ontoPageFilterVm.pageCount ? parseInt(ontoPageFilterVm.pageCount) : undefined; // undefined => return all to Flask UI
+        let pageCount: number | undefined = ontoPageFilterVm.pageCount
+            ? parseInt(ontoPageFilterVm.pageCount)
+            : undefined; // undefined => return all to Flask UI
         const sortBy: ONTOPAGE_SORT_BY = ontoPageFilterVm.sortBy || ONTOPAGE_SORT_BY.DATE; // default
         const sortOrder: SORT_ORDER = ontoPageFilterVm.sortOrder || SORT_ORDER.ASC;
 
@@ -78,7 +80,7 @@ export class OntoPageService extends DataService<IOntoPage> {
 
         if (sortBy == ONTOPAGE_SORT_BY.BINDING_TYPE) {
             result = result.sort((a, b) => {
-                if (a.publishType >= b.publishType) return 1;
+                if (a.bindingType >= b.bindingType) return 1;
                 return -1;
             });
         } else if (sortBy == ONTOPAGE_SORT_BY.DATE) {
@@ -101,7 +103,8 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     private paginate(array: Array<IOntoPage>, page_size: number | undefined, page_number: number): Array<IOntoPage> {
-        if (!page_size) return array; // undefined => return all to Flask UI
+        if (!page_size) return array;
+        // undefined => return all to Flask UI
         else return array.slice(page_number * page_size, (page_number + 1) * page_size);
     }
 }

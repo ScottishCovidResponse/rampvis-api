@@ -14,7 +14,7 @@ export interface IBinding {
 export class IOntoPage {
     public _id!: string | ObjectId;
     public nrows!: number;
-    public publishType!: BINDING_TYPE;
+    public bindingType!: BINDING_TYPE;
     public date!: Date;
 
     public bindings!: IBinding[];
