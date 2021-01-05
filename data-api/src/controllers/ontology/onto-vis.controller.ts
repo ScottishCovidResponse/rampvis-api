@@ -12,22 +12,20 @@ import { OntoVisVm } from '../../infrastructure/onto-vis/onto-vis.vm';
 import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { OntoVisService } from '../../services/onto-vis.service';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
-import { OntoDataService } from '../../services/onto-data.service';
-import { OntoPageService } from '../../services/onto-page.service';
 import { SomethingWentWrong } from '../../exceptions/exception';
+import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
+import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
 
 @controller('/ontology/vis', JwtToken.verify)
 export class OntoVisController {
     constructor(
-        @inject(TYPES.OntoVisService) private ontologyVisService: OntoVisService,
-        @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
-        @inject(TYPES.OntoPageService) private ontologyPageService: OntoPageService,
+        @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
     ) {}
 
     @httpGet('/')
     public async getAllVis(request: Request, response: Response, next: NextFunction): Promise<void> {
         try {
-            const visList: IOntoVis[] = await this.ontologyVisService.getAll();
+            const visList: IOntoVis[] = await this.ontoVisService.getAll();
             const visDtos: OntoVisDto[] = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, visList);
             logger.info(`OntoVisController:getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
             response.status(200).send(visDtos);
@@ -43,7 +41,7 @@ export class OntoVisController {
         logger.info(`OntoVisController:createVis: visVm = ${JSON.stringify(visVm)}`);
 
         try {
-            const vis: IOntoVis = await this.ontologyVisService.createVis(visVm);
+            const vis: IOntoVis = await this.ontoVisService.createVis(visVm);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
             logger.info(`OntoVisController:createVis: visDto = ${visDto}`);
             response.status(200).send(visDto);
@@ -57,7 +55,7 @@ export class OntoVisController {
     public async getVis(request: Request, response: Response, next: NextFunction): Promise<void> {
         const visId: string = request.params.visId;
         try {
-            const ontoVis: IOntoVis = await this.ontologyVisService.get(visId);
+            const ontoVis: IOntoVis = await this.ontoVisService.get(visId);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
             logger.info(`OntoVisController:getVis: visDto = ${JSON.stringify(visDto)}`);
             response.status(200).send(visDto);
@@ -75,7 +73,7 @@ export class OntoVisController {
         logger.info(`OntoVisController:updateVis: visId = ${visId}, visVm = ${JSON.stringify(visVm)}`);
 
         try {
-            const vis: IOntoVis = await this.ontologyVisService.updateVis(visId, visVm);
+            const vis: IOntoVis = await this.ontoVisService.updateVis(visId, visVm);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
             logger.info(`OntoVisController:updateVis: visDto = ${visDto}`);
             response.status(200).send(visDto);
@@ -85,18 +83,33 @@ export class OntoVisController {
         }
     }
 
-    @httpDelete('/:visId') 
+    @httpDelete('/:visId')
     public async deleteVis(request: Request, response: Response, next: NextFunction): Promise<void> {
         const visId: string = request.params.visId;
         logger.info(`OntoVisController:deleteVis: visId = ${visId}`);
 
         try {
-            const ontoVis: IOntoVis = await this.ontologyVisService.delete(visId);
+            const ontoVis: IOntoVis = await this.ontoVisService.delete(visId);
             const ontoVisDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
             logger.info(`OntoVisController:deleteVis: ontoVisDto = ${JSON.stringify(ontoVisDto)}`);
             response.status(200).send(ontoVisDto);
         } catch (e) {
             logger.error(`OntoVisController:deleteVis: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
+    }
+
+    @httpGet('/:visId/data')
+    public async getExampleDataBindingVisId(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const visId: string = request.params.visId;
+        try {
+            const ontoData: IOntoData[] = await this.ontoVisService.getExampleDataBindingVisId(visId);
+            const ontoDataDto: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
+
+            logger.info(`OntoVisController:getExampleDataBindingVisId: ontoDataDto = ${JSON.stringify(ontoDataDto)}`);
+            response.status(200).send(ontoDataDto);
+        } catch (e) {
+            logger.error(`OntoVisController:getExampleDataBindingVisId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }

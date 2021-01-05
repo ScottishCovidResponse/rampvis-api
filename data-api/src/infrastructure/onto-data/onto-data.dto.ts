@@ -12,4 +12,5 @@ export class OntoDataDto {
 
 export class OntoDataSearchDto extends OntoDataDto {
     public score: number = undefined as any;
+    public pageIds: string[] = undefined as any;
 }

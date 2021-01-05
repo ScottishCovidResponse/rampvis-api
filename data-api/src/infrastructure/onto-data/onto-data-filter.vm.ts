@@ -19,11 +19,11 @@ export class OntoDataFilterVm {
 
     @IsOptional()
     @IsString()
-    page!: string;
+    pageIndex!: string;
 
     @IsOptional()
     @IsString()
-    pageCount!: string;
+    pageSize!: string;
 
     @IsOptional()
     @IsEnum(ONTODATA_SORT_BY)

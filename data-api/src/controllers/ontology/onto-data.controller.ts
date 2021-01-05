@@ -17,14 +17,16 @@ import { DATA_TYPE } from '../../infrastructure/onto-data/onto-data-types';
 import { OntoDataFilterVm } from '../../infrastructure/onto-data/onto-data-filter.vm';
 import { PaginationVm } from '../../infrastructure/pagination.vm';
 import { OntoDataSearchService } from '../../services/onto-data-search.service';
+import { OntoPageService } from '../../services/onto-page.service';
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
         @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
-        @inject(TYPES.OntoDataSearchService) private ontoPageSearchService: OntoDataSearchService,
+        @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
+        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService
     ) {}
-   
+
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const query: OntoDataFilterVm = request.query as any;
@@ -46,7 +48,7 @@ export class OntoDataController {
         }
     }
 
-    @httpGet('/suggest') 
+    @httpGet('/suggest')
     public async suggest(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataType = request.query.dataType as DATA_TYPE;
         const queryStr = request.query.query as string;
@@ -57,7 +59,7 @@ export class OntoDataController {
         }
 
         try {
-            const data: IOntoDataSearch[] = await this.ontoPageSearchService.searchAsYouType(queryStr, dataType);
+            const data: IOntoDataSearch[] = await this.ontoDataSearchService.searchAsYouType(queryStr, dataType);
             const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
 
             logger.info(`OntoDataController:suggest: dataDto = ${JSON.stringify(dataDto)}`);
@@ -68,18 +70,30 @@ export class OntoDataController {
         }
     }
 
-    @httpGet('/search') 
+    @httpGet('/search')
     public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataType = request.query.dataType as DATA_TYPE;
         const queryStr = request.query.query as string;
-        logger.info(`OntoDataController:search: query = ${queryStr}, dataType = ${dataType}`);
+        const visId = request.query.visId as string;
+        logger.info(`OntoDataController:search: query = ${queryStr}, dataType = ${dataType}, visId = ${visId}`);
 
         if (!queryStr) {
             return next(new InvalidQueryParametersException('Missing dataType or query.'));
         }
 
         try {
-            const data: IOntoDataSearch[] = await this.ontoPageSearchService.searchAsYouType(queryStr, dataType);
+            let data: IOntoDataSearch[] = await this.ontoDataSearchService.search(queryStr, dataType);
+
+            if (visId) {
+                data = await Promise.all(
+                    data.map(async (d: IOntoDataSearch) => {
+                        d.pageIds = await this.ontoPageService.getPagesBindingVisIdAndDataId(visId, d._id);
+                        return d;
+                    })
+                );
+            }
+            console.log(data);
+
             const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
 
             logger.info(`OntoDataController:search: dataDto = ${JSON.stringify(dataDto)}`);
@@ -138,7 +152,7 @@ export class OntoDataController {
         }
     }
 
-    @httpDelete('/:dataId') 
+    @httpDelete('/:dataId')
     public async deleteData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataId: string = request.params.dataId;
         logger.info(`OntoDataController:deleteData: dataId = ${dataId}`);
@@ -153,5 +167,4 @@ export class OntoDataController {
             next(new SomethingWentWrong(e.message));
         }
     }
-
 }

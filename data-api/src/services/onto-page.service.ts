@@ -22,22 +22,26 @@ export class OntoPageService extends DataService<IOntoPage> {
         let ontoPages: IOntoPage[] = [];
 
         if (Object.values(BINDING_TYPE).includes(ontoPageFilterVm.bindingType)) {
-            // filtered pages
             ontoPages = await this.getAll({ bindingType: ontoPageFilterVm.bindingType });
         } else {
-            throw new SomethingWentWrong('Wrong page publish type');
+            ontoPages = await this.getAll();
         }
 
-        console.log(ontoPages);
         return this.getPaginatedOntoPages(ontoPages, ontoPageFilterVm);
     }
 
+    public async getPagesBindingVisIdAndDataId(_visId: string, _dataId: string): Promise<string[]> {
+        const pages = await this.getAll({ bindings: { $elemMatch: { visId: _visId, dataIds: { $in: [_dataId] } } } });
+        console.log('visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages)
+        return pages.map(d => d._id.toString())
+    }
+
+    public async getExamplePagesBindingVisId(_visId: string): Promise<IOntoPage[]> {
+        return await this.getAll({ bindingType: BINDING_TYPE.EXAMPLE, bindings: { $elemMatch: { visId: _visId } } });
+    }
+
     public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {
-        // TODO
-        // let ontoPage: IOntoPage = check if exist based on some condition
-        // if (ontoPage) return data;
-        // check pageId
-        // check dataId, query, & params
+        // TODO -  check if exist based on some condition
 
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),
@@ -64,10 +68,10 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     private getPaginatedOntoPages( ontoPages: Array<IOntoPage>, ontoPageFilterVm: OntoPageFilterVm, ): PaginationVm<IOntoPage> {
-        const page: number = ontoPageFilterVm.page ? parseInt(ontoPageFilterVm.page) : 0;
-        let pageCount: number | undefined = ontoPageFilterVm.pageCount
-            ? parseInt(ontoPageFilterVm.pageCount)
-            : undefined; // undefined => return all to Flask UI
+        const pageIndex: number = ontoPageFilterVm.pageIndex ? parseInt(ontoPageFilterVm.pageIndex) : 0;
+        let pageSize: number | undefined = ontoPageFilterVm.pageSize
+            ? parseInt(ontoPageFilterVm.pageSize)
+            : undefined; // undefined => return all
         const sortBy: ONTOPAGE_SORT_BY = ontoPageFilterVm.sortBy || ONTOPAGE_SORT_BY.DATE; // default
         const sortOrder: SORT_ORDER = ontoPageFilterVm.sortOrder || SORT_ORDER.ASC;
 
@@ -95,16 +99,19 @@ export class OntoPageService extends DataService<IOntoPage> {
         }
 
         return {
-            data: this.paginate(result, pageCount, page),
-            page: page,
-            pageCount: pageCount,
+            data: this.paginate(result, pageSize, pageIndex),
+            page: pageIndex,
+            pageCount: pageSize,
             totalCount: result.length,
         } as PaginationVm<IOntoPage>;
     }
 
-    private paginate(array: Array<IOntoPage>, page_size: number | undefined, page_number: number): Array<IOntoPage> {
-        if (!page_size) return array;
-        // undefined => return all to Flask UI
-        else return array.slice(page_number * page_size, (page_number + 1) * page_size);
+    private paginate(array: Array<IOntoPage>, pageSize: number | undefined, pageIndex: number): Array<IOntoPage> {
+        // undefined => return all
+        if (!pageSize) {
+            return array;
+        } else {
+            return array.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
+        }
     }
 }

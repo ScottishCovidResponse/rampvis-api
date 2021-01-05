@@ -73,12 +73,9 @@ export class OntoDataService extends DataService<IOntoData> {
         return await this.updateAndGet(dataId, data);
     }
 
-    private getPaginatedOntoDataList(
-        ontoDataList: Array<IOntoData>,
-        ontoDataFilterVm: OntoDataFilterVm,
-    ): PaginationVm<IOntoData> {
-        const page: number = ontoDataFilterVm.page ? parseInt(ontoDataFilterVm.page) : 0;
-        let pageCount: number = ontoDataFilterVm.pageCount ? parseInt(ontoDataFilterVm.pageCount) : Infinity;
+    private getPaginatedOntoDataList( ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm, ): PaginationVm<IOntoData> {
+        const pageIndex: number = ontoDataFilterVm.pageIndex ? parseInt(ontoDataFilterVm.pageIndex) : 0;
+        let pageSize: number = ontoDataFilterVm.pageSize ? parseInt(ontoDataFilterVm.pageSize) : Infinity;
         const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
         const sortOrder: SORT_ORDER = ontoDataFilterVm.sortOrder || SORT_ORDER.ASC;
 
@@ -113,16 +110,16 @@ export class OntoDataService extends DataService<IOntoData> {
         }
 
         return {
-            data: this.paginate(result, pageCount, page),
-            page: page,
-            pageCount: pageCount,
+            data: this.paginate(result, pageSize, pageIndex),
+            page: pageIndex,
+            pageCount: pageSize,
             totalCount: result.length,
         } as PaginationVm<IOntoData>;
     }
 
-    private paginate(list: IOntoData[], pageCount: number, page: number): Array<IOntoData> {
+    private paginate(list: IOntoData[], pageSize: number, pageIndex: number): Array<IOntoData> {
         logger.debug(`paginate: list = ${JSON.stringify(list)}`);
-        return list.slice(page * pageCount, (page + 1) * pageCount);
+        return list.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
     }
 
     async search(queryStr: string): Promise<IOntoData[]> {

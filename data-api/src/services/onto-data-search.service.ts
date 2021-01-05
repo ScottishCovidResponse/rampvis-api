@@ -9,7 +9,7 @@ import { IOntoDataSearch } from '../infrastructure/onto-data/onto-data.interface
 import { OntoDataMapping } from '../infrastructure/onto-data/onto-data.mapping';
 import { logger } from '../utils/logger';
 import { DATA_TYPE } from '../infrastructure/onto-data/onto-data-types';
- 
+
 @provide(TYPES.OntoDataSearchService)
 export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
     public constructor(@inject(TYPES.SearchClient) searchClient: SearchClient) {
@@ -27,7 +27,7 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
             query: {
                 bool: {
                     minimum_should_match: 1,
-                    should: [{ match: { description: queryStr } }, { match: { keyword: queryStr } }],
+                    should: [{ match: { description: queryStr } }, { match: { keywords: queryStr } }],
                 },
             },
         };
@@ -40,8 +40,9 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
         // console.log('OntoDataSearchService:search: dsl = ', dsl);
 
         const res = await this._search(dsl);
-        const hits: IOntoDataSearch[] = res?.hits?.hits?.map((d: any) => d?._source);
-        console.log('OntoDataSearchService:search: hits = ', hits);
+        const hits: IOntoDataSearch[] = res?.hits?.hits?.map((d: any) => { return { _id: d?._id, ...d?._source } });
+        //console.log('OntoDataSearchService:search: res = ', res.hits.hits);
+        // console.log('OntoDataSearchService:search: hits = ', hits);
         return hits;
     }
 
