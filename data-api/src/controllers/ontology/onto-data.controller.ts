@@ -18,6 +18,7 @@ import { OntoDataFilterVm } from '../../infrastructure/onto-data/onto-data-filte
 import { PaginationVm } from '../../infrastructure/pagination.vm';
 import { OntoDataSearchService } from '../../services/onto-data-search.service';
 import { OntoPageService } from '../../services/onto-page.service';
+import { OntoDataSearchFilterVm } from '../../infrastructure/onto-data/onto-data-search-filter.vm';
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
@@ -29,11 +30,11 @@ export class OntoDataController {
 
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const query: OntoDataFilterVm = request.query as any;
-        logger.info(`OntoDataController:getAllData: query = ${JSON.stringify(query)}`);
+        const ontoDataFilterVm: OntoDataFilterVm = request.query as any;
+        logger.info(`OntoDataController:getAllData: ontoDataFilterVm = ${JSON.stringify(ontoDataFilterVm)}`);
 
         try {
-            const result: PaginationVm<IOntoData> = await this.ontologyDataService.getAllData(query);
+            const result: PaginationVm<IOntoData> = await this.ontologyDataService.getAllData(ontoDataFilterVm);
             const resultDto: PaginationVm<OntoDataDto> = {
                 data: automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, result.data),
                 page: result.page,
@@ -70,34 +71,22 @@ export class OntoDataController {
         }
     }
 
-    @httpGet('/search')
+    @httpGet('/search', queryParamValidate(OntoDataSearchFilterVm))
     public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const dataType = request.query.dataType as DATA_TYPE;
-        const queryStr = request.query.query as string;
-        const visId = request.query.visId as string;
-        logger.info(`OntoDataController:search: query = ${queryStr}, dataType = ${dataType}, visId = ${visId}`);
-
-        if (!queryStr) {
-            return next(new InvalidQueryParametersException('Missing dataType or query.'));
-        }
+        const ontoDataSearchFilterVm: OntoDataSearchFilterVm = request.query as any;
+        logger.info(`OntoDataController:search: ontoDataSearchFilterVm = ${JSON.stringify(ontoDataSearchFilterVm)}`);
 
         try {
-            let data: IOntoDataSearch[] = await this.ontoDataSearchService.search(queryStr, dataType);
+            let result: PaginationVm<IOntoDataSearch> = await this.ontoDataSearchService.search(ontoDataSearchFilterVm);
+            const resultDto: PaginationVm<OntoDataDto> = {
+                data: automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, result.data),
+                page: result.page,
+                pageCount: result.pageCount,
+                totalCount: result.totalCount,
+            };
 
-            if (visId) {
-                data = await Promise.all(
-                    data.map(async (d: IOntoDataSearch) => {
-                        d.pageIds = await this.ontoPageService.getPagesBindingVisIdAndDataId(visId, d._id);
-                        return d;
-                    })
-                );
-            }
-            console.log(data);
-
-            const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
-
-            logger.info(`OntoDataController:search: dataDto = ${JSON.stringify(dataDto)}`);
-            response.status(200).send(dataDto);
+            logger.info(`OntoDataController:search: dataDto = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));

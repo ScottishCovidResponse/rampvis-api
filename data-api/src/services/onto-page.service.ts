@@ -12,9 +12,12 @@ import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
 import { OntoPageFilterVm, ONTOPAGE_SORT_BY, SORT_ORDER } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 
+
 @provide(TYPES.OntoPageService)
 export class OntoPageService extends DataService<IOntoPage> {
-    public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
+    public constructor(
+        @inject(TYPES.DbClient) dbClient: DbClient,
+    ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_page'));
     }
 

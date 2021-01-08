@@ -66,14 +66,14 @@ export class OntoDataService extends DataService<IOntoData> {
             endpoint: dataVm.endpoint,
             dataType: dataVm.dataType,
             description: dataVm.description,
-            keywords:  dataVm.keywords.join(', '),
+            keywords: dataVm.keywords.join(', '),
             date: new Date(),
         } as any;
 
         return await this.updateAndGet(dataId, data);
     }
 
-    private getPaginatedOntoDataList( ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm, ): PaginationVm<IOntoData> {
+    private getPaginatedOntoDataList(ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm): PaginationVm<IOntoData> {
         const pageIndex: number = ontoDataFilterVm.pageIndex ? parseInt(ontoDataFilterVm.pageIndex) : 0;
         let pageSize: number = ontoDataFilterVm.pageSize ? parseInt(ontoDataFilterVm.pageSize) : Infinity;
         const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
@@ -83,9 +83,14 @@ export class OntoDataService extends DataService<IOntoData> {
 
         if (ontoDataFilterVm.filter && ontoDataFilterVm.filter.length > 0) {
             const filter = ontoDataFilterVm.filter.toLowerCase();
-            result = result.filter(
-                (a) => a?.description?.match(new RegExp(filter, 'i')) || a?.description?.match(new RegExp(filter, 'i')),
-            );
+            result = result.filter((d) => {
+                return (
+                    d?.description?.match(new RegExp(filter, 'i')) ||
+                    d?._id.toString().match(new RegExp(filter, 'i')) ||
+                    d?.endpoint.toString().match(new RegExp(filter, 'i')) ||
+                    d?.keywords.match(new RegExp(filter, 'i'))
+                );
+            });
         }
 
         if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
