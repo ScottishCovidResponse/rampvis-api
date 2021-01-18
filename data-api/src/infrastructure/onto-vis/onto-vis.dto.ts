@@ -8,3 +8,7 @@ export class OntoVisDto {
     public description: string = undefined as any;
     public dataTypes: DATA_TYPE[] = undefined as any;
 }
+
+export class OntoVisSearchDto extends OntoVisDto {
+    public score: number = undefined as any;
+}

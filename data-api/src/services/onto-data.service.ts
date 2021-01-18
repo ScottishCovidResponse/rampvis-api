@@ -74,6 +74,9 @@ export class OntoDataService extends DataService<IOntoData> {
     }
 
     private getPaginatedOntoDataList(ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm): PaginationVm<IOntoData> {
+
+        logger.debug(`OntoDataService:getPaginatedOntoDataList: ontoDataFilterVm = ${JSON.stringify(ontoDataFilterVm)}`);
+
         const pageIndex: number = ontoDataFilterVm.pageIndex ? parseInt(ontoDataFilterVm.pageIndex) : 0;
         let pageSize: number = ontoDataFilterVm.pageSize ? parseInt(ontoDataFilterVm.pageSize) : Infinity;
         const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
@@ -98,7 +101,7 @@ export class OntoDataService extends DataService<IOntoData> {
                 if (a.dataType >= b.dataType) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DESC) {
+        } else if (sortBy == ONTODATA_SORT_BY.DESCRIPTION) {
             result = result.sort((a, b) => {
                 if (a.description >= b.description) return 1;
                 return -1;
@@ -115,15 +118,15 @@ export class OntoDataService extends DataService<IOntoData> {
         }
 
         return {
+            totalCount: result.length,
             data: this.paginate(result, pageSize, pageIndex),
             page: pageIndex,
             pageCount: pageSize,
-            totalCount: result.length,
         } as PaginationVm<IOntoData>;
     }
 
     private paginate(list: IOntoData[], pageSize: number, pageIndex: number): Array<IOntoData> {
-        logger.debug(`paginate: list = ${JSON.stringify(list)}`);
+        logger.debug(`OntoDataService: paginate: list = ${JSON.stringify(list)}, pageSize = ${pageSize}, pageIndex = ${pageIndex}`);
         return list.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
     }
 

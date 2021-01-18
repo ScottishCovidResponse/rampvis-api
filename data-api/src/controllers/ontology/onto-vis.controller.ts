@@ -5,21 +5,24 @@ import { inject } from 'inversify';
 
 import { logger } from '../../utils/logger';
 import { TYPES } from '../../services/config/types';
-import { vmValidate } from '../../middleware/validators';
+import { queryParamValidate, vmValidate } from '../../middleware/validators';
 import { JwtToken } from '../../middleware/jwt.token';
-import { IOntoVis } from '../../infrastructure/onto-vis/onto-vis.interface';
+import { IOntoVis, IOntoVisSearch } from '../../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../../infrastructure/onto-vis/onto-vis.vm';
-import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
+import { OntoVisDto, OntoVisSearchDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { OntoVisService } from '../../services/onto-vis.service';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
-import { SomethingWentWrong } from '../../exceptions/exception';
+import { InvalidQueryParametersException, SearchError, SomethingWentWrong } from '../../exceptions/exception';
 import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
+import { OntoVisSearchService } from '../../services/onto-vis-search.service';
+import { OntoVisSearchFilterVm } from '../../infrastructure/onto-page/onto-vis-search-filter.vm';
 
 @controller('/ontology/vis', JwtToken.verify)
 export class OntoVisController {
     constructor(
         @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
+        @inject(TYPES.OntoVisSearchService) private ontoVisSearchService: OntoVisSearchService
     ) {}
 
     @httpGet('/')
@@ -51,6 +54,44 @@ export class OntoVisController {
         }
     }
 
+    @httpGet('/suggest')
+    public async suggest(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const queryStr = request.query.query as string;
+        logger.info(`OntoVisController: search: query = ${queryStr}`);
+
+        if (!queryStr) {
+            return next(new InvalidQueryParametersException('Missing query.'));
+        }
+
+        try {
+            const vis: IOntoVisSearch[] = await this.ontoVisSearchService.searchAsYouType(queryStr);
+            const visDto: OntoVisSearchDto = automapper.map(MAPPING_TYPES.IOntoVisSearch, MAPPING_TYPES.OntoVisSearchDto, vis);
+
+            logger.info(`OntoVisController:suggest: visDto = ${JSON.stringify(visDto)}`);
+            response.status(200).send(visDto);
+        } catch (e) {
+            logger.error(`OntoVisController:suggest: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
+    }
+
+    @httpGet('/search', queryParamValidate(OntoVisSearchFilterVm))
+    public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const ontoVisSearchFilterVm: OntoVisSearchFilterVm = request.query as any;
+        logger.info(`OntoVisController:search: ontoVisSearchFilterVm = ${JSON.stringify(ontoVisSearchFilterVm)}`);
+
+        try {
+            let result: IOntoVisSearch[] = await this.ontoVisSearchService.search(ontoVisSearchFilterVm);
+            let resultDto = automapper.map(MAPPING_TYPES.IOntoVisSearch, MAPPING_TYPES.OntoVisSearchDto, result);
+
+            logger.info(`OntoVisController:search: resultDto = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
+        } catch (e) {
+            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
+    }
+
     @httpGet('/:visId')
     public async getVis(request: Request, response: Response, next: NextFunction): Promise<void> {
         const visId: string = request.params.visId;
@@ -64,7 +105,6 @@ export class OntoVisController {
             next(new SomethingWentWrong(e.message));
         }
     }
-
 
     @httpPut('/:visId', vmValidate(OntoVisVm))
     public async updateVis(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -113,5 +153,4 @@ export class OntoVisController {
             next(new SomethingWentWrong(e.message));
         }
     }
-
 }

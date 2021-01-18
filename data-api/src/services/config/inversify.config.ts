@@ -4,15 +4,16 @@ import 'reflect-metadata';
 import { ActivityService } from '../activity.service';
 import { BookmarkService } from '../bookmark.service';
 import { CSVService } from '../csv.service';
-import { SearchServiceV05} from '../search.service.v0.5';
+import { SearchServiceV05 } from '../search.service.v0.5';
 import { TemplateService } from '../template.service';
 import { ThumbnailService } from '../thumbnail.service';
 import { UserService } from '../user.service';
 import { OntoDataService } from '../onto-data.service';
 import { OntoPageService } from '../onto-page.service';
 import { OntoVisService } from '../onto-vis.service';
-import { TYPES } from './types';
 import { OntoDataSearchService } from '../onto-data-search.service';
+import { OntoVisSearchService } from '../onto-vis-search.service';
+import { TYPES } from './types';
 
 const DIContainer = new Container();
 
@@ -27,5 +28,6 @@ DIContainer.bind<OntoDataService>(TYPES.OntoDataService).to(OntoDataService);
 DIContainer.bind<OntoPageService>(TYPES.OntoPageService).to(OntoPageService);
 DIContainer.bind<TemplateService>(TYPES.TemplateService).to(TemplateService);
 DIContainer.bind<OntoDataSearchService>(TYPES.OntoDataSearchService).to(OntoDataSearchService);
+DIContainer.bind<OntoVisSearchService>(TYPES.OntoVisSearchService).to(OntoVisSearchService);
 
 export { DIContainer };

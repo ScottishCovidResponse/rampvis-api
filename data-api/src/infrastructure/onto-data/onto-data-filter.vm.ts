@@ -3,8 +3,9 @@ import { DATA_TYPE } from './onto-data-types';
 
 export enum ONTODATA_SORT_BY {
     DATA_TYPE = 'dataType',
-    DESC = 'description',
+    DESCRIPTION = 'description',
     DATE = 'date',
+    SCORE ='score',
 }
 
 export enum SORT_ORDER {

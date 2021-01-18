@@ -86,6 +86,7 @@ export abstract class SearchService<T extends { _id: any }> {
 
     public async _search(dsl: any): Promise<any> {
         return await this.searchClient.search({
+            "from" : 0, "size" : 1000,
             index: this.index,
             type: '_doc',
             body: dsl,

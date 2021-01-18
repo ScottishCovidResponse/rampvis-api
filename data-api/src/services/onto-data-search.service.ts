@@ -45,11 +45,10 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
             dsl.query.bool.filter = [{ term: { dataType: ontoDataSearchFilterVm.dataType } }];
         }
 
-        // logger.info(`OntoDataSearchService:search: dsl =  ${JSON.stringify(dsl)}`);
-        // console.log('OntoDataSearchService:search: dsl = ', dsl);
+        logger.info(`OntoDataSearchService:search: dsl =  ${JSON.stringify(dsl)}`);
 
         const res = await this._search(dsl);
-        let result: IOntoDataSearch[] = res?.hits?.hits?.map((d: any) => { return { _id: d?._id, ...d?._source } });
+        let result: IOntoDataSearch[] = res?.hits?.hits?.map((d: any) => { return { _id: d?._id, ...d?._source, score: d?._score } });
 
         if (ontoDataSearchFilterVm.visId) {
             result = await Promise.all(
@@ -62,11 +61,8 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
 
         let paginatedResult =  this.getPaginatedOntoDataList(result, ontoDataSearchFilterVm);
 
-
-
-
-        //console.log('OntoDataSearchService:search: res = ', res.hits.hits);
-        // console.log('OntoDataSearchService:search: result = ', result);
+        console.log('OntoDataSearchService:search: res?.hits?.hits? = ', res?.hits?.hits, result.length);
+        console.log('OntoDataSearchService:search: result = ', paginatedResult, paginatedResult.data.length);
 
         return paginatedResult;
     }
@@ -153,6 +149,8 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
     }
 
     private getPaginatedOntoDataList(ontoDataList: Array<IOntoDataSearch>, ontoDataSearchFilterVm: OntoDataSearchFilterVm): PaginationVm<IOntoDataSearch> {
+        logger.debug(`OntoDataService:OntoDataSearchService: ontoDataFilterVm = ${JSON.stringify(ontoDataSearchFilterVm)}`);
+
         const pageIndex: number = ontoDataSearchFilterVm.pageIndex ? parseInt(ontoDataSearchFilterVm.pageIndex) : 0;
         let pageSize: number = ontoDataSearchFilterVm.pageSize ? parseInt(ontoDataSearchFilterVm.pageSize) : Infinity;
         const sortBy: ONTODATA_SORT_BY = ontoDataSearchFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
@@ -172,12 +170,17 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
             });
         }
 
-        if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
+        if (sortBy == ONTODATA_SORT_BY.SCORE) {
+            result = result.sort((a, b) => {
+                if (a.score >= b.score) return 1;
+                return -1;
+            });
+        } else if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
             result = result.sort((a, b) => {
                 if (a.dataType >= b.dataType) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DESC) {
+        } else if (sortBy == ONTODATA_SORT_BY.DESCRIPTION) {
             result = result.sort((a, b) => {
                 if (a.description >= b.description) return 1;
                 return -1;

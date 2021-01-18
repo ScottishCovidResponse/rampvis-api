@@ -17,6 +17,7 @@ import { SearchServiceV05 } from './services/search.service.v0.5';
 import { SearchClient, getSearchClient } from './infrastructure/db/elasticsearch.connection';
 import { OntoDataService } from './services/onto-data.service';
 import { OntoDataSearchService } from './services/onto-data-search.service';
+import { OntoVisSearchService } from './services/onto-vis-search.service';
 
 export class App {
     public app!: express.Application;
@@ -90,9 +91,13 @@ export class App {
 
     private static async createSearchIndexes(container: Container) {
         try {
-            const ontoPageSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
-            await ontoPageSearchService.createIndexes();
-            logger.info(`Created search indexes.`);
+            const ontoDataSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
+            await ontoDataSearchService.createIndexes();
+
+            const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(TYPES.OntoVisSearchService);
+            await ontoVisSearchService.createIndexes();
+
+            logger.info(`Created search indexes for data and VIS.`);
         } catch (err) {
             logger.error(`Error creating indexes, error: ${err}`);
             process.exit();
@@ -101,9 +106,13 @@ export class App {
 
     private static async putSearchMappings(container: Container) {
         try {
-            const ontoPageSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
-            await ontoPageSearchService.putMapping();
-            logger.info(`Created search mappings.`);
+            const ontoDataSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
+            await ontoDataSearchService.putMapping();
+
+            const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(TYPES.OntoVisSearchService);
+            await ontoVisSearchService.putMapping();
+
+            logger.info(`Created search mappings for data and VIS.`);
         } catch (err) {
             logger.error(`Error creating mappings, error: ${err}`);
             process.exit();

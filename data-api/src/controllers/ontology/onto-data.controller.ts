@@ -25,7 +25,6 @@ export class OntoDataController {
     constructor(
         @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
         @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
-        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService
     ) {}
 
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
@@ -53,7 +52,7 @@ export class OntoDataController {
     public async suggest(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataType = request.query.dataType as DATA_TYPE;
         const queryStr = request.query.query as string;
-        logger.info(`OntoDataController: search: query = ${queryStr}, dataType = ${dataType}`);
+        logger.info(`OntoDataController: suggest: query = ${queryStr}, dataType = ${dataType}`);
 
         if (!queryStr) {
             return next(new InvalidQueryParametersException('Missing dataType or query.'));
@@ -66,7 +65,7 @@ export class OntoDataController {
             logger.info(`OntoDataController:suggest: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
         } catch (e) {
-            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
+            logger.error(`OntoDataController:suggest: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
         }
     }

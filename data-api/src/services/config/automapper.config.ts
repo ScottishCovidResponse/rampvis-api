@@ -2,7 +2,7 @@ import 'automapper-ts';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { ActivityDto } from '../../infrastructure/activity/activity.dto';
 import { OntoDataDto, OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data.dto';
-import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
+import { OntoVisDto, OntoVisSearchDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { UserDto } from '../../infrastructure/user/user.dto';
 import { splitKeywordsString } from '../../utils/helper';
 
@@ -21,6 +21,9 @@ const MAPPING_TYPES = {
 
     IOntoVis: 'IOntoVis',
     OntoVisDto: 'OntoVisDto',
+    IOntoVisSearch: 'IOntoVisSearch',
+    OntoVisSearchDto: 'OntoVisSearchDto',
+
     IOntoData: 'IOntoData',
     OntoDataDto: 'OntoDataDto',
     IOntoDataSearch: 'IOntoDataSearch',
@@ -40,8 +43,7 @@ function configureAutoMapper() {
         .createMap(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('thumbnail', (opts: AutoMapperJs.IMemberConfigurationOptions) =>
-            opts.sourceObject.thumbnail === null ? '' : opts.sourceObject.thumbnail,
-        );
+            (opts.sourceObject.thumbnail === null ? '' : opts.sourceObject.thumbnail));
 
     automapper
         .createMap(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto)
@@ -60,6 +62,12 @@ function configureAutoMapper() {
         .convertToType(OntoVisDto);
 
     automapper
+        .createMap(MAPPING_TYPES.IOntoVisSearch, MAPPING_TYPES.OntoVisSearchDto)
+        .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
+        .forMember('score', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_score'))
+        .convertToType(OntoVisSearchDto);
+
+    automapper
         .createMap(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('keywords', (opts: AutoMapperJs.IMemberConfigurationOptions) => {
@@ -67,7 +75,7 @@ function configureAutoMapper() {
         })
         .convertToType(OntoDataDto);
 
-        automapper
+    automapper
         .createMap(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('score', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_score'))
