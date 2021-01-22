@@ -8,7 +8,7 @@ export enum BINDING_TYPE {
 
 export interface IBinding {
     visId: string;
-    dataIds: string[];
+    dataIds: Array<string>;
 }
 
 export class IOntoPage {
@@ -17,5 +17,5 @@ export class IOntoPage {
     public bindingType!: BINDING_TYPE;
     public date!: Date;
 
-    public bindings!: IBinding[];
+    public bindings!: Array<IBinding>;
 }

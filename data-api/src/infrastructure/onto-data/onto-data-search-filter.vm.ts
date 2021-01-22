@@ -3,10 +3,18 @@ import { ONTODATA_SORT_BY, SORT_ORDER } from './onto-data-filter.vm';
 import { DATA_TYPE } from './onto-data-types';
 
  export class OntoDataSearchFilterVm {
+    @IsString()
+    query!: string;
+
+    @IsOptional()
+    @IsString()
+    visId!: string;
+
     @IsOptional()
     @IsEnum(DATA_TYPE)
     dataType!: DATA_TYPE;
 
+    // Not used as we are doing in browser pagination
     @IsOptional()
     @IsString()
     pageIndex!: string;
@@ -26,11 +34,4 @@ import { DATA_TYPE } from './onto-data-types';
     @IsOptional()
     @IsString()
     filter!: string;
-
-    @IsString()
-    query!: string;
-
-    @IsOptional()
-    @IsString()
-    visId!: string;
 }

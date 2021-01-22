@@ -14,5 +14,5 @@ export interface IOntoData {
 export interface IOntoDataSearch extends IOntoData {
     _id: string;
     score: number;
-    pageIds: string[];
+    pageIds?: Array<string>;
 }
