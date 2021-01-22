@@ -49,7 +49,7 @@ def create_app(config):
         app.config.from_object(config)
         configure_logs(app)
         register_extensions(app)
-        CORS(app)
+        CORS(app, resources={r"/*": {"origins": "*"}}, send_wildcard=True)
         register_blueprints(app)
 
     return app
