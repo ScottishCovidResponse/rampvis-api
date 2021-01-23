@@ -1,16 +1,12 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
+import { SORT_ORDER } from '../sort-order.enum';
 import { DATA_TYPE } from './onto-data-types';
 
-export enum ONTODATA_SORT_BY {
+export enum SORT_BY {
     DATA_TYPE = 'dataType',
     DESCRIPTION = 'description',
     DATE = 'date',
-    SCORE ='score',
-}
-
-export enum SORT_ORDER {
-    ASC = 'asc',
-    DESC = 'desc',
+    SCORE = 'score',
 }
 
 export class OntoDataFilterVm {
@@ -27,8 +23,8 @@ export class OntoDataFilterVm {
     pageSize!: string;
 
     @IsOptional()
-    @IsEnum(ONTODATA_SORT_BY)
-    sortBy!: ONTODATA_SORT_BY;
+    @IsEnum(SORT_BY)
+    sortBy!: SORT_BY;
 
     @IsOptional()
     @IsEnum(SORT_ORDER)

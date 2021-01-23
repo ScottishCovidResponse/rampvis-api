@@ -10,9 +10,3 @@ export interface IOntoData {
     description: string;
     keywords: string;
 }
-
-export interface IOntoDataSearch extends IOntoData {
-    _id: string;
-    score: number;
-    pageIds?: Array<string>;
-}

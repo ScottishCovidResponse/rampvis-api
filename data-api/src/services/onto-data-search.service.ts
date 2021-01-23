@@ -5,15 +5,15 @@ import { provide } from 'inversify-binding-decorators';
 import { TYPES } from './config/types';
 import { SearchService } from './search.service';
 import { SearchClient } from '../infrastructure/db/elasticsearch.connection';
-import { IOntoDataSearch } from '../infrastructure/onto-data/onto-data.interface';
 import { OntoDataMapping } from '../infrastructure/onto-data/onto-data.mapping';
 import { logger } from '../utils/logger';
 import { DATA_TYPE } from '../infrastructure/onto-data/onto-data-types';
 import { OntoDataSearchFilterVm } from '../infrastructure/onto-data/onto-data-search-filter.vm';
 import { OntoPageService } from './onto-page.service';
 import { PaginationVm } from '../infrastructure/pagination.vm';
-import { ONTODATA_SORT_BY } from '../infrastructure/onto-data/onto-data-filter.vm';
-import { SORT_ORDER } from '../infrastructure/onto-page/onto-page-filter.vm';
+import { SORT_BY } from '../infrastructure/onto-data/onto-data-filter.vm';
+import { SORT_ORDER } from '../infrastructure/sort-order.enum';
+import { IOntoDataSearch } from '../infrastructure/onto-data/onto-data-search.interface';
 
 @provide(TYPES.OntoDataSearchService)
 export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
@@ -153,7 +153,7 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
 
         const pageIndex: number = ontoDataSearchFilterVm.pageIndex ? parseInt(ontoDataSearchFilterVm.pageIndex) : 0;
         let pageSize: number = ontoDataSearchFilterVm.pageSize ? parseInt(ontoDataSearchFilterVm.pageSize) : Infinity;
-        const sortBy: ONTODATA_SORT_BY = ontoDataSearchFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
+        const sortBy: SORT_BY = ontoDataSearchFilterVm.sortBy || SORT_BY.DATE;
         const sortOrder: SORT_ORDER = ontoDataSearchFilterVm.sortOrder || SORT_ORDER.ASC;
 
         let result: Array<IOntoDataSearch> = ontoDataList;
@@ -170,22 +170,22 @@ export class OntoDataSearchService extends SearchService<IOntoDataSearch> {
             });
         }
 
-        if (sortBy == ONTODATA_SORT_BY.SCORE) {
+        if (sortBy == SORT_BY.SCORE) {
             result = result.sort((a, b) => {
                 if (a.score >= b.score) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
+        } else if (sortBy == SORT_BY.DATA_TYPE) {
             result = result.sort((a, b) => {
                 if (a.dataType >= b.dataType) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DESCRIPTION) {
+        } else if (sortBy == SORT_BY.DESCRIPTION) {
             result = result.sort((a, b) => {
                 if (a.description >= b.description) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DATE) {
+        } else if (sortBy == SORT_BY.DATE) {
             result = result.sort((a, b) => {
                 if (a.date >= b.date) return 1;
                 return -1;

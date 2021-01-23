@@ -2,6 +2,7 @@ import { ObjectId } from 'bson';
 import config from 'config';
 import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
+import * as _ from 'lodash';
 
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
@@ -9,14 +10,18 @@ import { DataService } from './data.service';
 import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
 import { OntoDataVm } from '../infrastructure/onto-data/onto-data.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
-import { OntoDataFilterVm, ONTODATA_SORT_BY, SORT_ORDER } from '../infrastructure/onto-data/onto-data-filter.vm';
+import { OntoDataFilterVm, SORT_BY } from '../infrastructure/onto-data/onto-data-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 import { DATA_TYPE } from '../infrastructure/onto-data/onto-data-types';
 import { logger } from '../utils/logger';
+import { SORT_ORDER } from '../infrastructure/sort-order.enum';
+import { IOntoDataSearchGroup } from '../infrastructure/onto-data/onto-data-search-group.interface';
 
 @provide(TYPES.OntoDataService)
 export class OntoDataService extends DataService<IOntoData> {
-    public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
+    public constructor(
+        @inject(TYPES.DbClient) dbClient: DbClient,
+    ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_data'));
     }
 
@@ -74,12 +79,11 @@ export class OntoDataService extends DataService<IOntoData> {
     }
 
     private getPaginatedOntoDataList(ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm): PaginationVm<IOntoData> {
-
         logger.debug(`OntoDataService:getPaginatedOntoDataList: ontoDataFilterVm = ${JSON.stringify(ontoDataFilterVm)}`);
 
         const pageIndex: number = ontoDataFilterVm.pageIndex ? parseInt(ontoDataFilterVm.pageIndex) : 0;
         let pageSize: number = ontoDataFilterVm.pageSize ? parseInt(ontoDataFilterVm.pageSize) : Infinity;
-        const sortBy: ONTODATA_SORT_BY = ontoDataFilterVm.sortBy || ONTODATA_SORT_BY.DATE;
+        const sortBy: SORT_BY = ontoDataFilterVm.sortBy || SORT_BY.DATE;
         const sortOrder: SORT_ORDER = ontoDataFilterVm.sortOrder || SORT_ORDER.ASC;
 
         let result: Array<IOntoData> = ontoDataList;
@@ -96,17 +100,17 @@ export class OntoDataService extends DataService<IOntoData> {
             });
         }
 
-        if (sortBy == ONTODATA_SORT_BY.DATA_TYPE) {
+        if (sortBy == SORT_BY.DATA_TYPE) {
             result = result.sort((a, b) => {
                 if (a.dataType >= b.dataType) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DESCRIPTION) {
+        } else if (sortBy == SORT_BY.DESCRIPTION) {
             result = result.sort((a, b) => {
                 if (a.description >= b.description) return 1;
                 return -1;
             });
-        } else if (sortBy == ONTODATA_SORT_BY.DATE) {
+        } else if (sortBy == SORT_BY.DATE) {
             result = result.sort((a, b) => {
                 if (a.date >= b.date) return 1;
                 return -1;
@@ -142,5 +146,19 @@ export class OntoDataService extends DataService<IOntoData> {
             { $sort: { score: { $meta: 'textScore' } } },
         ];
         return this.getDbCollection().aggregate(pipeline).toArray();
+    }
+
+    //
+    // Group - search and group for propagation
+    //
+
+    public async getGroupsMatchingExampleDataOfVis(len: number): Promise<IOntoDataSearchGroup[]> {
+
+        const ontoData: IOntoData[] = await this.getAll();
+        const ontoDataSearchGroup: IOntoDataSearchGroup[] = [];
+        for (let d of _.chunk(ontoData, len)) {
+            ontoDataSearchGroup.push({ score: 0, groups: d } as IOntoDataSearchGroup);
+        }
+        return ontoDataSearchGroup;
     }
 }

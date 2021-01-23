@@ -9,8 +9,9 @@ import { DataService } from './data.service';
 import { IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
 import { IOntoPage, BINDING_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
-import { OntoPageFilterVm, ONTOPAGE_SORT_BY, SORT_ORDER } from '../infrastructure/onto-page/onto-page-filter.vm';
+import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
+import { SORT_ORDER } from '../infrastructure/sort-order.enum';
 
 
 @provide(TYPES.OntoPageService)

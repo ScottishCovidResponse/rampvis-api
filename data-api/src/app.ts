@@ -99,7 +99,7 @@ export class App {
 
             logger.info(`Created search indexes for data and VIS.`);
         } catch (err) {
-            logger.error(`Error creating indexes, error: ${err}`);
+            logger.error(`Error creating indexes, error: ${JSON.stringify(err)}`);
             process.exit();
         }
     }

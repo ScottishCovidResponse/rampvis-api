@@ -1,16 +1,11 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
 import { SORT_ORDER } from '../sort-order.enum';
-import { BINDING_TYPE } from './onto-page.interface';
 
-export enum ONTOPAGE_SORT_BY {
-    BINDING_TYPE = 'bindingType',
-    DATE = 'date',
+export enum SORT_BY {
+    SCORE = 'score',
 }
 
-export class OntoPageFilterVm {
-    @IsEnum(BINDING_TYPE)
-    bindingType!: BINDING_TYPE;
-
+export class OntoDataSearchGroupFilterVm {
     @IsOptional()
     @IsString()
     pageIndex!: string;
@@ -20,8 +15,8 @@ export class OntoPageFilterVm {
     pageSize!: string;
 
     @IsOptional()
-    @IsEnum(ONTOPAGE_SORT_BY)
-    sortBy!: ONTOPAGE_SORT_BY;
+    @IsEnum(SORT_BY)
+    sortBy!: SORT_BY;
 
     @IsOptional()
     @IsEnum(SORT_ORDER)

@@ -1,5 +1,6 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
-import { ONTODATA_SORT_BY, SORT_ORDER } from './onto-data-filter.vm';
+import { SORT_ORDER } from '../sort-order.enum';
+import { SORT_BY } from './onto-data-filter.vm';
 import { DATA_TYPE } from './onto-data-types';
 
  export class OntoDataSearchFilterVm {
@@ -24,8 +25,8 @@ import { DATA_TYPE } from './onto-data-types';
     pageSize!: string;
 
     @IsOptional()
-    @IsEnum(ONTODATA_SORT_BY)
-    sortBy!: ONTODATA_SORT_BY;
+    @IsEnum(SORT_BY)
+    sortBy!: SORT_BY;
 
     @IsOptional()
     @IsEnum(SORT_ORDER)
