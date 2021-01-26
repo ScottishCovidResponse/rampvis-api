@@ -12,7 +12,7 @@ import { OntoPageVm } from '../../infrastructure/onto-page/onto-page.vm';
 import { OntoPageService } from '../../services/onto-page.service';
 import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { SomethingWentWrong } from '../../exceptions/exception';
-import { BindingExtDto, OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
+import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../../infrastructure/pagination.vm';
 import { OntoVisService } from '../../services/onto-vis.service';
@@ -21,6 +21,7 @@ import { IOntoVis } from '../../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
+import { BindingExtDto } from '../../infrastructure/onto-page/binding.dto';
 
 @controller('/ontology', JwtToken.verify)
 export class OntoPageController {
@@ -37,13 +38,30 @@ export class OntoPageController {
 
         try {
             const result: PaginationVm<IOntoPage> = await this.ontoPageService.getAllPages(query);
+            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data );
+            const ontoPageExtDtos: OntoPageExtDto[] = [];
 
-            const resultDto: PaginationVm<OntoPageDto> = {
-                data: automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data),
-                page: result.page,
-                pageCount: result.pageCount,
-                totalCount: result.totalCount,
-            };
+            for (let ontoPageDto of ontoPageDtos) {
+                let bindingExts: BindingExtDto[] = [];
+
+                for (let binding of ontoPageDto.bindings) {
+                    const ontoVis: IOntoVis = await this.ontoVisService.get(binding.visId);
+                    const ontoVisDto: OntoVisDto = automapper.map( MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis );
+                    let ontoDataDtos: OntoDataDto[] = [];
+                    for (let dataId of binding.dataIds) {
+                        const ontoData: IOntoData = await this.ontoDataService.get(dataId);
+                        let ontoDataDto: OntoDataDto = automapper.map( MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData );
+                        ontoDataDtos.push(ontoDataDto);
+                    }
+
+                    bindingExts.push({ vis: ontoVisDto, data: ontoDataDtos } as BindingExtDto);
+                }
+
+                ontoPageExtDtos.push({ ...ontoPageDto, bindingExts: bindingExts });
+            }
+
+            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
+
             logger.info(`OntoPageController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
@@ -123,7 +141,7 @@ export class OntoPageController {
                     ontoDataDtos.push(ontoDataDto);
                 }
 
-                bindingExts.push( {vis:  ontoVisDto, data: ontoDataDtos } as BindingExtDto);
+                bindingExts.push({ vis: ontoVisDto, data: ontoDataDtos } as BindingExtDto);
             }
 
             const ontoPageExtDto: OntoPageExtDto = { ...ontoPageDto, bindingExts: bindingExts };
