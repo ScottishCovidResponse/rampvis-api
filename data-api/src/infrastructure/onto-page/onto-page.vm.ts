@@ -8,15 +8,16 @@ export class BindingVm {
 
     @IsString({ each: true })
     dataIds!: string[];
+
+    @IsOptional()
+    @IsString({ each: true })
+    pageIds!: string[];
 }
 
 export class OntoPageVm {
     @IsOptional()
     @IsString()
     public id!: string;
-
-    @IsNumber()
-    public nrows!: number;
 
     @IsEnum(BINDING_TYPE)
     public bindingType!: BINDING_TYPE;
@@ -25,4 +26,8 @@ export class OntoPageVm {
     @Type(() => BindingVm)
     @ValidateNested({ each: true })
     bindings!: BindingVm[];
+
+    @IsOptional()
+    @IsNumber()
+    public nrows!: number;
 }

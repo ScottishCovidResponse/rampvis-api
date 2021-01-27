@@ -8,6 +8,7 @@ export enum ONTOPAGE_SORT_BY {
 }
 
 export class OntoPageFilterVm {
+    @IsOptional()
     @IsEnum(BINDING_TYPE)
     bindingType!: BINDING_TYPE;
 

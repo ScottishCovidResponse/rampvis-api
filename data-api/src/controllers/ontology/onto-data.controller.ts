@@ -23,13 +23,15 @@ import { OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data-sear
 import { IOntoDataSearchGroup } from '../../infrastructure/onto-data/onto-data-search-group.interface';
 import { OntoDataSearchGroupDto } from '../../infrastructure/onto-data/onto-data-search-group.dto';
 import { OntoVisService } from '../../services/onto-vis.service';
+import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { OntoPageService } from '../../services/onto-page.service';
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
         @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
-        @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
+        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
     ) {}
 
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
@@ -103,9 +105,13 @@ export class OntoDataController {
         logger.info(`OntoDataController:searchGroup: visId = ${JSON.stringify(visId)}`);
 
         try {
-            const exampleData = await this.ontoVisService.getExampleDataBindingVisId(visId)
-
-            let results: IOntoDataSearchGroup[] = await this.ontoDataService.getGroupsMatchingExampleDataOfVis(exampleData.length);
+            //
+            // TODO
+            //  I am just grouping arbitrarily
+            //
+            const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
+            const groupLen = ontoPages[0].bindings[0].dataIds.length;
+            let results: IOntoDataSearchGroup[] = await this.ontoDataService.getGroupsMatchingExampleDataOfVis(groupLen);
             const resultsDto: OntoDataSearchGroupDto[] = automapper.map(MAPPING_TYPES.IOntoDataSearchGroup, MAPPING_TYPES.OntoDataSearchGroupDto, results);
 
             logger.info(`OntoDataController:search: searchGroup = ${JSON.stringify(resultsDto)}`);

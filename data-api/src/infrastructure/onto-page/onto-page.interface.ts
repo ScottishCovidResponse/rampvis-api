@@ -9,13 +9,13 @@ export enum BINDING_TYPE {
 export interface IBinding {
     visId: string;
     dataIds: Array<string>;
+    pageIds?: Array<string>;
 }
 
 export class IOntoPage {
     public _id!: string | ObjectId;
-    public nrows!: number;
     public bindingType!: BINDING_TYPE;
-    public date!: Date;
-
     public bindings!: Array<IBinding>;
+    public date!: Date;
+    public nrows?: number;
 }

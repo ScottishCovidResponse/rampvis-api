@@ -10,16 +10,12 @@ import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../infrastructure/onto-vis/onto-vis.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 import { OntoPageService } from './onto-page.service';
-import { IOntoPage } from '../infrastructure/onto-page/onto-page.interface';
-import { IOntoData } from '../infrastructure/onto-data/onto-data.interface';
 import { OntoDataService } from './onto-data.service';
 
 @provide(TYPES.OntoVisService)
 export class OntoVisService extends DataService<IOntoVis> {
     public constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
-        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
-        @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
     ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_vis'));
     }
@@ -53,11 +49,5 @@ export class OntoVisService extends DataService<IOntoVis> {
         } as any;
 
         return await this.updateAndGet(visId, updateVis);
-    }
-
-    public async getExampleDataBindingVisId(visId: string) {
-        const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
-        const ontoData: IOntoData[] = await this.ontoDataService.getMultiple(ontoPages[0].bindings[0].dataIds)
-        return ontoData;
     }
 }

@@ -6,13 +6,12 @@ import { FilterQuery, ObjectId } from 'mongodb';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
+import { DuplicateEntry, IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
 import { IOntoPage, BINDING_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
 import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 import { SORT_ORDER } from '../infrastructure/sort-order.enum';
-
 
 @provide(TYPES.OntoPageService)
 export class OntoPageService extends DataService<IOntoPage> {
@@ -20,6 +19,10 @@ export class OntoPageService extends DataService<IOntoPage> {
         @inject(TYPES.DbClient) dbClient: DbClient,
     ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_page'));
+    }
+
+    public async getMultiple(ids: string[]): Promise<IOntoPage[]> {
+        return await this.getAll({ _id: { $in: ids.map((id) => new ObjectId(id)) } });
     }
 
     async getAllPages(ontoPageFilterVm: OntoPageFilterVm): Promise<PaginationVm<IOntoPage>> {
@@ -36,8 +39,14 @@ export class OntoPageService extends DataService<IOntoPage> {
 
     public async getPagesBindingVisIdAndDataId(_visId: string, _dataId: string): Promise<string[]> {
         const pages = await this.getAll({ bindings: { $elemMatch: { visId: _visId, dataIds: { $in: [_dataId] } } } });
-        console.log('visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages)
+        console.log('OntoPageService:getPagesBindingVisIdAndDataId: visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages)
         return pages.map(d => d._id.toString())
+    }
+
+    private async getPageBindingVisIdAndDataIds(_visId: string, _dataIds: string[]): Promise<IOntoPage[]> {
+        const pages = await this.getAll({ bindings: { $elemMatch: { visId: _visId, dataIds: { $in: _dataIds } } } });
+        console.log('OntoPageService:getPageBindingVisIdAndDataIds: visId = ', _visId, 'dataIds = ', _dataIds, 'pages = ', pages)
+        return pages;
     }
 
     public async getExamplePagesBindingVisId(_visId: string): Promise<IOntoPage[]> {
@@ -45,7 +54,13 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {
-        // TODO -  check if exist based on some condition
+
+        let exits = await this.getPageBindingVisIdAndDataIds(ontoPageVm.bindings[0].visId, ontoPageVm.bindings[0].dataIds);
+        if (exits.length) {
+            throw new DuplicateEntry(`The binding exists between visId: ${ontoPageVm.bindings[0].visId} and dataIds: ${JSON.stringify(ontoPageVm.bindings[0].dataIds)}`);
+        }
+
+        console.log('OntoPageService:createPage: ontoPageVm = ', ontoPageVm);
 
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),
@@ -54,6 +69,11 @@ export class OntoPageService extends DataService<IOntoPage> {
             date: new Date(),
             bindings: ontoPageVm.bindings,
         };
+
+        if (ontoPageVm.nrows) {
+            ontoPage.nrows = ontoPageVm.nrows;
+        }
+
         return await this.create(ontoPage);
     }
 
@@ -62,11 +82,14 @@ export class OntoPageService extends DataService<IOntoPage> {
         if (!data) throw new IdDoesNotExist(pageId);
 
         let ontoPage: IOntoPage = {
-            nrows: ontoPageVm.nrows,
             bindingType: ontoPageVm.bindingType,
             date: new Date(),
             bindings: ontoPageVm.bindings,
         } as any;
+
+        if (ontoPageVm.nrows) {
+            ontoPage.nrows = ontoPageVm.nrows;
+        }
 
         return await this.updateAndGet(pageId, ontoPage);
     }
