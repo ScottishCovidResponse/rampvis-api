@@ -14,3 +14,4 @@ csv-data-dynamic
 stat-api/error.log
 data-api/logs
 data/raw
+stat-api/.ipynb_checkpoints/data_products-checkpoint.ipynb
