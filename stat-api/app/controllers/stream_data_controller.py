@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 import json
 
 from flask import Response, current_app, Blueprint
@@ -19,9 +24,12 @@ def download_data():
     """
     Download data products from https://data.scrc.uk/.
     """
-    with open('manifest.json') as f:
-        manifest = json.load(f)
-        download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE')) 
+    try:
+        with open('manifest.json') as f:
+            manifest = json.load(f)
+            download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE')) 
+    except Exception as e:
+        logger.error(e, exc_info=True)
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
