@@ -154,7 +154,7 @@ export abstract class DataService<T extends { _id: any }> {
         } catch (e) {
             Promise.resolve();
         }
-        
+
         await this.getDbCollection().createIndex(obj,);
     }
 }
