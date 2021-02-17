@@ -73,11 +73,6 @@
                 "type": "raw"
             },
             {
-                "name": "date-golden_jubilee-covid19_patients_in_icu-total",
-                "location": "scotland",
-                "type": "raw"
-            },
-            {
                 "name": "nhs_health_board/date-covid19_patients_in_hospital-confirmed",
                 "location": "scotland",
                 "type": "raw"
@@ -123,16 +118,6 @@
                 "type": "raw"
             },
             {
-                "name": "council_area-all_deaths",
-                "location": "scotland",
-                "type": "raw"
-            },
-            {
-                "name": "council_area-covid_related_deaths",
-                "location": "scotland",
-                "type": "raw"
-            },
-            {
                 "name": "location_type/week-all_deaths",
                 "location": "scotland",
                 "type": "raw"
@@ -149,21 +134,6 @@
             },
             {
                 "name": "nhs_health_board/week-covid_related_deaths",
-                "location": "scotland",
-                "type": "raw"
-            },
-            {
-                "name": "nhs_health_board-all_deaths",
-                "location": "scotland",
-                "type": "raw"
-            },
-            {
-                "name": "nhs_health_board-covid_related_deaths",
-                "location": "scotland",
-                "type": "raw"
-            },
-            {
-                "name": "week-persons-scotland-all_deaths-averaged_over_5years",
                 "location": "scotland",
                 "type": "raw"
             }
