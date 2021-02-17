@@ -68,7 +68,7 @@ export class TemplateController {
         const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
 
         // IOntoPage -> OntoPageDto
-        const ontoPageDto: OntoPageDto = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+        const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
 
         // OntoPageDto -> OntoPageExtDto
         let bindingExts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
