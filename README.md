@@ -110,11 +110,11 @@ A scheduler is used to simulate a data stream. A job will be run every 3 seconds
 - the stream will stop when it reaches the last available date (26th May 2020).
 
 ### Endpoints
-- `/stat/v1/stream_data/start` to start or reset the stream from the first day (1st April 2020)
+- `/stat/v1/stream_data/start` to start the stream
 - `/stat/v1/stream_data/stop` to pause the stream
 - `/stat/v1/stream_data/resume` to resume the stream (keep the current date as it is)
 - `/stat/v1/stream_data/status` displays the status of the stream
-
+<!-- 
 # Simulation of deriving metrics dynamically
 
 A scheduler is used to compute metrics based on dynamic data stream. A job will be run every 3 seconds which is synchronized with the test stream.
@@ -123,7 +123,7 @@ A scheduler is used to compute metrics based on dynamic data stream. A job will 
 - `/stat/v1/process_data/start` to start the stream
 - `/stat/v1/process_data/stop` to pause the stream
 - `/stat/v1/process_data/resume` to resume the stream
-- `/stat/v1/process_data/status` displays the status of the stream
+- `/stat/v1/process_data/status` displays the status of the stream -->
 
 
 # Model 

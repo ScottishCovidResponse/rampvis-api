@@ -36,8 +36,8 @@ scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(download_data, 'cron', hour=0, minute=0, second=0)
 scheduler.start()
 
-# Download immediately
-download_data()
+# Testing only: download immediately
+# download_data()
 
 @stream_data_bp.route('/start', methods=['GET'])
 @validate_token

@@ -1,7 +1,9 @@
 import json
 import os
 import re
+import shutil
 from pathlib import Path
+from dateutil.parser import isoparse
 
 import h5py
 import pandas as pd
@@ -13,56 +15,90 @@ def clean_column_name(s):
     return s.lower().replace(' - ', '_').replace('-', '_').replace(' ', '_')
 
 def to_df(f, key):
-    # print('processing', key)
-    dates = [d.decode() for d in f[key]['Dimension_2_names']]
-    columns = [d.decode() for d in f[key]['Dimension_1_names']]
+    print('converting', key)
     values = np.array(f[key]['array'])
+    names_1 = [d.decode() for d in f[key]['Dimension_1_names']]
+    title_1 = list(f[key]['Dimension_1_title'])[0].decode()
+    names_2 = [d.decode() for d in f[key]['Dimension_2_names']]
+    title_2 = list(f[key]['Dimension_2_title'])[0].decode()
+    index_is_date = False
+    try:
+        isoparse(names_2[0])
+        # Succeeded, names_2 are dates and names_1 are columns
+        index_is_date = True
+        indices = names_2
+        index_name = title_2
+        columns = names_1
+    except Exception as e:
+        # Failed, names_2 are columns and names_1 are normal indices.
+        indices = names_1
+        index_name = title_1
+        columns = names_2
+
     if 'Dimension_3_names' in f[key]:
         extra_columns = [d.decode() for d in f[key]['Dimension_3_names']]
         data_dict = {}
         for i1, c1 in enumerate(extra_columns):
             for i2, c2 in enumerate(columns):
-                data_dict[c1 + '___' + c2] = values[i1,:,i2]
+                data_dict[c1 + '___' + c2] = values[i1,:,i2] if index_is_date else values[i1,i2,:]
                 
-        df = pd.DataFrame(data_dict, index=dates, dtype='Int64')
+        df = pd.DataFrame(data_dict, index=indices, dtype='Int64')
     else:
+        # The values are aslo transposed in case of 2 dimensions and non-date
+        if not index_is_date:
+            values = values.T
+
         # Try Int64 first which is the same as int but can store NaN
         try:
-            df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Int64')
+            df = pd.DataFrame(data=values, index=indices, columns=columns, dtype='Int64')
         except Exception:
-            df = pd.DataFrame(data=values, index=dates, columns=columns, dtype='Float64')
-    df.index.name = 'date'
-    # print('processed', key)
+            df = pd.DataFrame(data=values, index=indices, columns=columns, dtype='Float64')
+            
+    df.index.name = index_name
+    assert df.values.shape == (len(df), len(df.columns))
+    
     return df
 
-def process_h5(path, live_path, component_names):
+def process_h5(path, folder, component_names, split_data):
     f = h5py.File(path, 'r')
     for c in component_names:
         df = to_df(f, c)
         filename = re.sub('[\-/]', '_', c) + '.csv'
-        # index = None if isinstance(df.index, pd.RangeIndex) else df.index
-        df.to_csv(Path(live_path) / filename)
+        df.to_csv(folder/filename)
 
         # Split each column as a single file
-        if len(df.columns) > 1:
+        if len(df.columns) > 1 and split_data:
+            # Each folder for an original file
+            print('spliting', c)
+            filename = filename[:-4]
+            split_folder = folder/filename
+
+            # A bit strange here as sometimes, a FileExistsError happens, should be new folder
+            os.makedirs(split_folder, exist_ok=True)
+            
             for col in df.columns:
-                sub_filename = filename[:-4] + '---' + re.sub('[\-/ ]', '_', col) + '.csv'
-                df[[col]].to_csv(Path(live_path) / sub_filename)
+                sub_filename = filename + '---' + re.sub('[\-/ ]', '_', col) + '.csv'
+                df[[col]].to_csv(split_folder/sub_filename)
     
 def download_to_csvs(manifest, raw_path, live_path):
     "Download the latest file of a data product, convert h5 to csv and save it."
     for p in manifest:
         component_names = [c['name'] for c in p['components']]
-        download_product(p['product'], component_names, raw_path, live_path)
-    print('CSV conversion completed.')
+        download_product(p['product'], component_names, raw_path, live_path, p.get('split', True))
+    print('Data download and CSV conversion completed.')
     
-def download_product(product_name, component_names, raw_path, live_path):
+def download_product(product_name, component_names, raw_path, live_path, split_data):
     # downloader = Downloader(data_directory=raw_path)
     # downloader.add_data_product(namespace='SCRC', data_product=product_name)
     # downloader.download()
+
+    # Recreate a subfolder
+    subfolder = Path(live_path) / product_name
+    shutil.rmtree(subfolder, ignore_errors=True)
+    os.makedirs(subfolder)
 
     folder = Path(raw_path) / product_name
     folder = folder/max(os.listdir(folder))
     h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
     filename = h5s[0]
-    process_h5(folder/filename, live_path, component_names)
+    process_h5(folder/filename, subfolder, component_names, split_data)

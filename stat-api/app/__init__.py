@@ -9,12 +9,13 @@ def register_blueprints(app):
     Import parts of our application
     Register Blueprints
     """
-    from .controllers import correlation_bp, process_data_bp, scotland_bp, stream_data_bp, analytics_bp
+    from .controllers import correlation_bp, process_data_bp, scotland_bp, stream_data_bp, static_data_bp, analytics_bp
 
     app.register_blueprint(correlation_bp)
     app.register_blueprint(process_data_bp)
     app.register_blueprint(scotland_bp)
     app.register_blueprint(stream_data_bp)
+    app.register_blueprint(static_data_bp)
     app.register_blueprint(analytics_bp)
 
     # from .controllers import graph_bp
