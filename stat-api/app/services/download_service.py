@@ -59,35 +59,44 @@ def to_df(f, key):
     
     return df
 
-def process_h5(path, folder, component_names, split_data):
+def process_h5(path, folder, static_path, components, split_data):
     f = h5py.File(path, 'r')
-    for c in component_names:
-        df = to_df(f, c)
-        filename = re.sub('[\-/]', '_', c) + '.csv'
-        df.to_csv(folder/filename)
+    for c in components:
+        name = c['name']
+        df = to_df(f, name)
+        filename = re.sub('[\-/]', '_', name)
+        df.to_csv(folder/(filename + '.csv'))
+
+        # Normalizing
+        if 'normalized' in c:
+            pop_file = Path(static_path)/c['normalized']
+            pop_df = pd.read_csv(pop_file, index_col=c['col_name'])
+            norm_df = df.copy()
+            for col in df.columns:
+                norm_df.loc[:,col] = norm_df.loc[:,col] / pop_df.loc[col].values[0] * 100000
+            norm_df.to_csv(folder/(filename + '_normalized.csv'))
 
         # Split each column as a single file
         if len(df.columns) > 1 and split_data:
             # Each folder for an original file
-            print('spliting', c)
-            filename = filename[:-4]
+            print('spliting', name)
             split_folder = folder/filename
 
             # A bit strange here as sometimes, a FileExistsError happens, should be new folder
             os.makedirs(split_folder, exist_ok=True)
             
             for col in df.columns:
-                sub_filename = filename + '---' + re.sub('[\-/ ]', '_', col) + '.csv'
+                sub_filename = re.sub('[\-/ ]', '_', col) + '.csv'
                 df[[col]].to_csv(split_folder/sub_filename)
     
-def download_to_csvs(manifest, raw_path, live_path):
+def download_to_csvs(manifest, raw_path, live_path, static_path):
     "Download the latest file of a data product, convert h5 to csv and save it."
     for p in manifest:
-        component_names = [c['name'] for c in p['components']]
-        download_product(p['product'], component_names, raw_path, live_path, p.get('split', True))
+        download_product(p['product'], p['components'], raw_path, live_path, static_path, p.get('split', True))
     print('Data download and CSV conversion completed.')
     
-def download_product(product_name, component_names, raw_path, live_path, split_data):
+def download_product(product_name, components, raw_path, live_path, static_path, split_data):
+    print('\n-----\ndownloading', product_name)
     # downloader = Downloader(data_directory=raw_path)
     # downloader.add_data_product(namespace='SCRC', data_product=product_name)
     # downloader.download()
@@ -101,4 +110,4 @@ def download_product(product_name, component_names, raw_path, live_path, split_d
     folder = folder/max(os.listdir(folder))
     h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
     filename = h5s[0]
-    process_h5(folder/filename, subfolder, component_names, split_data)
+    process_h5(folder/filename, subfolder, static_path, components, split_data)

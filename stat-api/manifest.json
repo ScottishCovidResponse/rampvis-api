@@ -75,7 +75,9 @@
             {
                 "name": "nhs_health_board/date-covid19_patients_in_hospital-confirmed",
                 "location": "scotland",
-                "type": "raw"
+                "type": "raw",
+                "normalized": "human/demographics/population/scotland/health board_age_persons_all.csv",
+                "col_name": "health board"
             },
             {
                 "name": "nhs_health_board/date-covid19_patients_in_icu-confirmed",

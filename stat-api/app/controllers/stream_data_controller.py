@@ -27,7 +27,7 @@ def download_data():
     try:
         with open('manifest.json') as f:
             manifest = json.load(f)
-            download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE')) 
+            download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE'), config.get('DATA_PATH_STATIC')) 
     except Exception as e:
         logger.error(e, exc_info=True)
 
@@ -37,10 +37,10 @@ scheduler.add_job(download_data, 'cron', hour=0, minute=0, second=0)
 scheduler.start()
 
 # Testing only: download immediately
-# download_data()
+download_data()
 
 @stream_data_bp.route('/start', methods=['GET'])
-@validate_token
+# @validate_token
 def start():
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:
@@ -71,7 +71,7 @@ def status():
 
 
 @stream_data_bp.route('/stop', methods=['GET'])
-@validate_token
+# @validate_token
 def stop():
     scheduler.pause()
     return Response(json.dumps({'message': 'Data fetching has stopped.'}), mimetype='application/json')
