@@ -11,7 +11,7 @@ import { JwtToken } from '../../middleware/jwt.token';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { OntoPageVm } from '../../infrastructure/onto-page/onto-page.vm';
 import { OntoPageService } from '../../services/onto-page.service';
-import { IBinding, IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { SearchError, SomethingWentWrong } from '../../exceptions/exception';
 import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
@@ -23,12 +23,16 @@ import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
 import { BindingDto, BindingExtDto } from '../../infrastructure/onto-page/binding.dto';
-import { IOntoPageSearchGroup } from '../../infrastructure/onto-page/onto-page-search-group.interface';
 import { OntoPageExtSearchGroupDto } from '../../infrastructure/onto-page/onto-page-search-group.dto';
+import { ActivityService } from '../../services/activity.service';
+import { IUser } from '../../infrastructure/user/user.interface';
+import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
+
 
 @controller('/ontology', JwtToken.verify)
 export class OntoPageController {
     constructor(
+        @inject(TYPES.ActivityService) private activityService: ActivityService,
         @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
         @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService
@@ -67,6 +71,15 @@ export class OntoPageController {
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.createPage(ontoPageVm);
             const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_PAGE,
+                ACTIVITY_ACTION.CREATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoPageController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
             response.status(200).send(ontoPageDto);
         } catch (e) {
@@ -84,6 +97,15 @@ export class OntoPageController {
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.updatePage(pageId, ontoPageVm);
             const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_PAGE,
+                ACTIVITY_ACTION.UPDATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoPageController:updatePage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
             response.status(200).send(ontoPageDto);
         } catch (e) {
@@ -100,6 +122,15 @@ export class OntoPageController {
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.delete(pageId);
             const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_PAGE,
+                ACTIVITY_ACTION.DELETE,
+                user._id.toString()
+            );
+
             logger.info(`OntoPageController:deletePage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
             response.status(200).send(ontoPageDto);
         } catch (e) {

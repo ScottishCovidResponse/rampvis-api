@@ -24,10 +24,15 @@ import { OntoPageService } from '../../services/onto-page.service';
 import { OntoDataService } from '../../services/onto-data.service';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
+import { ActivityService } from '../../services/activity.service';
+import { IUser } from '../../infrastructure/user/user.interface';
+import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
+
 
 @controller('/ontology/vis', JwtToken.verify)
 export class OntoVisController {
     constructor(
+        @inject(TYPES.ActivityService) private activityService: ActivityService,
         @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
         @inject(TYPES.OntoVisSearchService) private ontoVisSearchService: OntoVisSearchService,
         @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
@@ -55,6 +60,15 @@ export class OntoVisController {
         try {
             const vis: IOntoVis = await this.ontoVisService.createVis(visVm);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_VIS,
+                ACTIVITY_ACTION.CREATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoVisController:createVis: visDto = ${visDto}`);
             response.status(200).send(visDto);
         } catch (e) {
@@ -124,6 +138,15 @@ export class OntoVisController {
         try {
             const vis: IOntoVis = await this.ontoVisService.updateVis(visId, visVm);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_VIS,
+                ACTIVITY_ACTION.UPDATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoVisController:updateVis: visDto = ${visDto}`);
             response.status(200).send(visDto);
         } catch (e) {
@@ -140,6 +163,15 @@ export class OntoVisController {
         try {
             const ontoVis: IOntoVis = await this.ontoVisService.delete(visId);
             const ontoVisDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_VIS,
+                ACTIVITY_ACTION.DELETE,
+                user._id.toString()
+            );
+
             logger.info(`OntoVisController:deleteVis: ontoVisDto = ${JSON.stringify(ontoVisDto)}`);
             response.status(200).send(ontoVisDto);
         } catch (e) {

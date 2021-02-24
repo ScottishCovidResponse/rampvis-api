@@ -24,7 +24,7 @@ import { ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interfac
 export class AuthController {
     constructor(
         @inject(TYPES.UserService) private userService: UserService,
-        @inject(TYPES.ActivityService) private activityService: ActivityService,
+        @inject(TYPES.ActivityService) private activityService: ActivityService
     ) {}
 
     //
@@ -33,7 +33,7 @@ export class AuthController {
     @httpGet('/github-login', passport.authenticate('github'))
     @httpGet(
         '/github-callback',
-        passport.authenticate('github', { failureRedirect: `${config.get('github.failureRedirect')}` }),
+        passport.authenticate('github', { failureRedirect: `${config.get('github.failureRedirect')}` })
     )
     public async githubCallback(request: Request, response: Response, next: NextFunction): Promise<void> {
         const currentUser = (request as any).currentUser;
@@ -49,31 +49,39 @@ export class AuthController {
     @httpPost('/login', vmValidate(LoginVm))
     public async login(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const loginData: LoginVm = request.body as any;
-
-        logger.error('AuthController: login: loginData = ', loginData);
+        logger.debug('AuthController: login: loginData = ', loginData);
 
         const user: IUser = await this.userService.getLoggedInUser(loginData.email);
+        logger.debug('AuthController: login: user = ', user);
+        console.log('user', user);
 
-        logger.error('AuthController: login: user = ', user);
-
-        if (user) {
-            const isPasswordMatching = await bcrypt.compare(loginData.password, user.password as string);
-            if (isPasswordMatching) {
-                user.password = '';
-                const tokenData: ITokenData = await JwtToken.create(user);
-
-                await this.activityService.createActivity(
-                    user,
-                    ACTIVITY_TYPE.USER,
-                    ACTIVITY_ACTION.LOGIN,
-                    user._id.toString(),
-                );
-                response.status(200).send(tokenData);
-            } else {
-                next(new WrongCredentialsException(loginData.email));
-            }
-        } else {
+        if (!user) {
             next(new WrongCredentialsException(loginData.email));
+            return;
+        }
+
+        const isMatch = await bcrypt.compare(loginData.password, user.password as string);
+        console.log('isMatch', isMatch);
+
+        if (!isMatch) {
+            next(new WrongCredentialsException(loginData.email));
+            return;
+        }
+
+        try {
+            const tokenData: ITokenData = await JwtToken.create(user);
+
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.USER,
+                ACTIVITY_ACTION.LOGIN,
+                user._id.toString()
+            );
+
+            user.password = '';
+            response.status(200).send(tokenData);
+        } catch (e) {
+            next(new WrongCredentialsException(JSON.stringify(e)));
         }
     }
 }

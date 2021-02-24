@@ -68,7 +68,6 @@ export class UserService extends DataService<IUser> {
 
     // Filter deleted user on login
     async getLoggedInUser(email: string): Promise<IUser> {
-        console.log('getLoggedInUser: email = ', email);
         return await this.get({ email: email, deleted: { $in: [null, false] } } as FilterQuery<IUser>);
     }
 
