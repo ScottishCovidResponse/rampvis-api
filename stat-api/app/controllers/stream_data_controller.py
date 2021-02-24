@@ -25,7 +25,7 @@ def download_data():
     Download data products from https://data.scrc.uk/.
     """
     try:
-        with open('manifest.json') as f:
+        with open('manifest/manifest.json') as f:
             manifest = json.load(f)
             download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE'), config.get('DATA_PATH_STATIC')) 
     except Exception as e:
@@ -71,7 +71,7 @@ def status():
 
 
 @stream_data_bp.route('/stop', methods=['GET'])
-# @validate_token
+@validate_token
 def stop():
     scheduler.pause()
     return Response(json.dumps({'message': 'Data fetching has stopped.'}), mimetype='application/json')

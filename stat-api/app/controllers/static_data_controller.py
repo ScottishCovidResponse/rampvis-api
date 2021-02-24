@@ -45,7 +45,7 @@ def download_data():
     Download data products from https://data.scrc.uk/.
     """
     try:
-        with open('static_manifest.json') as f:
+        with open('manifest/static_manifest.json') as f:
             manifest = json.load(f)
             download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_STATIC')) 
     except Exception as e:

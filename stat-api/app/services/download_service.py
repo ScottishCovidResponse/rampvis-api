@@ -97,9 +97,9 @@ def download_to_csvs(manifest, raw_path, live_path, static_path):
     
 def download_product(product_name, components, raw_path, live_path, static_path, split_data):
     print('\n-----\ndownloading', product_name)
-    # downloader = Downloader(data_directory=raw_path)
-    # downloader.add_data_product(namespace='SCRC', data_product=product_name)
-    # downloader.download()
+    downloader = Downloader(data_directory=raw_path)
+    downloader.add_data_product(namespace='SCRC', data_product=product_name)
+    downloader.download()
 
     # Recreate a subfolder
     subfolder = Path(live_path) / product_name
