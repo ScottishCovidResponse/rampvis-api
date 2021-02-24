@@ -7,31 +7,37 @@ import * as express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 
-import {logger, loggerStream} from '../utils/logger';
-import {configureGithubStrategy} from "./passport-github";
-import {UserService} from "../services/user.service";
-import {DIContainer} from "../services/config/inversify.config";
-import {TYPES} from "../services/config/types";
-import {IUser} from "../infrastructure/user/user.interface";
+import { logger, loggerStream } from '../utils/logger';
+import { configureGithubStrategy } from './passport-github';
+import { UserService } from '../services/user.service';
+import { DIContainer } from '../services/config/inversify.config';
+import { TYPES } from '../services/config/types';
+import { IUser } from '../infrastructure/user/user.interface';
 
 function GlobalMiddleware(app: express.Application) {
     logger.info('Initialize global middleware.');
 
-    app.use(morgan('combined', {
-        stream: loggerStream,  // custom logger
-    }));
+    app.use(
+        morgan('combined', {
+            stream: loggerStream, // custom logger
+        })
+    );
     app.use(morgan('dev')); // show in console.log
 
     app.use(compression());
 
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({
-        extended: true,
-    }));
+    app.use(
+        bodyParser.urlencoded({
+            extended: true,
+        })
+    );
 
-    app.use(express.urlencoded({
-        extended: true
-    }))
+    app.use(
+        express.urlencoded({
+            extended: true,
+        })
+    );
 
     // passport and related
     app.use(
@@ -45,7 +51,7 @@ function GlobalMiddleware(app: express.Application) {
     app.use(passport.session());
     configureGithubStrategy();
 
-    passport.serializeUser((user: IUser, done) => {
+    passport.serializeUser((user: any, done) => {
         done(null, user._id);
     });
 
@@ -56,33 +62,33 @@ function GlobalMiddleware(app: express.Application) {
         done(null, user);
     });
 
-
     // CORS
-    app.use(cors({
-        credentials: false,
-        origin: (origin, callback) => {
-            logger.debug(`GlobalMiddleware: origin = ${origin}`);
+    app.use(
+        cors({
+            credentials: false,
+            origin: (origin, callback) => {
+                logger.debug(`GlobalMiddleware: origin = ${origin}`);
 
-            // Allow all
-            // return callback(null, true);
+                // Allow all
+                // return callback(null, true);
 
-            const allowedOrigins: string[] = config.get('allowOrigins');
-            // allow requests with no origin, e.g., like mobile apps or curl requests
-            if (!origin) {
-                logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
-                return callback(null, true);
-            }
-            if (allowedOrigins.indexOf(origin) !== -1) {
-                logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
-                return callback(null, true);
-            } else {
-                logger.debug(`GlobalMiddleware: origin = ${origin}, denied.`);
-                const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-                return callback(new Error(msg), false);
-            }
-        },
-    }));
-
+                const allowedOrigins: string[] = config.get('allowOrigins');
+                // allow requests with no origin, e.g., like mobile apps or curl requests
+                if (!origin) {
+                    logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
+                    return callback(null, true);
+                }
+                if (allowedOrigins.indexOf(origin) !== -1) {
+                    logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
+                    return callback(null, true);
+                } else {
+                    logger.debug(`GlobalMiddleware: origin = ${origin}, denied.`);
+                    const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+                    return callback(new Error(msg), false);
+                }
+            },
+        })
+    );
 }
 
-export {GlobalMiddleware};
+export { GlobalMiddleware };

@@ -42,7 +42,7 @@ export class JwtToken {
         };
 
         // RS256 accepts public and private key
-        const token = jwt.sign({ ...dataStoredInToken }, this.RSA_PVT_KEY, {
+        const token = jwt.sign({ ...dataStoredInToken }, JwtToken.RSA_PVT_KEY, {
             algorithm: config.get('jwt.algorithm'),
             expiresIn: expInDays,
         });
@@ -65,8 +65,8 @@ export class JwtToken {
         let userId: string;
 
         try {
-            const verificationResponse = (await JwtToken.jwtVerify(token, JwtToken.RSA_PUB_KEY)) as IDataStoredInToken;
-            userId = verificationResponse.id;
+            const verificationResponse: any = jwt.verify(token, JwtToken.RSA_PUB_KEY);
+            userId = verificationResponse?.id;
             logger.debug('JwtToken: verify: DataStoredInToken = ' + JSON.stringify(verificationResponse));
         } catch (error) {
             logger.debug(`JwtToken: verify: error = ${error.message}`);

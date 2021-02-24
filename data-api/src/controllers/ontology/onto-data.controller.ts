@@ -22,13 +22,17 @@ import { IOntoDataSearch } from '../../infrastructure/onto-data/onto-data-search
 import { OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data-search.dto';
 import { IOntoDataSearchGroup } from '../../infrastructure/onto-data/onto-data-search-group.interface';
 import { OntoDataSearchGroupDto } from '../../infrastructure/onto-data/onto-data-search-group.dto';
-import { OntoVisService } from '../../services/onto-vis.service';
 import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { OntoPageService } from '../../services/onto-page.service';
+import { ActivityService } from '../../services/activity.service';
+import { IUser } from '../../infrastructure/user/user.interface';
+import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
+
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
+        @inject(TYPES.ActivityService) private activityService: ActivityService,
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
         @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
         @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
@@ -147,6 +151,15 @@ export class OntoDataController {
         try {
             const data: IOntoData = await this.ontoDataService.createData(dataVm);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_DATA,
+                ACTIVITY_ACTION.CREATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoDataController:createData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
         } catch (e) {
@@ -163,6 +176,15 @@ export class OntoDataController {
         try {
             const data: IOntoData = await this.ontoDataService.updateData(dataId, dataVm);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_DATA,
+                ACTIVITY_ACTION.UPDATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoDataController:updateData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
         } catch (e) {
@@ -179,6 +201,15 @@ export class OntoDataController {
         try {
             const ontoData: IOntoData = await this.ontoDataService.delete(dataId);
             const ontoDataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_DATA,
+                ACTIVITY_ACTION.DELETE,
+                user._id.toString()
+            );
+
             logger.info(`OntoDataController:deleteData: ontoDataDto = ${JSON.stringify(ontoDataDto)}`);
             response.status(200).send(ontoDataDto);
         } catch (e) {

@@ -7,9 +7,9 @@ Requirements
 Start development instance
 
 ```
-conda remove --name ramp-vis-api --all
+conda remove --name rampvis-api --all
 conda env create -f environment.yml
-conda activate ramp-vis-api
+conda activate rampvis-api
 
 # development start
 ./run-dev.sh
