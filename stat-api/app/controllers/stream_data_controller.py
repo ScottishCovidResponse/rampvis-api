@@ -25,7 +25,7 @@ def download_data():
     config = current_app.config
 
     try:
-        with open('manifest.json') as f:
+        with open('manifest/manifest.json') as f:
             manifest = json.load(f)
             download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE'), config.get('DATA_PATH_STATIC')) 
     except Exception as e:
