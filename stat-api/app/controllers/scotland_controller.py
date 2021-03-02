@@ -10,7 +10,6 @@ scotland_bp = Blueprint(
     url_prefix='/stat/v1/scotland/',
 )
 
-config = current_app.config
 
 
 @scotland_bp.route('/nhs-board/', methods=['GET'])
@@ -41,6 +40,9 @@ def get_metric(metric_fn, filename):
 
 def process_csv_data(filename: str):
     """Return a dataframe from a relative filename."""
+
+    config = current_app.config
+
     filepath = os.path.join(config.get('DATA_PATH_V04'), filename)
     df = pd.read_csv(filepath)
     df.replace('*', 0, inplace=True)

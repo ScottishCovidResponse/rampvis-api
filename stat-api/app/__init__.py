@@ -1,33 +1,22 @@
 from flask import Flask
 from flask_cors import CORS
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
-# from .infrastructure.database import CacheDB, GraphDB
+from flask_injector import FlaskInjector
+import json
+from flask_restful import Api
 
-
-def register_blueprints(app):
-    """
-    Import parts of our application
-    Register Blueprints
-    """
-    from .controllers import correlation_bp, process_data_bp, scotland_bp, stream_data_bp, static_data_bp, analytics_bp
-
-    app.register_blueprint(correlation_bp)
-    app.register_blueprint(process_data_bp)
-    app.register_blueprint(scotland_bp)
-    app.register_blueprint(stream_data_bp)
-    app.register_blueprint(static_data_bp)
-    app.register_blueprint(analytics_bp)
-
-    # from .controllers import graph_bp
-    # app.register_blueprint(graph_bp)
+from .utils import initialize_error_handler
+from .controllers import initialize_routes
+from .services import configure
 
 
 def configure_logs(app):
-    """
+    '''
     soft logging
-    """
+    '''
     try:
-        basicConfig(filename='error.log', level=DEBUG)
+        basicConfig(format='%(filename)s | %(funcName)s: %(msg)s',
+                    filename='error.log', level=DEBUG)
         logger = getLogger()
         logger.addHandler(StreamHandler())
     except:
@@ -35,22 +24,30 @@ def configure_logs(app):
 
 
 def register_extensions(app):
-    # CacheDB(app)
-    # GraphDB(app)
-    # TODO close db
     # @app.teardown_appcontext
     pass
 
 
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
+    api = Api(app, prefix='/stat/v1')
+
+    initialize_error_handler(app)
 
     app.app_context().push()
+
     with app.app_context():
         app.config.from_object(config)
+        with open(config.CONFIG_JSON) as config_file:
+            config_json = json.load(config_file)
+            app.config.update(config_json)
+
         configure_logs(app)
         register_extensions(app)
-        CORS(app, resources={r"/*": {"origins": "*"}}, send_wildcard=True)
-        register_blueprints(app)
+        CORS(app, resources={r'/*': {'origins': '*'}}, send_wildcard=True)
+        initialize_routes(api, app)
+
+        # Setup dependency injection after the routes are added
+        FlaskInjector(app=app, modules=[configure])
 
     return app
