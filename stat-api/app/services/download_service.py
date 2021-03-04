@@ -10,9 +10,7 @@ import pandas as pd
 import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
-
-def clean_column_name(s):
-    return s.lower().replace(' - ', '_').replace('-', '_').replace(' ', '_')
+from ..utils.naming import format_component_name
 
 def to_df(f, key):
     print('converting', key)
@@ -59,12 +57,12 @@ def to_df(f, key):
     
     return df
 
-def process_h5(path, folder, static_path, components, split_data):
+def process_h5(path, folder, static_path, components):
     f = h5py.File(path, 'r')
     for c in components:
         name = c['name']
         df = to_df(f, name)
-        filename = re.sub('[\-/]', '_', name)
+        filename = format_component_name(name)
         df.to_csv(folder/(filename + '.csv'))
 
         # Normalizing
@@ -76,30 +74,17 @@ def process_h5(path, folder, static_path, components, split_data):
                 norm_df.loc[:,col] = norm_df.loc[:,col] / pop_df.loc[col].values[0] * 100000
             norm_df.to_csv(folder/(filename + '_normalized.csv'))
 
-        # Split each column as a single file
-        if len(df.columns) > 1 and split_data:
-            # Each folder for an original file
-            print('spliting', name)
-            split_folder = folder/filename
-
-            # A bit strange here as sometimes, a FileExistsError happens, should be new folder
-            os.makedirs(split_folder, exist_ok=True)
-            
-            for col in df.columns:
-                sub_filename = re.sub('[\-/ ]', '_', col) + '.csv'
-                df[[col]].to_csv(split_folder/sub_filename)
-    
 def download_to_csvs(manifest, raw_path, live_path, static_path):
     "Download the latest file of a data product, convert h5 to csv and save it."
     for p in manifest:
-        download_product(p['product'], p['components'], raw_path, live_path, static_path, p.get('split', True))
+        download_product(p['product'], p['components'], raw_path, live_path, static_path)
     print('Data download and CSV conversion completed.')
     
-def download_product(product_name, components, raw_path, live_path, static_path, split_data):
+def download_product(product_name, components, raw_path, live_path, static_path):
     print('\n-----\ndownloading', product_name)
-    downloader = Downloader(data_directory=raw_path)
-    downloader.add_data_product(namespace='SCRC', data_product=product_name)
-    downloader.download()
+    # downloader = Downloader(data_directory=raw_path)
+    # downloader.add_data_product(namespace='SCRC', data_product=product_name)
+    # downloader.download()
 
     # Recreate a subfolder
     subfolder = Path(live_path) / product_name
@@ -110,4 +95,4 @@ def download_product(product_name, components, raw_path, live_path, static_path,
     folder = folder/max(os.listdir(folder))
     h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
     filename = h5s[0]
-    process_h5(folder/filename, subfolder, static_path, components, split_data)
+    process_h5(folder/filename, subfolder, static_path, components)
