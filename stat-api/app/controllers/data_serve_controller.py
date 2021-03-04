@@ -16,9 +16,6 @@ data_serve_bp = Blueprint(
     url_prefix='/stat/v1/data/',
 )
 
-config = current_app.config
-folder = Path(config.get('DATA_PATH_LIVE'))
-
 @data_serve_bp.route('/', methods=['GET'])
 def query():
     """
@@ -28,6 +25,9 @@ def query():
     - /stat/v1/data?product=records/SARS-CoV-2/scotland/cases-and-management/hospital&component=nhs_health_board_date_covid19_patients_in_hospital_confirmed
     - /stat/v1/data?product=records/SARS-CoV-2/scotland/cases-and-management/hospital&component=nhs_health_board_date_covid19_patients_in_hospital_confirmed&field=Fife
     """
+    config = current_app.config
+    folder = Path(config.get('DATA_PATH_LIVE'))
+
     product = request.args.get('product', None)
     component = request.args.get('component', None)
     field = request.args.get('field', None)
@@ -43,6 +43,6 @@ def query():
 
     if field is not None:
         df = df[[field]]
-        
+
     result = df.to_json(orient='records')
     return Response(result)
