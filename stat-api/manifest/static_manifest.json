@@ -1,7 +1,6 @@
 [
     {
         "product": "human/demographics/population/scotland",
-        "split": false,
         "components": [
             {
                 "name": "health board/age/genders",
