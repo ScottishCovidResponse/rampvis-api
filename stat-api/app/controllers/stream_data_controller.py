@@ -17,13 +17,13 @@ stream_data_bp = Blueprint(
     url_prefix='/stat/v1/stream_data/',
 )
 
-config = current_app.config
-
 
 def download_data():
     """
     Download data products from https://data.scrc.uk/.
     """
+    config = current_app.config
+
     try:
         with open('manifest/manifest.json') as f:
             manifest = json.load(f)
@@ -40,7 +40,7 @@ scheduler.start()
 # download_data()
 
 @stream_data_bp.route('/start', methods=['GET'])
-# @validate_token
+@validate_token
 def start():
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:

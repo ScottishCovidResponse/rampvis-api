@@ -17,7 +17,6 @@ static_data_bp = Blueprint(
     url_prefix='/stat/v1/static_data/',
 )
 
-config = current_app.config
 
 nhs_code_to_name = {
     'S08000015': 'Ayrshire and Arran',
@@ -45,6 +44,8 @@ def download_data():
     Download data products from https://data.scrc.uk/.
     """
     try:
+        config = current_app.config
+
         with open('manifest/static_manifest.json') as f:
             manifest = json.load(f)
             download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_STATIC')) 

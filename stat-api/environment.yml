@@ -4,9 +4,9 @@ channels:
   - anaconda
   - defaults
 dependencies:
-  - cryptography=2.9.2
   - flask=1.1.2
   - flask-cors=3.0.8
+  - cryptography=2.9.2
   - jinja2=2.11.2
   - matplotlib=3.2.2
   - numpy=1.18.5
@@ -17,16 +17,18 @@ dependencies:
   - scipy=1.5.0
   - pip:
       - flask_cors==3.0.10
+      - flask_caching==1.9.0
+      - flask_restful
+      - flask_injector==0.12.3
       - pyjwt==1.7.1
       - apscheduler==3.6.3
-      - flask_caching==1.9.0
       - fsspec==0.8.4
       - data-pipeline-api
-      - neo4j==4.1.1
-      - marshmallow==3.9.0
-      - flask_injector==0.12.3
+      - elasticsearch
       - pymongo
       - dnspython
-      - elasticsearch
+      - neo4j==4.1.1
       - autopep8
-      - seaborn
+      - pytest
+      - marshmallow==3.9.0
+

@@ -12,8 +12,6 @@ correlation_bp = Blueprint(
     url_prefix='/stat/v1/correlation',
 )
 
-config = current_app.config
-
 
 @correlation_bp.route('/', methods=['GET'])
 def query():
@@ -47,6 +45,8 @@ def query():
 
 
 def variable_to_df(var):
+    config = current_app.config
+
     filepath = os.path.join(config.get('DATA_PATH_V04'), var + '.csv')
     print(filepath)
     return pd.read_csv(filepath)
