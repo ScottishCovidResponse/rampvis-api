@@ -19,7 +19,7 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
-    DEBUG = False
+    DEBUG = True
     PROPAGATE_EXCEPTIONS = True
 
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))

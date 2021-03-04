@@ -12,7 +12,9 @@ class ErrorCodes(Enum):
 
 
 class APIError(Exception):
-    '''All custom API Exceptions'''
+    '''
+    All custom API Exceptions
+    '''
     pass
 
 
@@ -64,7 +66,6 @@ def initialize_error_handler(app):
         '''
         Return custom JSON when APIError or its children are raised
         '''
-
         response = {
             'message': err.message,
             'status': err.status,
@@ -73,16 +74,20 @@ def initialize_error_handler(app):
 
         if len(err.args) > 0:
             response['message'] = err.args[0]
+        
         # Add some logging so that we can monitor different types of errors
         app.logger.error(f'{response}')
+
         return jsonify(response), err.status
 
     @app.errorhandler(500)
     def handle_exception(err):
-        '''Return JSON instead of HTML for any other server error'''
         app.logger.error(f'Unknown Exception: {str(err)}')
         app.logger.debug(''.join(traceback.format_exception(
             etype=type(err), value=err, tb=err.__traceback__)))
         response = {
-            'error': 'Sorry, that error is on us, please contact support if this was not an accident'}
+            'message': 'Internal server error',
+            'status': 500,
+            'code': ErrorCodes.SERVER_EXCEPTION
+        }
         return jsonify(response), 500
