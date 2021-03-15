@@ -1,9 +1,10 @@
-import logging as log
 import sys
 from abc import ABC, abstractmethod
 from injector import inject
 from elasticsearch import Elasticsearch
 from flask import current_app
+# from logging import basicConfig, DEBUG, CRITICAL getLogger, StreamHandler
+import logging
 
 
 class SearchEngine(ABC):
@@ -35,15 +36,19 @@ class ES(SearchEngine):
         self.connect()
 
     def connect(self):
+        tracer = logging.getLogger('elasticsearch')
+        tracer.setLevel(logging.CRITICAL)  # or desired level
+        tracer.addHandler(logging.FileHandler('indexer.log'))
+
         try:
             config = current_app.config
             host = config['es']['host']
-            
+
             self.client = Elasticsearch(host)
-            log.info('Connected to ES')
+            logging.info('Connected to ES')
 
         except Exception as e:
-            log.error(f'ES connection error: {e}')
+            logging.error(f'ES connection error: {e}')
             sys.exit(1)
 
     def health(self):
@@ -58,6 +63,7 @@ class ES(SearchEngine):
         must_keys = [d.lower() for d in must_keys]
         should_keys = [d.lower() for d in should_keys]
         filter_keys = [d.lower() for d in filter_keys]
+        must_not_keys = [d.lower() for d in must_not_keys]
 
         if not must_not_keys:
             must_not_keys = [d.lower() for d in must_not_keys]
@@ -65,11 +71,13 @@ class ES(SearchEngine):
         must_clause = [{'match': {'keywords': d}} for d in must_keys]
         should_clause = [{'match': {'keywords': d}} for d in should_keys]
         filter_clause = [{'term': {'dataType': d}} for d in filter_keys]
+        must_not_clause = [{'match': {'keywords': d}} for d in must_not_keys]
 
         query = {
             "bool": {
                 "must": must_clause,
                 "should": should_clause,
+                "must_not": must_not_clause,
                 "minimum_should_match": minimum_should_match,
                 "filter": {
                     "bool": {
@@ -83,7 +91,7 @@ class ES(SearchEngine):
 
     def search(self, query: dict) -> list:
         res = self.client.search(index='rampvis.onto_data',
-                                 size=1000,
+                                 size=5000,
                                  body={"query": query})
 
         data_search = [{**d['_source'],  'id': d['_id']}

@@ -72,7 +72,7 @@ export class TemplateController {
 
         // OntoPageDto -> OntoPageExtDto
         let bindingExts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
-        let ontoPageExtDto: OntoPageExtDto = { ...ontoPageDto, bindingExts: bindingExts };
+        let ontoPageExtDto: any = { ...ontoPageDto, bindings: bindingExts };
 
         try {
             logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);

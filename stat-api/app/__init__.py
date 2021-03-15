@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+import logging
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from flask_injector import FlaskInjector
 import json
@@ -29,12 +30,15 @@ def register_extensions(app):
 
 
 def create_app(config):
+    logging.info('create_app')
+
     app = Flask(__name__, static_folder='base/static')
     api = Api(app, prefix='/stat/v1')
 
     initialize_error_handler(app)
 
     app.app_context().push()
+    logging.info('create_app: context pushed')
 
     with app.app_context():
         app.config.from_object(config)
