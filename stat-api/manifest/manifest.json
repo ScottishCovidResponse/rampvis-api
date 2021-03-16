@@ -112,12 +112,12 @@
             {
                 "name": "council_area/week-all_deaths",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "mortality", "weekly", "council_area", "all_deaths"]
+                "keywords": ["data_product", "scotland", "mortality", "weekly", "local_authority", "all_deaths"]
             },
             {
                 "name": "council_area/week-covid_related_deaths",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "mortality", "weekly", "council_area", "covid_deaths"]
+                "keywords": ["data_product", "scotland", "mortality", "weekly", "local_authority", "covid_deaths"]
             },
             {
                 "name": "location_type/week-all_deaths",
