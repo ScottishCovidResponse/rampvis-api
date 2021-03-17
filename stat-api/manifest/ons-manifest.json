@@ -1,0 +1,17 @@
+[
+    {
+        "product": "ons/england/mortality",
+        "components": [
+            {
+                "name": "weekly_all_deaths_local_authority",
+                "dataType": "timeseries",
+                "keywords": ["ons", "england", "mortality", "weekly", "local_authority", "place_of_death", "all_deaths"]
+            },
+            {
+                "name": "weekly_covid_deaths_local_authority",
+                "dataType": "timeseries",
+                "keywords": ["ons", "england", "mortality", "weekly", "local_authority", "place_of_death", "covid_deaths"]
+            }
+        ]
+    }
+]
