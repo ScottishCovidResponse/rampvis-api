@@ -40,9 +40,10 @@ def query():
     # - each component is a csv containing all fields
     filename = component_to_csv_file(folder, product, component)
     df = pd.read_csv(filename)
+    df.rename(columns={df.columns[0]: 'index'}, inplace=True)
 
     if field is not None:
-        df = df[[field]]
+        df = df[['index', field]]
 
     result = df.to_json(orient='records')
     return Response(result)
