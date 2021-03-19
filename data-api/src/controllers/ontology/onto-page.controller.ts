@@ -44,7 +44,7 @@ export class OntoPageController {
         logger.info(`OntoPageController:getPages: OntoPageFilterVm = ${JSON.stringify(ontoPageFilterVm)}`);
 
         try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getAllPages(ontoPageFilterVm);
+            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(ontoPageFilterVm);
             const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data );
             const ontoPageExtDtos: OntoPageExtDto[] = [];
 
@@ -55,7 +55,7 @@ export class OntoPageController {
 
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
 
-            logger.info(`OntoPageController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+            // logger.info(`OntoPageController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`OntoPageController:getPages: error = ${JSON.stringify(e)}`);

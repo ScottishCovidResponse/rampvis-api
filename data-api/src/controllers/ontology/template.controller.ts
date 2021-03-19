@@ -41,7 +41,7 @@ export class TemplateController {
         logger.info(`TemplateController:getPages: query = ${JSON.stringify(query)}`);
 
         try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getAllPages(query);
+            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(query);
 
             const resultDto: PaginationVm<OntoPageDto> = {
                 data: automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data),
@@ -51,7 +51,7 @@ export class TemplateController {
             } as PaginationVm<OntoPageDto>;
 
             resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
-            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+            // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
