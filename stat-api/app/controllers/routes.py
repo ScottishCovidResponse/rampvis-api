@@ -6,7 +6,7 @@ from .process_data_controller import process_data_bp
 from .correlation_controller import correlation_bp
 from .analytics_controller import analytics_bp
 
-#from .onto_data_search_controller import OntoDataSearchController
+from .onto_data_search_controller import OntoDataSearchController
 
 
 def initialize_routes(api, app):
@@ -20,4 +20,4 @@ def initialize_routes(api, app):
     app.register_blueprint(analytics_bp)
 
     # Api resources
-    #api.add_resource(OntoDataSearchController, '/onto-data/search/group', methods=['GET', 'POST'])
+    api.add_resource(OntoDataSearchController, '/onto-data/search/group', methods=['GET', 'POST'])
