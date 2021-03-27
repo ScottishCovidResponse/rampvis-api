@@ -4,6 +4,8 @@ from config import config_by_name
 import logging
 
 env = environ.get('FLASK_ENV', 'development')
+logging.info(f'run.py: env = {env}')
+
 app = create_app(config_by_name[env])
 
 

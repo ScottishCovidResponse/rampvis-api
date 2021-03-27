@@ -45,7 +45,7 @@ class ES(SearchEngine):
             host = config['es']['host']
 
             self.client = Elasticsearch(host)
-            logging.info('Connected to ES')
+            logging.info(f'Connected to ES, host = {host}')
 
         except Exception as e:
             logging.error(f'ES connection error: {e}')
