@@ -50,7 +50,15 @@ export class OntoPageController {
 
             for (let ontoPageDto of ontoPageDtos) {
                 let bindingExts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
-                ontoPageExtDtos.push({ ...ontoPageDto, bindingExts: bindingExts });
+                let ontoPageExtDto: OntoPageExtDto = {
+                    id: ontoPageDto.id,
+                    bindingType: ontoPageDto.bindingType,
+                    date: ontoPageDto.date,
+                    nrows: ontoPageDto.nrows,
+                    bindingExts: bindingExts,
+                };
+                ontoPageExtDtos.push(ontoPageExtDto);
+                // ontoPageExtDtos.push({ ...ontoPageDto, bindingExts: bindingExts });
             }
 
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };

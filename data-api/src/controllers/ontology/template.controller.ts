@@ -42,16 +42,25 @@ export class TemplateController {
 
         try {
             const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(query);
+            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data );
+            const ontoPageExtDtos: OntoPageExtDto[] = [];
 
-            const resultDto: PaginationVm<OntoPageDto> = {
-                data: automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data),
-                page: result.page,
-                pageCount: result.pageCount,
-                totalCount: result.totalCount,
-            } as PaginationVm<OntoPageDto>;
+            for (let ontoPageDto of ontoPageDtos) {
+                let bindingExts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
+                let ontoPageExtDto: OntoPageExtDto = {
+                    id: ontoPageDto.id,
+                    bindingType: ontoPageDto.bindingType,
+                    date: ontoPageDto.date,
+                    nrows: ontoPageDto.nrows,
+                    bindingExts: bindingExts,
+                };
+                ontoPageExtDtos.push(ontoPageExtDto);
+            }
 
+            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
             resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
-            // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+
+            //logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);

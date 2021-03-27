@@ -1,4 +1,3 @@
-import { OntoDataDto } from './onto-data.dto';
 import { OntoPageExtDto } from './onto-page.dto';
 
 export class OntoPageExtSearchGroupDto {
