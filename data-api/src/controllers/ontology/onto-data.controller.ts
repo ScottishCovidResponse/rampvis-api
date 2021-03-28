@@ -5,34 +5,127 @@ import { inject } from 'inversify';
 
 import { logger } from '../../utils/logger';
 import { TYPES } from '../../services/config/types';
-import { vmValidate } from '../../middleware/validators';
+import { queryParamValidate, vmValidate } from '../../middleware/validators';
 import { JwtToken } from '../../middleware/jwt.token';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { OntoDataVm } from '../../infrastructure/onto-data/onto-data.vm';
 import { OntoDataService } from '../../services/onto-data.service';
 import { IOntoData } from '../../infrastructure/onto-data/onto-data.interface';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
-import { SomethingWentWrong } from '../../exceptions/exception';
+import { InvalidQueryParametersException, SearchError, SomethingWentWrong } from '../../exceptions/exception';
+import { DATA_TYPE } from '../../infrastructure/onto-data/onto-data-types';
+import { OntoDataFilterVm } from '../../infrastructure/onto-data/onto-data-filter.vm';
+import { PaginationVm } from '../../infrastructure/pagination.vm';
+import { OntoDataSearchService } from '../../services/onto-data-search.service';
+import { OntoDataSearchFilterVm } from '../../infrastructure/onto-data/onto-data-search-filter.vm';
+import { IOntoDataSearch } from '../../infrastructure/onto-data/onto-data-search.interface';
+import { OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data-search.dto';
+import { IOntoDataSearchGroup } from '../../infrastructure/onto-data/onto-data-search-group.interface';
+import { OntoDataSearchGroupDto } from '../../infrastructure/onto-data/onto-data-search-group.dto';
+import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { OntoPageService } from '../../services/onto-page.service';
+import { ActivityService } from '../../services/activity.service';
+import { IUser } from '../../infrastructure/user/user.interface';
+import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
+
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
-        @inject(TYPES.OntoDataService) private ontologyDataService: OntoDataService,
+        @inject(TYPES.ActivityService) private activityService: ActivityService,
+        @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
+        @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
+        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
     ) {}
 
-   
-    @httpGet('/')
+    @httpGet('/', queryParamValidate(OntoDataFilterVm))
     public async getAllData(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const ontoDataFilterVm: OntoDataFilterVm = request.query as any;
+        logger.info(`OntoDataController:getAllData: ontoDataFilterVm = ${JSON.stringify(ontoDataFilterVm)}`);
+
         try {
-            const dataList: IOntoData[] = await this.ontologyDataService.getAll();
-            const dataDtos: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, dataList);
-            logger.info(`OntoDataController:getAllData: dataDtos = ${JSON.stringify(dataDtos)}`);
-            response.status(200).send(dataDtos);
+            const result: PaginationVm<IOntoData> = await this.ontoDataService.getAllData(ontoDataFilterVm);
+            const resultDto: PaginationVm<OntoDataDto> = {
+                data: automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, result.data),
+                page: result.page,
+                pageCount: result.pageCount,
+                totalCount: result.totalCount,
+            };
+            logger.info(`OntoDataController:getAllData: resultDto = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`OntoDataController:getAllData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
+
+    @httpGet('/suggest')
+    public async suggest(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataType = request.query.dataType as DATA_TYPE;
+        const queryStr = request.query.query as string;
+        logger.info(`OntoDataController: suggest: query = ${queryStr}, dataType = ${dataType}`);
+
+        if (!queryStr) {
+            return next(new InvalidQueryParametersException('Missing dataType or query.'));
+        }
+
+        try {
+            const data: IOntoDataSearch[] = await this.ontoDataSearchService.searchAsYouType(queryStr, dataType);
+            const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
+
+            logger.info(`OntoDataController:suggest: dataDto = ${JSON.stringify(dataDto)}`);
+            response.status(200).send(dataDto);
+        } catch (e) {
+            logger.error(`OntoDataController:suggest: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
+    }
+
+    @httpGet('/search', queryParamValidate(OntoDataSearchFilterVm))
+    public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const ontoDataSearchFilterVm: OntoDataSearchFilterVm = request.query as any;
+        logger.info(`OntoDataController:search: ontoDataSearchFilterVm = ${JSON.stringify(ontoDataSearchFilterVm)}`);
+
+        try {
+            let result: PaginationVm<IOntoDataSearch> = await this.ontoDataSearchService.search(ontoDataSearchFilterVm);
+            const resultDto: PaginationVm<OntoDataDto> = {
+                data: automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, result.data),
+                page: result.page,
+                pageCount: result.pageCount,
+                totalCount: result.totalCount,
+            };
+
+            logger.info(`OntoDataController:search: dataDto = ${JSON.stringify(resultDto)}`);
+            response.status(200).send(resultDto);
+        } catch (e) {
+            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
+    }
+
+    @httpGet('/search-group')
+    public async searchGroup(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const visId: string = request.query.visId as any;
+        logger.info(`OntoDataController:searchGroup: visId = ${JSON.stringify(visId)}`);
+
+        try {
+            //
+            // TODO
+            //  I am just grouping arbitrarily
+            //
+            const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
+            const groupLen = ontoPages[0].bindings[0].dataIds.length;
+            let results: IOntoDataSearchGroup[] = await this.ontoDataService.getGroupsMatchingExampleDataOfVis(groupLen);
+            const resultsDto: OntoDataSearchGroupDto[] = automapper.map(MAPPING_TYPES.IOntoDataSearchGroup, MAPPING_TYPES.OntoDataSearchGroupDto, results);
+
+            logger.info(`OntoDataController:search: searchGroup = ${JSON.stringify(resultsDto)}`);
+            response.status(200).send(resultsDto);
+        } catch (e) {
+            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
+            next(new SearchError(e.message));
+        }
+    }
+
 
     @httpGet('/:dataId')
     public async getData(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -40,7 +133,7 @@ export class OntoDataController {
         logger.info(`OntoDataController:getData: dataId = ${JSON.stringify(dataId)}`);
 
         try {
-            const data: IOntoData = await this.ontologyDataService.get(dataId);
+            const data: IOntoData = await this.ontoDataService.get(dataId);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
             logger.info(`OntoDataController:getData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
@@ -56,8 +149,17 @@ export class OntoDataController {
         logger.info(`OntoDataController:createData: dataVm = ${JSON.stringify(dataVm)}`);
 
         try {
-            const data: IOntoData = await this.ontologyDataService.createData(dataVm);
+            const data: IOntoData = await this.ontoDataService.createData(dataVm);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_DATA,
+                ACTIVITY_ACTION.CREATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoDataController:createData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
         } catch (e) {
@@ -72,8 +174,17 @@ export class OntoDataController {
         const dataVm: OntoDataVm = request.body as any;
         logger.info(`OntoDataController:updateData: dataId = ${dataId}, dataVm = ${JSON.stringify(dataVm)}`);
         try {
-            const data: IOntoData = await this.ontologyDataService.updateData(dataId, dataVm);
+            const data: IOntoData = await this.ontoDataService.updateData(dataId, dataVm);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_DATA,
+                ACTIVITY_ACTION.UPDATE,
+                user._id.toString()
+            );
+
             logger.info(`OntoDataController:updateData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
         } catch (e) {
@@ -82,14 +193,23 @@ export class OntoDataController {
         }
     }
 
-    @httpDelete('/:dataId') 
+    @httpDelete('/:dataId')
     public async deleteData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataId: string = request.params.dataId;
         logger.info(`OntoDataController:deleteData: dataId = ${dataId}`);
 
         try {
-            const ontoData: IOntoData = await this.ontologyDataService.delete(dataId);
+            const ontoData: IOntoData = await this.ontoDataService.delete(dataId);
             const ontoDataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_DATA,
+                ACTIVITY_ACTION.DELETE,
+                user._id.toString()
+            );
+
             logger.info(`OntoDataController:deleteData: ontoDataDto = ${JSON.stringify(ontoDataDto)}`);
             response.status(200).send(ontoDataDto);
         } catch (e) {

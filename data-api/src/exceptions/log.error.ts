@@ -6,7 +6,7 @@ export class LogError extends HttpException {
     path!: string;
     originalUrl!: string;
     method!: string;
-    subomains!: string[];
+    subdomains!: string[];
     ip!: string;
     ips!: string[];
     userAgent!: string | undefined;

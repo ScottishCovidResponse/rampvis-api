@@ -2,8 +2,11 @@ import 'automapper-ts';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { ActivityDto } from '../../infrastructure/activity/activity.dto';
 import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
-import { OntoVisDto } from '../../infrastructure/onto-vis/onto-vis.dto';
+import { OntoVisDto, OntoVisSearchDto } from '../../infrastructure/onto-vis/onto-vis.dto';
 import { UserDto } from '../../infrastructure/user/user.dto';
+import { splitKeywordsString } from '../../utils/helper';
+import { OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data-search.dto';
+import { OntoDataSearchGroupDto } from '../../infrastructure/onto-data/onto-data-search-group.dto';
 
 const MAPPING_TYPES = {
     IBookmark: 'IBookmark',
@@ -20,8 +23,16 @@ const MAPPING_TYPES = {
 
     IOntoVis: 'IOntoVis',
     OntoVisDto: 'OntoVisDto',
+    IOntoVisSearch: 'IOntoVisSearch',
+    OntoVisSearchDto: 'OntoVisSearchDto',
+
     IOntoData: 'IOntoData',
     OntoDataDto: 'OntoDataDto',
+    IOntoDataSearch: 'IOntoDataSearch',
+    OntoDataSearchDto: 'OntoDataSearchDto',
+    IOntoDataSearchGroup: 'IOntoDataSearchGroup',
+    OntoDataSearchGroupDto: 'OntoDataSearchGroupDto',
+
     IOntoPage: 'IOntoPage',
     OntoPageDto: 'OntoPageDto',
 };
@@ -36,7 +47,7 @@ function configureAutoMapper() {
         .createMap(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('thumbnail', (opts: AutoMapperJs.IMemberConfigurationOptions) =>
-            opts.sourceObject.thumbnail === null ? '' : opts.sourceObject.thumbnail,
+            opts.sourceObject.thumbnail === null ? '' : opts.sourceObject.thumbnail
         );
 
     automapper
@@ -56,10 +67,35 @@ function configureAutoMapper() {
         .convertToType(OntoVisDto);
 
     automapper
+        .createMap(MAPPING_TYPES.IOntoVisSearch, MAPPING_TYPES.OntoVisSearchDto)
+        .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
+        .forMember('score', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_score'))
+        .convertToType(OntoVisSearchDto);
+
+    automapper
         .createMap(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
-        .forMember('queryParams', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('queryParams'))
+        .forMember('keywords', (opts: AutoMapperJs.IMemberConfigurationOptions) => {
+            return splitKeywordsString(opts.sourceObject.keywords);
+        })
         .convertToType(OntoDataDto);
+
+    automapper
+        .createMap(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto)
+        .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
+        .forMember('score', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_score'))
+        .forMember('keywords', (opts: AutoMapperJs.IMemberConfigurationOptions) => {
+            return splitKeywordsString(opts.sourceObject.keywords);
+        })
+        .convertToType(OntoDataSearchDto);
+
+    automapper
+        .createMap(MAPPING_TYPES.IOntoDataSearchGroup, MAPPING_TYPES.OntoDataSearchGroupDto)
+        //.forMember('score', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_score'))
+        .forMember('groups', (opts: AutoMapperJs.IMemberConfigurationOptions) => {
+            return automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, opts.sourceObject.groups);
+        })
+        .convertToType(OntoDataSearchGroupDto);
 
     automapper
         .createMap(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto)

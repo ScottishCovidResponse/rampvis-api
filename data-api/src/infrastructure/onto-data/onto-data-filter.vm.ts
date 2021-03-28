@@ -1,32 +1,30 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
+import { SORT_ORDER } from '../sort-order.enum';
+import { DATA_TYPE } from './onto-data-types';
 
-export enum ONTODATA_SORT_BY {
-    TITLE = 'title',
-    PUBLISH_TYPE = 'publishType',
+export enum SORT_BY {
+    DATA_TYPE = 'dataType',
+    DESCRIPTION = 'description',
     DATE = 'date',
-}
-
-export enum SORT_ORDER {
-    ASC = 'asc',
-    DESC = 'desc',
+    SCORE = 'score',
 }
 
 export class OntoDataFilterVm {
-    // @IsEnum(PUBLISH_TYPE)
-    // publishType!: PUBLISH_TYPE;
-
+    @IsOptional()
+    @IsEnum(DATA_TYPE)
+    dataType!: DATA_TYPE;
 
     @IsOptional()
     @IsString()
-    page!: string;
+    pageIndex!: string;
 
     @IsOptional()
     @IsString()
-    pageCount!: string;
+    pageSize!: string;
 
     @IsOptional()
-    @IsEnum(ONTODATA_SORT_BY)
-    sortBy!: ONTODATA_SORT_BY;
+    @IsEnum(SORT_BY)
+    sortBy!: SORT_BY;
 
     @IsOptional()
     @IsEnum(SORT_ORDER)

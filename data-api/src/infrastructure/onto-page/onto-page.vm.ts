@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { PUBLISH_TYPE } from './onto-page.interface';
+import { BINDING_TYPE } from './onto-page.interface';
 
 export class BindingVm {
     @IsString()
@@ -8,6 +8,10 @@ export class BindingVm {
 
     @IsString({ each: true })
     dataIds!: string[];
+
+    @IsOptional()
+    @IsString({ each: true })
+    pageIds!: string[];
 }
 
 export class OntoPageVm {
@@ -15,14 +19,15 @@ export class OntoPageVm {
     @IsString()
     public id!: string;
 
-    @IsNumber()
-    public nrows!: number;
-
-    @IsEnum(PUBLISH_TYPE)
-    public publishType!: PUBLISH_TYPE;
+    @IsEnum(BINDING_TYPE)
+    public bindingType!: BINDING_TYPE;
 
     @IsArray()
     @Type(() => BindingVm)
     @ValidateNested({ each: true })
     bindings!: BindingVm[];
+
+    @IsOptional()
+    @IsNumber()
+    public nrows!: number;
 }

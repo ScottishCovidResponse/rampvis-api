@@ -1,14 +1,20 @@
-import { PUBLISH_TYPE } from './onto-page.interface';
-
-export class BindingDto {
-    public visId: string = undefined as any;
-    public dataIds: string[] = undefined as any;
-}
+import { BindingDto, BindingExtDto } from './binding.dto';
+import { BINDING_TYPE } from './onto-page.interface';
 
 export class OntoPageDto {
     public id: string = undefined as any;
-    public nrows: number = undefined as any;
-    public publishType: PUBLISH_TYPE = undefined as any;
+    public bindingType: BINDING_TYPE = undefined as any;
     public date: Date = undefined as any;
-    public bindings: BindingDto[]  = undefined as any;
+    public nrows: number = undefined as any;
+
+    public bindings: BindingDto[] = undefined as any;
+}
+
+export class OntoPageExtDto {
+    public id: string = undefined as any;
+    public bindingType: BINDING_TYPE = undefined as any;
+    public date: Date = undefined as any;
+    public nrows: number = undefined as any;
+
+    public bindingExts: BindingExtDto[] = undefined as any;
 }

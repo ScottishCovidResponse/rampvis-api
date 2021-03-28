@@ -1,0 +1,17 @@
+[
+    {
+        "product": "human/demographics/population/scotland",
+        "components": [
+            {
+                "name": "health board/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "health board/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            }
+        ]
+    }
+]

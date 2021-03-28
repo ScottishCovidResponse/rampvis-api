@@ -11,7 +11,6 @@ analytics_bp = Blueprint(
     url_prefix='/stat/v1',
 )
 
-config = current_app.config
 
 
 @analytics_bp.route('/percentiles/model/eera/age-groups/', methods=['GET'])
@@ -19,6 +18,8 @@ def query():
     col = request.args.get('col', None)
     if col not in {'H', 'R', 'D'}:
         abort(400, '`col` parameter should be one of [H, R, D]')
+
+    config = current_app.config
 
     filepath = os.path.join(config.get('DATA_MODEL'), 'eera-outcome-hosp-rec-death-age-groups.csv')
     df = pd.read_csv(filepath)

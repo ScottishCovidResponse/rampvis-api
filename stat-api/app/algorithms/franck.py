@@ -9,9 +9,6 @@ from skimage import metrics as ski_metrics
 from sklearn import metrics as skl_metrics
 from flask import current_app
 
-config = current_app.config
-
-
 def compute_metrics(df1, df2, metrics, window):
     number_of_columns1 = len(df1.columns)
     number_of_columns2 = len(df2.columns)

@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 import json
 
 from flask import Response, current_app, Blueprint
@@ -12,24 +17,30 @@ stream_data_bp = Blueprint(
     url_prefix='/stat/v1/stream_data/',
 )
 
-config = current_app.config
-
 
 def download_data():
     """
     Download data products from https://data.scrc.uk/.
     """
-    with open('manifest.json') as f:
-        manifest = json.load(f)
-        download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE')) 
+    config = current_app.config
+
+    try:
+        with open('manifest/manifest.json') as f:
+            manifest = json.load(f)
+            download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE'), config.get('DATA_PATH_STATIC')) 
+    except Exception as e:
+        logger.error(e, exc_info=True)
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(download_data, 'cron', hour=0, minute=0, second=0)
 scheduler.start()
 
-# Download immediately
-# download_data()
+@stream_data_bp.route('/download', methods=['GET'])
+# @validate_token
+def download():
+    download_data()
+    return Response('Download completed.')
 
 @stream_data_bp.route('/start', methods=['GET'])
 @validate_token

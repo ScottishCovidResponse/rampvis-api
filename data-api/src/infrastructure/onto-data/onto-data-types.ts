@@ -1,6 +1,10 @@
 export enum DATA_TYPE {
     TIMESERIES = 'timeseries',
+    MULTI_TIMESERIES = 'multi_timeseries',
+    CUM_TIMESERIES = 'cum_timeseries',
+    MULTI_CUM_TIMESERIES = 'multi_cum_timeseries',
     MATRIX = 'matrix',
+    OTHER = 'other',
 }
 
 export enum SOURCE {

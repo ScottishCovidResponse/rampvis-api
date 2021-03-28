@@ -1,27 +1,32 @@
-name: ramp-vis-api
+name: rampvis-api
 channels:
   - conda-forge
   - anaconda
   - defaults
 dependencies:
-  - cryptography=2.9.2
-  - flask=1.1.2
-  - flask-cors=3.0.8
-  - jinja2=2.11.2
-  - matplotlib=3.2.2
-  - numpy=1.18.5
-  - pandas=1.0.4
-  - python=3.8.3
-  - scikit-image=0.16.2
-  - scikit-learn=0.23.1
-  - scipy=1.5.0
+  - cryptography
+  - jinja2
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-image
+  - scikit-learn
+  - scipy
   - pip:
-      - flask_cors==3.0.9
-      - pyjwt==1.7.1
-      - apscheduler==3.6.3
-      - flask_caching==1.9.0
-      - fsspec==0.8.4
+      - flask
+      - flask_cors
+      - flask_caching
+      - flask_restful
+      - flask_injector
+      - pyjwt
+      - apscheduler
+      - fsspec
       - data-pipeline-api
-      - neo4j==4.1.1
-      - py2neo==2020.7b8
-      - marshmallow==3.9.0
+      - elasticsearch
+      - pymongo
+      - dnspython
+      - neo4j
+      - autopep8
+      - pytest
+      - marshmallow
+      - pyamg

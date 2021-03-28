@@ -1,0 +1,15 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": ["plugin:@typescript-eslint/recommended", "eslint:recommended", "prettier", "prettier/@typescript-eslint"],
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": "error",
+      "@typescript-eslint/indent": ["error", 4]
+    },
+    "plugins": [
+      "prettier"
+    ]
+  }

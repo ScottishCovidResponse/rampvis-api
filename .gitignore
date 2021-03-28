@@ -14,3 +14,6 @@ csv-data-dynamic
 stat-api/error.log
 data-api/logs
 data/raw
+data/live/records
+.ipynb_checkpoints
+.pytest_cache

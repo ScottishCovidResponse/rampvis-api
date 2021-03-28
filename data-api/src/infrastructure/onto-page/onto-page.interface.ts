@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-export enum PUBLISH_TYPE {
+export enum BINDING_TYPE {
     EXAMPLE = 'example',
     REVIEW = 'review',
     RELEASE = 'release',
@@ -8,14 +8,14 @@ export enum PUBLISH_TYPE {
 
 export interface IBinding {
     visId: string;
-    dataIds: string[];
+    dataIds: Array<string>;
+    pageIds?: Array<string>;
 }
 
 export class IOntoPage {
     public _id!: string | ObjectId;
-    public nrows!: number;
-    public publishType!: PUBLISH_TYPE;
+    public bindingType!: BINDING_TYPE;
+    public bindings!: Array<IBinding>;
     public date!: Date;
-
-    public bindings!: IBinding[];
+    public nrows?: number;
 }

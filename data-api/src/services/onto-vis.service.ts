@@ -9,10 +9,14 @@ import { DataService } from './data.service';
 import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../infrastructure/onto-vis/onto-vis.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
+import { OntoPageService } from './onto-page.service';
+import { OntoDataService } from './onto-data.service';
 
 @provide(TYPES.OntoVisService)
 export class OntoVisService extends DataService<IOntoVis> {
-    public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
+    public constructor(
+        @inject(TYPES.DbClient) dbClient: DbClient,
+    ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_vis'));
     }
 

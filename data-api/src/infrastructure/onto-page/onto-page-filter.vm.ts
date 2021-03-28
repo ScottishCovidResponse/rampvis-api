@@ -1,27 +1,24 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
-import { PUBLISH_TYPE } from './onto-page.interface';
+import { SORT_ORDER } from '../sort-order.enum';
+import { BINDING_TYPE } from './onto-page.interface';
 
 export enum ONTOPAGE_SORT_BY {
-    PUBLISH_TYPE = 'publishType',
+    BINDING_TYPE = 'bindingType',
     DATE = 'date',
 }
 
-export enum SORT_ORDER {
-    ASC = 'asc',
-    DESC = 'desc',
-}
-
 export class OntoPageFilterVm {
-    @IsEnum(PUBLISH_TYPE)
-    publishType!: PUBLISH_TYPE;
+    @IsOptional()
+    @IsEnum(BINDING_TYPE)
+    filterPageType!: BINDING_TYPE;
 
     @IsOptional()
     @IsString()
-    page!: string;
+    pageIndex!: string;
 
     @IsOptional()
     @IsString()
-    pageCount!: string;
+    pageSize!: string;
 
     @IsOptional()
     @IsEnum(ONTOPAGE_SORT_BY)
@@ -33,5 +30,5 @@ export class OntoPageFilterVm {
 
     @IsOptional()
     @IsString()
-    filter!: string;
+    filterId!: string;
 }

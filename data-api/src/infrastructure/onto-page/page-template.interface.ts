@@ -2,7 +2,7 @@ export interface IPageTemplate {
     page: {
         id: number;
         type: string;
-        nrows: number;
+        nrows?: number;
         title: string;
         description: string;
         date: Date;

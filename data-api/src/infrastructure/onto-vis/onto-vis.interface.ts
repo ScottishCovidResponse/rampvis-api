@@ -9,3 +9,8 @@ export interface IOntoVis {
     description: string;
     dataTypes: DATA_TYPE[];
 }
+
+export interface IOntoVisSearch extends IOntoVis {
+    _id: string;
+    score: number;
+}

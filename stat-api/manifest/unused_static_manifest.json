@@ -1,0 +1,98 @@
+[
+    {
+        "product": "human/demographics/population/scotland",
+        "split": false,
+        "components": [
+            {
+                "name": "datazone/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "datazone/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "grid area/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "grid area/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "health board/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "health board/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "intermediate zone/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "intermediate zone/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "local authority/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "local authority/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "multi member ward/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "multi member ward/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "scottish parliamentary constituency/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "scottish parliamentary constituency/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "travel to work area/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "travel to work area/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "urban rural classification/age/genders",
+                "location": "scotland",
+                "type": "raw"
+            },
+            {
+                "name": "urban rural classification/age/persons",
+                "location": "scotland",
+                "type": "raw"
+            }
+        ]
+    }
+]

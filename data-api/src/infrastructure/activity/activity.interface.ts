@@ -16,6 +16,9 @@ export enum ACTIVITY_TYPE {
     LOGIN = 'login',
     USER = 'user',
     BOOKMARK = 'bookmark',
+    ONTO_DATA = 'onto_data',
+    ONTO_VIS = 'onto_vis',
+    ONTO_PAGE = 'onto_page',
 }
 
 export enum ACTIVITY_ACTION {
