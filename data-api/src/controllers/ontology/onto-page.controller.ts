@@ -58,7 +58,6 @@ export class OntoPageController {
                     bindingExts: bindingExts,
                 };
                 ontoPageExtDtos.push(ontoPageExtDto);
-                // ontoPageExtDtos.push({ ...ontoPageDto, bindingExts: bindingExts });
             }
 
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
