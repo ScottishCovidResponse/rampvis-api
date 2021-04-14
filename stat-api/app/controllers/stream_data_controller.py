@@ -44,8 +44,7 @@ def download():
     return Response("Download completed.")
 
 
-@stream_data_controller.get("/start")
-# @validate_token
+@stream_data_controller.get("/start", dependencies=[Depends(validate_user_token)])
 def start():
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:

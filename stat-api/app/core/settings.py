@@ -3,10 +3,11 @@ import os
 import logging
 import sys
 
-DEFAULT_ROUTE_STR: str = "/stat/v1"
+DEFAULT_ROUTE_STR: str = ""
 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+RSA_PVT_KEY = BASE_DIR + '/../../../' + 'data-api/config/keys/jwtRS256.key'
 RSA_PUB_KEY = BASE_DIR + '/../../../' + 'data-api/config/keys/jwtRS256.key.pub'
 
 DATA_PATH_V04 = BASE_DIR + '/../../../' + 'data/v04'
