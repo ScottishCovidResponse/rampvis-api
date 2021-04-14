@@ -7,7 +7,7 @@ import numpy as np
 from scipy import stats as stats
 from skimage import metrics as ski_metrics
 from sklearn import metrics as skl_metrics
-from flask import current_app
+
 
 def compute_metrics(df1, df2, metrics, window):
     number_of_columns1 = len(df1.columns)
@@ -71,7 +71,7 @@ def compute_metrics(df1, df2, metrics, window):
 
 
 def variable_to_df(var):
-    filepath = os.path.join(current_app.root_path, CSV_DATA_PATH, var + '.csv')
+    filepath = '' # os.path.join(current_app.root_path, CSV_DATA_PATH, var + '.csv')
     return pd.read_csv(filepath)
 
 

@@ -1,42 +1,57 @@
 import os
-from flask import current_app, request, jsonify
+from loguru import logger
 import jwt
 from functools import wraps
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 
-from .errors import APIConfigError, APIWrongAuthTokenError
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 
-def validate_token(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        print('validate_token')
+from app.core.settings import GLOBAL_CONFIG_OBJ, RSA_PUB_KEY
+from app.core.token_data_model import TokenDataModel
 
-        try:
-            config = current_app.config
-            pub_key = config.get('RSA_PUB_KEY')
-            # Load the public key
-            with open(pub_key, 'rb') as key_file:
-                public_key = serialization.load_pem_public_key(
-                    key_file.read(),
-                    backend=default_backend()
-                )
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-        except Exception as e:
-            raise APIConfigError()
 
-        try:
-            bearer_token = request.headers.get('Authorization')
-        except:
-            raise APIAuthTokenMissingError()
+async def validate_user_token(token: str = Depends(oauth2_scheme)):
 
-        try:
-            token = bearer_token.split(' ')[1]
-            jwt.decode(token, public_key)
-        except:
-            raise APIWrongAuthTokenError()
+    try:
+        with open(RSA_PUB_KEY, "rb") as key_file:
+            public_key = serialization.load_pem_public_key(
+                key_file.read(), backend=default_backend()
+            )
+    except Exception as e:
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Public key configuration error",
+        )
 
-        return f(*args, **kwargs)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, public_key)
 
-    return decorated
+        userid: str = payload.get("id")
+        if userid is None:
+            raise credentials_exception
+        token_data = TokenDataModel(userid=userid)
+
+    except Exception as e:
+        logger.error(f"{e}")
+        raise credentials_exception
+
+    #
+    # TODO: check in the database
+    #
+    # user = get_user(fake_users_db, username=token_data.username)
+    # if user is None:
+    #    logger.error(f'{user}')
+    #    raise credentials_exception
+    # return user
+
+    return True

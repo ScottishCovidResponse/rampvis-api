@@ -1,93 +1,104 @@
-import logging as log
-from flask import Response, current_app, Blueprint, request, abort
-from injector import inject
 import json
-from flask_restful import Resource
+from loguru import logger
+from fastapi import APIRouter, Depends, Response
+from starlette.exceptions import HTTPException
+from starlette.status import (
+    HTTP_422_UNPROCESSABLE_ENTITY,
+    HTTP_500_INTERNAL_SERVER_ERROR,
+)
 
-from ..utils import validate_token
-from ..services import DatabaseService, SearchService
-from ..algorithms import Ranking
-from ..utils import NumpyEncoder
-from ..utils import APIInternalServerError
+from app.utils.jwt_service import validate_user_token
+from app.core.propagate_data_query_model import PropagateDataQueryModel
+from app.utils.numpy_encoder import NumpyEncoder
+from app.services.database_service import DatabaseService
+from app.services.mongodb_service import MongoDBService
+from app.services.search_service import SearchService
+from app.services.elasticsearch_service import ElasticsearchService
+from app.algorithms.ranking import Ranking
 
 
-class OntoDataSearchController(Resource):
+onto_data_search_controller = APIRouter()
 
-    @inject
-    def __init__(self,
-                 database_service: DatabaseService,
-                 search_service: SearchService,
-                 ranking: Ranking,
-                 ):
-        self.database_service = database_service
-        self.search_service = search_service
-        self.ranking = ranking
 
-    @validate_token
-    def get(self):
-        # Test error
-        try:
-            a = 10 / 0
+@onto_data_search_controller.get("/ping")
+async def ping(
+    database_service: DatabaseService = Depends(MongoDBService),
+    search_service: SearchService = Depends(ElasticsearchService),
+):
+    status = {
+        "database_service": f"{database_service.ping()}",
+        "search_service": f"{search_service.ping()}",
+    }
+    logger.info(f"{status}")
+    return status
 
-        except Exception as e:
-            raise APIInternalServerError()
 
-        return Response(json.dumps({'name': 'OntoDataSearchController', 'type': 'GET'}))
+@onto_data_search_controller.post("/group", dependencies=[Depends(validate_user_token)])
+async def search_group(
+    query: PropagateDataQueryModel,
+    database_service: DatabaseService = Depends(MongoDBService),
+    search_service: SearchService = Depends(ElasticsearchService),
+    ranking: Ranking = Depends(Ranking),
+):
+    """
+    TODO: use query model and validation
+    """
+    logger.info(f"propagate_data_query = {query}")
+    visId = query.visId
+    mustKeys = query.mustKeys
+    shouldKeys = query.shouldKeys
+    filterKeys = query.filterKeys
+    mustNotKeys = query.mustNotKeys
+    minimumShouldMatch = query.minimumShouldMatch
+    alpha = query.alpha
+    beta = query.beta
 
-    @validate_token
-    def post(self):
-        body = request.get_json()
-        vis_id = body.get('visId', None)
-        must_keys = body.get('mustKeys', None)
-        should_keys = body.get('shouldKeys', None)
-        filter_keys = body.get('filterKeys', None)
-        must_not_keys = body.get('mustNotKeys', None)
-        minimum_should_match = body.get('minimumShouldMatch', None)
-        alpha = float(body.get('alpha', None))
-        beta = float(body.get('beta', None))
-        cluster = body.get('cluster', None)
-        numClusters = body.get('numClusters', None)
+    logger.info(
+        f"OntoDataSearchController:post: query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}"
+    )
 
-        log.info(f'OntoDataSearchController:post: query params = {vis_id}, {must_keys}, {should_keys}, {must_not_keys}, {filter_keys}, {minimum_should_match}, {alpha}, {beta}, {cluster}')
-        
-        if (not must_keys) and (not should_keys) and (not filter_keys):
-            abort(400, 'Invalid parameters for keywords')  # TODO
+    if visId is None or mustKeys is None or shouldKeys is None or filterKeys is None:
+        raise HTTPException(
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Required parameters: visId, mustKeys, shouldKeys, filterKeys",
+        )
 
-        if (not cluster) and (not numClusters):
-            abort(400, 'Invalid parameters for cluster')  # TODO
+    # 1
+    examples = database_service.find_example_data_of_vis(visId)
+    # log.debug(f'examples = {examples}')
+    # 2
+    query = search_service.build_query(
+        mustKeys, shouldKeys, filterKeys, mustNotKeys, minimumShouldMatch
+    )
+    logger.debug(f"OntoDataSearchController:post: query = {query}")
 
-        # 1
-        examples = self.database_service.find_example_data_of_vis(vis_id)
-        #log.debug(f'examples = {examples}')
-        # 2
-        query = self.search_service.build_query(
-            must_keys, should_keys, filter_keys, must_not_keys, minimum_should_match)
-        log.debug(f'OntoDataSearchController:post: query = {query}')
+    # 3
+    searched = search_service.search(query)
+    # log.debug(f'searched = {searched}')
+    logger.debug(
+        f"OntoDataSearchController:post: len(examples) = {len(examples)}, len(searched) = {len(searched)}"
+    )
 
-        # 3
-        searched = self.search_service.search(query)
-        #log.debug(f'searched = {searched}')
-        log.debug(f'OntoDataSearchController:post: len(examples) = {len(examples)}, len(searched) = {len(searched)}')
+    M1 = ranking.M1(examples, searched, mustKeys, alpha, beta)
+    logger.debug(f"OntoDataSearchController:post: len(M1) = {len(M1)}")
 
-        M1 = self.ranking.M1(examples, searched, must_keys, alpha, beta)
-        log.debug(f'OntoDataSearchController:post: len(M1) = {len(M1)}')
+    M2 = ranking.M2(searched, mustKeys + shouldKeys, alpha, beta)
+    logger.debug(f"OntoDataSearchController:post: len(M2) = {len(M2)}")
 
-        M2 = self.ranking.M2(searched, must_keys + should_keys, alpha, beta)
-        log.debug(f'OntoDataSearchController:post: len(M2) = {len(M2)}')
+    n_clusters = int(len(searched) / len(examples))
 
-        if not numClusters:
-            n_clusters = int(len(searched) / len(examples))
-        else:
-            n_clusters = int(numClusters)
+    logger.debug(f"OntoDataSearchController:post: len(examples) = {len(examples)}")
+    logger.debug(f"OntoDataSearchController:post: n_clusters = {n_clusters}")
 
-        log.debug(f'OntoDataSearchController:post: len(examples) = {len(examples)}')
-        log.debug(f'OntoDataSearchController:post: n_clusters = {n_clusters}')
+    clusters = ranking.cluster(M2, n_clusters)
+    logger.debug(f"OntoDataSearchController:post: len(clusters) = {len(clusters)}")
 
-        clusters = self.ranking.cluster(M2, n_clusters)
-        log.debug(f'OntoDataSearchController:post: len(clusters) = {len(clusters)}')
+    groups = ranking.group_data_streams(M1, searched, clusters)
+    logger.debug(f"OntoDataSearchController:post: len(groups) = {len(groups)}")
 
-        groups = self.ranking.group_data_streams(M1, searched, clusters)
-        log.debug(
-            f'OntoDataSearchController:post: len(groups) = {len(groups)}')
+    from fastapi.encoders import jsonable_encoder
+    from fastapi.responses import JSONResponse
 
-        return Response(json.dumps(groups, cls=NumpyEncoder), mimetype='application/json')
+    return Response(
+        content=json.dumps(groups, cls=NumpyEncoder), media_type="application/json"
+    )

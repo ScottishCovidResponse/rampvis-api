@@ -1,80 +1,101 @@
-import logging
-
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-
 import json
-
-from flask import Response, current_app, Blueprint
+from loguru import logger
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
-from ..utils import validate_token
-from ..services import download_to_csvs
-
-stream_data_bp = Blueprint(
-    'stream_data_bp',
-    __name__,
-    url_prefix='/stat/v1/stream_data/',
+from fastapi import APIRouter, Query, Response, Depends
+from starlette.exceptions import HTTPException
+from starlette.status import (
+    HTTP_422_UNPROCESSABLE_ENTITY,
+    HTTP_500_INTERNAL_SERVER_ERROR,
 )
+
+from app.utils.jwt_service import validate_user_token
+from app.services.download_service import download_to_csvs
+from app.core.settings import DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC
+
+stream_data_controller = APIRouter()
 
 
 def download_data():
     """
     Download data products from https://data.scrc.uk/.
     """
-    config = current_app.config
 
     try:
-        with open('manifest/manifest.json') as f:
+        with open("manifest/manifest.json") as f:
             manifest = json.load(f)
-            download_to_csvs(manifest, config.get('DATA_PATH_RAW'), config.get('DATA_PATH_LIVE'), config.get('DATA_PATH_STATIC')) 
+            download_to_csvs(manifest, DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC)
     except Exception as e:
-        logger.error(e, exc_info=True)
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"{e}",
+        )
+
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(download_data, 'cron', hour=0, minute=0, second=0)
+scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
 scheduler.start()
 
-@stream_data_bp.route('/download', methods=['GET'])
-# @validate_token
+
+@stream_data_controller.get("/download", dependencies=[Depends(validate_user_token)])
 def download():
     download_data()
-    return Response('Download completed.')
+    return Response("Download completed.")
 
-@stream_data_bp.route('/start', methods=['GET'])
-@validate_token
+
+@stream_data_controller.get("/start")
+# @validate_token
 def start():
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:
         scheduler.start()
-        return Response(json.dumps({'message': 'Data fetching has started.'}), mimetype='application/json')
+        return Response(
+            json.dumps({"message": "Data fetching has started."}),
+            media_type="application/json",
+        )
 
     # Resume if paused
     if scheduler.state == STATE_PAUSED:
         scheduler.resume()
-        return Response(json.dumps({'message': 'Data fetching has started.'}), mimetype='application/json')
+        return Response(
+            json.dumps({"message": "Data fetching has started."}),
+            media_type="application/json",
+        )
 
     # Already running
     if scheduler.state == STATE_RUNNING:
-        return Response(json.dumps({'message': 'Data fetching is already running.'}), mimetype='application/json')
+        return Response(
+            json.dumps({"message": "Data fetching is already running."}),
+            media_type="application/json",
+        )
 
 
-@stream_data_bp.route('/status', methods=['GET'])
-@validate_token
+@stream_data_controller.get("/status", dependencies=[Depends(validate_user_token)])
 def status():
     if scheduler.state == STATE_STOPPED:
-        return Response(json.dumps({'message': 'Data fetching has not started.'}), mimetype='application/json')
+        return Response(
+            json.dumps({"message": "Data fetching has not started."}),
+            media_type="application/json",
+        )
 
     if scheduler.state == STATE_PAUSED:
-        return Response(json.dumps({'message': 'Data fetching has paused.'}), mimetype='application/json')
+        return Response(
+            json.dumps({"message": "Data fetching has paused."}),
+            media_type="application/json",
+        )
 
     if scheduler.state == STATE_RUNNING:
-        return Response(json.dumps({'message': 'Data fetching is running.'}), mimetype='application/json')
+        return Response(
+            json.dumps({"message": "Data fetching is running."}),
+            media_type="application/json",
+        )
 
 
-@stream_data_bp.route('/stop', methods=['GET'])
-@validate_token
+@stream_data_controller.get("/stop", dependencies=[Depends(validate_user_token)])
 def stop():
     scheduler.pause()
-    return Response(json.dumps({'message': 'Data fetching has stopped.'}), mimetype='application/json')
+    return Response(
+        json.dumps({"message": "Data fetching has stopped."}),
+        media_type="application/json",
+    )
