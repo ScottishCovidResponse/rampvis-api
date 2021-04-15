@@ -24,7 +24,7 @@ NEO4J_PASSWORD = 'pass123'
 
 env = environ.get('ENV', 'development')
 logger.info(f'ENV = {env}')
-if env is 'production':
+if env == 'production':
     GLOBAL_CONFIG_FILE = BASE_DIR + '/../../../' + 'data-api/config/production.json'
 else:
     GLOBAL_CONFIG_FILE = BASE_DIR + '/../../../' + 'data-api/config/default.json'
