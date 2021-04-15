@@ -14,6 +14,9 @@ csv-data-dynamic
 stat-api/error.log
 data-api/logs
 data/raw
-data/live/records
+data/live/records/SARS-CoV-2/scotland/cases-and-management/carehomes
+data/live/records/SARS-CoV-2/scotland/cases-and-management/mortality
+data/live/records/SARS-CoV-2/scotland/cases-and-management/nhsworkforce
+data/live/records/SARS-CoV-2/scotland/cases-and-management/schools
 .ipynb_checkpoints
 .pytest_cache
