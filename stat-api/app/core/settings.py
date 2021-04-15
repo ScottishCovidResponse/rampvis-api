@@ -1,10 +1,11 @@
 import json
 import os
-import logging
+from os import environ
 import sys
+from loguru import logger
+
 
 DEFAULT_ROUTE_STR: str = ""
-
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 RSA_PVT_KEY = BASE_DIR + '/../../../' + 'data-api/config/keys/jwtRS256.key'
@@ -21,7 +22,13 @@ NEO4J_BOLT_PORT = 7687
 NEO4J_USER = 'neo4j'
 NEO4J_PASSWORD = 'pass123'
 
-GLOBAL_CONFIG_FILE = BASE_DIR + '/../../../' + 'data-api/config/default.json'
+env = environ.get('ENV', 'development')
+logger.info(f'ENV = {env}')
+if env is 'production':
+    GLOBAL_CONFIG_FILE = BASE_DIR + '/../../../' + 'data-api/config/production.json'
+else:
+    GLOBAL_CONFIG_FILE = BASE_DIR + '/../../../' + 'data-api/config/default.json'
+
 GLOBAL_CONFIG_OBJ = None
 with open(GLOBAL_CONFIG_FILE) as config_file:
     GLOBAL_CONFIG_OBJ = json.load(config_file)

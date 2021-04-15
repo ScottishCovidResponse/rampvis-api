@@ -28,7 +28,7 @@ class MongoDBService(DatabaseService):
 
             self.client = pymongo.MongoClient(host, 27017)
             self.db = self.client["rampvis"]
-            logger.info("Connected to MongoDB")
+            logger.info(f"Connected to MongoDB host = {host}")
 
         except Exception as e:
             logger.error(f"MongoDB connection error: {e}")

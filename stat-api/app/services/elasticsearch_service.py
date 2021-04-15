@@ -25,7 +25,7 @@ class ElasticsearchService(SearchService):
             host = GLOBAL_CONFIG_OBJ["es"]["host"]
 
             self.client = Elasticsearch(host)
-            logger.info("Connected to ES")
+            logger.info(f"Connected to ES host = {host}")
 
         except Exception as e:
             logger.error(f"ES connection error: {e}")
