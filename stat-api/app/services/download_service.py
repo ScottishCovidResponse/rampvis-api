@@ -60,19 +60,21 @@ def to_df(f, key):
 def process_h5(path, folder, static_path, components):
     f = h5py.File(path, 'r')
     for c in components:
-        name = c['name']
-        df = to_df(f, name)
-        filename = format_component_name(name)
-        df.to_csv(folder/(filename + '.csv'))
-
-        # Normalizing
         if 'normalized' in c:
+            df = to_df(f, c['source'])
+            filename = format_component_name(c['name'])
+
             pop_file = Path(static_path)/c['normalized']
             pop_df = pd.read_csv(pop_file, index_col=c['col_name'])
             norm_df = df.copy()
             for col in df.columns:
                 norm_df.loc[:,col] = norm_df.loc[:,col] / pop_df.loc[col].values[0] * 100000
-            norm_df.to_csv(folder/(filename + '_normalized.csv'))
+            norm_df.to_csv(folder/(filename + '.csv'))
+        else:
+            name = c['name']
+            df = to_df(f, name)
+            filename = format_component_name(name)
+            df.to_csv(folder/(filename + '.csv'))
 
 def download_to_csvs(manifest, raw_path, live_path, static_path):
     "Download the latest file of a data product, convert h5 to csv and save it."
@@ -81,12 +83,12 @@ def download_to_csvs(manifest, raw_path, live_path, static_path):
     print('Data download and CSV conversion completed.')
     
 def download_product(product_name, components, raw_path, live_path, static_path):
-    print('\n-----\ndownloading', product_name)
+    # print('\n-----\ndownloading', product_name)
     # downloader = Downloader(data_directory=raw_path)
     # downloader.add_data_product(namespace='SCRC', data_product=product_name)
     # downloader.download()
 
-    # Recreate a subfolder
+    # # Recreate a subfolder
     subfolder = Path(live_path) / product_name
     shutil.rmtree(subfolder, ignore_errors=True)
     os.makedirs(subfolder)

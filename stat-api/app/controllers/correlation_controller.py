@@ -1,52 +1,56 @@
-from flask import Response, request, abort, Blueprint
-from flask import current_app
-
 import os
 import json
 import pandas as pd
-from ..algorithms import compute_metrics
-
-correlation_bp = Blueprint(
-    'correlation_bp',
-    __name__,
-    url_prefix='/stat/v1/correlation',
+from loguru import logger
+from fastapi import APIRouter, Query
+from starlette.exceptions import HTTPException
+from starlette.status import (
+    HTTP_422_UNPROCESSABLE_ENTITY,
+    HTTP_500_INTERNAL_SERVER_ERROR,
 )
 
+from app.algorithms.franck import compute_metrics
+from app.core.settings import DATA_PATH_V04
 
-@correlation_bp.route('/', methods=['GET'])
-def query():
-    var1 = request.args.get('var1', None)
-    var2 = request.args.get('var2', None)
-    metrics = request.args.get('metrics', None)
-    window = request.args.get('smooth', 'none')
+correlation_controller = APIRouter()
 
-    if var1 is None or var2 is None or metrics is None:
-        abort(400, 'Required parameters: var1, var2, metrics')
 
+@correlation_controller.get("/")
+def query(var1=Query(None), var2=Query(None), metrics=Query(None), window=Query(None)):
+    logger.info(f"var1 = {var1}, var2 = {var2}, metrics = {metrics}, window = {window}")
+
+    if var1 is None or var2 is None or metrics is None or window is None:
+        raise HTTPException(
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Required parameters: var1, var2, metrics",
+        )
     try:
         df1 = variable_to_df(var1)
         df2 = variable_to_df(var2)
     except IOError:
-        return Response(json.dumps({'message': f'Data is not available'}), mimetype='application/json')
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Data is not available",
+        )
 
-    metrics = metrics.split(',')
+    metrics = metrics.split(",")
 
     try:
         result = compute_metrics(df1, df2, metrics, window)
-    except Exception as v:
-        abort(400, v)
+    except Exception as e:
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"{e}",
+        )
 
     # Convert to list for serialisation
     for m in metrics:
         result[m] = result[m].tolist()
 
-    response = Response(json.dumps(result), mimetype='application/json')
-    return response
+    return result
 
 
 def variable_to_df(var):
-    config = current_app.config
-
-    filepath = os.path.join(config.get('DATA_PATH_V04'), var + '.csv')
-    print(filepath)
+    filepath = os.path.join(DATA_PATH_V04, var + ".csv")
+    logger.info(filepath)
     return pd.read_csv(filepath)

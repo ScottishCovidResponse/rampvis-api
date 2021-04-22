@@ -28,15 +28,20 @@ export class OntoPageService extends DataService<IOntoPage> {
 
     async getPaginated(ontoPageFilterVm: OntoPageFilterVm): Promise<PaginationVm<IOntoPage>> {
         console.log('OntoPageService:getPaginated: ontoPageFilterVm = ', ontoPageFilterVm)
-        const totalCount: number = await this.getDbCollection().countDocuments();
-
+        let totalCount: number = 0;
         const query:  any = {};
+
+        if (ontoPageFilterVm.filterPageType) {
+            totalCount = await this.getDbCollection().find({ bindingType: ontoPageFilterVm.filterPageType }).count();
+            query.bindingType = ontoPageFilterVm.filterPageType;
+        } else {
+            totalCount = await this.getDbCollection().countDocuments();
+        }
+
         if (ontoPageFilterVm.filterId) {
             query._id = new ObjectId(ontoPageFilterVm.filterId);
         }
-        if (ontoPageFilterVm.filterPageType) {
-            query.bindingType = ontoPageFilterVm.filterPageType;
-        }
+
         const pageIndex: number = ontoPageFilterVm.pageIndex ? parseInt(ontoPageFilterVm.pageIndex) : 1;
         const pageSize: number = ontoPageFilterVm.pageSize ? parseInt(ontoPageFilterVm.pageSize) : totalCount;
         const sortBy: string = ontoPageFilterVm.sortBy; // Not used as we are using only one field, date

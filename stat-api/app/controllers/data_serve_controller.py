@@ -1,23 +1,23 @@
-from flask import Response, request, abort, Blueprint
-from flask import current_app
-
 import os
 import json
 from pathlib import Path
-
 import pandas as pd
-
-from ..algorithms import compute_metrics
-from ..utils.naming import component_to_csv_file
-
-data_serve_bp = Blueprint(
-    'data_serve_bp',
-    __name__,
-    url_prefix='/stat/v1/data/',
+from fastapi import APIRouter, Query, Response
+from starlette.exceptions import HTTPException
+from starlette.status import (
+    HTTP_422_UNPROCESSABLE_ENTITY,
+    HTTP_500_INTERNAL_SERVER_ERROR,
 )
 
-@data_serve_bp.route('/', methods=['GET'])
-def query():
+from app.algorithms.franck import compute_metrics
+from app.utils.naming import component_to_csv_file
+from app.core.settings import DATA_PATH_LIVE
+
+data_serve_controller = APIRouter()
+
+
+@data_serve_controller.get("/")
+def query(product=Query(None), component=Query(None), field=Query(None)):
     """
     Return data in JSON format.
 
@@ -25,25 +25,23 @@ def query():
     - /stat/v1/data?product=records/SARS-CoV-2/scotland/cases-and-management/hospital&component=nhs_health_board_date_covid19_patients_in_hospital_confirmed
     - /stat/v1/data?product=records/SARS-CoV-2/scotland/cases-and-management/hospital&component=nhs_health_board_date_covid19_patients_in_hospital_confirmed&field=Fife
     """
-    config = current_app.config
-    folder = Path(config.get('DATA_PATH_LIVE'))
-
-    product = request.args.get('product', None)
-    component = request.args.get('component', None)
-    field = request.args.get('field', None)
+    folder = Path(DATA_PATH_LIVE)
 
     if product is None or component is None:
-        abort(400, 'Required parameters: product, component')
+        raise HTTPException(
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Required parameters: product, component",
+        )
 
-    # Data structure: 
+    # Data structure:
     # - each product is in a folder with subfolders as components
     # - each component is a csv containing all fields
     filename = component_to_csv_file(folder, product, component)
     df = pd.read_csv(filename)
-    df.rename(columns={df.columns[0]: 'index'}, inplace=True)
+    df.rename(columns={df.columns[0]: "index"}, inplace=True)
 
     if field is not None:
-        df = df[['index', field]]
+        df = df[["index", field]]
 
-    result = df.to_json(orient='records')
-    return Response(result)
+    result = df.to_json(orient="records")
+    return Response(content=result, media_type="application/json")

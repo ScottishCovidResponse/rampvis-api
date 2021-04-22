@@ -1,3 +1,6 @@
+#
+# TODO: not used now, review this entire file
+#
 from flask import current_app, jsonify
 from neo4j import Neo4jDriver, Result
 from py2neo import Graph, Node, Relationship, NodeMatcher

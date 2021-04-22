@@ -1,19 +1,10 @@
 ## Stat API 
 
-Requirements
+## Requirements
 - Python 3.8.3
 - conda 
+- virtualenv
 
-
-Conda environment:
-
-```
-conda remove --name rampvis-api --all
-conda env create -f environment.yml
-conda activate rampvis-api
-```
-
-pip environment:
 
 ```bash
 pip install virtualenv
@@ -22,15 +13,12 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Start development instance
+## Running the Project in Development
+
 ```bash
-./run-dev.sh
+source ./venv/bin/activate
+
+uvicorn app.main:app --reload --port 3000
 ```
 
-Open http://localhost:3000/stat/v1/hello to check!
-
-
-
-
-
-
+Open: http://localhost:3000/stat/v1/ping to ping the server.
