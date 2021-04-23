@@ -61,3 +61,5 @@ target/
 
 # VSCode
 .vscode
+
+nohup.out

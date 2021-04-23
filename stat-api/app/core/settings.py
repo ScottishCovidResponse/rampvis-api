@@ -3,6 +3,7 @@ import os
 from os import environ
 import sys
 from loguru import logger
+from starlette.datastructures import CommaSeparatedStrings
 
 
 DEFAULT_ROUTE_STR: str = ""
@@ -34,3 +35,5 @@ with open(GLOBAL_CONFIG_FILE) as config_file:
     GLOBAL_CONFIG_OBJ = json.load(config_file)
 
 RSA_PUB_KEY = BASE_DIR + '/../../../' + 'data-api/config/keys/jwtRS256.key.pub'
+
+ALLOWED_HOSTS = CommaSeparatedStrings(os.getenv("ALLOWED_HOSTS", "*"))
