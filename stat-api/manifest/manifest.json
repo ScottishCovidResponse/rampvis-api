@@ -5,31 +5,31 @@
             {
                 "name": "date-country-adult_carehomes_which_submitted_a_return",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "carehome", "weekly"],
+                "keywords": ["data_product", "scotland", "carehome", "weekly", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-response_rate",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "carehome", "weekly"],
+                "keywords": ["data_product", "scotland", "carehome", "weekly", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-staff_absence_rate",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "carehome", "weekly"],
+                "keywords": ["data_product", "scotland", "carehome", "weekly", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-staff_in_adult_carehomes_which_submitted_a_return",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "carehome", "weekly"],
+                "keywords": ["data_product", "scotland", "carehome", "weekly", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-staff_reported_absent",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "carehome", "weekly"],
+                "keywords": ["data_product", "scotland", "carehome", "weekly", "entire_country"],
                 "description": "Scotland"
             }
         ]
@@ -46,19 +46,19 @@
             {
                 "name": "date-country-percentage_absent_for_covid_reasons",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "school", "daily"],
+                "keywords": ["data_product", "scotland", "school", "daily", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-percentage_attendance",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "school", "daily"],
+                "keywords": ["data_product", "scotland", "school", "daily", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-pupils_absent_for_covid_reasons",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "school", "daily"],
+                "keywords": ["data_product", "scotland", "school", "daily", "entire_country"],
                 "description": "Scotland"
             }
         ]
@@ -69,13 +69,13 @@
             {
                 "name": "date-country-covid19_patients_in_hospital-confirmed",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "hospital", "daily", "hospital_confirmed"],
+                "keywords": ["data_product", "scotland", "hospital", "daily", "hospital_confirmed", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-covid19_patients_in_icu-confirmed",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "hospital", "daily", "icu_confirmed"],
+                "keywords": ["data_product", "scotland", "hospital", "daily", "icu_confirmed", "entire_country"],
                 "description": "Scotland"
             },
             {
@@ -189,7 +189,7 @@
             {
                 "name": "date-country-covid19_confirmed_deaths_registered-cumulative",
                 "dataType": "cumm_timeseries",
-                "keywords": ["data_product", "scotland", "mortality", "daily", "covid_deaths"],
+                "keywords": ["data_product", "scotland", "mortality", "daily", "covid_deaths", "entire_country"],
                 "description": "Scotland"
             }
         ]
@@ -200,25 +200,25 @@
             {
                 "name": "date-country-covid_related_absences-all_staff",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "workforce", "daily", "all_staff"],
+                "keywords": ["data_product", "scotland", "workforce", "daily", "all_staff", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-covid_related_absences-medical_and_dental_staff",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "workforce", "daily", "medical_staff"],
+                "keywords": ["data_product", "scotland", "workforce", "daily", "medical_staff", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-covid_related_absences-nursing_and_midwifery_staff",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "workforce", "daily", "nursing_staff"],
+                "keywords": ["data_product", "scotland", "workforce", "daily", "nursing_staff", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-covid_related_absences-other_staff",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "workforce", "daily", "other_staff"],
+                "keywords": ["data_product", "scotland", "workforce", "daily", "other_staff", "entire_country"],
                 "description": "Scotland"
             }
         ]
@@ -229,67 +229,67 @@
             {
                 "name": "date-country-new_cases_as_percentage_of_people_newly_tested",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "new_cases_percentage"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "new_cases_percentage", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-new_cases_reported",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "new_cases"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "new_cases", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-people_with_first_test_results_in_last_7_days",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "first_test_results", "last_7_days"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "first_test_results", "last_7_days", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-positive_cases_reported_in_last_7_days",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "positive_cases", "last_7_days"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "positive_cases", "last_7_days", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-positive_tests_reported_in_last_7_days",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "positive_tests", "last_7_days"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "positive_tests", "last_7_days", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-test_positivity_percent_of_tests_that_are_positive",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "test_positivity_percent"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "test_positivity_percent", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-test_positivity_rate_in_last_7_days",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "positivity_rate", "last_7_days"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "positivity_rate", "last_7_days", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-tests_in_last_7_days_per_1000_population",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "tests_per_1000_population", "last_7_days"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "tests_per_1000_population", "last_7_days", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-tests_reported_in_last_7_days",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "tests_reported", "last_7_days"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "tests_reported", "last_7_days", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-total_daily_number_of_positive_tests_reported",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "positive_tests_reported"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "positive_tests_reported", "entire_country"],
                 "description": "Scotland"
             },
             {
                 "name": "date-country-total_daily_tests_reported",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "tests_reported"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "tests_reported", "entire_country"],
                 "description": "Scotland"
             },
             {

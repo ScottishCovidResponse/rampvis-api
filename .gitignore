@@ -40,6 +40,5 @@ data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_positive_tests_reported_in_last_7_days.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_positive_cases_reported_in_last_7_days.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_people_with_first_test_results_in_last_7_days.csv
-data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_new_cases_reported.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_new_cases_as_percentage_of_people_newly_tested.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/hospital/date_delayed_discharges.csv
