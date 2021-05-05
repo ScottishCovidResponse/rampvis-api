@@ -27,6 +27,7 @@ import { OntoPageExtSearchGroupDto } from '../../infrastructure/onto-page/onto-p
 import { ActivityService } from '../../services/activity.service';
 import { IUser } from '../../infrastructure/user/user.interface';
 import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
+import { UpdateOntoPageDataVm } from '../../infrastructure/onto-page/update-onto-page-data.vm';
 
 
 @controller('/ontology', JwtToken.verify)
@@ -69,8 +70,8 @@ export class OntoPageController {
         logger.info(`OntoPageController:createPage: dataVm = ${JSON.stringify(ontoPageVm)}`);
 
         try {
-            const ontoPage: IOntoPage = await this.ontoPageService.createPage(ontoPageVm);
-            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const res: any = await this.ontoPageService.createPage(ontoPageVm);
+            // const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
 
             const user = request.user as IUser
             await this.activityService.createActivity(
@@ -80,8 +81,8 @@ export class OntoPageController {
                 user._id.toString()
             );
 
-            logger.info(`OntoPageController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
-            response.status(200).send(ontoPageDto);
+            logger.info(`OntoPageController:createPage: ontoPageDto = ${JSON.stringify(res)}`);
+            response.status(200).send(res);
         } catch (e) {
             logger.error(`OntoPageController:createPage: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
@@ -110,6 +111,31 @@ export class OntoPageController {
             response.status(200).send(ontoPageDto);
         } catch (e) {
             logger.error(`OntoPageController:updatePage: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
+    }
+
+    @httpPut('/page/:pageId/data', vmValidate(UpdateOntoPageDataVm))
+    public async updatePageData(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const pageId: string = request.params.pageId;
+        const updateOntoPageDataVm: UpdateOntoPageDataVm = request.body as any;
+        logger.info(`OntoPageController:updatePageData: pageId = ${pageId}, dataIds = ${JSON.stringify(updateOntoPageDataVm)}`);
+
+        try {
+            const res: any = await this.ontoPageService.updatePageData(pageId, updateOntoPageDataVm);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_PAGE,
+                ACTIVITY_ACTION.UPDATE,
+                user._id.toString()
+            );
+
+            logger.info(`OntoPageController:updatePageData: ontoPageDto = ${JSON.stringify(res)}`);
+            response.status(200).send(res);
+        } catch (e) {
+            logger.error(`OntoPageController:updatePageData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
