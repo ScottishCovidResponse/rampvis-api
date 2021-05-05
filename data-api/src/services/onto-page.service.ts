@@ -13,7 +13,6 @@ import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../infrastructure/onto-page/
 import { PaginationVm } from '../infrastructure/pagination.vm';
 import { SORT_ORDER } from '../infrastructure/sort-order.enum';
 import { MAPPING_TYPES } from './config/automapper.config';
-import { UpdateOntoPageDataVm } from '../infrastructure/onto-page/update-onto-page-data.vm';
 
 
 @provide(TYPES.OntoPageService)
@@ -125,10 +124,18 @@ export class OntoPageService extends DataService<IOntoPage> {
         return await this.updateAndGet(pageId, ontoPage);
     }
 
-    public async updatePageData(pageId: string, dataIds: UpdateOntoPageDataVm): Promise<any> {
+    public async updatePageData(pageId: string, dataIds: string[]): Promise<any> {
         return this.getDbCollection().updateOne(
             { _id: new ObjectId(pageId)},
             { $set: { "bindings.0.dataIds": dataIds} },
+            { upsert: false }
+         );
+    }
+
+    public async updatePageBindingType(pageId: string, bindingType: BINDING_TYPE): Promise<any> {
+        return this.getDbCollection().updateOne(
+            { _id: new ObjectId(pageId)},
+            { $set: { 'bindingType': bindingType} },
             { upsert: false }
          );
     }

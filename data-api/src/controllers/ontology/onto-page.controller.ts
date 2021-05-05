@@ -11,7 +11,7 @@ import { JwtToken } from '../../middleware/jwt.token';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { OntoPageVm } from '../../infrastructure/onto-page/onto-page.vm';
 import { OntoPageService } from '../../services/onto-page.service';
-import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { BINDING_TYPE, IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { SearchError, SomethingWentWrong } from '../../exceptions/exception';
 import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
@@ -28,6 +28,7 @@ import { ActivityService } from '../../services/activity.service';
 import { IUser } from '../../infrastructure/user/user.interface';
 import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
 import { UpdateOntoPageDataVm } from '../../infrastructure/onto-page/update-onto-page-data.vm';
+import { UpdateOntoPageBindingTypeVm } from '../../infrastructure/onto-page/update-onto-page-bindingtype.vm';
 
 
 @controller('/ontology', JwtToken.verify)
@@ -119,10 +120,10 @@ export class OntoPageController {
     public async updatePageData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
         const updateOntoPageDataVm: UpdateOntoPageDataVm = request.body as any;
-        logger.info(`OntoPageController:updatePageData: pageId = ${pageId}, dataIds = ${JSON.stringify(updateOntoPageDataVm)}`);
+        logger.info(`OntoPageController:updatePageData: pageId = ${pageId}, updateOntoPageDataVm = ${JSON.stringify(updateOntoPageDataVm)}`);
 
         try {
-            const res: any = await this.ontoPageService.updatePageData(pageId, updateOntoPageDataVm);
+            const res: any = await this.ontoPageService.updatePageData(pageId, updateOntoPageDataVm.dataIds);
 
             const user = request.user as IUser
             await this.activityService.createActivity(
@@ -136,6 +137,31 @@ export class OntoPageController {
             response.status(200).send(res);
         } catch (e) {
             logger.error(`OntoPageController:updatePageData: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
+    }
+
+    @httpPut('/page/:pageId/bindingtype', vmValidate(UpdateOntoPageBindingTypeVm))
+    public async updatePageBindingType(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const pageId: string = request.params.pageId;
+        const updateOntoPageBindingTypeVm: UpdateOntoPageBindingTypeVm = request.body as any;
+        logger.info(`OntoPageController:updatePageBindingType: pageId = ${pageId}, updateOntoPageBindingTypeVm = ${JSON.stringify(updateOntoPageBindingTypeVm)}`);
+
+        try {
+            const res: any = await this.ontoPageService.updatePageBindingType(pageId, updateOntoPageBindingTypeVm.bindingType);
+
+            const user = request.user as IUser
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.ONTO_PAGE,
+                ACTIVITY_ACTION.UPDATE,
+                user._id.toString()
+            );
+
+            logger.info(`OntoPageController:updatePageBindingType: ontoPageDto = ${JSON.stringify(res)}`);
+            response.status(200).send(res);
+        } catch (e) {
+            logger.error(`OntoPageController:updatePageBindingType: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
