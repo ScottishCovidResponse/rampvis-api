@@ -70,8 +70,8 @@ export class OntoPageController {
         logger.info(`OntoPageController:createPage: dataVm = ${JSON.stringify(ontoPageVm)}`);
 
         try {
-            const res: any = await this.ontoPageService.createPage(ontoPageVm);
-            // const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const ontoPage: any = await this.ontoPageService.createPage(ontoPageVm);
+            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
 
             const user = request.user as IUser
             await this.activityService.createActivity(
@@ -81,8 +81,8 @@ export class OntoPageController {
                 user._id.toString()
             );
 
-            logger.info(`OntoPageController:createPage: ontoPageDto = ${JSON.stringify(res)}`);
-            response.status(200).send(res);
+            logger.info(`OntoPageController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
+            response.status(200).send(ontoPageDto);
         } catch (e) {
             logger.error(`OntoPageController:createPage: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
