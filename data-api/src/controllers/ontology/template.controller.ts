@@ -60,7 +60,7 @@ export class TemplateController {
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
             resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
 
-            //logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+            // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
@@ -73,18 +73,16 @@ export class TemplateController {
         const pageId: string = request.params.pageId;
         logger.info(`TemplateController:getPageTemplate: pageId = ${pageId}`);
 
-        // Get all pages
+        // Get a page
         const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
-
         // IOntoPage -> OntoPageDto
         const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
-
         // OntoPageDto -> OntoPageExtDto
         let bindingExts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
-        let ontoPageExtDto: any = { ...ontoPageDto, bindings: bindingExts };
+        let ontoPageExtDto: any = { ...ontoPageDto, bindingExts: bindingExts };
 
         try {
-            logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
+            // logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
             response.status(200).send(ontoPageExtDto);
         } catch (e) {
             logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
@@ -92,6 +90,7 @@ export class TemplateController {
         }
     }
 
+    // TODO links
     private async bindingDtoToBindingExtDto(bindings: BindingDto[]) {
         let bindingExts: BindingExtDto[] = [];
 
