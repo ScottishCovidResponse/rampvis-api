@@ -22,8 +22,6 @@ data/live/records/SARS-CoV-2/scotland/cases-and-management/schools
 .pytest_cache
 data/live/records/SARS-CoV-2/scotland/human-mortality/location_type_week_covid_related_deaths.csv
 data/live/records/SARS-CoV-2/scotland/human-mortality/location_type_week_all_deaths.csv
-data/live/records/SARS-CoV-2/scotland/human-mortality/council_area_week_covid_related_deaths.csv
-data/live/records/SARS-CoV-2/scotland/human-mortality/council_area_week_all_deaths.csv
 data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_persons_country_covid_related_deaths.csv
 data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_persons_country_all_deaths.csv
 data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_gender_country_covid_related_deaths.csv
