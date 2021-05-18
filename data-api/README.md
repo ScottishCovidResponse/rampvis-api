@@ -3,25 +3,15 @@
 
 ## Development 
 
-Prerequisites
+### Requirements
 
-- Node version 12.17.0
-- `data-api/config` - please contact GitHub administrator for access
-- Mongodb 4.2.6
+- Node version 14.15.0
+- `data-api/config` - please contact a developer for getting access
+- Mongodb
 - Elasticsearch 
 
-Start a local instance of Elasticsearch single node.
-```bash
-docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.12.1
-```
 
-Multi-node cluster
-```bash
-docker compose -f docker-compose-dev-es.yml up -d
-docker compose -f docker-compose-dev-es.yml [stop | start | rm]
-```
-
-Start development instance:
+Start a development instance.
 
 ```bash
 npm install

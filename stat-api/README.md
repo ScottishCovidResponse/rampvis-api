@@ -1,10 +1,14 @@
-## Stat API 
+# Stat API 
 
-## Requirements
+## Development
+### Requirements
 - Python 3.8.3
-- conda 
 - virtualenv
+- `data-api/config` - please contact a developer for getting access
+- Mongodb
+- Elasticsearch 
 
+Setting up a python environment.
 
 ```bash
 pip install virtualenv
@@ -13,7 +17,7 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Running the Project in Development
+Start a development instance.
 
 ```bash
 source ./venv/bin/activate
@@ -22,3 +26,4 @@ uvicorn app.main:app --reload --port 3000
 ```
 
 Open: http://localhost:3000/stat/v1/ping to ping the server.
+
