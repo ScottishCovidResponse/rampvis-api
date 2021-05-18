@@ -1,0 +1,1933 @@
+Date,Product,Population,Dose,NumberVaccinated,PercentCoverage,CumulativeNumberVaccinated,CumulativePercentCoverage,AgeBand
+20201208,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201208,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201208,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1870,,1870,,16 years and over
+20201208,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201208,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201208,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201208,Total,4541903,Dose 1,1870,,1870,,16 years and over
+20201208,Total,4434138,Dose 1,1869,0.0421502443090404,1869,0.0421502443090404,18 years and over
+20201208,Total,2183051,Dose 1,786,0.0360046558692399,786,0.0360046558692399,50 years and over
+20201208,Total,4541903,Dose 2,0,,0,,16 years and over
+20201208,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201208,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201209,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201209,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201209,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3807,,5677,,16 years and over
+20201209,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201209,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201209,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201209,Total,4541903,Dose 1,3807,,5677,,16 years and over
+20201209,Total,4434138,Dose 1,3807,0.0858565971559749,5676,0.128006841465015,18 years and over
+20201209,Total,2183051,Dose 1,1531,0.0701312062796517,2317,0.10613586214889201,50 years and over
+20201209,Total,4541903,Dose 2,0,,0,,16 years and over
+20201209,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201209,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201210,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201210,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201210,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4924,,10601,,16 years and over
+20201210,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201210,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201210,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201210,Total,4541903,Dose 1,4924,,10601,,16 years and over
+20201210,Total,4434138,Dose 1,4922,0.111002409036435,10598,0.23900925050145,18 years and over
+20201210,Total,2183051,Dose 1,2088,0.0956459560495838,4405,0.20178181819847502,50 years and over
+20201210,Total,4541903,Dose 2,0,,0,,16 years and over
+20201210,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201210,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201211,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201211,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201211,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5260,,15861,,16 years and over
+20201211,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201211,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201211,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201211,Total,4541903,Dose 1,5260,,15861,,16 years and over
+20201211,Total,4434138,Dose 1,5255,0.11851232415409699,15853,0.35752157465554707,18 years and over
+20201211,Total,2183051,Dose 1,2236,0.10242545868145099,6641,0.30420727687992605,50 years and over
+20201211,Total,4541903,Dose 2,0,,0,,16 years and over
+20201211,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201211,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201212,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201212,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201212,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2119,,17980,,16 years and over
+20201212,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201212,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201212,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201212,Total,4541903,Dose 1,2119,,17980,,16 years and over
+20201212,Total,4434138,Dose 1,2117,0.0477432141263984,17970,0.40526478878194605,18 years and over
+20201212,Total,2183051,Dose 1,815,0.0373330719254841,7456,0.34154034880540995,50 years and over
+20201212,Total,4541903,Dose 2,0,,0,,16 years and over
+20201212,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201212,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201213,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201213,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201213,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1107,,19087,,16 years and over
+20201213,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201213,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201213,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201213,Total,4541903,Dose 1,1107,,19087,,16 years and over
+20201213,Total,4434138,Dose 1,1106,0.0249428412016045,19076,0.43020762998355,18 years and over
+20201213,Total,2183051,Dose 1,448,0.0205217376964624,7904,0.362062086501873,50 years and over
+20201213,Total,4541903,Dose 2,0,,0,,16 years and over
+20201213,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201213,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201214,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201214,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201214,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5678,,24765,,16 years and over
+20201214,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201214,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201214,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201214,Total,4541903,Dose 1,5678,,24765,,16 years and over
+20201214,Total,4434138,Dose 1,5676,0.128006841465015,24752,0.5582144714485661,18 years and over
+20201214,Total,2183051,Dose 1,2635,0.12070263131736302,10539,0.482764717819236,50 years and over
+20201214,Total,4541903,Dose 2,0,,0,,16 years and over
+20201214,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201214,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201215,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201215,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201215,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7303,,32068,,16 years and over
+20201215,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201215,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201215,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201215,Total,4541903,Dose 1,7303,,32068,,16 years and over
+20201215,Total,4434138,Dose 1,7297,0.164564115956698,32049,0.7227785874052629,18 years and over
+20201215,Total,2183051,Dose 1,3568,0.163440982368254,14107,0.64620570018749,50 years and over
+20201215,Total,4541903,Dose 2,0,,0,,16 years and over
+20201215,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201215,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201216,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201216,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201216,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7135,,39203,,16 years and over
+20201216,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201216,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201216,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201216,Total,4541903,Dose 1,7135,,39203,,16 years and over
+20201216,Total,4434138,Dose 1,7128,0.16075277765374,39177,0.883531365059004,18 years and over
+20201216,Total,2183051,Dose 1,3403,0.15588275308272698,17510,0.802088453270217,50 years and over
+20201216,Total,4541903,Dose 2,0,,0,,16 years and over
+20201216,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201216,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201217,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201217,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201217,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7024,,46227,,16 years and over
+20201217,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201217,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201217,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201217,Total,4541903,Dose 1,7024,,46227,,16 years and over
+20201217,Total,4434138,Dose 1,7019,0.15829457720982099,46196,1.0418259422688199,18 years and over
+20201217,Total,2183051,Dose 1,3638,0.166647503883327,21148,0.9687359571535429,50 years and over
+20201217,Total,4541903,Dose 2,0,,0,,16 years and over
+20201217,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201217,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201218,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201218,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201218,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8461,,54688,,16 years and over
+20201218,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201218,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201218,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201218,Total,4541903,Dose 1,8461,,54688,,16 years and over
+20201218,Total,4434138,Dose 1,8451,0.190589467445533,54647,1.23241540971436,18 years and over
+20201218,Total,2183051,Dose 1,4634,0.21227172429778302,25782,1.18100768145133,50 years and over
+20201218,Total,4541903,Dose 2,0,,0,,16 years and over
+20201218,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201218,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201219,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201219,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201219,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3340,,58028,,16 years and over
+20201219,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201219,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201219,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201219,Total,4541903,Dose 1,3340,,58028,,16 years and over
+20201219,Total,4434138,Dose 1,3338,0.0752795695578261,57985,1.30769497927218,18 years and over
+20201219,Total,2183051,Dose 1,1677,0.0768190940110881,27459,1.25782677546241,50 years and over
+20201219,Total,4541903,Dose 2,0,,0,,16 years and over
+20201219,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201219,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201220,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201220,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201220,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2518,,60546,,16 years and over
+20201220,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201220,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201220,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201220,Total,4541903,Dose 1,2518,,60546,,16 years and over
+20201220,Total,4434138,Dose 1,2514,0.0566964762937013,60499,1.36439145556588,18 years and over
+20201220,Total,2183051,Dose 1,1356,0.0621149024919711,28815,1.31994167795439,50 years and over
+20201220,Total,4541903,Dose 2,0,,0,,16 years and over
+20201220,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201220,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201221,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201221,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201221,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9535,,70081,,16 years and over
+20201221,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201221,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201221,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201221,Total,4541903,Dose 1,9535,,70081,,16 years and over
+20201221,Total,4434138,Dose 1,9520,0.214697873634064,70019,1.5790893291999502,18 years and over
+20201221,Total,2183051,Dose 1,5131,0.23503802705479604,33946,1.55497970500918,50 years and over
+20201221,Total,4541903,Dose 2,0,,0,,16 years and over
+20201221,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201221,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201222,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201222,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201222,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,11737,,81818,,16 years and over
+20201222,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201222,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201222,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201222,Total,4541903,Dose 1,11737,,81818,,16 years and over
+20201222,Total,4434138,Dose 1,11731,0.264561003739622,81750,1.84365033293957,18 years and over
+20201222,Total,2183051,Dose 1,6455,0.295687091139877,40401,1.8506667961490602,50 years and over
+20201222,Total,4541903,Dose 2,0,,0,,16 years and over
+20201222,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201222,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201223,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201223,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201223,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10084,,91902,,16 years and over
+20201223,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201223,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201223,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201223,Total,4541903,Dose 1,10084,,91902,,16 years and over
+20201223,Total,4434138,Dose 1,10071,0.22712418963956502,91821,2.0707745225791396,18 years and over
+20201223,Total,2183051,Dose 1,5549,0.254185541244799,45950,2.10485233739386,50 years and over
+20201223,Total,4541903,Dose 2,0,,0,,16 years and over
+20201223,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201223,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201224,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201224,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201224,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2811,,94713,,16 years and over
+20201224,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201224,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201224,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201224,Total,4541903,Dose 1,2811,,94713,,16 years and over
+20201224,Total,4434138,Dose 1,2806,0.0632817472076873,94627,2.13405626978682,18 years and over
+20201224,Total,2183051,Dose 1,1725,0.0790178516214234,47675,2.18387018901528,50 years and over
+20201224,Total,4541903,Dose 2,0,,0,,16 years and over
+20201224,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201224,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201225,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201225,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201225,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,14,,94727,,16 years and over
+20201225,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201225,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201225,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201225,Total,4541903,Dose 1,14,,94727,,16 years and over
+20201225,Total,4434138,Dose 1,14,0.000315732167108917,94641,2.13437200195393,18 years and over
+20201225,Total,2183051,Dose 1,10,0.000458074502153179,47685,2.18432826351743,50 years and over
+20201225,Total,4541903,Dose 2,0,,0,,16 years and over
+20201225,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201225,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201226,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201226,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201226,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1,,94728,,16 years and over
+20201226,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201226,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201226,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201226,Total,4541903,Dose 1,1,,94728,,16 years and over
+20201226,Total,4434138,Dose 1,1,2.25522976506369e-05,94642,2.13439455425158,18 years and over
+20201226,Total,2183051,Dose 1,0,0.0,47685,2.18432826351743,50 years and over
+20201226,Total,4541903,Dose 2,0,,0,,16 years and over
+20201226,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201226,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201227,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201227,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201227,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,468,,95196,,16 years and over
+20201227,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201227,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201227,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201227,Total,4541903,Dose 1,468,,95196,,16 years and over
+20201227,Total,4434138,Dose 1,468,0.0105544753004981,95110,2.14494902955208,18 years and over
+20201227,Total,2183051,Dose 1,408,0.0186894396878497,48093,2.20301770320528,50 years and over
+20201227,Total,4541903,Dose 2,0,,0,,16 years and over
+20201227,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201227,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201228,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201228,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201228,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1731,,96927,,16 years and over
+20201228,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,0,,16 years and over
+20201228,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201228,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201228,Total,4541903,Dose 1,1731,,96927,,16 years and over
+20201228,Total,4434138,Dose 1,1726,0.0389252657449994,96836,2.18387429529708,18 years and over
+20201228,Total,2183051,Dose 1,1091,0.0499759281849119,49184,2.2529936313902,50 years and over
+20201228,Total,4541903,Dose 2,0,,0,,16 years and over
+20201228,Total,4434138,Dose 2,0,0.0,0,0.0,18 years and over
+20201228,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201229,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201229,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201229,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7522,,104449,,16 years and over
+20201229,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6,,6,,16 years and over
+20201229,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201229,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201229,Total,4541903,Dose 1,7522,,104449,,16 years and over
+20201229,Total,4434138,Dose 1,7516,0.169503069142187,104352,2.35337736443927,18 years and over
+20201229,Total,2183051,Dose 1,4029,0.18455821691751603,53213,2.43755184830771,50 years and over
+20201229,Total,4541903,Dose 2,6,,6,,16 years and over
+20201229,Total,4434138,Dose 2,6,0.000135313785903822,6,0.000135313785903822,18 years and over
+20201229,Total,2183051,Dose 2,0,0.0,0,0.0,50 years and over
+20201230,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201230,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201230,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7625,,112074,,16 years and over
+20201230,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,23,,29,,16 years and over
+20201230,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201230,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201230,Total,4541903,Dose 1,7625,,112074,,16 years and over
+20201230,Total,4434138,Dose 1,7619,0.17182595580020302,111971,2.5252033202394704,18 years and over
+20201230,Total,2183051,Dose 1,4353,0.19939983078727902,57566,2.6369516790949903,50 years and over
+20201230,Total,4541903,Dose 2,23,,29,,16 years and over
+20201230,Total,4434138,Dose 2,23,0.00051870284596465,29,0.000654016631868471,18 years and over
+20201230,Total,2183051,Dose 2,15,0.000687111753229769,15,0.000687111753229769,50 years and over
+20201231,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20201231,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20201231,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4242,,116316,,16 years and over
+20201231,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8,,37,,16 years and over
+20201231,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20201231,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20201231,Total,4541903,Dose 1,4242,,116316,,16 years and over
+20201231,Total,4434138,Dose 1,4236,0.0955315328480981,116207,2.6207348530875696,18 years and over
+20201231,Total,2183051,Dose 1,2545,0.11657996079798401,60111,2.7535316398929797,50 years and over
+20201231,Total,4541903,Dose 2,8,,37,,16 years and over
+20201231,Total,4434138,Dose 2,8,0.000180418381205096,37,0.000834435013073567,18 years and over
+20201231,Total,2183051,Dose 2,3,0.000137422350645954,18,0.000824534103875723,50 years and over
+20210101,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210101,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210101,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,33,,116349,,16 years and over
+20210101,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,37,,16 years and over
+20210101,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20210101,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20210101,Total,4541903,Dose 1,33,,116349,,16 years and over
+20210101,Total,4434138,Dose 1,33,0.0007442258224710191,116240,2.62147907891004,18 years and over
+20210101,Total,2183051,Dose 1,16,0.000732919203445087,60127,2.75426455909642,50 years and over
+20210101,Total,4541903,Dose 2,0,,37,,16 years and over
+20210101,Total,4434138,Dose 2,0,0.0,37,0.000834435013073567,18 years and over
+20210101,Total,2183051,Dose 2,0,0.0,18,0.000824534103875723,50 years and over
+20210102,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210102,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210102,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2,,116351,,16 years and over
+20210102,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9,,46,,16 years and over
+20210102,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20210102,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20210102,Total,4541903,Dose 1,2,,116351,,16 years and over
+20210102,Total,4434138,Dose 1,2,4.51045953012739e-05,116242,2.6215241835053398,18 years and over
+20210102,Total,2183051,Dose 1,1,4.58074502153179e-05,60128,2.7543103665466404,50 years and over
+20210102,Total,4541903,Dose 2,9,,46,,16 years and over
+20210102,Total,4434138,Dose 2,9,0.000202970678855733,46,0.0010374056919293,18 years and over
+20210102,Total,2183051,Dose 2,6,0.000274844701291908,24,0.00109937880516763,50 years and over
+20210103,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210103,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210103,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,346,,116697,,16 years and over
+20210103,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,0,,46,,16 years and over
+20210103,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,0,,0,,16 years and over
+20210103,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20210103,Total,4541903,Dose 1,346,,116697,,16 years and over
+20210103,Total,4434138,Dose 1,346,0.007803094987120379,116588,2.62932727849246,18 years and over
+20210103,Total,2183051,Dose 1,304,0.0139254648654566,60432,2.76823583141209,50 years and over
+20210103,Total,4541903,Dose 2,0,,46,,16 years and over
+20210103,Total,4434138,Dose 2,0,0.0,46,0.0010374056919293,18 years and over
+20210103,Total,2183051,Dose 2,0,0.0,24,0.00109937880516763,50 years and over
+20210104,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210104,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210104,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1241,,117938,,16 years and over
+20210104,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7,,53,,16 years and over
+20210104,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,357,,357,,16 years and over
+20210104,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,0,,16 years and over
+20210104,Total,4541903,Dose 1,1598,,118295,,16 years and over
+20210104,Total,4434138,Dose 1,1598,0.0360385716457178,118186,2.6653658501381803,18 years and over
+20210104,Total,2183051,Dose 1,1292,0.0591832256781908,61724,2.82741905709028,50 years and over
+20210104,Total,4541903,Dose 2,7,,53,,16 years and over
+20210104,Total,4434138,Dose 2,7,0.000157866083554459,53,0.00119527177548376,18 years and over
+20210104,Total,2183051,Dose 2,1,4.58074502153179e-05,25,0.00114518625538295,50 years and over
+20210105,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210105,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210105,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8569,,126507,,16 years and over
+20210105,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,899,,952,,16 years and over
+20210105,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,25,,382,,16 years and over
+20210105,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,1,,16 years and over
+20210105,Total,4541903,Dose 1,8594,,126889,,16 years and over
+20210105,Total,4434138,Dose 1,8586,0.193634027628369,126772,2.8589998777665495,18 years and over
+20210105,Total,2183051,Dose 1,4420,0.202468929951705,66144,3.0298879870419904,50 years and over
+20210105,Total,4541903,Dose 2,900,,953,,16 years and over
+20210105,Total,4434138,Dose 2,900,0.0202970678855732,953,0.021492339661057,18 years and over
+20210105,Total,2183051,Dose 2,394,0.0180481353848353,419,0.0191933216402182,50 years and over
+20210106,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210106,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210106,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9556,,136063,,16 years and over
+20210106,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,994,,1946,,16 years and over
+20210106,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,254,,636,,16 years and over
+20210106,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,2,,16 years and over
+20210106,Total,4541903,Dose 1,9810,,136699,,16 years and over
+20210106,Total,4434138,Dose 1,9798,0.22096741238094103,136570,3.0799672901474904,18 years and over
+20210106,Total,2183051,Dose 1,5413,0.24795572801551602,71557,3.2778437150575,50 years and over
+20210106,Total,4541903,Dose 2,995,,1948,,16 years and over
+20210106,Total,4434138,Dose 2,995,0.0224395361623838,1948,0.0439318758234408,18 years and over
+20210106,Total,2183051,Dose 2,462,0.0211630419994769,881,0.0403563636396951,50 years and over
+20210107,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210107,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210107,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9860,,145923,,16 years and over
+20210107,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,325,,2271,,16 years and over
+20210107,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,989,,1625,,16 years and over
+20210107,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,2,,16 years and over
+20210107,Total,4541903,Dose 1,10849,,147548,,16 years and over
+20210107,Total,4434138,Dose 1,10829,0.244218831258747,147399,3.3241861214062296,18 years and over
+20210107,Total,2183051,Dose 1,6206,0.284281036036263,77763,3.56212475109377,50 years and over
+20210107,Total,4541903,Dose 2,325,,2273,,16 years and over
+20210107,Total,4434138,Dose 2,325,0.0073294967364570095,2273,0.0512613725598978,18 years and over
+20210107,Total,2183051,Dose 2,127,0.0058175461773453795,1008,0.0461739098170405,50 years and over
+20210108,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210108,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210108,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10258,,156181,,16 years and over
+20210108,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,383,,2654,,16 years and over
+20210108,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1158,,2783,,16 years and over
+20210108,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,2,,16 years and over
+20210108,Total,4541903,Dose 1,11416,,158964,,16 years and over
+20210108,Total,4434138,Dose 1,11389,0.25684811794310397,158788,3.5810342393493397,18 years and over
+20210108,Total,2183051,Dose 1,6340,0.290419234365116,84103,3.85254398545888,50 years and over
+20210108,Total,4541903,Dose 2,383,,2656,,16 years and over
+20210108,Total,4434138,Dose 2,383,0.00863753000019395,2656,0.0598989025600917,18 years and over
+20210108,Total,2183051,Dose 2,154,0.0070543473331589595,1162,0.0532282571501994,50 years and over
+20210109,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210109,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210109,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4985,,161166,,16 years and over
+20210109,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,229,,2883,,16 years and over
+20210109,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1540,,4323,,16 years and over
+20210109,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,2,,16 years and over
+20210109,Total,4541903,Dose 1,6525,,165489,,16 years and over
+20210109,Total,4434138,Dose 1,6519,0.147018428384502,165307,3.7280526677338397,18 years and over
+20210109,Total,2183051,Dose 1,3767,0.172556664961103,87870,4.02510065041999,50 years and over
+20210109,Total,4541903,Dose 2,229,,2885,,16 years and over
+20210109,Total,4434138,Dose 2,229,0.00516447616199586,2885,0.0650633787220876,18 years and over
+20210109,Total,2183051,Dose 2,75,0.0034355587661488397,1237,0.0566638159163483,50 years and over
+20210110,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210110,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210110,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2522,,163688,,16 years and over
+20210110,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8,,2891,,16 years and over
+20210110,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,293,,4616,,16 years and over
+20210110,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,2,,16 years and over
+20210110,Total,4541903,Dose 1,2815,,168304,,16 years and over
+20210110,Total,4434138,Dose 1,2810,0.0633719563982898,168117,3.79142462413213,18 years and over
+20210110,Total,2183051,Dose 1,1443,0.0661001506607038,89313,4.09120080108069,50 years and over
+20210110,Total,4541903,Dose 2,8,,2893,,16 years and over
+20210110,Total,4434138,Dose 2,8,0.000180418381205096,2893,0.0652437971032927,18 years and over
+20210110,Total,2183051,Dose 2,3,0.000137422350645954,1240,0.0568012382669942,50 years and over
+20210111,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210111,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210111,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8475,,172163,,16 years and over
+20210111,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,138,,3029,,16 years and over
+20210111,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,3098,,7714,,16 years and over
+20210111,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,2,,16 years and over
+20210111,Total,4541903,Dose 1,11573,,179877,,16 years and over
+20210111,Total,4434138,Dose 1,11550,0.260479037864857,179667,4.051903661996991,18 years and over
+20210111,Total,2183051,Dose 1,6893,0.31575075433418603,96206,4.40695155541488,50 years and over
+20210111,Total,4541903,Dose 2,138,,3031,,16 years and over
+20210111,Total,4434138,Dose 2,138,0.0031122170757879,3031,0.0683560141790806,18 years and over
+20210111,Total,2183051,Dose 2,53,0.00242779486141185,1293,0.0592290331284061,50 years and over
+20210112,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210112,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210112,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,11505,,183668,,16 years and over
+20210112,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,174,,3203,,16 years and over
+20210112,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,4866,,12580,,16 years and over
+20210112,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,3,,16 years and over
+20210112,Total,4541903,Dose 1,16371,,196248,,16 years and over
+20210112,Total,4434138,Dose 1,16359,0.36893303726677,196026,4.42083669926376,18 years and over
+20210112,Total,2183051,Dose 1,10237,0.46893086785421,106443,4.87588242326909,50 years and over
+20210112,Total,4541903,Dose 2,175,,3206,,16 years and over
+20210112,Total,4434138,Dose 2,175,0.00394665208886147,3206,0.072302666267942,18 years and over
+20210112,Total,2183051,Dose 2,92,0.00421428541980925,1385,0.0634433185482153,50 years and over
+20210113,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210113,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210113,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,11398,,195066,,16 years and over
+20210113,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,253,,3456,,16 years and over
+20210113,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,5828,,18408,,16 years and over
+20210113,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,3,,16 years and over
+20210113,Total,4541903,Dose 1,17226,,213474,,16 years and over
+20210113,Total,4434138,Dose 1,17203,0.38796717648390705,213229,4.80880387574766,18 years and over
+20210113,Total,2183051,Dose 1,11387,0.521609435601825,117830,5.39749185887091,50 years and over
+20210113,Total,4541903,Dose 2,253,,3459,,16 years and over
+20210113,Total,4434138,Dose 2,253,0.00570573130561115,3459,0.0780083975735532,18 years and over
+20210113,Total,2183051,Dose 2,134,0.0061381983288526,1519,0.0695815168770679,50 years and over
+20210114,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210114,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210114,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,11469,,206535,,16 years and over
+20210114,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,197,,3653,,16 years and over
+20210114,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,6103,,24511,,16 years and over
+20210114,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,3,,16 years and over
+20210114,Total,4541903,Dose 1,17572,,231046,,16 years and over
+20210114,Total,4434138,Dose 1,17544,0.395657509982775,230773,5.204461385730441,18 years and over
+20210114,Total,2183051,Dose 1,12061,0.552483657046949,129891,5.949975515917861,50 years and over
+20210114,Total,4541903,Dose 2,197,,3656,,16 years and over
+20210114,Total,4434138,Dose 2,196,0.00442025033952484,3655,0.08242864791307801,18 years and over
+20210114,Total,2183051,Dose 2,110,0.00503881952368497,1629,0.0746203364007529,50 years and over
+20210115,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210115,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210115,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10372,,216907,,16 years and over
+20210115,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,196,,3849,,16 years and over
+20210115,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,6647,,31158,,16 years and over
+20210115,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,4,,16 years and over
+20210115,Total,4541903,Dose 1,17019,,248065,,16 years and over
+20210115,Total,4434138,Dose 1,17001,0.383411612358479,247774,5.58787299808892,18 years and over
+20210115,Total,2183051,Dose 1,11876,0.544009278757116,141767,6.49398479467498,50 years and over
+20210115,Total,4541903,Dose 2,197,,3853,,16 years and over
+20210115,Total,4434138,Dose 2,197,0.00444280263717548,3852,0.0868714505502535,18 years and over
+20210115,Total,2183051,Dose 2,118,0.005405279125407511,1747,0.0800256155261604,50 years and over
+20210116,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210116,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210116,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,11327,,228234,,16 years and over
+20210116,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,133,,3982,,16 years and over
+20210116,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,9881,,41039,,16 years and over
+20210116,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,4,,16 years and over
+20210116,Total,4541903,Dose 1,21208,,269273,,16 years and over
+20210116,Total,4434138,Dose 1,21200,0.478108710193503,268974,6.065981708282419,18 years and over
+20210116,Total,2183051,Dose 1,16149,0.7397445135271691,157916,7.233729308202139,50 years and over
+20210116,Total,4541903,Dose 2,133,,3986,,16 years and over
+20210116,Total,4434138,Dose 2,133,0.00299945558753471,3985,0.0898709061377882,18 years and over
+20210116,Total,2183051,Dose 2,64,0.00293167681378035,1811,0.0829572923399407,50 years and over
+20210117,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210117,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210117,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2911,,231145,,16 years and over
+20210117,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,79,,4061,,16 years and over
+20210117,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1696,,42735,,16 years and over
+20210117,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2,,6,,16 years and over
+20210117,Total,4541903,Dose 1,4607,,273880,,16 years and over
+20210117,Total,4434138,Dose 1,4599,0.10371801689527901,273573,6.169699725177701,18 years and over
+20210117,Total,2183051,Dose 1,2996,0.137239120845092,160912,7.37096842904724,50 years and over
+20210117,Total,4541903,Dose 2,81,,4067,,16 years and over
+20210117,Total,4434138,Dose 2,81,0.0018267361097015899,4066,0.0916976422474898,18 years and over
+20210117,Total,2183051,Dose 2,28,0.0012826086060289,1839,0.0842399009459697,50 years and over
+20210118,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210118,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210118,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10683,,241828,,16 years and over
+20210118,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,274,,4335,,16 years and over
+20210118,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,7881,,50616,,16 years and over
+20210118,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,6,,16 years and over
+20210118,Total,4541903,Dose 1,18564,,292444,,16 years and over
+20210118,Total,4434138,Dose 1,18549,0.418322569121665,292122,6.58802229429937,18 years and over
+20210118,Total,2183051,Dose 1,12942,0.592840020686645,173854,7.96380844973388,50 years and over
+20210118,Total,4541903,Dose 2,274,,4341,,16 years and over
+20210118,Total,4434138,Dose 2,274,0.00617932955627452,4340,0.0978769718037643,18 years and over
+20210118,Total,2183051,Dose 2,134,0.0061381983288526,1973,0.0903780992748223,50 years and over
+20210119,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210119,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210119,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,14418,,256246,,16 years and over
+20210119,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,306,,4641,,16 years and over
+20210119,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11522,,62138,,16 years and over
+20210119,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,7,,16 years and over
+20210119,Total,4541903,Dose 1,25940,,318384,,16 years and over
+20210119,Total,4434138,Dose 1,25921,0.58457810740216,318043,7.17260040170153,18 years and over
+20210119,Total,2183051,Dose 1,19383,0.887885807523507,193237,8.85169425725739,50 years and over
+20210119,Total,4541903,Dose 2,307,,4648,,16 years and over
+20210119,Total,4434138,Dose 2,307,0.00692355537874554,4647,0.10480052718251,18 years and over
+20210119,Total,2183051,Dose 2,184,0.0084285708396185,2157,0.0988066701144408,50 years and over
+20210120,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210120,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210120,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,14247,,270493,,16 years and over
+20210120,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,374,,5015,,16 years and over
+20210120,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12175,,74313,,16 years and over
+20210120,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2,,9,,16 years and over
+20210120,Total,4541903,Dose 1,26422,,344806,,16 years and over
+20210120,Total,4434138,Dose 1,26401,0.5954032102744661,344444,7.76800361197599,18 years and over
+20210120,Total,2183051,Dose 1,19594,0.8975511795189391,212831,9.74924543677633,50 years and over
+20210120,Total,4541903,Dose 2,376,,5024,,16 years and over
+20210120,Total,4434138,Dose 2,376,0.00847966391663949,5023,0.11328019109914901,18 years and over
+20210120,Total,2183051,Dose 2,189,0.008657608090695091,2346,0.107464278205136,50 years and over
+20210121,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210121,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210121,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,12309,,282802,,16 years and over
+20210121,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,260,,5275,,16 years and over
+20210121,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11866,,86179,,16 years and over
+20210121,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,5,,14,,16 years and over
+20210121,Total,4541903,Dose 1,24175,,368981,,16 years and over
+20210121,Total,4434138,Dose 1,24160,0.5448635112393889,368604,8.31286712321538,18 years and over
+20210121,Total,2183051,Dose 1,17987,0.823938607022923,230818,10.5731840437993,50 years and over
+20210121,Total,4541903,Dose 2,265,,5289,,16 years and over
+20210121,Total,4434138,Dose 2,265,0.00597635887741879,5288,0.11925654997656801,18 years and over
+20210121,Total,2183051,Dose 2,148,0.00677950263186705,2494,0.11424378083700301,50 years and over
+20210122,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210122,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210122,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,12736,,295538,,16 years and over
+20210122,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,538,,5813,,16 years and over
+20210122,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11133,,97312,,16 years and over
+20210122,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,8,,22,,16 years and over
+20210122,Total,4541903,Dose 1,23869,,392850,,16 years and over
+20210122,Total,4434138,Dose 1,23843,0.537714432884137,392447,8.85058155609952,18 years and over
+20210122,Total,2183051,Dose 1,17639,0.807997614347993,248457,11.381181658147199,50 years and over
+20210122,Total,4541903,Dose 2,546,,5835,,16 years and over
+20210122,Total,4434138,Dose 2,545,0.0122910022195971,5833,0.13154755219616499,18 years and over
+20210122,Total,2183051,Dose 2,289,0.0132383531122269,2783,0.12748213394923,50 years and over
+20210123,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210123,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210123,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10767,,306305,,16 years and over
+20210123,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,233,,6046,,16 years and over
+20210123,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,16345,,113657,,16 years and over
+20210123,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,22,,16 years and over
+20210123,Total,4541903,Dose 1,27112,,419962,,16 years and over
+20210123,Total,4434138,Dose 1,27101,0.611189818629912,419548,9.46177137472943,18 years and over
+20210123,Total,2183051,Dose 1,22196,1.0167421649792,270653,12.3979238231264,50 years and over
+20210123,Total,4541903,Dose 2,233,,6068,,16 years and over
+20210123,Total,4434138,Dose 2,233,0.00525468535259841,6066,0.136802237548764,18 years and over
+20210123,Total,2183051,Dose 2,88,0.00403105561894798,2871,0.131513189568178,50 years and over
+20210124,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210124,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210124,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5069,,311374,,16 years and over
+20210124,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,174,,6220,,16 years and over
+20210124,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,3451,,117108,,16 years and over
+20210124,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,22,,16 years and over
+20210124,Total,4541903,Dose 1,8520,,428482,,16 years and over
+20210124,Total,4434138,Dose 1,8514,0.192010262197523,428062,9.653781636926949,18 years and over
+20210124,Total,2183051,Dose 1,6316,0.289319855559948,276969,12.6872436786864,50 years and over
+20210124,Total,4541903,Dose 2,174,,6242,,16 years and over
+20210124,Total,4434138,Dose 2,174,0.00392409979121083,6240,0.14072633733997503,18 years and over
+20210124,Total,2183051,Dose 2,69,0.00316071406485694,2940,0.13467390363303502,50 years and over
+20210125,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210125,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210125,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9970,,321344,,16 years and over
+20210125,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,578,,6798,,16 years and over
+20210125,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12340,,129448,,16 years and over
+20210125,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,4,,26,,16 years and over
+20210125,Total,4541903,Dose 1,22310,,450792,,16 years and over
+20210125,Total,4434138,Dose 1,22276,0.502374982465589,450338,10.1561566193925,18 years and over
+20210125,Total,2183051,Dose 1,17023,0.779780225015357,293992,13.4670239037017,50 years and over
+20210125,Total,4541903,Dose 2,582,,6824,,16 years and over
+20210125,Total,4434138,Dose 2,582,0.0131254372326707,6822,0.15385177457264498,18 years and over
+20210125,Total,2183051,Dose 2,287,0.0131467382117962,3227,0.14782064184483099,50 years and over
+20210126,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210126,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210126,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9526,,330870,,16 years and over
+20210126,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,645,,7443,,16 years and over
+20210126,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,15952,,145400,,16 years and over
+20210126,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2,,28,,16 years and over
+20210126,Total,4541903,Dose 1,25478,,476270,,16 years and over
+20210126,Total,4434138,Dose 1,25457,0.574113841292265,475795,10.730270460684801,18 years and over
+20210126,Total,2183051,Dose 1,20575,0.9424882881801658,314567,14.4095121918819,50 years and over
+20210126,Total,4541903,Dose 2,647,,7471,,16 years and over
+20210126,Total,4434138,Dose 2,647,0.0145913365799621,7469,0.168443111152607,18 years and over
+20210126,Total,2183051,Dose 2,250,0.0114518625538295,3477,0.15927250439866,50 years and over
+20210127,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210127,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210127,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9093,,339963,,16 years and over
+20210127,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,246,,7689,,16 years and over
+20210127,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,20906,,166306,,16 years and over
+20210127,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,29,,16 years and over
+20210127,Total,4541903,Dose 1,29999,,506269,,16 years and over
+20210127,Total,4434138,Dose 1,29985,0.676230645054349,505780,11.406501105739201,18 years and over
+20210127,Total,2183051,Dose 1,25391,1.16309696841714,339958,15.572609160299,50 years and over
+20210127,Total,4541903,Dose 2,247,,7718,,16 years and over
+20210127,Total,4434138,Dose 2,247,0.0055704175197073295,7716,0.17401352867231498,18 years and over
+20210127,Total,2183051,Dose 2,126,0.00577173872713006,3603,0.16504424312579,50 years and over
+20210128,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210128,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210128,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8051,,348014,,16 years and over
+20210128,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,303,,7992,,16 years and over
+20210128,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,20086,,186392,,16 years and over
+20210128,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,30,,16 years and over
+20210128,Total,4541903,Dose 1,28137,,534406,,16 years and over
+20210128,Total,4434138,Dose 1,28115,0.634057848447658,533895,12.040558954186801,18 years and over
+20210128,Total,2183051,Dose 1,23896,1.0946148303452399,363854,16.6672239906443,50 years and over
+20210128,Total,4541903,Dose 2,304,,8022,,16 years and over
+20210128,Total,4434138,Dose 2,304,0.006855898485793629,8020,0.18086942715810803,18 years and over
+20210128,Total,2183051,Dose 2,179,0.00819953358854191,3782,0.173243776714332,50 years and over
+20210129,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210129,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210129,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7886,,355900,,16 years and over
+20210129,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,587,,8579,,16 years and over
+20210129,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,19812,,206204,,16 years and over
+20210129,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,5,,35,,16 years and over
+20210129,Total,4541903,Dose 1,27698,,562104,,16 years and over
+20210129,Total,4434138,Dose 1,27682,0.6242927035649319,561577,12.664851657751699,18 years and over
+20210129,Total,2183051,Dose 1,23278,1.06630582611217,387132,17.733529816756498,50 years and over
+20210129,Total,4541903,Dose 2,592,,8614,,16 years and over
+20210129,Total,4434138,Dose 2,591,0.0133284079115264,8611,0.19419783506963503,18 years and over
+20210129,Total,2183051,Dose 2,367,0.0168113342290217,4149,0.19005511094335395,50 years and over
+20210130,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210130,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210130,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,6580,,362480,,16 years and over
+20210130,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,202,,8781,,16 years and over
+20210130,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,20891,,227095,,16 years and over
+20210130,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,0,,35,,16 years and over
+20210130,Total,4541903,Dose 1,27471,,589575,,16 years and over
+20210130,Total,4434138,Dose 1,27453,0.619128227402936,589030,13.2839798851547,18 years and over
+20210130,Total,2183051,Dose 1,24398,1.11761017035333,411530,18.851139987109804,50 years and over
+20210130,Total,4541903,Dose 2,202,,8816,,16 years and over
+20210130,Total,4434138,Dose 2,200,0.0045104595301273896,8811,0.198708294599762,18 years and over
+20210130,Total,2183051,Dose 2,93,0.004260092870024571,4242,0.194315203813379,50 years and over
+20210131,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210131,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210131,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2109,,364589,,16 years and over
+20210131,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,50,,8831,,16 years and over
+20210131,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,4938,,232033,,16 years and over
+20210131,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1,,36,,16 years and over
+20210131,Total,4541903,Dose 1,7047,,596622,,16 years and over
+20210131,Total,4434138,Dose 1,7042,0.15881328005578502,596072,13.4427931652105,18 years and over
+20210131,Total,2183051,Dose 1,5782,0.264858677144968,417312,19.1159986642548,50 years and over
+20210131,Total,4541903,Dose 2,51,,8867,,16 years and over
+20210131,Total,4434138,Dose 2,51,0.0011501671801824802,8862,0.199858461779945,18 years and over
+20210131,Total,2183051,Dose 2,20,0.000916149004306358,4262,0.195231352817685,50 years and over
+20210201,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210201,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210201,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,18062,,382651,,16 years and over
+20210201,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,616,,9447,,16 years and over
+20210201,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,13877,,245910,,16 years and over
+20210201,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,4,,40,,16 years and over
+20210201,Total,4541903,Dose 1,31939,,628561,,16 years and over
+20210201,Total,4434138,Dose 1,31933,0.72016252087779,628005,14.1629556860883,18 years and over
+20210201,Total,2183051,Dose 1,30027,1.3754603076153502,447339,20.4914589718701,50 years and over
+20210201,Total,4541903,Dose 2,620,,9487,,16 years and over
+20210201,Total,4434138,Dose 2,620,0.0139824245433949,9482,0.21384088632334,18 years and over
+20210201,Total,2183051,Dose 2,358,0.0163990671770838,4620,0.21163041999476898,50 years and over
+20210202,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210202,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210202,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,18751,,401402,,16 years and over
+20210202,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,467,,9914,,16 years and over
+20210202,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,19167,,265077,,16 years and over
+20210202,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,5,,45,,16 years and over
+20210202,Total,4541903,Dose 1,37918,,666479,,16 years and over
+20210202,Total,4434138,Dose 1,37903,0.8547997378520921,665908,15.0177554239403,18 years and over
+20210202,Total,2183051,Dose 1,35737,1.63702084834482,483076,22.128479820214896,50 years and over
+20210202,Total,4541903,Dose 2,472,,9959,,16 years and over
+20210202,Total,4434138,Dose 2,472,0.0106446844911006,9954,0.22448557081443998,18 years and over
+20210202,Total,2183051,Dose 2,246,0.0112686327529682,4866,0.22289905274773697,50 years and over
+20210203,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210203,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210203,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,23624,,425026,,16 years and over
+20210203,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,323,,10237,,16 years and over
+20210203,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,20197,,285274,,16 years and over
+20210203,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,29,,74,,16 years and over
+20210203,Total,4541903,Dose 1,43821,,710300,,16 years and over
+20210203,Total,4434138,Dose 1,43808,0.987971055479103,709716,16.0057264794195,18 years and over
+20210203,Total,2183051,Dose 1,41650,1.90788030146799,524726,24.036360121682897,50 years and over
+20210203,Total,4541903,Dose 2,352,,10311,,16 years and over
+20210203,Total,4434138,Dose 2,352,0.0079384087730242,10306,0.232423979587464,18 years and over
+20210203,Total,2183051,Dose 2,175,0.00801630378768063,5041,0.230915356535418,50 years and over
+20210204,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210204,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210204,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,23532,,448558,,16 years and over
+20210204,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,677,,10914,,16 years and over
+20210204,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,26060,,311334,,16 years and over
+20210204,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,13,,87,,16 years and over
+20210204,Total,4541903,Dose 1,49592,,759892,,16 years and over
+20210204,Total,4434138,Dose 1,49567,1.11784973764912,759283,17.1235762170686,18 years and over
+20210204,Total,2183051,Dose 1,46939,2.1501559056568103,571665,26.186516027339696,50 years and over
+20210204,Total,4541903,Dose 2,690,,11001,,16 years and over
+20210204,Total,4434138,Dose 2,688,0.0155159807836382,10994,0.247939960371103,18 years and over
+20210204,Total,2183051,Dose 2,340,0.0155745330732081,5381,0.246489889608626,50 years and over
+20210205,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210205,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210205,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,24235,,472793,,16 years and over
+20210205,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,921,,11835,,16 years and over
+20210205,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,25208,,336542,,16 years and over
+20210205,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,12,,99,,16 years and over
+20210205,Total,4541903,Dose 1,49443,,809335,,16 years and over
+20210205,Total,4434138,Dose 1,49412,1.11435413151327,808695,18.237930348581802,18 years and over
+20210205,Total,2183051,Dose 1,45961,2.10535621934623,617626,28.2918722466859,50 years and over
+20210205,Total,4541903,Dose 2,933,,11934,,16 years and over
+20210205,Total,4434138,Dose 2,930,0.0209736368150924,11924,0.268913597186195,18 years and over
+20210205,Total,2183051,Dose 2,507,0.0232243772591662,5888,0.269714266867792,50 years and over
+20210206,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210206,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210206,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,21372,,494165,,16 years and over
+20210206,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,276,,12111,,16 years and over
+20210206,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,32191,,368733,,16 years and over
+20210206,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,9,,108,,16 years and over
+20210206,Total,4541903,Dose 1,53563,,862898,,16 years and over
+20210206,Total,4434138,Dose 1,53548,1.20763043459631,862243,19.4455607831782,18 years and over
+20210206,Total,2183051,Dose 1,50727,2.32367452707243,668353,30.615546773758396,50 years and over
+20210206,Total,4541903,Dose 2,285,,12219,,16 years and over
+20210206,Total,4434138,Dose 2,285,0.006427404830431529,12209,0.27534100201662604,18 years and over
+20210206,Total,2183051,Dose 2,136,0.00622981322928324,6024,0.27594408009707505,50 years and over
+20210207,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210207,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210207,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,15660,,509825,,16 years and over
+20210207,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,122,,12233,,16 years and over
+20210207,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,10099,,378832,,16 years and over
+20210207,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,3,,111,,16 years and over
+20210207,Total,4541903,Dose 1,25759,,888657,,16 years and over
+20210207,Total,4434138,Dose 1,25743,0.580563798420347,887986,20.0261245815985,18 years and over
+20210207,Total,2183051,Dose 1,23116,1.05888501917729,691469,31.6744317929357,50 years and over
+20210207,Total,4541903,Dose 2,125,,12344,,16 years and over
+20210207,Total,4434138,Dose 2,125,0.00281903720632962,12334,0.278160039222956,18 years and over
+20210207,Total,2183051,Dose 2,65,0.0029774842639956603,6089,0.278921564361071,50 years and over
+20210208,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210208,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210208,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,33910,,543735,,16 years and over
+20210208,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,1517,,13750,,16 years and over
+20210208,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,22475,,401307,,16 years and over
+20210208,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,31,,142,,16 years and over
+20210208,Total,4541903,Dose 1,56385,,945042,,16 years and over
+20210208,Total,4434138,Dose 1,56369,1.27125046626875,944355,21.297375047867302,18 years and over
+20210208,Total,2183051,Dose 1,53765,2.46283756082657,745234,34.1372693537622,50 years and over
+20210208,Total,4541903,Dose 2,1548,,13892,,16 years and over
+20210208,Total,4434138,Dose 2,1544,0.0348207475725834,13878,0.31298078679554,18 years and over
+20210208,Total,2183051,Dose 2,991,0.0453951831633801,7080,0.324316747524451,50 years and over
+20210209,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210209,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210209,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,31961,,575696,,16 years and over
+20210209,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,716,,14466,,16 years and over
+20210209,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,26084,,427391,,16 years and over
+20210209,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,50,,192,,16 years and over
+20210209,Total,4541903,Dose 1,58045,,1003087,,16 years and over
+20210209,Total,4434138,Dose 1,58026,1.30861962347586,1002381,22.6059946713431,18 years and over
+20210209,Total,2183051,Dose 1,55016,2.52014268104593,800250,36.6574120348082,50 years and over
+20210209,Total,4541903,Dose 2,766,,14658,,16 years and over
+20210209,Total,4434138,Dose 2,766,0.0172750600003879,14644,0.330255846795927,18 years and over
+20210209,Total,2183051,Dose 2,385,0.0176358683328974,7465,0.341952615857348,50 years and over
+20210210,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210210,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210210,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,33221,,608917,,16 years and over
+20210210,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,406,,14872,,16 years and over
+20210210,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,30826,,458217,,16 years and over
+20210210,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,54,,246,,16 years and over
+20210210,Total,4541903,Dose 1,64047,,1067134,,16 years and over
+20210210,Total,4434138,Dose 1,64024,1.4438883047843798,1066405,24.0498829761275,18 years and over
+20210210,Total,2183051,Dose 1,60779,2.7841310166368105,861029,39.441543051444995,50 years and over
+20210210,Total,4541903,Dose 2,460,,15118,,16 years and over
+20210210,Total,4434138,Dose 2,459,0.0103515046216424,15103,0.34060735141757004,18 years and over
+20210210,Total,2183051,Dose 2,254,0.0116350923546908,7719,0.353587708212039,50 years and over
+20210211,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210211,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210211,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,32725,,641642,,16 years and over
+20210211,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,425,,15297,,16 years and over
+20210211,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,29967,,488184,,16 years and over
+20210211,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,81,,327,,16 years and over
+20210211,Total,4541903,Dose 1,62692,,1129826,,16 years and over
+20210211,Total,4434138,Dose 1,62658,1.4130818661936102,1129063,25.4629648423211,18 years and over
+20210211,Total,2183051,Dose 1,59004,2.70282279250462,920033,42.1443658439496,50 years and over
+20210211,Total,4541903,Dose 2,506,,15624,,16 years and over
+20210211,Total,4434138,Dose 2,505,0.0113889103135717,15608,0.351996261731141,18 years and over
+20210211,Total,2183051,Dose 2,247,0.0113144402031835,7966,0.364902148415223,50 years and over
+20210212,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210212,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210212,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,27977,,669619,,16 years and over
+20210212,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,479,,15776,,16 years and over
+20210212,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,31181,,519365,,16 years and over
+20210212,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,91,,418,,16 years and over
+20210212,Total,4541903,Dose 1,59158,,1188984,,16 years and over
+20210212,Total,4434138,Dose 1,59124,1.33338204629626,1188187,26.796346888617396,18 years and over
+20210212,Total,2183051,Dose 1,55812,2.5566054114173196,975845,44.700971255366895,50 years and over
+20210212,Total,4541903,Dose 2,570,,16194,,16 years and over
+20210212,Total,4434138,Dose 2,570,0.0128548096608631,16178,0.36485107139200396,18 years and over
+20210212,Total,2183051,Dose 2,294,0.0134673903633035,8260,0.378369538778526,50 years and over
+20210213,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210213,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210213,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,26132,,695751,,16 years and over
+20210213,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,366,,16142,,16 years and over
+20210213,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,28317,,547682,,16 years and over
+20210213,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,34,,452,,16 years and over
+20210213,Total,4541903,Dose 1,54449,,1243433,,16 years and over
+20210213,Total,4434138,Dose 1,54409,1.22704796287351,1242596,28.0233948514909,18 years and over
+20210213,Total,2183051,Dose 1,51137,2.34245558166071,1026982,47.043426837027596,50 years and over
+20210213,Total,4541903,Dose 2,400,,16594,,16 years and over
+20210213,Total,4434138,Dose 2,399,0.00899836676260414,16577,0.37384943815460897,18 years and over
+20210213,Total,2183051,Dose 2,229,0.0104899060993078,8489,0.38885944487783397,50 years and over
+20210214,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210214,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210214,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,17706,,713457,,16 years and over
+20210214,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,248,,16390,,16 years and over
+20210214,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11720,,559402,,16 years and over
+20210214,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,8,,460,,16 years and over
+20210214,Total,4541903,Dose 1,29426,,1272859,,16 years and over
+20210214,Total,4434138,Dose 1,29412,0.6633081785005339,1272008,28.6867030299914,18 years and over
+20210214,Total,2183051,Dose 1,26921,1.23318236724657,1053903,48.27660920427421,50 years and over
+20210214,Total,4541903,Dose 2,256,,16850,,16 years and over
+20210214,Total,4434138,Dose 2,255,0.00575083590091242,16832,0.379600274055521,18 years and over
+20210214,Total,2183051,Dose 2,169,0.0077414590863887295,8658,0.396600903964223,50 years and over
+20210215,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210215,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210215,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9986,,723443,,16 years and over
+20210215,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,2783,,19173,,16 years and over
+20210215,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,19393,,578795,,16 years and over
+20210215,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,42,,502,,16 years and over
+20210215,Total,4541903,Dose 1,29379,,1302238,,16 years and over
+20210215,Total,4434138,Dose 1,29365,0.662248220510954,1301373,29.3489512505024,18 years and over
+20210215,Total,2183051,Dose 1,27249,1.2482072109172,1081152,49.5248164151914,50 years and over
+20210215,Total,4541903,Dose 2,2825,,19675,,16 years and over
+20210215,Total,4434138,Dose 2,2823,0.0636651362677481,19655,0.443265410323269,18 years and over
+20210215,Total,2183051,Dose 2,1720,0.0787888143703468,10378,0.47538971833456894,50 years and over
+20210216,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210216,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210216,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9830,,733273,,16 years and over
+20210216,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,3426,,22599,,16 years and over
+20210216,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,21795,,600590,,16 years and over
+20210216,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,133,,635,,16 years and over
+20210216,Total,4541903,Dose 1,31625,,1333863,,16 years and over
+20210216,Total,4434138,Dose 1,31610,0.7128781287366341,1332983,30.061829379239,18 years and over
+20210216,Total,2183051,Dose 1,29294,1.34188344660752,1110446,50.8666998617989,50 years and over
+20210216,Total,4541903,Dose 2,3559,,23234,,16 years and over
+20210216,Total,4434138,Dose 2,3556,0.080195970445665,23211,0.523461380768934,18 years and over
+20210216,Total,2183051,Dose 2,2247,0.10292934063381899,12625,0.5783190589683891,50 years and over
+20210217,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210217,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210217,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8765,,742038,,16 years and over
+20210217,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,3828,,26427,,16 years and over
+20210217,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,24704,,625294,,16 years and over
+20210217,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,118,,753,,16 years and over
+20210217,Total,4541903,Dose 1,33469,,1367332,,16 years and over
+20210217,Total,4434138,Dose 1,33446,0.754284147223203,1366429,30.816113526462196,18 years and over
+20210217,Total,2183051,Dose 1,30216,1.3841179157060501,1140662,52.250817777505,50 years and over
+20210217,Total,4541903,Dose 2,3946,,27180,,16 years and over
+20210217,Total,4434138,Dose 2,3938,0.0888109481482083,27149,0.6122723289171421,18 years and over
+20210217,Total,2183051,Dose 2,2515,0.11520573729152499,15140,0.693524796259913,50 years and over
+20210218,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210218,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210218,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7759,,749797,,16 years and over
+20210218,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4763,,31190,,16 years and over
+20210218,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,22199,,647493,,16 years and over
+20210218,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,168,,921,,16 years and over
+20210218,Total,4541903,Dose 1,29958,,1397290,,16 years and over
+20210218,Total,4434138,Dose 1,29919,0.674742193409407,1396348,31.4908557198716,18 years and over
+20210218,Total,2183051,Dose 1,26739,1.2248454113073899,1167401,53.47566318881229,50 years and over
+20210218,Total,4541903,Dose 2,4931,,32111,,16 years and over
+20210218,Total,4434138,Dose 2,4910,0.11073178146462699,32059,0.72300411038177,18 years and over
+20210218,Total,2183051,Dose 2,3073,0.140766294511672,18213,0.8342910907715849,50 years and over
+20210219,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210219,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210219,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5738,,755535,,16 years and over
+20210219,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4545,,35735,,16 years and over
+20210219,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,20348,,667841,,16 years and over
+20210219,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,114,,1035,,16 years and over
+20210219,Total,4541903,Dose 1,26086,,1423376,,16 years and over
+20210219,Total,4434138,Dose 1,26062,0.5877579813709001,1422410,32.078613701242496,18 years and over
+20210219,Total,2183051,Dose 1,23102,1.05824371487427,1190503,54.5339069036866,50 years and over
+20210219,Total,4541903,Dose 2,4659,,36770,,16 years and over
+20210219,Total,4434138,Dose 2,4649,0.10484563177781099,36708,0.8278497421595808,18 years and over
+20210219,Total,2183051,Dose 2,2686,0.123038811278344,20899,0.9573299020499291,50 years and over
+20210220,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210220,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210220,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3895,,759430,,16 years and over
+20210220,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,2015,,37750,,16 years and over
+20210220,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,15661,,683502,,16 years and over
+20210220,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,8,,1043,,16 years and over
+20210220,Total,4541903,Dose 1,19556,,1442932,,16 years and over
+20210220,Total,4434138,Dose 1,19549,0.44087486677230203,1441959,32.5194885680148,18 years and over
+20210220,Total,2183051,Dose 1,16047,0.7350721536052071,1206550,55.268979057291794,50 years and over
+20210220,Total,4541903,Dose 2,2023,,38793,,16 years and over
+20210220,Total,4434138,Dose 2,2023,0.0456232981472385,38731,0.8734730403068199,18 years and over
+20210220,Total,2183051,Dose 2,1238,0.0567096233665636,22137,1.01403952541649,50 years and over
+20210221,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210221,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210221,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3814,,763244,,16 years and over
+20210221,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,1860,,39610,,16 years and over
+20210221,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,9674,,693176,,16 years and over
+20210221,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,9,,1052,,16 years and over
+20210221,Total,4541903,Dose 1,13488,,1456420,,16 years and over
+20210221,Total,4434138,Dose 1,13486,0.30414028611648997,1455445,32.8236288541313,18 years and over
+20210221,Total,2183051,Dose 1,11065,0.506859436632493,1217615,55.77583849392429,50 years and over
+20210221,Total,4541903,Dose 2,1869,,40662,,16 years and over
+20210221,Total,4434138,Dose 2,1864,0.0420374828207873,40595,0.9155105231276071,18 years and over
+20210221,Total,2183051,Dose 2,1073,0.0491513940810361,23210,1.06319091949753,50 years and over
+20210222,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210222,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210222,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5577,,768821,,16 years and over
+20210222,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5980,,45590,,16 years and over
+20210222,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,13412,,706588,,16 years and over
+20210222,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,98,,1150,,16 years and over
+20210222,Total,4541903,Dose 1,18989,,1475409,,16 years and over
+20210222,Total,4434138,Dose 1,18977,0.427974952516137,1474422,33.251603806647395,18 years and over
+20210222,Total,2183051,Dose 1,15353,0.7032817831557759,1232968,56.4791202770801,50 years and over
+20210222,Total,4541903,Dose 2,6078,,46740,,16 years and over
+20210222,Total,4434138,Dose 2,6074,0.136982655929969,46669,1.05249317905758,18 years and over
+20210222,Total,2183051,Dose 2,3040,0.13925464865456602,26250,1.2024455681521002,50 years and over
+20210223,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210223,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210223,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7012,,775833,,16 years and over
+20210223,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7046,,52636,,16 years and over
+20210223,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,16049,,722637,,16 years and over
+20210223,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,111,,1261,,16 years and over
+20210223,Total,4541903,Dose 1,23061,,1498470,,16 years and over
+20210223,Total,4434138,Dose 1,23042,0.519650042465976,1497464,33.7712538491134,18 years and over
+20210223,Total,2183051,Dose 1,18025,0.8256792901311051,1250993,57.3047995672112,50 years and over
+20210223,Total,4541903,Dose 2,7157,,53897,,16 years and over
+20210223,Total,4434138,Dose 2,7154,0.16133913739265698,53823,1.21383231645023,18 years and over
+20210223,Total,2183051,Dose 2,3762,0.17232762771002602,30012,1.37477319586212,50 years and over
+20210224,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210224,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210224,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10467,,786300,,16 years and over
+20210224,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6688,,59324,,16 years and over
+20210224,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,17551,,740188,,16 years and over
+20210224,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,157,,1418,,16 years and over
+20210224,Total,4541903,Dose 1,28018,,1526488,,16 years and over
+20210224,Total,4434138,Dose 1,27983,0.6310809451577739,1525447,34.4023347942712,18 years and over
+20210224,Total,2183051,Dose 1,20826,0.953985958184211,1271819,58.2587855253954,50 years and over
+20210224,Total,4541903,Dose 2,6845,,60742,,16 years and over
+20210224,Total,4434138,Dose 2,6842,0.15430282052565802,60665,1.3681351369758898,18 years and over
+20210224,Total,2183051,Dose 2,3518,0.16115060985748803,33530,1.53592380571961,50 years and over
+20210225,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210225,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210225,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9911,,796211,,16 years and over
+20210225,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6499,,65823,,16 years and over
+20210225,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,17523,,757711,,16 years and over
+20210225,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,90,,1508,,16 years and over
+20210225,Total,4541903,Dose 1,27434,,1553922,,16 years and over
+20210225,Total,4434138,Dose 1,27405,0.6180457171157061,1552852,35.0203805113869,18 years and over
+20210225,Total,2183051,Dose 1,18898,0.8656691941690781,1290717,59.124454719564504,50 years and over
+20210225,Total,4541903,Dose 2,6589,,67331,,16 years and over
+20210225,Total,4434138,Dose 2,6584,0.148484327731794,67249,1.51661946470768,18 years and over
+20210225,Total,2183051,Dose 2,3516,0.16105899495705803,37046,1.6969828006766698,50 years and over
+20210226,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210226,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210226,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9835,,806046,,16 years and over
+20210226,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6848,,72671,,16 years and over
+20210226,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,15839,,773550,,16 years and over
+20210226,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,121,,1629,,16 years and over
+20210226,Total,4541903,Dose 1,25674,,1579596,,16 years and over
+20210226,Total,4434138,Dose 1,25379,0.5723547620755151,1578231,35.5927352734624,18 years and over
+20210226,Total,2183051,Dose 1,17148,0.7855061562922719,1307865,59.9099608758568,50 years and over
+20210226,Total,4541903,Dose 2,6969,,74300,,16 years and over
+20210226,Total,4434138,Dose 2,6959,0.15694143935078303,74208,1.6735609040584698,18 years and over
+20210226,Total,2183051,Dose 2,3679,0.16852560934215502,40725,1.8655084100188202,50 years and over
+20210227,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210227,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210227,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7681,,813727,,16 years and over
+20210227,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4334,,77005,,16 years and over
+20210227,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,14991,,788541,,16 years and over
+20210227,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,23,,1652,,16 years and over
+20210227,Total,4541903,Dose 1,22672,,1602268,,16 years and over
+20210227,Total,4434138,Dose 1,22635,0.5104712573221671,1600866,36.103206530784604,18 years and over
+20210227,Total,2183051,Dose 1,15333,0.7023656341514699,1323198,60.6123265100082,50 years and over
+20210227,Total,4541903,Dose 2,4357,,78657,,16 years and over
+20210227,Total,4434138,Dose 2,4354,0.0981927039708733,78562,1.7717536080293401,18 years and over
+20210227,Total,2183051,Dose 2,2274,0.10416614178963302,42999,1.96967455180846,50 years and over
+20210228,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210228,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210228,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5873,,819600,,16 years and over
+20210228,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,2416,,79421,,16 years and over
+20210228,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12313,,800854,,16 years and over
+20210228,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,7,,1659,,16 years and over
+20210228,Total,4541903,Dose 1,18186,,1620454,,16 years and over
+20210228,Total,4434138,Dose 1,18177,0.40993311439562796,1619043,36.5131396451802,18 years and over
+20210228,Total,2183051,Dose 1,11651,0.5337026024586691,1334849,61.1460291124669,50 years and over
+20210228,Total,4541903,Dose 2,2423,,81080,,16 years and over
+20210228,Total,4434138,Dose 2,2418,0.0545314557192401,80980,1.8262850637485801,18 years and over
+20210228,Total,2183051,Dose 2,1378,0.0631226663967081,44377,2.0327972182051597,50 years and over
+20210301,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210301,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210301,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3843,,823443,,16 years and over
+20210301,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5673,,85094,,16 years and over
+20210301,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,19602,,820456,,16 years and over
+20210301,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,42,,1701,,16 years and over
+20210301,Total,4541903,Dose 1,23445,,1643899,,16 years and over
+20210301,Total,4434138,Dose 1,23387,0.527430585155446,1642430,37.040570230335604,18 years and over
+20210301,Total,2183051,Dose 1,14000,0.6413043030144511,1348849,61.7873334154814,50 years and over
+20210301,Total,4541903,Dose 2,5715,,86795,,16 years and over
+20210301,Total,4434138,Dose 2,5710,0.128773619585137,86690,1.95505868333372,18 years and over
+20210301,Total,2183051,Dose 2,2789,0.127756978650522,47166,2.16055419685568,50 years and over
+20210302,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210302,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210302,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3253,,826696,,16 years and over
+20210302,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8321,,93415,,16 years and over
+20210302,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,24783,,845239,,16 years and over
+20210302,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,110,,1811,,16 years and over
+20210302,Total,4541903,Dose 1,28036,,1671935,,16 years and over
+20210302,Total,4434138,Dose 1,27987,0.6311711543483759,1670417,37.671741384684,18 years and over
+20210302,Total,2183051,Dose 1,16984,0.77799373445696,1365833,62.5653271499383,50 years and over
+20210302,Total,4541903,Dose 2,8431,,95226,,16 years and over
+20210302,Total,4434138,Dose 2,8425,0.19000310770661605,95115,2.14506179104033,18 years and over
+20210302,Total,2183051,Dose 2,4243,0.194361011263594,51409,2.3549152081192797,50 years and over
+20210303,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210303,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210303,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2010,,828706,,16 years and over
+20210303,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8397,,101812,,16 years and over
+20210303,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,24626,,869865,,16 years and over
+20210303,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,266,,2077,,16 years and over
+20210303,Total,4541903,Dose 1,26636,,1698571,,16 years and over
+20210303,Total,4434138,Dose 1,26566,0.599124339386821,1696983,38.270865724070795,18 years and over
+20210303,Total,2183051,Dose 1,16096,0.737316718665757,1381929,63.3026438686041,50 years and over
+20210303,Total,4541903,Dose 2,8663,,103889,,16 years and over
+20210303,Total,4434138,Dose 2,8650,0.19507737467801,103765,2.34013916571834,18 years and over
+20210303,Total,2183051,Dose 2,4932,0.225922344461948,56341,2.58083755258123,50 years and over
+20210304,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210304,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210304,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1631,,830337,,16 years and over
+20210304,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7307,,109119,,16 years and over
+20210304,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,25491,,895356,,16 years and over
+20210304,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,196,,2273,,16 years and over
+20210304,Total,4541903,Dose 1,27122,,1725693,,16 years and over
+20210304,Total,4434138,Dose 1,27022,0.6094081871155121,1724005,38.8802739111864,18 years and over
+20210304,Total,2183051,Dose 1,16284,0.745928519306237,1398213,64.0485723879103,50 years and over
+20210304,Total,4541903,Dose 2,7503,,111392,,16 years and over
+20210304,Total,4434138,Dose 2,7491,0.168939261700921,111256,2.5090784274192597,18 years and over
+20210304,Total,2183051,Dose 2,4028,0.18451240946730105,60369,2.76534996204853,50 years and over
+20210305,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210305,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210305,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2973,,833310,,16 years and over
+20210305,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5570,,114689,,16 years and over
+20210305,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,23694,,919050,,16 years and over
+20210305,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,112,,2385,,16 years and over
+20210305,Total,4541903,Dose 1,26667,,1752360,,16 years and over
+20210305,Total,4434138,Dose 1,26541,0.598560531945555,1750546,39.4788344431319,18 years and over
+20210305,Total,2183051,Dose 1,15974,0.7317282097394879,1414187,64.7803005976498,50 years and over
+20210305,Total,4541903,Dose 2,5682,,117074,,16 years and over
+20210305,Total,4434138,Dose 2,5672,0.12791663227441302,116928,2.63699505969368,18 years and over
+20210305,Total,2183051,Dose 2,2976,0.136322971840786,63345,2.90167293388931,50 years and over
+20210306,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210306,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210306,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3277,,836587,,16 years and over
+20210306,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,3041,,117730,,16 years and over
+20210306,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,14529,,933579,,16 years and over
+20210306,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,119,,2504,,16 years and over
+20210306,Total,4541903,Dose 1,17806,,1770166,,16 years and over
+20210306,Total,4434138,Dose 1,17496,0.394574999695544,1768042,39.873409442827395,18 years and over
+20210306,Total,2183051,Dose 1,10024,0.45917388095834705,1424211,65.2394744786081,50 years and over
+20210306,Total,4541903,Dose 2,3160,,120234,,16 years and over
+20210306,Total,4434138,Dose 2,3159,0.0712427082783621,120087,2.70823776797204,18 years and over
+20210306,Total,2183051,Dose 2,2291,0.10494486844329301,65636,3.00661780233261,50 years and over
+20210307,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210307,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210307,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2388,,838975,,16 years and over
+20210307,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,1615,,119345,,16 years and over
+20210307,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,8816,,942395,,16 years and over
+20210307,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,22,,2526,,16 years and over
+20210307,Total,4541903,Dose 1,11204,,1781370,,16 years and over
+20210307,Total,4434138,Dose 1,11189,0.25233765841297695,1779231,40.1257471012404,18 years and over
+20210307,Total,2183051,Dose 1,6410,0.29362575588018797,1430621,65.5331002344883,50 years and over
+20210307,Total,4541903,Dose 2,1637,,121871,,16 years and over
+20210307,Total,4434138,Dose 2,1629,0.0367376928728876,121716,2.7449754608449304,18 years and over
+20210307,Total,2183051,Dose 2,869,0.0398066742371113,66505,3.0464244765697206,50 years and over
+20210308,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210308,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210308,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1147,,840122,,16 years and over
+20210308,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4685,,124030,,16 years and over
+20210308,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,14031,,956426,,16 years and over
+20210308,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,173,,2699,,16 years and over
+20210308,Total,4541903,Dose 1,15178,,1796548,,16 years and over
+20210308,Total,4434138,Dose 1,15129,0.34119371115648606,1794360,40.4669408123969,18 years and over
+20210308,Total,2183051,Dose 1,8428,0.38606519041469894,1439049,65.919165424903,50 years and over
+20210308,Total,4541903,Dose 2,4858,,126729,,16 years and over
+20210308,Total,4434138,Dose 2,4848,0.10933353901028801,126564,2.8543089998552102,18 years and over
+20210308,Total,2183051,Dose 2,2831,0.129680891559565,69336,3.1761053681292797,50 years and over
+20210309,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210309,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210309,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1095,,841217,,16 years and over
+20210309,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9411,,133441,,16 years and over
+20210309,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,17771,,974197,,16 years and over
+20210309,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,260,,2959,,16 years and over
+20210309,Total,4541903,Dose 1,18866,,1815414,,16 years and over
+20210309,Total,4434138,Dose 1,18727,0.422336878103478,1813087,40.8892776905004,18 years and over
+20210309,Total,2183051,Dose 1,10023,0.459128073508132,1449072,66.37829349841121,50 years and over
+20210309,Total,4541903,Dose 2,9671,,136400,,16 years and over
+20210309,Total,4434138,Dose 2,9654,0.217719881519249,136218,3.07202888137446,18 years and over
+20210309,Total,2183051,Dose 2,5143,0.23558771645738003,74479,3.4116930845866604,50 years and over
+20210310,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210310,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210310,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,803,,842020,,16 years and over
+20210310,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8653,,142094,,16 years and over
+20210310,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,15692,,989889,,16 years and over
+20210310,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,352,,3311,,16 years and over
+20210310,Total,4541903,Dose 1,16495,,1831909,,16 years and over
+20210310,Total,4434138,Dose 1,16450,0.370985296352978,1829537,41.2602629868534,18 years and over
+20210310,Total,2183051,Dose 1,9036,0.41391612014561296,1458108,66.7922096185568,50 years and over
+20210310,Total,4541903,Dose 2,9005,,145405,,16 years and over
+20210310,Total,4434138,Dose 2,8994,0.20283536506982897,145212,3.2748642464442903,18 years and over
+20210310,Total,2183051,Dose 2,5060,0.23178569808950897,79539,3.64347878267617,50 years and over
+20210311,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210311,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210311,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1459,,843479,,16 years and over
+20210311,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7405,,149499,,16 years and over
+20210311,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,17713,,1007602,,16 years and over
+20210311,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,437,,3748,,16 years and over
+20210311,Total,4541903,Dose 1,19172,,1851081,,16 years and over
+20210311,Total,4434138,Dose 1,18768,0.423261522307154,1848305,41.6835245091605,18 years and over
+20210311,Total,2183051,Dose 1,9640,0.441583820075665,1467748,67.2337934386324,50 years and over
+20210311,Total,4541903,Dose 2,7842,,153247,,16 years and over
+20210311,Total,4434138,Dose 2,7829,0.176561938306837,153041,3.4514261847511296,18 years and over
+20210311,Total,2183051,Dose 2,4452,0.203934768358595,83991,3.8474135510347702,50 years and over
+20210312,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210312,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210312,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,923,,844402,,16 years and over
+20210312,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6526,,156025,,16 years and over
+20210312,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,20826,,1028428,,16 years and over
+20210312,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,451,,4199,,16 years and over
+20210312,Total,4541903,Dose 1,21749,,1872830,,16 years and over
+20210312,Total,4434138,Dose 1,21635,0.48791895967153004,1869940,42.171443468832,18 years and over
+20210312,Total,2183051,Dose 1,11375,0.521059746199241,1479123,67.7548531848317,50 years and over
+20210312,Total,4541903,Dose 2,6977,,160224,,16 years and over
+20210312,Total,4434138,Dose 2,6962,0.157009096243734,160003,3.60843528099486,18 years and over
+20210312,Total,2183051,Dose 2,4049,0.185474365921822,88040,4.032887916956589,50 years and over
+20210313,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210313,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210313,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,486,,844888,,16 years and over
+20210313,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4570,,160595,,16 years and over
+20210313,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,23637,,1052065,,16 years and over
+20210313,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,505,,4704,,16 years and over
+20210313,Total,4541903,Dose 1,24123,,1896953,,16 years and over
+20210313,Total,4434138,Dose 1,23987,0.540961963745828,1893927,42.712405432577896,18 years and over
+20210313,Total,2183051,Dose 1,17198,0.787796528803038,1496321,68.5426497136347,50 years and over
+20210313,Total,4541903,Dose 2,5075,,165299,,16 years and over
+20210313,Total,4434138,Dose 2,5068,0.114295044493428,165071,3.72273032548829,18 years and over
+20210313,Total,2183051,Dose 2,3191,0.14617157363707903,91231,4.17905949059367,50 years and over
+20210314,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210314,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210314,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,872,,845760,,16 years and over
+20210314,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,1891,,162486,,16 years and over
+20210314,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,19489,,1071554,,16 years and over
+20210314,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,27,,4731,,16 years and over
+20210314,Total,4541903,Dose 1,20361,,1917314,,16 years and over
+20210314,Total,4434138,Dose 1,19760,0.445633401576586,1913687,43.1580388341545,18 years and over
+20210314,Total,2183051,Dose 1,13150,0.6023679703314311,1509471,69.1450176839662,50 years and over
+20210314,Total,4541903,Dose 2,1918,,167217,,16 years and over
+20210314,Total,4434138,Dose 2,1918,0.0432553068939217,166989,3.76598563238221,18 years and over
+20210314,Total,2183051,Dose 2,886,0.0405854008907717,92117,4.21964489148444,50 years and over
+20210315,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210315,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210315,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,714,,846474,,16 years and over
+20210315,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7049,,169535,,16 years and over
+20210315,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,31846,,1103400,,16 years and over
+20210315,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,748,,5479,,16 years and over
+20210315,Total,4541903,Dose 1,32560,,1949874,,16 years and over
+20210315,Total,4434138,Dose 1,32414,0.731010176047746,1946101,43.88904901020221,18 years and over
+20210315,Total,2183051,Dose 1,26806,1.22791451047181,1536277,70.372932194438,50 years and over
+20210315,Total,4541903,Dose 2,7797,,175014,,16 years and over
+20210315,Total,4434138,Dose 2,7791,0.175704950996112,174780,3.94169058337833,18 years and over
+20210315,Total,2183051,Dose 2,4162,0.190650607796153,96279,4.41029549928059,50 years and over
+20210316,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210316,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210316,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,796,,847270,,16 years and over
+20210316,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10471,,180006,,16 years and over
+20210316,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,36856,,1140256,,16 years and over
+20210316,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1333,,6812,,16 years and over
+20210316,Total,4541903,Dose 1,37652,,1987526,,16 years and over
+20210316,Total,4434138,Dose 1,37496,0.845620952708283,1983597,44.7346699629105,18 years and over
+20210316,Total,2183051,Dose 1,31552,1.44531666919371,1567829,71.81824886363171,50 years and over
+20210316,Total,4541903,Dose 2,11804,,186818,,16 years and over
+20210316,Total,4434138,Dose 2,11788,0.265846484705708,186568,4.207537068084029,18 years and over
+20210316,Total,2183051,Dose 2,6573,0.30109237026528496,102852,4.71138786954588,50 years and over
+20210317,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210317,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210317,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,676,,847946,,16 years and over
+20210317,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9442,,189448,,16 years and over
+20210317,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,42004,,1182260,,16 years and over
+20210317,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1324,,8136,,16 years and over
+20210317,Total,4541903,Dose 1,42680,,2030206,,16 years and over
+20210317,Total,4434138,Dose 1,42430,0.9568939893165259,2026027,45.691563952227,18 years and over
+20210317,Total,2183051,Dose 1,35212,1.61297193698177,1603041,73.4312208006134,50 years and over
+20210317,Total,4541903,Dose 2,10766,,197584,,16 years and over
+20210317,Total,4434138,Dose 2,10759,0.242640170423203,197327,4.450177238507241,18 years and over
+20210317,Total,2183051,Dose 2,6371,0.29183926532179,109223,5.00322713486767,50 years and over
+20210318,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210318,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210318,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,722,,848668,,16 years and over
+20210318,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7298,,196746,,16 years and over
+20210318,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,41802,,1224062,,16 years and over
+20210318,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2992,,11128,,16 years and over
+20210318,Total,4541903,Dose 1,42524,,2072730,,16 years and over
+20210318,Total,4434138,Dose 1,42220,0.952158006809892,2068247,46.643721959036895,18 years and over
+20210318,Total,2183051,Dose 1,31526,1.4441256754881102,1634567,74.87534647610158,50 years and over
+20210318,Total,4541903,Dose 2,10290,,207874,,16 years and over
+20210318,Total,4434138,Dose 2,10276,0.23174741065794502,207603,4.68192464916518,18 years and over
+20210318,Total,2183051,Dose 2,6838,0.31323134457234403,116061,5.316458479440009,50 years and over
+20210319,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210319,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210319,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1084,,849752,,16 years and over
+20210319,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5702,,202448,,16 years and over
+20210319,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,41036,,1265098,,16 years and over
+20210319,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2453,,13581,,16 years and over
+20210319,Total,4541903,Dose 1,42120,,2114850,,16 years and over
+20210319,Total,4434138,Dose 1,41398,0.9336200181410679,2109645,47.577341977178,18 years and over
+20210319,Total,2183051,Dose 1,28221,1.29273205252649,1662788,76.16807852862809,50 years and over
+20210319,Total,4541903,Dose 2,8155,,216029,,16 years and over
+20210319,Total,4434138,Dose 2,8144,0.183665912066787,215747,4.865590561231969,18 years and over
+20210319,Total,2183051,Dose 2,5105,0.23384703334919799,121166,5.55030551278921,50 years and over
+20210320,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210320,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210320,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,477,,850229,,16 years and over
+20210320,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8177,,210625,,16 years and over
+20210320,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,41360,,1306458,,16 years and over
+20210320,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,5166,,18747,,16 years and over
+20210320,Total,4541903,Dose 1,41837,,2156687,,16 years and over
+20210320,Total,4434138,Dose 1,41548,0.9370028627886641,2151193,48.514344839966604,18 years and over
+20210320,Total,2183051,Dose 1,32082,1.46959461780783,1694870,77.63767314643592,50 years and over
+20210320,Total,4541903,Dose 2,13343,,229372,,16 years and over
+20210320,Total,4434138,Dose 2,13336,0.300757441468894,229083,5.16634800270086,18 years and over
+20210320,Total,2183051,Dose 2,8833,0.40461720775190296,129999,5.95492272054111,50 years and over
+20210321,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210321,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210321,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,517,,850746,,16 years and over
+20210321,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,1838,,212463,,16 years and over
+20210321,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,30044,,1336502,,16 years and over
+20210321,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,809,,19556,,16 years and over
+20210321,Total,4541903,Dose 1,30561,,2187248,,16 years and over
+20210321,Total,4434138,Dose 1,30494,0.687709764558523,2181687,49.2020546045252,18 years and over
+20210321,Total,2183051,Dose 1,22558,1.03332446195714,1717428,78.670997608393,50 years and over
+20210321,Total,4541903,Dose 2,2647,,232019,,16 years and over
+20210321,Total,4434138,Dose 2,2640,0.0595380657976815,231723,5.22588606849854,18 years and over
+20210321,Total,2183051,Dose 2,1611,0.0737958022968772,131610,6.02871852283799,50 years and over
+20210322,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210322,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210322,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,627,,851373,,16 years and over
+20210322,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7715,,220178,,16 years and over
+20210322,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,32739,,1369241,,16 years and over
+20210322,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2854,,22410,,16 years and over
+20210322,Total,4541903,Dose 1,33366,,2220614,,16 years and over
+20210322,Total,4434138,Dose 1,33327,0.7516004238027769,2215014,49.953655028327894,18 years and over
+20210322,Total,2183051,Dose 1,27349,1.25278795593873,1744777,79.9237855643318,50 years and over
+20210322,Total,4541903,Dose 2,10569,,242588,,16 years and over
+20210322,Total,4434138,Dose 2,10551,0.23794929251187,242274,5.46383536101041,18 years and over
+20210322,Total,2183051,Dose 2,6380,0.29225153237372803,137990,6.32097005521172,50 years and over
+20210323,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210323,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210323,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,516,,851889,,16 years and over
+20210323,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9217,,229395,,16 years and over
+20210323,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,34685,,1403926,,16 years and over
+20210323,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,6194,,28604,,16 years and over
+20210323,Total,4541903,Dose 1,35201,,2255815,,16 years and over
+20210323,Total,4434138,Dose 1,35183,0.7934574882423601,2250197,50.747112516570304,18 years and over
+20210323,Total,2183051,Dose 1,29191,1.3371652792353501,1773968,81.2609508435671,50 years and over
+20210323,Total,4541903,Dose 2,15411,,257999,,16 years and over
+20210323,Total,4434138,Dose 2,15395,0.347192622331556,257669,5.811027983341969,18 years and over
+20210323,Total,2183051,Dose 2,10472,0.4796956186548089,148462,6.800665673866531,50 years and over
+20210324,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210324,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210324,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,357,,852246,,16 years and over
+20210324,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8356,,237751,,16 years and over
+20210324,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,36136,,1440062,,16 years and over
+20210324,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,6555,,35159,,16 years and over
+20210324,Total,4541903,Dose 1,36493,,2292308,,16 years and over
+20210324,Total,4434138,Dose 1,36452,0.8220763539610179,2286649,51.5691888705313,18 years and over
+20210324,Total,2183051,Dose 1,32040,1.46767070489879,1806008,82.72862154846591,50 years and over
+20210324,Total,4541903,Dose 2,14911,,272910,,16 years and over
+20210324,Total,4434138,Dose 2,14900,0.33602923499449,272569,6.147057218336459,18 years and over
+20210324,Total,2183051,Dose 2,10443,0.478367202598565,158905,7.279032876465089,50 years and over
+20210325,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210325,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210325,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,291,,852537,,16 years and over
+20210325,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8643,,246394,,16 years and over
+20210325,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,35548,,1475610,,16 years and over
+20210325,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,7973,,43132,,16 years and over
+20210325,Total,4541903,Dose 1,35839,,2328147,,16 years and over
+20210325,Total,4434138,Dose 1,35801,0.8073948081904531,2322450,52.3765836787218,18 years and over
+20210325,Total,2183051,Dose 1,31283,1.4329944650857902,1837291,84.16161601355171,50 years and over
+20210325,Total,4541903,Dose 2,16616,,289526,,16 years and over
+20210325,Total,4434138,Dose 2,16584,0.3740073042381629,289153,6.52106452257462,18 years and over
+20210325,Total,2183051,Dose 2,12064,0.552621079397595,170969,7.8316539558626905,50 years and over
+20210326,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210326,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210326,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,298,,852835,,16 years and over
+20210326,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7375,,253769,,16 years and over
+20210326,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,33285,,1508895,,16 years and over
+20210326,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,7789,,50921,,16 years and over
+20210326,Total,4541903,Dose 1,33583,,2361730,,16 years and over
+20210326,Total,4434138,Dose 1,33526,0.756088331035254,2355976,53.132672009757,18 years and over
+20210326,Total,2183051,Dose 1,28284,1.29561792189005,1865575,85.4572339354417,50 years and over
+20210326,Total,4541903,Dose 2,15164,,304690,,16 years and over
+20210326,Total,4434138,Dose 2,15146,0.341577100216547,304299,6.86264162279117,18 years and over
+20210326,Total,2183051,Dose 2,11082,0.507638163286153,182051,8.33929211914884,50 years and over
+20210327,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210327,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210327,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,277,,853112,,16 years and over
+20210327,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10261,,264030,,16 years and over
+20210327,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,28299,,1537194,,16 years and over
+20210327,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,18251,,69172,,16 years and over
+20210327,Total,4541903,Dose 1,28576,,2390306,,16 years and over
+20210327,Total,4434138,Dose 1,28508,0.6429209014243579,2384484,53.775592911181405,18 years and over
+20210327,Total,2183051,Dose 1,23240,1.06456514300399,1888815,86.5217990784457,50 years and over
+20210327,Total,4541903,Dose 2,28512,,333202,,16 years and over
+20210327,Total,4434138,Dose 2,28497,0.642672826150201,332796,7.505314448941371,18 years and over
+20210327,Total,2183051,Dose 2,23771,1.0888888990683199,205822,9.42818101821717,50 years and over
+20210328,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210328,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210328,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,477,,853589,,16 years and over
+20210328,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4778,,268808,,16 years and over
+20210328,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,21403,,1558597,,16 years and over
+20210328,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,1934,,71106,,16 years and over
+20210328,Total,4541903,Dose 1,21880,,2412186,,16 years and over
+20210328,Total,4434138,Dose 1,21697,0.48931720212587,2406181,54.264910113307295,18 years and over
+20210328,Total,2183051,Dose 1,17720,0.811708017815434,1906535,87.3335070962612,50 years and over
+20210328,Total,4541903,Dose 2,6712,,339914,,16 years and over
+20210328,Total,4434138,Dose 2,6698,0.151055289663966,339494,7.656369738605339,18 years and over
+20210328,Total,2183051,Dose 2,4271,0.195643619869623,210093,9.623824638086788,50 years and over
+20210329,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210329,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210329,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,197,,853786,,16 years and over
+20210329,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8421,,277229,,16 years and over
+20210329,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,26886,,1585483,,16 years and over
+20210329,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,8831,,79937,,16 years and over
+20210329,Total,4541903,Dose 1,27083,,2439269,,16 years and over
+20210329,Total,4434138,Dose 1,27068,0.610445592807441,2433249,54.8753557061147,18 years and over
+20210329,Total,2183051,Dose 1,17966,0.822976650568402,1924501,88.15648374682958,50 years and over
+20210329,Total,4541903,Dose 2,17252,,357166,,16 years and over
+20210329,Total,4434138,Dose 2,17239,0.38877905919933,356733,8.04514879780467,18 years and over
+20210329,Total,2183051,Dose 2,12977,0.594443281444181,223070,10.218267919531,50 years and over
+20210330,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210330,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210330,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,275,,854061,,16 years and over
+20210330,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10462,,287691,,16 years and over
+20210330,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,27443,,1612926,,16 years and over
+20210330,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,13854,,93791,,16 years and over
+20210330,Total,4541903,Dose 1,27718,,2466987,,16 years and over
+20210330,Total,4434138,Dose 1,27685,0.624360360457884,2460934,55.4997160665726,18 years and over
+20210330,Total,2183051,Dose 1,21064,0.9648881313354569,1945565,89.121371878165,50 years and over
+20210330,Total,4541903,Dose 2,24316,,381482,,16 years and over
+20210330,Total,4434138,Dose 2,24304,0.5481110421010801,381037,8.59325983990575,18 years and over
+20210330,Total,2183051,Dose 2,19042,0.8722654670000841,242112,11.090533386531101,50 years and over
+20210331,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210331,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210331,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,335,,854396,,16 years and over
+20210331,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,13287,,300978,,16 years and over
+20210331,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,27549,,1640475,,16 years and over
+20210331,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,15767,,109558,,16 years and over
+20210331,Total,4541903,Dose 1,27884,,2494871,,16 years and over
+20210331,Total,4434138,Dose 1,27753,0.6258939166981271,2488687,56.1256099832707,18 years and over
+20210331,Total,2183051,Dose 1,22143,1.01431437011778,1967708,90.1356862482828,50 years and over
+20210331,Total,4541903,Dose 2,29054,,410536,,16 years and over
+20210331,Total,4434138,Dose 2,29032,0.654738305393292,410069,9.24799814529904,18 years and over
+20210331,Total,2183051,Dose 2,23665,1.0840333093455001,265777,12.174566695876601,50 years and over
+20210401,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210401,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210401,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,387,,854783,,16 years and over
+20210401,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10462,,311440,,16 years and over
+20210401,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,23380,,1663855,,16 years and over
+20210401,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,12556,,122114,,16 years and over
+20210401,Total,4541903,Dose 1,23767,,2518638,,16 years and over
+20210401,Total,4434138,Dose 1,23719,0.534917947975458,2512406,56.66052793124621,18 years and over
+20210401,Total,2183051,Dose 1,18951,0.8680969890304899,1986659,91.00378323731329,50 years and over
+20210401,Total,4541903,Dose 2,23018,,433554,,16 years and over
+20210401,Total,4434138,Dose 2,23004,0.518793055155252,433073,9.76679120045429,18 years and over
+20210401,Total,2183051,Dose 2,18555,0.8499572387452242,284332,13.0245239346218,50 years and over
+20210402,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210402,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210402,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,294,,855077,,16 years and over
+20210402,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9806,,321246,,16 years and over
+20210402,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,18799,,1682654,,16 years and over
+20210402,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,5955,,128069,,16 years and over
+20210402,Total,4541903,Dose 1,19093,,2537731,,16 years and over
+20210402,Total,4434138,Dose 1,19032,0.4292153288869221,2531438,57.089743260133105,18 years and over
+20210402,Total,2183051,Dose 1,14620,0.669704922147948,2001279,91.67348815946121,50 years and over
+20210402,Total,4541903,Dose 2,15761,,449315,,16 years and over
+20210402,Total,4434138,Dose 2,15749,0.355176135699881,448822,10.1219673361542,18 years and over
+20210402,Total,2183051,Dose 2,12821,0.5872973192105911,297153,13.6118212538324,50 years and over
+20210403,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210403,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210403,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,421,,855498,,16 years and over
+20210403,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9301,,330547,,16 years and over
+20210403,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,15156,,1697810,,16 years and over
+20210403,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,3266,,131335,,16 years and over
+20210403,Total,4541903,Dose 1,15577,,2553308,,16 years and over
+20210403,Total,4434138,Dose 1,15556,0.350823542253308,2546994,57.4405668023864,18 years and over
+20210403,Total,2183051,Dose 1,12834,0.5878928160633901,2014113,92.2613809755246,50 years and over
+20210403,Total,4541903,Dose 2,12567,,461882,,16 years and over
+20210403,Total,4434138,Dose 2,12559,0.28323430619434903,461381,10.4052016423485,18 years and over
+20210403,Total,2183051,Dose 2,9633,0.441263167924158,306786,14.053084421756498,50 years and over
+20210404,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210404,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210404,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,63,,855561,,16 years and over
+20210404,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,3523,,334070,,16 years and over
+20210404,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11167,,1708977,,16 years and over
+20210404,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,367,,131702,,16 years and over
+20210404,Total,4541903,Dose 1,11230,,2564538,,16 years and over
+20210404,Total,4434138,Dose 1,11227,0.253194645723701,2558221,57.6937614481101,18 years and over
+20210404,Total,2183051,Dose 1,8220,0.37653724076991296,2022333,92.6379182162945,50 years and over
+20210404,Total,4541903,Dose 2,3890,,465772,,16 years and over
+20210404,Total,4434138,Dose 2,3885,0.0876156763727245,465266,10.4928173187212,18 years and over
+20210404,Total,2183051,Dose 2,2952,0.135223593035618,309738,14.1883080147921,50 years and over
+20210405,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210405,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210405,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,64,,855625,,16 years and over
+20210405,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5127,,339197,,16 years and over
+20210405,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,13142,,1722119,,16 years and over
+20210405,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,2847,,134549,,16 years and over
+20210405,Total,4541903,Dose 1,13206,,2577744,,16 years and over
+20210405,Total,4434138,Dose 1,13199,0.297667776690757,2571420,57.9914292248009,18 years and over
+20210405,Total,2183051,Dose 1,10713,0.49073521415670096,2033046,93.12865343045121,50 years and over
+20210405,Total,4541903,Dose 2,7974,,473746,,16 years and over
+20210405,Total,4434138,Dose 2,7961,0.179538841596721,473227,10.672356160318,18 years and over
+20210405,Total,2183051,Dose 2,6487,0.297152929546767,316225,14.4854609443389,50 years and over
+20210406,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,0,,16 years and over
+20210406,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210406,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1106,,856731,,16 years and over
+20210406,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10676,,349873,,16 years and over
+20210406,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,14918,,1737037,,16 years and over
+20210406,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,8300,,142849,,16 years and over
+20210406,Total,4541903,Dose 1,16024,,2593768,,16 years and over
+20210406,Total,4434138,Dose 1,15727,0.354679985151567,2587147,58.3461092099524,18 years and over
+20210406,Total,2183051,Dose 1,9478,0.4341630131407829,2042524,93.562816443592,50 years and over
+20210406,Total,4541903,Dose 2,18976,,492722,,16 years and over
+20210406,Total,4434138,Dose 2,18963,0.427659220349028,492190,11.100015380667,18 years and over
+20210406,Total,2183051,Dose 2,15406,0.705709578017188,331631,15.1911705223561,50 years and over
+20210407,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1497,,1497,,16 years and over
+20210407,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210407,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1428,,858159,,16 years and over
+20210407,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,12222,,362095,,16 years and over
+20210407,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12075,,1749112,,16 years and over
+20210407,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,13393,,156242,,16 years and over
+20210407,Total,4541903,Dose 1,15000,,2608768,,16 years and over
+20210407,Total,4434138,Dose 1,14847,0.33483396321900705,2601994,58.68094317317139,18 years and over
+20210407,Total,2183051,Dose 1,10582,0.484734438178494,2053106,94.04755088177049,50 years and over
+20210407,Total,4541903,Dose 2,25615,,518337,,16 years and over
+20210407,Total,4434138,Dose 2,25592,0.577158401475101,517782,11.6771737821421,18 years and over
+20210407,Total,2183051,Dose 2,22045,1.00982523999668,353676,16.2009957623528,50 years and over
+20210408,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1444,,2941,,16 years and over
+20210408,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210408,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1951,,860110,,16 years and over
+20210408,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10579,,372674,,16 years and over
+20210408,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12616,,1761728,,16 years and over
+20210408,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,15298,,171540,,16 years and over
+20210408,Total,4541903,Dose 1,16011,,2624779,,16 years and over
+20210408,Total,4434138,Dose 1,15988,0.36056613483838296,2617982,59.04150930800979,18 years and over
+20210408,Total,2183051,Dose 1,11691,0.535534900467282,2064797,94.5830857822378,50 years and over
+20210408,Total,4541903,Dose 2,25877,,544214,,16 years and over
+20210408,Total,4434138,Dose 2,25862,0.5832475218407729,543644,12.260421303982902,18 years and over
+20210408,Total,2183051,Dose 2,22924,1.05008998873595,376600,17.2510857510887,50 years and over
+20210409,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1143,,4084,,16 years and over
+20210409,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210409,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5406,,865516,,16 years and over
+20210409,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,10411,,383085,,16 years and over
+20210409,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12527,,1774255,,16 years and over
+20210409,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,11051,,182591,,16 years and over
+20210409,Total,4541903,Dose 1,19076,,2643855,,16 years and over
+20210409,Total,4434138,Dose 1,19046,0.42953106105403105,2637028,59.4710403690638,18 years and over
+20210409,Total,2183051,Dose 1,11415,0.522892044207854,2076212,95.1059778264457,50 years and over
+20210409,Total,4541903,Dose 2,21462,,565676,,16 years and over
+20210409,Total,4434138,Dose 2,21448,0.483701680010861,565092,12.7441229839937,18 years and over
+20210409,Total,2183051,Dose 2,18359,0.8409789785030221,394959,18.0920647295918,50 years and over
+20210410,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1669,,5753,,16 years and over
+20210410,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210410,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1396,,866912,,16 years and over
+20210410,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6773,,389858,,16 years and over
+20210410,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11777,,1786032,,16 years and over
+20210410,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,25282,,207873,,16 years and over
+20210410,Total,4541903,Dose 1,14842,,2658697,,16 years and over
+20210410,Total,4434138,Dose 1,14810,0.333999528205933,2651838,59.80503989726979,18 years and over
+20210410,Total,2183051,Dose 1,10501,0.481024034711053,2086713,95.58700186115671,50 years and over
+20210410,Total,4541903,Dose 2,32055,,597731,,16 years and over
+20210410,Total,4434138,Dose 2,32046,0.722710930512312,597138,13.466833914506,18 years and over
+20210410,Total,2183051,Dose 2,29945,1.3717040966977,424904,19.4637688262894,50 years and over
+20210411,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,393,,6146,,16 years and over
+20210411,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210411,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1253,,868165,,16 years and over
+20210411,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5420,,395278,,16 years and over
+20210411,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,8195,,1794227,,16 years and over
+20210411,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,3603,,211476,,16 years and over
+20210411,Total,4541903,Dose 1,9841,,2668538,,16 years and over
+20210411,Total,4434138,Dose 1,9827,0.22162142901280898,2661665,60.02666132628261,18 years and over
+20210411,Total,2183051,Dose 1,6261,0.286800445798105,2092974,95.8738023069548,50 years and over
+20210411,Total,4541903,Dose 2,9023,,606754,,16 years and over
+20210411,Total,4434138,Dose 2,9012,0.20324130642753999,606150,13.6700752209336,18 years and over
+20210411,Total,2183051,Dose 2,6863,0.314376530827727,431767,19.7781453571172,50 years and over
+20210412,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,376,,6522,,16 years and over
+20210412,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210412,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,2411,,870576,,16 years and over
+20210412,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7369,,402647,,16 years and over
+20210412,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11334,,1805561,,16 years and over
+20210412,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,14037,,225513,,16 years and over
+20210412,Total,4541903,Dose 1,14121,,2682659,,16 years and over
+20210412,Total,4434138,Dose 1,14094,0.317852083088077,2675759,60.3445134093707,18 years and over
+20210412,Total,2183051,Dose 1,9944,0.45550928494112103,2102918,96.3293115918959,50 years and over
+20210412,Total,4541903,Dose 2,21406,,628160,,16 years and over
+20210412,Total,4434138,Dose 2,21376,0.48207791458001503,627526,14.152153135513599,18 years and over
+20210412,Total,2183051,Dose 2,18895,0.8655317718184321,450662,20.6436771289356,50 years and over
+20210413,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,235,,6757,,16 years and over
+20210413,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210413,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3992,,874568,,16 years and over
+20210413,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8424,,411071,,16 years and over
+20210413,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,8338,,1813899,,16 years and over
+20210413,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,18235,,243748,,16 years and over
+20210413,Total,4541903,Dose 1,12565,,2695224,,16 years and over
+20210413,Total,4434138,Dose 1,12540,0.282805812538987,2688299,60.6273192219096,18 years and over
+20210413,Total,2183051,Dose 1,9031,0.41368708289453604,2111949,96.7429986747905,50 years and over
+20210413,Total,4541903,Dose 2,26659,,654819,,16 years and over
+20210413,Total,4434138,Dose 2,26647,0.6009510754965229,654173,14.753104211010099,18 years and over
+20210413,Total,2183051,Dose 2,23555,1.0789944898218102,474217,21.7226716187574,50 years and over
+20210414,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1584,,8341,,16 years and over
+20210414,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210414,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4880,,879448,,16 years and over
+20210414,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8853,,419924,,16 years and over
+20210414,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,7904,,1821803,,16 years and over
+20210414,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,21955,,265703,,16 years and over
+20210414,Total,4541903,Dose 1,14368,,2709592,,16 years and over
+20210414,Total,4434138,Dose 1,14250,0.32137024152157595,2702549,60.94868946343121,18 years and over
+20210414,Total,2183051,Dose 1,9125,0.417992983214776,2121074,97.1609916580052,50 years and over
+20210414,Total,4541903,Dose 2,30808,,685627,,16 years and over
+20210414,Total,4434138,Dose 2,30784,0.694249930877208,684957,15.4473541418873,18 years and over
+20210414,Total,2183051,Dose 2,27770,1.2720728924793798,501987,22.9947445112368,50 years and over
+20210415,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,385,,8726,,16 years and over
+20210415,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210415,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5259,,884707,,16 years and over
+20210415,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7524,,427448,,16 years and over
+20210415,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,6465,,1828268,,16 years and over
+20210415,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,18139,,283842,,16 years and over
+20210415,Total,4541903,Dose 1,12109,,2721701,,16 years and over
+20210415,Total,4434138,Dose 1,11982,0.27022163044993197,2714531,61.218911093881204,18 years and over
+20210415,Total,2183051,Dose 1,6059,0.277547340854611,2127133,97.43853899885981,50 years and over
+20210415,Total,4541903,Dose 2,25663,,711290,,16 years and over
+20210415,Total,4434138,Dose 2,25646,0.578376225548235,710603,16.0257303674356,18 years and over
+20210415,Total,2183051,Dose 2,23034,1.05512880825963,525021,24.0498733194964,50 years and over
+20210416,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,115,,8841,,16 years and over
+20210416,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210416,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4879,,889586,,16 years and over
+20210416,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6630,,434078,,16 years and over
+20210416,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,5712,,1833980,,16 years and over
+20210416,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,17559,,301401,,16 years and over
+20210416,Total,4541903,Dose 1,10706,,2732407,,16 years and over
+20210416,Total,4434138,Dose 1,10592,0.238873936715547,2725123,61.4577850305967,18 years and over
+20210416,Total,2183051,Dose 1,4932,0.225922344461948,2132065,97.6644613433218,50 years and over
+20210416,Total,4541903,Dose 2,24189,,735479,,16 years and over
+20210416,Total,4434138,Dose 2,24158,0.5448184066440871,734761,16.5705487740797,18 years and over
+20210416,Total,2183051,Dose 2,20997,0.96181903217103,546018,25.0116923516675,50 years and over
+20210417,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,152,,8993,,16 years and over
+20210417,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210417,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,6815,,896401,,16 years and over
+20210417,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6369,,440447,,16 years and over
+20210417,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,3825,,1837805,,16 years and over
+20210417,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,22772,,324173,,16 years and over
+20210417,Total,4541903,Dose 1,10792,,2743199,,16 years and over
+20210417,Total,4434138,Dose 1,10290,0.23206314282505397,2735413,61.689848173421794,18 years and over
+20210417,Total,2183051,Dose 1,2618,0.119923904663702,2134683,97.7843852479855,50 years and over
+20210417,Total,4541903,Dose 2,29141,,764620,,16 years and over
+20210417,Total,4434138,Dose 2,29125,0.6568356690748011,763886,17.2273844431545,18 years and over
+20210417,Total,2183051,Dose 2,26982,1.23597662170971,573000,26.2476689733772,50 years and over
+20210418,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,150,,9143,,16 years and over
+20210418,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210418,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1413,,897814,,16 years and over
+20210418,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5163,,445610,,16 years and over
+20210418,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1408,,1839213,,16 years and over
+20210418,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,6087,,330260,,16 years and over
+20210418,Total,4541903,Dose 1,2971,,2746170,,16 years and over
+20210418,Total,4434138,Dose 1,2947,0.0664616211764271,2738360,61.75630979459821,18 years and over
+20210418,Total,2183051,Dose 1,785,0.0359588484190246,2135468,97.8203440964045,50 years and over
+20210418,Total,4541903,Dose 2,11250,,775870,,16 years and over
+20210418,Total,4434138,Dose 2,11248,0.253668243974364,775134,17.481052687128802,18 years and over
+20210418,Total,2183051,Dose 2,10151,0.464991427135692,583151,26.7126604005129,50 years and over
+20210419,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,473,,9616,,16 years and over
+20210419,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210419,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1062,,898876,,16 years and over
+20210419,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,25049,,470659,,16 years and over
+20210419,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,767,,1839980,,16 years and over
+20210419,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,19871,,350131,,16 years and over
+20210419,Total,4541903,Dose 1,2302,,2748472,,16 years and over
+20210419,Total,4434138,Dose 1,2287,0.0515771047270067,2740647,61.8078868993252,18 years and over
+20210419,Total,2183051,Dose 1,783,0.0358672335185939,2136251,97.8562113299231,50 years and over
+20210419,Total,4541903,Dose 2,44920,,820790,,16 years and over
+20210419,Total,4434138,Dose 2,44905,1.0127109260018499,820039,18.4937636131307,18 years and over
+20210419,Total,2183051,Dose 2,42808,1.96092532881733,625959,28.673585729330203,50 years and over
+20210420,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,397,,10013,,16 years and over
+20210420,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210420,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,921,,899797,,16 years and over
+20210420,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,26844,,497503,,16 years and over
+20210420,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,815,,1840795,,16 years and over
+20210420,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,24785,,374916,,16 years and over
+20210420,Total,4541903,Dose 1,2133,,2750605,,16 years and over
+20210420,Total,4434138,Dose 1,2116,0.0477206618287478,2742763,61.855607561153896,18 years and over
+20210420,Total,2183051,Dose 1,658,0.0301413022416792,2136909,97.8863526321648,50 years and over
+20210420,Total,4541903,Dose 2,51629,,872419,,16 years and over
+20210420,Total,4434138,Dose 2,51557,1.16272880997389,871596,19.656492423104602,18 years and over
+20210420,Total,2183051,Dose 2,48815,2.2360906822607403,674774,30.9096764115909,50 years and over
+20210421,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,393,,10406,,16 years and over
+20210421,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210421,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1055,,900852,,16 years and over
+20210421,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,25454,,522957,,16 years and over
+20210421,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,936,,1841731,,16 years and over
+20210421,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,26289,,401205,,16 years and over
+20210421,Total,4541903,Dose 1,2384,,2752989,,16 years and over
+20210421,Total,4434138,Dose 1,2366,0.053358736241407,2745129,61.908966297395295,18 years and over
+20210421,Total,2183051,Dose 1,686,0.0314239108477081,2137595,97.91777654301251,50 years and over
+20210421,Total,4541903,Dose 2,51743,,924162,,16 years and over
+20210421,Total,4434138,Dose 2,51723,1.16647249138389,923319,20.822964914488498,18 years and over
+20210421,Total,2183051,Dose 2,48673,2.2295860243301697,723447,33.139262435921104,50 years and over
+20210422,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,362,,10768,,16 years and over
+20210422,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210422,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1636,,902488,,16 years and over
+20210422,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,22211,,545168,,16 years and over
+20210422,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1084,,1842815,,16 years and over
+20210422,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,25824,,427029,,16 years and over
+20210422,Total,4541903,Dose 1,3082,,2756071,,16 years and over
+20210422,Total,4434138,Dose 1,3065,0.0691227922992022,2748194,61.9780890896945,18 years and over
+20210422,Total,2183051,Dose 1,816,0.0373788793756994,2138411,97.95515542238822,50 years and over
+20210422,Total,4541903,Dose 2,48035,,972197,,16 years and over
+20210422,Total,4434138,Dose 2,47998,1.08246518263527,971317,21.9054300971237,18 years and over
+20210422,Total,2183051,Dose 2,45349,2.07732205981445,768796,35.2165844957356,50 years and over
+20210423,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1263,,12031,,16 years and over
+20210423,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210423,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3549,,906037,,16 years and over
+20210423,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,17688,,562856,,16 years and over
+20210423,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,773,,1843588,,16 years and over
+20210423,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,21472,,448501,,16 years and over
+20210423,Total,4541903,Dose 1,5585,,2761656,,16 years and over
+20210423,Total,4434138,Dose 1,5477,0.123518934232539,2753671,62.1016080239271,18 years and over
+20210423,Total,2183051,Dose 1,652,0.0298664575403873,2139063,97.9850218799286,50 years and over
+20210423,Total,4541903,Dose 2,39160,,1011357,,16 years and over
+20210423,Total,4434138,Dose 2,39141,0.88271948234358,1010458,22.7881495794673,18 years and over
+20210423,Total,2183051,Dose 2,36519,1.6728422744132,805315,36.889426770148795,50 years and over
+20210424,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1188,,13219,,16 years and over
+20210424,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210424,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1836,,907873,,16 years and over
+20210424,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,14798,,577654,,16 years and over
+20210424,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,823,,1844411,,16 years and over
+20210424,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,33597,,482098,,16 years and over
+20210424,Total,4541903,Dose 1,3847,,2765503,,16 years and over
+20210424,Total,4434138,Dose 1,3716,0.0838043380697669,2757387,62.185412361996896,18 years and over
+20210424,Total,2183051,Dose 1,815,0.0373330719254841,2139878,98.0223549518541,50 years and over
+20210424,Total,4541903,Dose 2,48395,,1059752,,16 years and over
+20210424,Total,4434138,Dose 2,48358,1.0905840097894999,1058816,23.8787335892568,18 years and over
+20210424,Total,2183051,Dose 2,45211,2.07100063168474,850526,38.9604274018335,50 years and over
+20210425,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,349,,13568,,16 years and over
+20210425,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,0,,16 years and over
+20210425,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,1906,,909779,,16 years and over
+20210425,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,14758,,592412,,16 years and over
+20210425,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,342,,1844753,,16 years and over
+20210425,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,12689,,494787,,16 years and over
+20210425,Total,4541903,Dose 1,2597,,2768100,,16 years and over
+20210425,Total,4434138,Dose 1,2581,0.05820748023629401,2759968,62.2436198422331,18 years and over
+20210425,Total,2183051,Dose 1,314,0.0143835393676098,2140192,98.0367384912217,50 years and over
+20210425,Total,4541903,Dose 2,27447,,1087199,,16 years and over
+20210425,Total,4434138,Dose 2,27431,0.6186320768546221,1086247,24.4973656661114,18 years and over
+20210425,Total,2183051,Dose 2,25956,1.18897817778879,876482,40.1494055796223,50 years and over
+20210426,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,348,,13916,,16 years and over
+20210426,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,1,,1,,16 years and over
+20210426,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,6284,,916063,,16 years and over
+20210426,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,17143,,609555,,16 years and over
+20210426,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,748,,1845501,,16 years and over
+20210426,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,19242,,514029,,16 years and over
+20210426,Total,4541903,Dose 1,7380,,2775480,,16 years and over
+20210426,Total,4434138,Dose 1,7332,0.16535344637447,2767300,62.4089732886076,18 years and over
+20210426,Total,2183051,Dose 1,545,0.0249650603673483,2140737,98.06170355158899,50 years and over
+20210426,Total,4541903,Dose 2,36386,,1123585,,16 years and over
+20210426,Total,4434138,Dose 2,36360,0.8200015425771591,1122607,25.3173672086886,18 years and over
+20210426,Total,2183051,Dose 2,33603,1.5392677495853302,910085,41.6886733292076,50 years and over
+20210427,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,360,,14276,,16 years and over
+20210427,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,1,,16 years and over
+20210427,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,6344,,922407,,16 years and over
+20210427,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,15754,,625309,,16 years and over
+20210427,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1000,,1846501,,16 years and over
+20210427,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,24703,,538732,,16 years and over
+20210427,Total,4541903,Dose 1,7704,,2783184,,16 years and over
+20210427,Total,4434138,Dose 1,7655,0.172637838515626,2774955,62.5816111271232,18 years and over
+20210427,Total,2183051,Dose 1,727,0.0333020163065361,2141464,98.0950055678956,50 years and over
+20210427,Total,4541903,Dose 2,40457,,1164042,,16 years and over
+20210427,Total,4434138,Dose 2,40441,0.9120374692894091,1163048,26.229404677978,18 years and over
+20210427,Total,2183051,Dose 2,37588,1.7218104386933701,947673,43.410483767901,50 years and over
+20210428,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,239,,14515,,16 years and over
+20210428,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,1,,16 years and over
+20210428,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5220,,927627,,16 years and over
+20210428,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,16046,,641355,,16 years and over
+20210428,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1197,,1847698,,16 years and over
+20210428,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,26186,,564918,,16 years and over
+20210428,Total,4541903,Dose 1,6656,,2789840,,16 years and over
+20210428,Total,4434138,Dose 1,6544,0.147582235825768,2781499,62.729193362949,18 years and over
+20210428,Total,2183051,Dose 1,716,0.0327981343541676,2142180,98.1278037022497,50 years and over
+20210428,Total,4541903,Dose 2,42232,,1206274,,16 years and over
+20210428,Total,4434138,Dose 2,42216,0.9520677976192891,1205264,27.1814724755973,18 years and over
+20210428,Total,2183051,Dose 2,38317,1.7552040699003402,985990,45.16568783780129,50 years and over
+20210429,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,197,,14712,,16 years and over
+20210429,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,1,,2,,16 years and over
+20210429,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4508,,932135,,16 years and over
+20210429,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,14629,,655984,,16 years and over
+20210429,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,2902,,1850600,,16 years and over
+20210429,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,26282,,591200,,16 years and over
+20210429,Total,4541903,Dose 1,7607,,2797447,,16 years and over
+20210429,Total,4434138,Dose 1,7567,0.17065323632236998,2789066,62.8998465992714,18 years and over
+20210429,Total,2183051,Dose 1,526,0.0240947188132572,2142706,98.15189842106301,50 years and over
+20210429,Total,4541903,Dose 2,40912,,1247186,,16 years and over
+20210429,Total,4434138,Dose 2,40879,0.9219153756603878,1246143,28.1033878512577,18 years and over
+20210429,Total,2183051,Dose 2,37300,1.7086178930313602,1023290,46.8743057308327,50 years and over
+20210430,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,166,,14878,,16 years and over
+20210430,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210430,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7409,,939544,,16 years and over
+20210430,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,13711,,669695,,16 years and over
+20210430,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,2110,,1852710,,16 years and over
+20210430,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,24045,,615245,,16 years and over
+20210430,Total,4541903,Dose 1,9685,,2807132,,16 years and over
+20210430,Total,4434138,Dose 1,9632,0.217223730970935,2798698,63.1170703302423,18 years and over
+20210430,Total,2183051,Dose 1,746,0.0341723578606272,2143452,98.1860707789236,50 years and over
+20210430,Total,4541903,Dose 2,37756,,1284942,,16 years and over
+20210430,Total,4434138,Dose 2,37709,0.8504245921078691,1283852,28.953812443365504,18 years and over
+20210430,Total,2183051,Dose 2,34408,1.5761427470086598,1057698,48.4504484778413,50 years and over
+20210501,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,14878,,16 years and over
+20210501,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210501,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5189,,944733,,16 years and over
+20210501,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,11822,,681517,,16 years and over
+20210501,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,1131,,1853841,,16 years and over
+20210501,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,17883,,633128,,16 years and over
+20210501,Total,4541903,Dose 1,6320,,2813452,,16 years and over
+20210501,Total,4434138,Dose 1,6304,0.142169684389615,2805002,63.2592400146319,18 years and over
+20210501,Total,2183051,Dose 1,832,0.0381117985791445,2144284,98.2241825775028,50 years and over
+20210501,Total,4541903,Dose 2,29705,,1314647,,16 years and over
+20210501,Total,4434138,Dose 2,29676,0.669261985080302,1313528,29.6230744284458,18 years and over
+20210501,Total,2183051,Dose 2,27181,1.2450923043025601,1084879,49.6955407821439,50 years and over
+20210502,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1,,14879,,16 years and over
+20210502,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210502,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5486,,950219,,16 years and over
+20210502,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,14803,,696320,,16 years and over
+20210502,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,910,,1854751,,16 years and over
+20210502,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,10745,,643873,,16 years and over
+20210502,Total,4541903,Dose 1,6397,,2819849,,16 years and over
+20210502,Total,4434138,Dose 1,6226,0.140410605172866,2811228,63.399650619804795,18 years and over
+20210502,Total,2183051,Dose 1,470,0.0215295016011994,2144754,98.24571207910401,50 years and over
+20210502,Total,4541903,Dose 2,25548,,1340195,,16 years and over
+20210502,Total,4434138,Dose 2,25323,0.571091833407079,1338851,30.1941662618529,18 years and over
+20210502,Total,2183051,Dose 2,23695,1.08540753285196,1108574,50.7809483149958,50 years and over
+20210503,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,1997,,16876,,16 years and over
+20210503,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210503,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4138,,954357,,16 years and over
+20210503,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,13788,,710108,,16 years and over
+20210503,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,2980,,1857731,,16 years and over
+20210503,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,7875,,651748,,16 years and over
+20210503,Total,4541903,Dose 1,9115,,2828964,,16 years and over
+20210503,Total,4434138,Dose 1,9102,0.20527101321609698,2820330,63.60492163302089,18 years and over
+20210503,Total,2183051,Dose 1,488,0.0223540357050751,2145242,98.268066114809,50 years and over
+20210503,Total,4541903,Dose 2,21663,,1361858,,16 years and over
+20210503,Total,4434138,Dose 2,21644,0.488121930350386,1360495,30.682288192203302,18 years and over
+20210503,Total,2183051,Dose 2,19980,0.915232855302052,1128554,51.6961811702979,50 years and over
+20210504,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,667,,17543,,16 years and over
+20210504,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210504,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9651,,964008,,16 years and over
+20210504,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,13709,,723817,,16 years and over
+20210504,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,2443,,1860174,,16 years and over
+20210504,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,13329,,665077,,16 years and over
+20210504,Total,4541903,Dose 1,12761,,2841725,,16 years and over
+20210504,Total,4434138,Dose 1,12741,0.287338824366765,2833071,63.89226045738771,18 years and over
+20210504,Total,2183051,Dose 1,515,0.0235908368608887,2145757,98.2916569516699,50 years and over
+20210504,Total,4541903,Dose 2,27038,,1388896,,16 years and over
+20210504,Total,4434138,Dose 2,26992,0.6087316181859921,1387487,31.2910198103893,18 years and over
+20210504,Total,2183051,Dose 2,23769,1.08879728416789,1152323,52.7849784544658,50 years and over
+20210505,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,115,,17658,,16 years and over
+20210505,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210505,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,10866,,974874,,16 years and over
+20210505,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,13113,,736930,,16 years and over
+20210505,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,3287,,1863461,,16 years and over
+20210505,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,14124,,679201,,16 years and over
+20210505,Total,4541903,Dose 1,14268,,2855993,,16 years and over
+20210505,Total,4434138,Dose 1,14235,0.32103195705681703,2847306,64.21329241444451,18 years and over
+20210505,Total,2183051,Dose 1,517,0.0236824517613194,2146274,98.3153394034313,50 years and over
+20210505,Total,4541903,Dose 2,27237,,1416133,,16 years and over
+20210505,Total,4434138,Dose 2,27173,0.6128135840607579,1414660,31.903833394450103,18 years and over
+20210505,Total,2183051,Dose 2,24050,1.1016691776783998,1176373,53.886647632144204,50 years and over
+20210506,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,22,,17680,,16 years and over
+20210506,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210506,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8383,,983257,,16 years and over
+20210506,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,11384,,748314,,16 years and over
+20210506,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,7215,,1870676,,16 years and over
+20210506,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,12172,,691373,,16 years and over
+20210506,Total,4541903,Dose 1,15620,,2871613,,16 years and over
+20210506,Total,4434138,Dose 1,15585,0.351477558885177,2862891,64.5647699733296,18 years and over
+20210506,Total,2183051,Dose 1,558,0.0255605572201474,2146832,98.3408999606514,50 years and over
+20210506,Total,4541903,Dose 2,23556,,1439689,,16 years and over
+20210506,Total,4434138,Dose 2,23525,0.5305428022312341,1438185,32.4343761966813,18 years and over
+20210506,Total,2183051,Dose 2,20329,0.931219655427198,1196702,54.8178672875714,50 years and over
+20210507,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,12,,17692,,16 years and over
+20210507,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210507,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7438,,990695,,16 years and over
+20210507,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,9972,,758286,,16 years and over
+20210507,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,5877,,1876553,,16 years and over
+20210507,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,8555,,699928,,16 years and over
+20210507,Total,4541903,Dose 1,13327,,2884940,,16 years and over
+20210507,Total,4434138,Dose 1,13294,0.299810244967568,2876185,64.8645802182972,18 years and over
+20210507,Total,2183051,Dose 1,417,0.0191017067397876,2147249,98.3600016673912,50 years and over
+20210507,Total,4541903,Dose 2,18527,,1458216,,16 years and over
+20210507,Total,4434138,Dose 2,18483,0.41683411747672294,1456668,32.851210314158,18 years and over
+20210507,Total,2183051,Dose 2,15642,0.716520136268003,1212344,55.5343874238394,50 years and over
+20210508,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,17692,,16 years and over
+20210508,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210508,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,9449,,1000144,,16 years and over
+20210508,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,8328,,766614,,16 years and over
+20210508,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,6365,,1882918,,16 years and over
+20210508,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,11190,,711118,,16 years and over
+20210508,Total,4541903,Dose 1,15814,,2900754,,16 years and over
+20210508,Total,4434138,Dose 1,15794,0.35619098909415997,2891979,65.2207712073914,18 years and over
+20210508,Total,2183051,Dose 1,651,0.029820650090172002,2147900,98.3898223174814,50 years and over
+20210508,Total,4541903,Dose 2,19518,,1477734,,16 years and over
+20210508,Total,4434138,Dose 2,19351,0.43640951183747606,1476019,33.2876198259955,18 years and over
+20210508,Total,2183051,Dose 2,15947,0.730491408583675,1228291,56.26487883242311,50 years and over
+20210509,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,17692,,16 years and over
+20210509,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210509,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4769,,1004913,,16 years and over
+20210509,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,7057,,773671,,16 years and over
+20210509,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,5245,,1888163,,16 years and over
+20210509,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,7366,,718484,,16 years and over
+20210509,Total,4541903,Dose 1,10014,,2910768,,16 years and over
+20210509,Total,4434138,Dose 1,9991,0.22532000582751396,2901970,65.44609121321889,18 years and over
+20210509,Total,2183051,Dose 1,224,0.0102608688482312,2148124,98.4000831863296,50 years and over
+20210509,Total,4541903,Dose 2,14423,,1492157,,16 years and over
+20210509,Total,4434138,Dose 2,14412,0.32502371374098,1490431,33.6126435397365,18 years and over
+20210509,Total,2183051,Dose 2,9975,0.456929315897796,1238266,56.721808148320896,50 years and over
+20210510,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,17692,,16 years and over
+20210510,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210510,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8757,,1013670,,16 years and over
+20210510,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,5998,,779669,,16 years and over
+20210510,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,10203,,1898366,,16 years and over
+20210510,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,12628,,731112,,16 years and over
+20210510,Total,4541903,Dose 1,18960,,2929728,,16 years and over
+20210510,Total,4434138,Dose 1,18937,0.427072860610112,2920907,65.873164073829,18 years and over
+20210510,Total,2183051,Dose 1,658,0.0301413022416792,2148782,98.4302244885713,50 years and over
+20210510,Total,4541903,Dose 2,18626,,1510783,,16 years and over
+20210510,Total,4434138,Dose 2,18498,0.41717240194148203,1508929,34.029815941678,18 years and over
+20210510,Total,2183051,Dose 2,13443,0.615789553244519,1251709,57.3375977015654,50 years and over
+20210511,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,17692,,16 years and over
+20210511,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210511,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,8615,,1022285,,16 years and over
+20210511,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6443,,786112,,16 years and over
+20210511,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11387,,1909753,,16 years and over
+20210511,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,16378,,747490,,16 years and over
+20210511,Total,4541903,Dose 1,20002,,2949730,,16 years and over
+20210511,Total,4434138,Dose 1,19926,0.44937708298659207,2940833,66.3225411568156,18 years and over
+20210511,Total,2183051,Dose 1,534,0.0244611784149798,2149316,98.4546856669863,50 years and over
+20210511,Total,4541903,Dose 2,22821,,1533604,,16 years and over
+20210511,Total,4434138,Dose 2,22787,0.5138992065650639,1531716,34.543715148242995,18 years and over
+20210511,Total,2183051,Dose 2,16288,0.746111749107098,1267997,58.0837094506725,50 years and over
+20210512,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,0,,17692,,16 years and over
+20210512,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210512,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,7045,,1029330,,16 years and over
+20210512,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,6146,,792258,,16 years and over
+20210512,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12561,,1922314,,16 years and over
+20210512,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,17259,,764749,,16 years and over
+20210512,Total,4541903,Dose 1,19606,,2969336,,16 years and over
+20210512,Total,4434138,Dose 1,19564,0.441213151237061,2960397,66.7637543080527,18 years and over
+20210512,Total,2183051,Dose 1,502,0.0229953400080896,2149818,98.4776810069943,50 years and over
+20210512,Total,4541903,Dose 2,23405,,1557009,,16 years and over
+20210512,Total,4434138,Dose 2,23366,0.526956986904783,1555082,35.0706721351478,18 years and over
+20210512,Total,2183051,Dose 2,16086,0.7368586441636039,1284083,58.820568094836105,50 years and over
+20210513,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,70,,17762,,16 years and over
+20210513,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210513,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4430,,1033760,,16 years and over
+20210513,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4877,,797135,,16 years and over
+20210513,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12818,,1935132,,16 years and over
+20210513,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,18294,,783043,,16 years and over
+20210513,Total,4541903,Dose 1,17318,,2986654,,16 years and over
+20210513,Total,4434138,Dose 1,17277,0.389636046510055,2977674,67.1533903545627,18 years and over
+20210513,Total,2183051,Dose 1,419,0.0191933216402182,2150237,98.49687432863449,50 years and over
+20210513,Total,4541903,Dose 2,23171,,1580180,,16 years and over
+20210513,Total,4434138,Dose 2,23095,0.5208453142414601,1578177,35.59151744938929,18 years and over
+20210513,Total,2183051,Dose 2,16123,0.7385535198215709,1300206,59.5591216146576,50 years and over
+20210514,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,48,,17810,,16 years and over
+20210514,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210514,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4856,,1038616,,16 years and over
+20210514,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,4576,,801711,,16 years and over
+20210514,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,12924,,1948056,,16 years and over
+20210514,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,18148,,801191,,16 years and over
+20210514,Total,4541903,Dose 1,17828,,3004482,,16 years and over
+20210514,Total,4434138,Dose 1,17668,0.398453994891454,2995342,67.5518443494542,18 years and over
+20210514,Total,2183051,Dose 1,631,0.0289045010858656,2150868,98.52577882972041,50 years and over
+20210514,Total,4541903,Dose 2,22724,,1602904,,16 years and over
+20210514,Total,4434138,Dose 2,22630,0.510358495833914,1600807,36.101875945223206,18 years and over
+20210514,Total,2183051,Dose 2,14945,0.6845923434679261,1315151,60.2437139581256,50 years and over
+20210515,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,53,,17863,,16 years and over
+20210515,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210515,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,5562,,1044178,,16 years and over
+20210515,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,2660,,804371,,16 years and over
+20210515,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,11607,,1959663,,16 years and over
+20210515,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,17050,,818241,,16 years and over
+20210515,Total,4541903,Dose 1,17222,,3021704,,16 years and over
+20210515,Total,4434138,Dose 1,16195,0.36523446045206504,3011537,67.9170788099062,18 years and over
+20210515,Total,2183051,Dose 1,331,0.0151622660212702,2151199,98.54094109574172,50 years and over
+20210515,Total,4541903,Dose 2,19710,,1622614,,16 years and over
+20210515,Total,4434138,Dose 2,19404,0.437604783612959,1620211,36.539480728836104,18 years and over
+20210515,Total,2183051,Dose 2,12840,0.588167660764682,1327991,60.83188161889029,50 years and over
+20210516,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,57,,17920,,16 years and over
+20210516,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210516,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,4184,,1048362,,16 years and over
+20210516,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,3057,,807428,,16 years and over
+20210516,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,10006,,1969669,,16 years and over
+20210516,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,13692,,831933,,16 years and over
+20210516,Total,4541903,Dose 1,14247,,3035951,,16 years and over
+20210516,Total,4434138,Dose 1,14066,0.317220618753859,3025603,68.2342994286601,18 years and over
+20210516,Total,2183051,Dose 1,293,0.0134215829130881,2151492,98.5543626786548,50 years and over
+20210516,Total,4541903,Dose 2,16749,,1639363,,16 years and over
+20210516,Total,4434138,Dose 2,16312,0.36787307927719,1636523,36.9073538081133,18 years and over
+20210516,Total,2183051,Dose 2,10881,0.49843086579287393,1338872,61.330312484683105,50 years and over
+20210517,Covid-19 mRNA Vaccine Moderna,4541903,Dose 1,65,,17985,,16 years and over
+20210517,Covid-19 mRNA Vaccine Moderna,4541903,Dose 2,0,,2,,16 years and over
+20210517,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 1,3611,,1051973,,16 years and over
+20210517,Covid-19 mRNA Vaccine Pfizer,4541903,Dose 2,3469,,810897,,16 years and over
+20210517,Covid-19 Vaccine AstraZeneca,4541903,Dose 1,5525,,1975194,,16 years and over
+20210517,Covid-19 Vaccine AstraZeneca,4541903,Dose 2,26637,,858570,,16 years and over
+20210517,Total,4541903,Dose 1,9201,,3045152,,16 years and over
+20210517,Total,4434138,Dose 1,9077,0.204707205774832,3034680,68.4390066344349,18 years and over
+20210517,Total,2183051,Dose 1,347,0.0158951852247153,2151839,98.5702578638795,50 years and over
+20210517,Total,4541903,Dose 2,30106,,1669469,,16 years and over
+20210517,Total,4434138,Dose 2,29953,0.6755089715295279,1666476,37.582862779642895,18 years and over
+20210517,Total,2183051,Dose 2,18484,0.846704909779937,1357356,62.1770173944631,50 years and over

@@ -1,0 +1,852 @@
+[
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_total",
+                "dataType": "timeseries",
+                "keywords": ["opendata", "scotland", "vaccination", "daily", "entire_country"],
+                "description": "Scotland - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_sex_agegroup",
+                "dataType": "timeseries",
+                "keywords": ["opendata", "scotland", "vaccination", "daily", "entire_country", "all_sexes", "all_agegroups"],
+                "description": "Scotland - Daily vaccination by Sex and Age group"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_aberdeen_city",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "aberdeen_city"
+                ],
+                "description": "Aberdeen City - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_aberdeenshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "aberdeenshire"
+                ],
+                "description": "Aberdeenshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_angus",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "angus"
+                ],
+                "description": "Angus - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_argyll_and_bute",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "argyll_and_bute"
+                ],
+                "description": "Argyll and Bute - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_city_of_edinburgh",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "city_of_edinburgh"
+                ],
+                "description": "City of Edinburgh - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_clackmannanshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "clackmannanshire"
+                ],
+                "description": "Clackmannanshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_dumfries_and_galloway",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "dumfries_and_galloway"
+                ],
+                "description": "Dumfries and Galloway - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_dundee_city",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "dundee_city"
+                ],
+                "description": "Dundee City - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_east_ayrshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "east_ayrshire"
+                ],
+                "description": "East Ayrshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_east_dunbartonshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "east_dunbartonshire"
+                ],
+                "description": "East Dunbartonshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_east_lothian",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "east_lothian"
+                ],
+                "description": "East Lothian - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_east_renfrewshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "east_renfrewshire"
+                ],
+                "description": "East Renfrewshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_falkirk",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "falkirk"
+                ],
+                "description": "Falkirk - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_fife",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "fife"
+                ],
+                "description": "Fife - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_glasgow_city",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "glasgow_city"
+                ],
+                "description": "Glasgow City - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_highland",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "highland"
+                ],
+                "description": "Highland - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_inverclyde",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "inverclyde"
+                ],
+                "description": "Inverclyde - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_midlothian",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "midlothian"
+                ],
+                "description": "Midlothian - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_moray",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "moray"
+                ],
+                "description": "Moray - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_na_h_eileanan_siar",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "na_h_eileanan_siar"
+                ],
+                "description": "Na h-Eileanan Siar - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_north_ayrshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "north_ayrshire"
+                ],
+                "description": "North Ayrshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_north_lanarkshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "north_lanarkshire"
+                ],
+                "description": "North Lanarkshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_orkney_islands",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "orkney_islands"
+                ],
+                "description": "Orkney Islands - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_perth_and_kinross",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "perth_and_kinross"
+                ],
+                "description": "Perth and Kinross - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_renfrewshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "renfrewshire"
+                ],
+                "description": "Renfrewshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_scottish_borders",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "scottish_borders"
+                ],
+                "description": "Scottish Borders - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_shetland_islands",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "shetland_islands"
+                ],
+                "description": "Shetland Islands - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_south_ayrshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "south_ayrshire"
+                ],
+                "description": "South Ayrshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_south_lanarkshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "south_lanarkshire"
+                ],
+                "description": "South Lanarkshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_stirling",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "stirling"
+                ],
+                "description": "Stirling - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_west_dunbartonshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "west_dunbartonshire"
+                ],
+                "description": "West Dunbartonshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authority_west_lothian",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "west_lothian"
+                ],
+                "description": "West Lothian - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_ayrshire_and_arran",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "ayrshire_and_arran"
+                ],
+                "description": "Ayrshire and Arran - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_borders",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "borders"
+                ],
+                "description": "Borders - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_dumfries_and_galloway",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "dumfries_and_galloway"
+                ],
+                "description": "Dumfries and Galloway - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_fife",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "fife"
+                ],
+                "description": "Fife - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_forth_valley",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "forth_valley"
+                ],
+                "description": "Forth Valley - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_grampian",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "grampian"
+                ],
+                "description": "Grampian - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_greater_glasgow_and_clyde",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "greater_glasgow_and_clyde"
+                ],
+                "description": "Greater Glasgow and Clyde - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_highland",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "highland"
+                ],
+                "description": "Highland - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_lanarkshire",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "lanarkshire"
+                ],
+                "description": "Lanarkshire - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_lothian",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "lothian"
+                ],
+                "description": "Lothian - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_orkney",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "orkney"
+                ],
+                "description": "Orkney - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_shetland",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "shetland"
+                ],
+                "description": "Shetland - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_tayside",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "tayside"
+                ],
+                "description": "Tayside - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_board_western_isles",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "western_isles"
+                ],
+                "description": "Western Isles - Daily vaccination"
+            }
+        ]
+    }
+]
