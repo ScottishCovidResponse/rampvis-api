@@ -10,14 +10,10 @@
 - Mongodb
 - Elasticsearch 
 
-
 Start a development instance.
 
 ```bash
 npm install
-
-export PORT=2000
-export NODE_ENV='development'
 npm run dev
 ```
 

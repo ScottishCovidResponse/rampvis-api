@@ -11,5 +11,5 @@ export class BindingDto {
 export class BindingExtDto {
     public vis: OntoVisDto = undefined as any;
     public data: OntoDataDto[] = undefined as any;
-    // public pageExt: OntoPageExtDto[] = undefined as any; // TODO review this
+    public links: OntoPageExtDto[] = undefined as any; // TODO review this
 }

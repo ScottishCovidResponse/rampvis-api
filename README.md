@@ -2,12 +2,12 @@
 This is the RESTful API of the RAMPVIS system. This repository consist of a two projects.
 
 1. [data-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/data-api) 
-   - APIs, e.g., Authentication, user, ontology operations, and data
-   - Implemented Node.js and Typescript 
+   - APIs, e.g., Authentication, user, ontology operations, and data.
+   - Implemented in Node.js, Typescript, and JS libraries.
 
 2. [stat-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/stat-api) 
-   - APIs, e.g., Data, search, ranking, analytical algorithms, and agents
-   - Implemented in FastAPI and Python
+   - APIs, e.g., Data, search, grouping, ranking, analytical algorithms, agents, etc.
+   - Implemented in FastAPI, Python, and other python libraries.
 
 
 # Requirements
