@@ -391,5 +391,7 @@
     "all_sexes_agegroups": "genders, age groups",
     "tests_reported": "tests reported",
     "new_cases": "new cases",
-    "vaccination": "vaccination"
+    "vaccination": "vaccination",
+    "people_tested": "people tested",
+    "tests_carried_out": "tests carried out"
 }
