@@ -308,18 +308,18 @@
             {
                 "name": "test_result/date-people_tested_for_covid19-cumulative",
                 "dataType": "cum_timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "test_result", "people_tested"],
+                "keywords": ["data_product", "scotland", "testing", "daily", "test_result", "people_tested", "cumulative"],
                 "description": "Scotland"
             },
             {
                 "name": "testing_location/date-covid19_tests_carried_out-cumulative",
                 "dataType": "cum_timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "testing_location", "tests_carried_out"]
+                "keywords": ["data_product", "scotland", "testing", "daily", "testing_location", "tests_carried_out", "cumulative"]
             },
             {
                 "name": "testing_location/date-covid19_tests_carried_out-daily",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "testing_location", "tests_carried_out"]
+                "keywords": ["data_product", "scotland", "testing", "daily", "testing_location", "tests_carried_out", "cumulative"]
             }
         ]
     }

@@ -848,5 +848,41 @@
                 "description": "Western Isles - Daily vaccination"
             }
         ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_health_boards",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "health_board",
+                    "all_boards"
+                ],
+                "description": "All boards - Daily vaccination"
+            }
+        ]
+    },
+    {
+        "product": "opendata/scotland/vaccination",
+        "components": [
+            {
+                "name": "daily_local_authorities",
+                "dataType": "timeseries",
+                "keywords": [
+                    "opendata",
+                    "scotland",
+                    "vaccination",
+                    "daily",
+                    "local_authority",
+                    "all_local_authorities"
+                ],
+                "description": "All local authorities - Daily vaccination"
+            }
+        ]
     }
 ]
