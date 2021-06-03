@@ -189,7 +189,7 @@
             {
                 "name": "date-country-covid19_confirmed_deaths_registered-cumulative",
                 "dataType": "cum_timeseries",
-                "keywords": ["data_product", "scotland", "mortality", "daily", "covid_deaths", "entire_country"],
+                "keywords": ["data_product", "scotland", "mortality", "daily", "covid_deaths", "entire_country", "cumulative"],
                 "description": "Scotland"
             }
         ]
@@ -319,7 +319,7 @@
             {
                 "name": "testing_location/date-covid19_tests_carried_out-daily",
                 "dataType": "timeseries",
-                "keywords": ["data_product", "scotland", "testing", "daily", "testing_location", "tests_carried_out", "cumulative"]
+                "keywords": ["data_product", "scotland", "testing", "daily", "testing_location", "tests_carried_out"]
             }
         ]
     }
