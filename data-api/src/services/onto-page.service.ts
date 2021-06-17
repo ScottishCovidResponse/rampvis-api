@@ -45,7 +45,6 @@ export class OntoPageService extends DataService<IOntoPage> {
 
         const pageIndex: number = ontoPageFilterVm.pageIndex ? parseInt(ontoPageFilterVm.pageIndex) : 1;
         const pageSize: number = ontoPageFilterVm.pageSize ? parseInt(ontoPageFilterVm.pageSize) : totalCount;
-        const sortBy: string = ontoPageFilterVm.sortBy; // Not used as we are using only one field, date
         const sortOrder: number = ontoPageFilterVm.sortOrder == SORT_ORDER.ASC ? 1 : -1;
 
         console.log("OntoPageService:getPaginated: query = ", query);
@@ -56,10 +55,6 @@ export class OntoPageService extends DataService<IOntoPage> {
             .skip(pageSize * (pageIndex - 1))
             .limit(pageSize)
             .toArray()
-
-
-        console.log('OntoPageService:getPaginated: #ontoPages = ', ontoPages.length, 'totalCount = ', totalCount);
-
         return {
             data: automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, ontoPages),
             page: pageIndex,

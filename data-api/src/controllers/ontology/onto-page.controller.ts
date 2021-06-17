@@ -14,7 +14,7 @@ import { OntoPageService } from '../../services/onto-page.service';
 import { BINDING_TYPE, IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { SearchError, SomethingWentWrong } from '../../exceptions/exception';
 import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
-import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
+import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../../infrastructure/pagination.vm';
 import { OntoVisService } from '../../services/onto-vis.service';
 import { OntoDataService } from '../../services/onto-data.service';
@@ -53,6 +53,22 @@ export class OntoPageController {
             for (let ontoPageDto of ontoPageDtos) {
                 let bindingExts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
                 ontoPageExtDtos.push({...ontoPageDto, bindingExts});
+            }
+
+
+            // We are sorting by VIS function name.
+            // Perhaps sort it in the service as part of database call after we fetch the extended data there.
+            // TODO: Could be very slow!
+            if (ontoPageFilterVm.sortBy === ONTOPAGE_SORT_BY.FUNCTION) {
+                ontoPageExtDtos.sort((a: OntoPageExtDto, b: OntoPageExtDto) => {
+                    let comparison = 0;
+                    if (a.bindingExts[0].vis.function > b.bindingExts[0].vis.function) {
+                        comparison = 1;
+                    } else if (a.bindingExts[0].vis.function < b.bindingExts[0].vis.function) {
+                        comparison = -1;
+                    }
+                    return comparison;
+                });
             }
 
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };

@@ -18,5 +18,5 @@ class SearchService(ABC):
         pass
 
     @abstractmethod
-    def search(self):
+    def search(self) -> list:
         pass

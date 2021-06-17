@@ -5,6 +5,7 @@ import { BINDING_TYPE } from './onto-page.interface';
 export enum ONTOPAGE_SORT_BY {
     BINDING_TYPE = 'bindingType',
     DATE = 'date',
+    FUNCTION = 'function'
 }
 
 export class OntoPageFilterVm {
