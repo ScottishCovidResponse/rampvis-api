@@ -1,12 +1,10 @@
-import os
 from loguru import logger
 import jwt
 from datetime import datetime, timedelta
-from functools import wraps
 from typing import Optional
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
 from app.core.settings import RSA_PUB_KEY, RSA_PVT_KEY

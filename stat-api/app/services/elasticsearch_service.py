@@ -40,18 +40,22 @@ class ElasticsearchService(SearchService):
 
     def build_query(
         self,
-        must_keys: str,
-        should_keys: str,
-        filter_keys: str,
-        must_not_keys: str = None,
+        must_keys: list[str],
+        should_keys: list[str],
+        filter_keys: list[str],
+        must_not_keys: list[str] = None,
         minimum_should_match: int = 1,
     ) -> dict:
-        # Lowercase
+
+        # Convert to lowercase
         must_keys = [d.lower() for d in must_keys]
         should_keys = [d.lower() for d in should_keys]
         filter_keys = [d.lower() for d in filter_keys]
         must_not_keys = [d.lower() for d in must_not_keys]
 
+        if len(should_keys) == 0:
+              minimum_should_match = 0
+                
         if not must_not_keys:
             must_not_keys = [d.lower() for d in must_not_keys]
 
