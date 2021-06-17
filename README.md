@@ -29,6 +29,6 @@ docker run --name esaticsearch \
 
 Start a multi-node Elasticsearch cluster.
 ```bash
-docker compose -f docker-compose-dev-es.yml up -d
-docker compose -f docker-compose-dev-es.yml [stop | start | rm]
+docker-compose -f docker-compose-dev-es.yml up -d
+docker-compose -f docker-compose-dev-es.yml [stop | start | rm | down]
 ```
