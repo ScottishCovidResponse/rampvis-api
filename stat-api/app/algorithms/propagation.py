@@ -65,10 +65,11 @@ class Propagation:
     def weighted_average(T, K, D=None, alpha=1, beta=0):
         """ """
         logger.info(
-            f"Computing weighted average (1); len(T) = {len(T)}, len(K) = {len(K)}, len(D) = {len(D)}, alpha={alpha}, beta={beta}"
+            f"Computing weighted average (1); len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}"
         )
 
         if D is not None:
+            logger.info(f"len(D) = {len(D)}")
             return T * (alpha * K + beta * D)
         else:
             return T * K
@@ -77,10 +78,11 @@ class Propagation:
     def weighted_average2(K, D=None, alpha=1, beta=0):
         """ """
         logger.info(
-            f"Computing weighted average(2); len(K) = {len(K)}, len(D) = {len(D)}, alpha={alpha}, beta={beta}"
+            f"Computing weighted average(2); len(K) = {len(K)}, alpha={alpha}, beta={beta}"
         )
 
         if D is not None:
+            logger.info(f"len(D) = {len(D)}")
             return alpha * K + beta * D
         else:
             return K

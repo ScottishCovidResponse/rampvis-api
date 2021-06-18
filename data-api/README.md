@@ -20,7 +20,7 @@ npm run dev
 
 ### Config
 
-We did not share the folder `data-api/config` due to security reasons. You need to create a `data-api/config` folder and its contensts following the structure mentioned below:
+We did not share the folder `data-api/config` due to security reasons. You need to create a `data-api/config` folder and its contents following the structure mentioned below:
 
 ```bash
 config
