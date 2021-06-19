@@ -4,7 +4,7 @@
 
 Requirements
 
-- Python 3.8.3
+- Python 3.9.2
 - `data-api/config`
 - Mongodb
 - Elasticsearch 
@@ -12,6 +12,11 @@ Requirements
 Setting up a Python environment.
 
 ```bash
+conda create -n py-3.9.2 python=3.9.2
+conda activate py-3.9.2
+python --version
+	Python 3.9.2
+    
 pip install virtualenv
 virtualenv venv
 source ./venv/bin/activate

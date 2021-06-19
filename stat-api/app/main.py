@@ -12,14 +12,11 @@ from app.controllers import router
 
 app = FastAPI(title=PROJECT_NAME)
 app.add_middleware(GZipMiddleware, minimum_size=1000)
-origins = [    
-    "http://vis.scrc.uk",
-    "http://0.0.0.0:5000",
-    "http://localhost:5000",
-    "http://localhost:4200"
-]
+
+logger.info(f"GLOBAL_CONFIG_OBJ = {GLOBAL_CONFIG_OBJ}")
+
 app.add_middleware(CORSMiddleware, 
-        allow_origins=origins,
+        allow_origins=GLOBAL_CONFIG_OBJ["allowOrigins"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

@@ -96,9 +96,6 @@ async def search_group(
     groups = propagation.group_data_streams(Srd, discovered, clusters)
     logger.debug(f"OntoDataSearchController:post: len(groups) = {len(groups)}")
 
-    from fastapi.encoders import jsonable_encoder
-    from fastapi.responses import JSONResponse
-
     return Response(
         content=json.dumps(groups, cls=NumpyEncoder), media_type="application/json"
     )

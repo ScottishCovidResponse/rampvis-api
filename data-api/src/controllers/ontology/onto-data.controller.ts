@@ -51,7 +51,8 @@ export class OntoDataController {
                 pageCount: result.pageCount,
                 totalCount: result.totalCount,
             };
-            logger.info(`OntoDataController:getAllData: resultDto = ${JSON.stringify(resultDto)}`);
+
+            // logger.info(`OntoDataController:getAllData: resultDto = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
         } catch (e) {
             logger.error(`OntoDataController:getAllData: error = ${JSON.stringify(e)}`);
