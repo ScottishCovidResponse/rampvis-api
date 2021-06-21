@@ -79,6 +79,12 @@ async def search_group(
         f"OntoDataSearchController:post: len(examples) = {len(example)}, len(searched) = {len(discovered)}"
     )
 
+    if len(discovered) <= 0:
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="No matching data streams found! Pease update the search query.",
+        )
+
     Srd = propagation.Srd(example, discovered, mustKeys, alpha, beta)
     logger.debug(f"OntoDataSearchController:post: len(M1) = {len(Srd)}")
 
