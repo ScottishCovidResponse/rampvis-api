@@ -151,12 +151,12 @@ class Propagation:
         logger.info(f"Computing Sdd; alpha = {alpha}, beta = {beta}")
 
         keywords = [d["keywords"] for d in discovered]
-
         count_vectorizer = CountVectorizer(
             lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(stop_keys)
         )
         bow = count_vectorizer.fit_transform(keywords)
-        # K = Ranking.pairwise_jaccard_similarity(bow.toarray(), bow.toarray())
+
+        # K = Propagation.pairwise_jaccard_similarity(bow.toarray(), bow.toarray())
         K = Propagation.pairwise_cosine_similarity(bow, bow)
 
         D = None
@@ -173,6 +173,10 @@ class Propagation:
     @staticmethod
     def cluster(Sdd, n_clusters):
         logger.info(f"Ranking:cluster: ")
+
+        # When only a single data stream discovered
+        if len(Sdd) == 1:
+            return [0]
 
         clustering = SpectralClustering(n_clusters=n_clusters).fit(Sdd)
         # clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage='complete').fit(M2)
