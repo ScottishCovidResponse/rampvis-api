@@ -10,3 +10,5 @@ class PropagateDataQueryModel(BaseModel):
     minimumShouldMatch: int
     alpha: float
     beta: float
+    theta: float
+    clusteringAlgorithm: str

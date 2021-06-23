@@ -52,9 +52,11 @@ async def search_group(
     minimumShouldMatch: int = query.minimumShouldMatch
     alpha: float = query.alpha
     beta: float = query.beta
+    theta: float = query.theta
+    clusteringAlgorithm: str = query.clusteringAlgorithm
 
     logger.info(
-        f"query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}"
+        f"query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}, {theta}, {clusteringAlgorithm}"
     )
 
     if visId is None or mustKeys is None or shouldKeys is None or filterKeys is None:
@@ -85,11 +87,26 @@ async def search_group(
             detail="No matching data streams found! Pease update the search query.",
         )
 
-    Srd = propagation.Srd(example, discovered, mustKeys, alpha, beta)
-    logger.debug(f"OntoDataSearchController:post: len(M1) = {len(Srd)}")
+    try:
+        Srd = propagation.Srd(example, discovered, mustKeys, alpha, beta, theta)
+        logger.info(f"OntoDataSearchController:post: len(M1) = {len(Srd)}")
+    except Exception as e:
+        logger.error(f"OntoDataSearchController:post: e = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Srd Computation: {e}",
+        )
 
-    Sdd = propagation.Sdd(discovered, mustKeys + shouldKeys, alpha, beta)
-    logger.debug(f"OntoDataSearchController:post: len(M2) = {len(Sdd)}")
+    try:
+        Sdd = propagation.Sdd(discovered, mustKeys + shouldKeys, alpha, beta, theta)
+        logger.info(f"OntoDataSearchController:post: len(M2) = {len(Sdd)}")
+    except Exception as e:
+        logger.error(f"OntoDataSearchController:post: e = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Sdd Computation: {e}",
+        )
+
 
     n_clusters = int(len(discovered) / len(example))
 

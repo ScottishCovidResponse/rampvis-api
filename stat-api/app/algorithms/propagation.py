@@ -62,10 +62,10 @@ class Propagation:
         return sim
 
     @staticmethod
-    def weighted_average(T, K, D=None, alpha=1, beta=0):
+    def weighted_average(T, K, D=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Computing weighted average (1); len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}"
+            f"Computing weighted average (1); len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
 
         if D is not None:
@@ -75,10 +75,10 @@ class Propagation:
             return T * K
 
     @staticmethod
-    def weighted_average2(K, D=None, alpha=1, beta=0):
+    def weighted_average2(K, D=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Computing weighted average(2); len(K) = {len(K)}, alpha={alpha}, beta={beta}"
+            f"Computing weighted average(2); len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
 
         if D is not None:
@@ -88,7 +88,7 @@ class Propagation:
             return K
 
     @staticmethod
-    def Srd(reference, discovered, must_keys=[], alpha=1, beta=0):
+    def Srd(reference, discovered, must_keys=[], alpha=1, beta=0, theta=0):
         """
         a: Example data as array of OntoData object
         b: Search results as array of OntoData object
@@ -97,7 +97,7 @@ class Propagation:
         """
         # TODO: type and empty check
 
-        logger.info(f"Computing Srd; alpha = {alpha}, beta = {beta}")
+        logger.info(f"Computing Srd; alpha = {alpha}, beta = {beta}, theta={theta}")
 
         data = np.concatenate((reference, discovered))
         rows = len(reference)
@@ -137,24 +137,26 @@ class Propagation:
             # TODO: to send possible error when description field is not empty
 
         # Weighted average
-        Srd = Propagation.weighted_average(T, K, D, alpha, beta)
+        Srd = Propagation.weighted_average(T, K, D, alpha=alpha, beta=beta, theta=theta)
         return Srd
 
     @staticmethod
-    def Sdd(discovered, stop_keys=[], alpha=1, beta=0):
+    def Sdd(discovered, stop_keys=[], alpha=1, beta=0, theta=0):
         """
         a: Example data as array of OntoData object
         b: Search results as array of OntoData object
         Return:
         C: pair-wise similarity matrix
         """
-        logger.info(f"Computing Sdd; alpha = {alpha}, beta = {beta}")
+        logger.info(f"Computing Sdd; alpha = {alpha}, beta = {beta}, theta={theta}")
 
         keywords = [d["keywords"] for d in discovered]
         count_vectorizer = CountVectorizer(
             lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(stop_keys)
         )
         bow = count_vectorizer.fit_transform(keywords)
+
+        logger.debug(f"bow = {bow.toarray()}")
 
         # K = Propagation.pairwise_jaccard_similarity(bow.toarray(), bow.toarray())
         K = Propagation.pairwise_cosine_similarity(bow, bow)
@@ -167,7 +169,7 @@ class Propagation:
             bow = tfidf_vectorizer.fit_transform(description)
             D = Propagation.pairwise_cosine_similarity(bow, bow)
 
-        Sdd = Propagation.weighted_average2(K, D, 1, 0)
+        Sdd = Propagation.weighted_average2(K, D, alpha=alpha, beta=beta, theta=theta)
         return Sdd
 
     @staticmethod
