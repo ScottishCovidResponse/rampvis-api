@@ -100,7 +100,6 @@ function configureAutoMapper() {
     automapper
         .createMap(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
-        .forMember('bindVis', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('bindVis'))
         .convertToType(OntoPageDto);
 }
 

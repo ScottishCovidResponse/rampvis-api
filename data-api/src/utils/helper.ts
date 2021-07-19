@@ -6,6 +6,9 @@ export async function asyncForEach(array: any[], callback: any) {
 
 export function splitKeywordsString(keywords: any): string[] {
     let result: string[] = [];
-    if (keywords && typeof keywords === 'string') result = keywords.split(', ');
+    if (keywords && typeof keywords === 'string') {
+        // Convert to array and filter empty strings
+        result = keywords.split(', ').filter((d: string) => d);
+    }
     return result;
 }

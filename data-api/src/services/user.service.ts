@@ -92,8 +92,8 @@ export class UserService extends DataService<IUser> {
             role: userDto.role || ROLES.USER,
             password: hashedPassword,
             expireOn: userDto.expireOn
-                ? new Date(userDto.expireOn)
-                : new Date(new Date().setFullYear(new Date().getFullYear() + 30)),
+                ? new Date(new Date(userDto.expireOn).toISOString())
+                : new Date(new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString()),
             deleted: false,
         };
 
@@ -115,19 +115,23 @@ export class UserService extends DataService<IUser> {
     }
 
 
-    async updateUser(id: string, updateUserDto: UpdateUserVm): Promise<IUser> {
+    async updateUser(id: string, updateUserVm: UpdateUserVm): Promise<IUser> {
         const user: IUser = await this.getUser(id);
         const updateUser: IUser = {} as IUser;
 
-        if (updateUserDto.role && user.role !== updateUserDto.role) {
-            updateUser.role = updateUserDto.role;
+        if (updateUserVm.role && user.role !== updateUserVm.role) {
+            updateUser.role = updateUserVm.role;
         }
 
-        if (updateUserDto.password && user.password) {
-            const isPasswordMatching = await bcrypt.compare(updateUserDto.password, user.password);
+        if (updateUserVm.password && user.password) {
+            const isPasswordMatching = await bcrypt.compare(updateUserVm.password, user.password);
             if (!isPasswordMatching) {
-                updateUser.password = await bcrypt.hash(updateUserDto.password, 10);
+                updateUser.password = await bcrypt.hash(updateUserVm.password, 10);
             }
+        }
+
+        if (new Date(updateUserVm?.expireOn).getTime() !== new Date(user?.expireOn as any).getTime()) {
+            updateUser.expireOn = new Date(new Date(updateUserVm.expireOn).toISOString());
         }
 
         if (Object.entries(updateUser).length === 0) {
@@ -135,7 +139,6 @@ export class UserService extends DataService<IUser> {
         }
 
         const result: IUser = await this.updateAndGet(id, updateUser);
-
         return result;
     }
 

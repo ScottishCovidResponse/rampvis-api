@@ -35,7 +35,7 @@ export class OntoDataService extends DataService<IOntoData> {
             result = await this.getAll();
         }
 
-        logger.debug(`getAllData: result = ${JSON.stringify(result)}`);
+        // logger.debug(`getAllData: result = ${JSON.stringify(result)}`);
         return this.getPaginatedOntoDataList(result, ontoDataFilterVm);
     }
 
@@ -130,7 +130,8 @@ export class OntoDataService extends DataService<IOntoData> {
     }
 
     private paginate(list: IOntoData[], pageSize: number, pageIndex: number): Array<IOntoData> {
-        logger.debug(`OntoDataService: paginate: list = ${JSON.stringify(list)}, pageSize = ${pageSize}, pageIndex = ${pageIndex}`);
+        logger.debug(`OntoDataService: paginate: pageSize = ${pageSize}, pageIndex = ${pageIndex}`);
+        // logger.debug(`OntoDataService: paginate: list = ${JSON.stringify(list)}`);
         return list.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
     }
 

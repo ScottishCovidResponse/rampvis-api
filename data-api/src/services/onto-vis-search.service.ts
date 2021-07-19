@@ -30,19 +30,17 @@ export class OntoVisSearchService extends SearchService<IOntoVisSearch> {
         const dsl: any = {
             query: {
                 bool: {
-                    minimum_should_match: 1,
-                    should: [{ match: { description: ontoVisSearchFilterVm.query } }, { match: { function: ontoVisSearchFilterVm.query } }],
+                    must: [{ match: { function: ontoVisSearchFilterVm.query } }],
                 },
             },
         };
 
-
         const res = await this._search(dsl);
         let result: IOntoVisSearch[] = res?.hits?.hits?.map((d: any) => { return { _id: d?._id, ...d?._source } });
 
-        console.log('OntoVisSearchService:search: res = ', res.hits.hits);
-        console.log('OntoVisSearchService:search: result = ', result);
-
+        logger.info('OntoVisSearchService:search: dsl = ', JSON.stringify(dsl));
+        // console.log('OntoVisSearchService:search: res = ', res.hits.hits);
+        logger.info('OntoVisSearchService:search: result = ', result);
         return result;
     }
 

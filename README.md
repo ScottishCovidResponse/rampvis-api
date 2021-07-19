@@ -1,21 +1,21 @@
 # Introduction
 This is the RESTful API of the RAMPVIS system. This repository consist of a two projects.
 
-1. [data-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/data-api) 
-   - APIs, e.g., Authentication, user, ontology operations, and data.
-   - Implemented in Node.js, Typescript, and JS libraries.
+1. [data-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/data-api)
+   - Implemented in Typescript, Node.js, Express, and other JavaScript libraries.
+   - APIs for Authentication, user management, ontology operations, data service, etc.
 
-2. [stat-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/stat-api) 
-   - APIs, e.g., Data, search, grouping, ranking, analytical algorithms, agents, etc.
-   - Implemented in FastAPI, Python, and other python libraries.
+2. [stat-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/stat-api)
+   - Implemented in Python, FastAPI, and other Python libraries.
+   - APIs for data service, search algorithms, grouping, ranking and propagation algorithms, analytical algorithms, scheduler agents, etc.
 
 
 # Requirements
 
-In order to run the projects locally you will need a MongoDB and a Elasticsearch instance.
+In order to run these projects locally you will need a MongoDB (> 4.4.\*) and a Elasticsearch (> 7.12.\*) instance. 
 
 ## Mongodb
-We are using a free MongoDB Atlas managed instance for our development and a community version for production.
+We are using a freely available MongoDB Atlas-managed instance for development and a community version for production.
 
 ## Elasticsearch 
 
@@ -29,6 +29,6 @@ docker run --name esaticsearch \
 
 Start a multi-node Elasticsearch cluster.
 ```bash
-docker compose -f docker-compose-dev-es.yml up -d
-docker compose -f docker-compose-dev-es.yml [stop | start | rm]
+docker-compose -f docker-compose-dev-es.yml up -d
+docker-compose -f docker-compose-dev-es.yml [stop | start | rm | down]
 ```

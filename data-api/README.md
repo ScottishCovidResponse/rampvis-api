@@ -1,12 +1,13 @@
 
 # Data API
+APIs for Authentication, user management, ontology operations, data service, etc.
 
 ## Development 
 
-### Requirements
+Requirements
 
-- Node version 14.15.0
-- `data-api/config` - please contact a developer for getting access
+- Node version 14.17.1
+- `data-api/config`
 - Mongodb
 - Elasticsearch 
 
@@ -19,7 +20,7 @@ npm run dev
 
 ### Config
 
-`data-api/config` folder and configuration files structure:
+We did not share the folder `data-api/config` due to security reasons. You need to create a `data-api/config` folder and its contents following the structure mentioned below:
 
 ```bash
 config
@@ -31,7 +32,7 @@ config
 
 ```
 
-`data-api/config/default.json` & `data-api/config/production.json` file structure/example:
+The `data-api/config/default.json` or the `data-api/config/production.json` file structure (example) as follows:
 
 ```json
 {
@@ -83,3 +84,5 @@ config
   }
 }
 ```
+
+If you have any queries or need any help please contact one of the software engineers of this project. 

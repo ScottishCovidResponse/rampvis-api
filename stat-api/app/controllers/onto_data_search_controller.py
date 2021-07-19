@@ -14,7 +14,7 @@ from app.services.database_service import DatabaseService
 from app.services.mongodb_service import MongoDBService
 from app.services.search_service import SearchService
 from app.services.elasticsearch_service import ElasticsearchService
-from app.algorithms.ranking import Ranking
+from app.algorithms.propagation import Propagation
 
 
 onto_data_search_controller = APIRouter()
@@ -38,23 +38,25 @@ async def search_group(
     query: PropagateDataQueryModel,
     database_service: DatabaseService = Depends(MongoDBService),
     search_service: SearchService = Depends(ElasticsearchService),
-    ranking: Ranking = Depends(Ranking),
+    propagation: Propagation = Depends(Propagation),
 ):
     """
     TODO: use query model and validation
     """
     logger.info(f"propagate_data_query = {query}")
-    visId = query.visId
-    mustKeys = query.mustKeys
-    shouldKeys = query.shouldKeys
-    filterKeys = query.filterKeys
-    mustNotKeys = query.mustNotKeys
-    minimumShouldMatch = query.minimumShouldMatch
-    alpha = query.alpha
-    beta = query.beta
+    visId: str = query.visId
+    mustKeys: list[str] = query.mustKeys
+    shouldKeys: list[str] = query.shouldKeys
+    filterKeys: list[str] = query.filterKeys
+    mustNotKeys: list[str] = query.mustNotKeys
+    minimumShouldMatch: int = query.minimumShouldMatch
+    alpha: float = query.alpha
+    beta: float = query.beta
+    theta: float = query.theta
+    clusteringAlgorithm: str = query.clusteringAlgorithm
 
     logger.info(
-        f"OntoDataSearchController:post: query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}"
+        f"query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}, {theta}, {clusteringAlgorithm}"
     )
 
     if visId is None or mustKeys is None or shouldKeys is None or filterKeys is None:
@@ -64,7 +66,7 @@ async def search_group(
         )
 
     # 1
-    examples = database_service.find_example_data_of_vis(visId)
+    example = database_service.find_example_data_of_vis(visId)
     # log.debug(f'examples = {examples}')
     # 2
     query = search_service.build_query(
@@ -73,31 +75,49 @@ async def search_group(
     logger.debug(f"OntoDataSearchController:post: query = {query}")
 
     # 3
-    searched = search_service.search(query)
+    discovered = search_service.search(query)
     # log.debug(f'searched = {searched}')
     logger.debug(
-        f"OntoDataSearchController:post: len(examples) = {len(examples)}, len(searched) = {len(searched)}"
+        f"OntoDataSearchController:post: len(examples) = {len(example)}, len(searched) = {len(discovered)}"
     )
 
-    M1 = ranking.M1(examples, searched, mustKeys, alpha, beta)
-    logger.debug(f"OntoDataSearchController:post: len(M1) = {len(M1)}")
+    if len(discovered) <= 0:
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="No matching data streams found! Pease update the search query.",
+        )
 
-    M2 = ranking.M2(searched, mustKeys + shouldKeys, alpha, beta)
-    logger.debug(f"OntoDataSearchController:post: len(M2) = {len(M2)}")
+    try:
+        Srd = propagation.Srd(example, discovered, mustKeys, alpha, beta, theta)
+        logger.info(f"OntoDataSearchController:post: len(M1) = {len(Srd)}")
+    except Exception as e:
+        logger.error(f"OntoDataSearchController:post: e = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Srd Computation: {e}",
+        )
 
-    n_clusters = int(len(searched) / len(examples))
+    try:
+        Sdd = propagation.Sdd(discovered, mustKeys + shouldKeys, alpha, beta, theta)
+        logger.info(f"OntoDataSearchController:post: len(M2) = {len(Sdd)}")
+    except Exception as e:
+        logger.error(f"OntoDataSearchController:post: e = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Sdd Computation: {e}",
+        )
 
-    logger.debug(f"OntoDataSearchController:post: len(examples) = {len(examples)}")
+
+    n_clusters = int(len(discovered) / len(example))
+
+    logger.debug(f"OntoDataSearchController:post: len(examples) = {len(example)}")
     logger.debug(f"OntoDataSearchController:post: n_clusters = {n_clusters}")
 
-    clusters = ranking.cluster(M2, n_clusters)
+    clusters = propagation.cluster(Sdd, n_clusters)
     logger.debug(f"OntoDataSearchController:post: len(clusters) = {len(clusters)}")
 
-    groups = ranking.group_data_streams(M1, searched, clusters)
+    groups = propagation.group_data_streams(Srd, discovered, clusters)
     logger.debug(f"OntoDataSearchController:post: len(groups) = {len(groups)}")
-
-    from fastapi.encoders import jsonable_encoder
-    from fastapi.responses import JSONResponse
 
     return Response(
         content=json.dumps(groups, cls=NumpyEncoder), media_type="application/json"
