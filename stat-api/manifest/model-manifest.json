@@ -1,0 +1,19 @@
+[
+    {
+        "model": "percentiles/model/eera",
+        "components": [
+            {
+                "name": "age-groups?col=H",
+                "dataType": "timeseries",
+                "keywords": ["scotland", "model", "eera", "covid_deaths", "age_group"],
+                "description": "EERA predictions of hospital admission by age group"
+            },
+            {
+                "name": "age-groups?col=D",
+                "dataType": "timeseries",
+                "keywords": ["scotland", "model", "eera", "hospital_admission", "age_group"],
+                "description": "EERA predictions of deaths by age group"
+            }
+        ]
+    }
+]

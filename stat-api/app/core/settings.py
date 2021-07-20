@@ -18,13 +18,10 @@ DATA_PATH_LIVE = BASE_DIR + '/../../../' + 'data/live'
 DATA_PATH_STATIC = BASE_DIR + '/../../../' + 'data/static'
 DATA_MODEL = BASE_DIR + '/../../../' + 'data/scotland/model'
 
-NEO4J_BOLT = 'bolt://localhost'
-NEO4J_BOLT_PORT = 7687
-NEO4J_USER = 'neo4j'
-NEO4J_PASSWORD = 'pass123'
 
 env = environ.get('ENV', 'development')
 logger.info(f'ENV = {env}')
+
 if env == 'production':
     GLOBAL_CONFIG_FILE = BASE_DIR + '/../../../' + 'data-api/config/production.json'
 else:

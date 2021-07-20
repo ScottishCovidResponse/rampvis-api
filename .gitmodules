@@ -1,3 +1,0 @@
-[submodule "data-api/config"]
-	path = data-api/config
-	url = https://github.com/ScottishCovidResponse/config.git
