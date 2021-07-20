@@ -1,0 +1,9 @@
+{
+  "allowOrigins": [
+    "http://0.0.0.0:5000"
+  ],
+  "apiUrl": "/api/v1",
+  "es": {
+    "host": "http://localhost:9200"
+  }
+}
