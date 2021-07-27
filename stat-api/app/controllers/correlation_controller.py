@@ -16,10 +16,10 @@ correlation_controller = APIRouter()
 
 
 @correlation_controller.get("/")
-def query(var1=Query(None), var2=Query(None), metrics=Query(None), window=Query(None)):
+def query(var1=Query(None), var2=Query(None), metrics=Query(None), window=Query('none')):
     logger.info(f"var1 = {var1}, var2 = {var2}, metrics = {metrics}, window = {window}")
 
-    if var1 is None or var2 is None or metrics is None or window is None:
+    if var1 is None or var2 is None or metrics is None:
         raise HTTPException(
             status_code=HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Required parameters: var1, var2, metrics",
