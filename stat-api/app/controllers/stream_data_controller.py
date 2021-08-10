@@ -36,8 +36,7 @@ def download_data():
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
-# scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
-scheduler.add_job(download_data, "cron", second=0)
+scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
 scheduler.start()
 
 
