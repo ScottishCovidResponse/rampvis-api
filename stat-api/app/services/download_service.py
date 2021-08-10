@@ -103,4 +103,4 @@ def download_owid(folder):
     print('Download owid ...')
     url = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
     df = pd.read_csv(url)
-    df.to_csv(Path(folder)/'owid/full.csv')
+    df.to_csv(Path(folder)/'owid/full.csv', index=False)
