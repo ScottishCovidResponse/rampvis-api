@@ -10,21 +10,23 @@ from starlette.status import (
 )
 
 from app.utils.jwt_service import validate_user_token
-from app.services.download_service import download_to_csvs
+from app.services.download_service import download_to_csvs, download_owid
 from app.core.settings import DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC
 
 stream_data_controller = APIRouter()
 
 
 def download_data():
-    """
-    Download data products from https://data.scrc.uk/.
+    """Download daily data.
     """
 
     try:
-        with open("manifest/manifest.json") as f:
-            manifest = json.load(f)
-            download_to_csvs(manifest, DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC)
+        # Currently data products isn't working. Waiting for the data team to fix.
+        # with open("manifest/manifest.json") as f:
+        #     manifest = json.load(f)
+        #     download_to_csvs(manifest, DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC)
+
+        download_owid(DATA_PATH_LIVE)
     except Exception as e:
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
@@ -34,7 +36,8 @@ def download_data():
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
+# scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
+scheduler.add_job(download_data, "cron", second=0)
 scheduler.start()
 
 

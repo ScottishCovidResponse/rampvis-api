@@ -98,3 +98,9 @@ def download_product(product_name, components, raw_path, live_path, static_path)
     h5s = [filename for filename in os.listdir(folder) if filename.endswith('.h5')]
     filename = h5s[0]
     process_h5(folder/filename, subfolder, static_path, components)
+
+def download_owid(folder):
+    print('Download owid ...')
+    url = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
+    df = pd.read_csv(url)
+    df.to_csv(Path(folder)/'owid/full.csv')
