@@ -1,0 +1,20 @@
+[
+    {
+        "name": "var1=scotland/cumulative_cases&var2=scotland/cumulative_cases&metrics=pearsonr&smooth=hanning&window=none",
+        "dataType": "timeseries",
+        "keywords": ["scotland", "correlation", "cumulative_cases", "health_board", "pearsonr"],
+        "description": "pearson correlation of cumulative cases between health boards"
+    },
+    {
+        "name": "var1=scotland/hospital_confirmed&var2=scotland/hospital_confirmed&metrics=pearsonr&smooth=hanning&window=none",
+        "dataType": "timeseries",
+        "keywords": ["scotland", "correlation", "hospital_confirmed", "health_board", "pearsonr"],
+        "description": "pearson correlation of hospital confirmed between health boards"
+    },
+    {
+        "name": "var1=scotland/icu_patients&var2=scotland/icu_patients&metrics=pearsonr&smooth=hanning&window=none",
+        "dataType": "timeseries",
+        "keywords": ["scotland", "correlation", "icu_patients", "health_board", "pearsonr"],
+        "description": "pearson correlation of icu patients between health boards"
+    }
+]
