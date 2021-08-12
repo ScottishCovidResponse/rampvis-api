@@ -1,0 +1,13 @@
+[
+    {
+        "product": "opendata/scotland/case_trends",
+        "components": [
+            {
+                "name": "daily_sex_agegroup",
+                "dataType": "timeseries",
+                "keywords": ["opendata", "scotland", "case_trends", "daily", "entire_country", "all_sexes", "all_agegroups"],
+                "description": "Scotland - Daily case trends by Sex and Age group"
+            }
+        ]
+    }
+]
