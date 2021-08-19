@@ -20,8 +20,6 @@ data/live/records/SARS-CoV-2/scotland/cases-and-management/nhsworkforce
 data/live/records/SARS-CoV-2/scotland/cases-and-management/schools
 data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_persons_country_covid_related_deaths.csv
 data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_persons_country_all_deaths.csv
-data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_gender_country_covid_related_deaths.csv
-data/live/records/SARS-CoV-2/scotland/human-mortality/age_group_week_gender_country_all_deaths.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/testing_location_date_covid19_tests_carried_out_daily.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_total_daily_tests_reported.csv
 data/live/records/SARS-CoV-2/scotland/cases-and-management/testing/date_country_total_daily_number_of_positive_tests_reported.csv
