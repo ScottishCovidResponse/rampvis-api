@@ -32,9 +32,9 @@ export class OntoPageService extends DataService<IOntoPage> {
         let totalCount: number = 0;
         const query:  any = {};
 
-        if (ontoPageFilterVm.filterPageType) {
-            totalCount = await this.getDbCollection().find({ bindingType: ontoPageFilterVm.filterPageType }).count();
-            query.bindingType = ontoPageFilterVm.filterPageType;
+        if (ontoPageFilterVm.filterBindingType) {
+            totalCount = await this.getDbCollection().find({ bindingType: ontoPageFilterVm.filterBindingType }).count();
+            query.bindingType = ontoPageFilterVm.filterBindingType;
         } else {
             totalCount = await this.getDbCollection().countDocuments();
         }
