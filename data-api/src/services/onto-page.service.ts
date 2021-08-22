@@ -7,7 +7,7 @@ import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
 import { DuplicateEntry, IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
-import { IOntoPage, BINDING_TYPE } from '../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage, PAGE_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
 import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
@@ -32,12 +32,14 @@ export class OntoPageService extends DataService<IOntoPage> {
         let totalCount: number = 0;
         const query:  any = {};
 
-        if (ontoPageFilterVm.filterBindingType) {
-            totalCount = await this.getDbCollection().find({ bindingType: ontoPageFilterVm.filterBindingType }).count();
-            query.bindingType = ontoPageFilterVm.filterBindingType;
+        if (ontoPageFilterVm.filterPageType) {
+            totalCount = await this.getDbCollection().find({ pageType: ontoPageFilterVm.filterPageType }).count();
+            query.pageType = ontoPageFilterVm.filterPageType;
         } else {
             totalCount = await this.getDbCollection().countDocuments();
         }
+
+        // TODO: Implement filterVisType
 
         if (ontoPageFilterVm.filterId) {
             query._id = new ObjectId(ontoPageFilterVm.filterId);
@@ -64,73 +66,71 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     public async getPagesBindingVisIdAndDataId(_visId: string, _dataId: string): Promise<string[]> {
-        const pages = await this.getAll({ bindings: { $elemMatch: { visId: _visId, dataIds: { $in: [_dataId] } } } });
+        const pages = await this.getAll({ visId: _visId, dataIds: { $in: [_dataId] } });
         console.log('OntoPageService:getPagesBindingVisIdAndDataId: visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages)
         return pages.map(d => d._id.toString())
     }
 
-    private async getPageBindingVisIdAndDataIds(bindingType: BINDING_TYPE, _visId: string, _dataIds: string[]): Promise<IOntoPage[]> {
-        const pages = await this.getAll({ bindingType: bindingType, bindings: { $elemMatch: { visId: _visId, dataIds: { $in: _dataIds } } } });
+    private async getPageBindingVisIdAndDataIds(_pageType: PAGE_TYPE, _visId: string, _dataIds: string[]): Promise<IOntoPage[]> {
+        const pages = await this.getAll({ pageType: _pageType, visId: _visId, dataIds: { $in: _dataIds } });
         return pages;
     }
 
     public async getExamplePagesBindingVisId(_visId: string): Promise<IOntoPage[]> {
-        return await this.getAll({ bindingType: BINDING_TYPE.EXAMPLE, bindings: { $elemMatch: { visId: _visId } } });
+        return await this.getAll({ pageType: PAGE_TYPE.EXAMPLE, visId: _visId });
     }
 
     public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {
 
-        let exits = await this.getPageBindingVisIdAndDataIds(ontoPageVm.bindingType, ontoPageVm.bindings[0].visId, ontoPageVm.bindings[0].dataIds);
+        let exits = await this.getPageBindingVisIdAndDataIds(ontoPageVm.pageType, ontoPageVm.visId, ontoPageVm.dataIds);
         if (exits.length) {
-            throw new DuplicateEntry(`page type: ${ontoPageVm.bindingType}, visId: ${ontoPageVm.bindings[0].visId} and dataIds: ${JSON.stringify(ontoPageVm.bindings[0].dataIds)}`);
+            throw new DuplicateEntry(`page type: ${ontoPageVm.pageType}, visId: ${ontoPageVm.visId} and dataIds: ${JSON.stringify(ontoPageVm.dataIds)}`);
         }
 
         console.log('OntoPageService:createPage: ontoPageVm = ', ontoPageVm);
 
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),
-            nrows: ontoPageVm.nrows,
-            bindingType: ontoPageVm.bindingType,
+            pageType: ontoPageVm.pageType,
             date: new Date(),
-            bindings: ontoPageVm.bindings,
+            visId: ontoPageVm.visId,
+            dataIds: ontoPageVm.dataIds,
         };
 
-        if (ontoPageVm.nrows) {
-            ontoPage.nrows = ontoPageVm.nrows;
+        if (ontoPageVm.pageIds && ontoPageVm.pageIds.length > 0) {
+            ontoPage.pageIds = ontoPageVm.pageIds;
         }
 
         return await this.create(ontoPage);
     }
 
     public async updatePage(pageId: string, ontoPageVm: OntoPageVm): Promise<IOntoPage> {
-        let data: IOntoPage = await this.get(pageId);
-        if (!data) throw new IdDoesNotExist(pageId);
+        let existingOntoPage: IOntoPage = await this.get(pageId);
+        if (!existingOntoPage) throw new IdDoesNotExist(pageId);
 
         let ontoPage: IOntoPage = {
-            bindingType: ontoPageVm.bindingType,
+            pageType: ontoPageVm.pageType,
             date: new Date(),
-            bindings: ontoPageVm.bindings,
+            visId: ontoPageVm.visId,
+            dataIds: ontoPageVm.dataIds,
+            pageIds: ontoPageVm?.pageIds,
         } as any;
-
-        if (ontoPageVm.nrows) {
-            ontoPage.nrows = ontoPageVm.nrows;
-        }
 
         return await this.updateAndGet(pageId, ontoPage);
     }
 
-    public async updatePageData(pageId: string, dataIds: string[]): Promise<any> {
+    public async updatePageDataIds(pageId: string, dataIds: string[]): Promise<any> {
         return this.getDbCollection().updateOne(
             { _id: new ObjectId(pageId)},
-            { $set: { "bindings.0.dataIds": dataIds} },
+            { $set: { "dataIds": dataIds} },
             { upsert: false }
          );
     }
 
-    public async updatePageBindingType(pageId: string, bindingType: BINDING_TYPE): Promise<any> {
+    public async updatePageType(pageId: string, pageType: PAGE_TYPE): Promise<any> {
         return this.getDbCollection().updateOne(
             { _id: new ObjectId(pageId)},
-            { $set: { 'bindingType': bindingType} },
+            { $set: { 'pageType': pageType} },
             { upsert: false }
          );
     }

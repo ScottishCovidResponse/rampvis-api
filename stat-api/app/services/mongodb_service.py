@@ -44,14 +44,14 @@ class MongoDBService(DatabaseService):
     def find_example_data_of_vis(self, vis_id):
         # Find 'example pages binding vis_id'
         cursor = self.db["onto_page"].find(
-            {"bindingType": "example", "bindings": {"$elemMatch": {"visId": vis_id}}}
+            {"pageType": "example", "visId": vis_id}
         )
 
         data_ids = []
         for doc in cursor:
-            data_ids = doc.get("bindings")[0].get("dataIds")
+            data_ids = doc.get("dataIds")
 
-        # Find example data with data_ids
+        # Find onto data with data_ids
         res = self.db["onto_data"].find(
             {"_id": {"$in": [ObjectId(id) for id in data_ids]}}
         )

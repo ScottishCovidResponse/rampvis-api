@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class UpdateOntoPageDataVm {
+export class UpdateOntoPageDataIdsVm {
   @IsString({ each: true })
   dataIds!: string[];
 }

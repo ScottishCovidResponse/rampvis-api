@@ -5,7 +5,6 @@ import { ActivityService } from '../activity.service';
 import { BookmarkService } from '../bookmark.service';
 import { CSVService } from '../csv.service';
 import { SearchServiceV05 } from '../search.service.v0.5';
-import { TemplateService } from '../template.service';
 import { ThumbnailService } from '../thumbnail.service';
 import { UserService } from '../user.service';
 import { OntoDataService } from '../onto-data.service';
@@ -26,7 +25,6 @@ DIContainer.bind<SearchServiceV05>(TYPES.SearchServiceV05).to(SearchServiceV05);
 DIContainer.bind<OntoVisService>(TYPES.OntoVisService).to(OntoVisService);
 DIContainer.bind<OntoDataService>(TYPES.OntoDataService).to(OntoDataService);
 DIContainer.bind<OntoPageService>(TYPES.OntoPageService).to(OntoPageService);
-DIContainer.bind<TemplateService>(TYPES.TemplateService).to(TemplateService);
 DIContainer.bind<OntoDataSearchService>(TYPES.OntoDataSearchService).to(OntoDataSearchService);
 DIContainer.bind<OntoVisSearchService>(TYPES.OntoVisSearchService).to(OntoVisSearchService);
 

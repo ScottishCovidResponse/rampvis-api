@@ -9,8 +9,8 @@ import { DataService } from './data.service';
 import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
 import { OntoVisVm } from '../infrastructure/onto-vis/onto-vis.vm';
 import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
-import { OntoPageService } from './onto-page.service';
-import { OntoDataService } from './onto-data.service';
+import { OntoVisDto } from '../infrastructure/onto-vis/onto-vis.dto';
+import { MAPPING_TYPES } from './config/automapper.config';
 
 @provide(TYPES.OntoVisService)
 export class OntoVisService extends DataService<IOntoVis> {
@@ -18,6 +18,12 @@ export class OntoVisService extends DataService<IOntoVis> {
         @inject(TYPES.DbClient) dbClient: DbClient,
     ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_vis'));
+    }
+
+    public async getOntoVisDto(id: string): Promise<OntoVisDto> {
+        const ontoVis: IOntoVis = await this.get(id);
+        const OntoVisDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
+        return OntoVisDto;
     }
 
     public async createVis(visVm: OntoVisVm): Promise<IOntoVis> {

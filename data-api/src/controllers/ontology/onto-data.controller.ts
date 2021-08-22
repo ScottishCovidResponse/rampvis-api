@@ -104,30 +104,6 @@ export class OntoDataController {
         }
     }
 
-    @httpGet('/search-group')
-    public async searchGroup(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const visId: string = request.query.visId as any;
-        logger.info(`OntoDataController:searchGroup: visId = ${JSON.stringify(visId)}`);
-
-        try {
-            //
-            // TODO
-            //  I am just grouping arbitrarily
-            //
-            const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
-            const groupLen = ontoPages[0].bindings[0].dataIds.length;
-            let results: IOntoDataSearchGroup[] = await this.ontoDataService.getGroupsMatchingExampleDataOfVis(groupLen);
-            const resultsDto: OntoDataSearchGroupDto[] = automapper.map(MAPPING_TYPES.IOntoDataSearchGroup, MAPPING_TYPES.OntoDataSearchGroupDto, results);
-
-            logger.info(`OntoDataController:search: searchGroup = ${JSON.stringify(resultsDto)}`);
-            response.status(200).send(resultsDto);
-        } catch (e) {
-            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
-            next(new SearchError(e.message));
-        }
-    }
-
-
     @httpGet('/:dataId')
     public async getData(request: Request, response: Response, next: NextFunction): Promise<void> {
         const dataId = request.params.dataId;
