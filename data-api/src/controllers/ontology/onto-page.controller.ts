@@ -11,7 +11,7 @@ import { JwtToken } from '../../middleware/jwt.token';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { OntoPageVm } from '../../infrastructure/onto-page/onto-page.vm';
 import { OntoPageService } from '../../services/onto-page.service';
-import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage, PAGE_TYPE } from '../../infrastructure/onto-page/onto-page.interface';
 import { SomethingWentWrong } from '../../exceptions/exception';
 import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../../infrastructure/onto-page/onto-page-filter.vm';
@@ -23,6 +23,7 @@ import { IUser } from '../../infrastructure/user/user.interface';
 import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
 import { UpdateOntoPageDataIdsVm } from '../../infrastructure/onto-page/update-onto-page-data-ids.vm';
 import { UpdateOntoPageTypeVm } from '../../infrastructure/onto-page/update-onto-page-type.vm';
+import { VIS_TYPE } from '../../infrastructure/onto-vis/onto-vis-type.enum';
 
 
 @controller('/ontology', JwtToken.verify)
@@ -34,13 +35,16 @@ export class OntoPageController {
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService
     ) {}
 
-    @httpGet('/pages', queryParamValidate(OntoPageFilterVm))
+    @httpGet('/pages/:pageType/', queryParamValidate(OntoPageFilterVm))
     public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
+        // TODO: Review the onto-page.controller.ts
+        const pageType: PAGE_TYPE = request.params.pageType as any;
         const ontoPageFilterVm: OntoPageFilterVm = request.query as any;
-        logger.info(`OntoPageController:getPages: OntoPageFilterVm = ${JSON.stringify(ontoPageFilterVm)}`);
+        // prettier-ignore
+        logger.info(`OntoPageController:getPages: pageType=${pageType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
 
         try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(ontoPageFilterVm);
+            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(pageType, null as any, ontoPageFilterVm);
             const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data);
             const ontoPageExtDtos: OntoPageExtDto[] = [];
             for (let ontoPageDto of ontoPageDtos) {

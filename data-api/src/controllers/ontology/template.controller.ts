@@ -7,7 +7,7 @@ import { TYPES } from '../../services/config/types';
 import { OntoPageService } from '../../services/onto-page.service';
 import { logger } from '../../utils/logger';
 import { SearchError, SomethingWentWrong } from '../../exceptions/exception';
-import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
+import { IOntoPage, PAGE_TYPE } from '../../infrastructure/onto-page/onto-page.interface';
 import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
 import { MAPPING_TYPES } from '../../services/config/automapper.config';
 import { queryParamValidate } from '../../middleware/validators';
@@ -19,9 +19,10 @@ import { OntoPageSearchService } from '../../services/onto-page-search.service';
 import { OntoPageSearchFilterVm } from '../../infrastructure/onto-page/onto-page-search-filter.vm';
 import { IOntoPageSearch } from '../../infrastructure/onto-page/onto-page-search.interface';
 import { OntoPageSearchDto } from '../../infrastructure/onto-page/onto-page-search.dto';
+import { VIS_TYPE } from '../../infrastructure/onto-vis/onto-vis-type.enum';
 
 //
-// Un-guarded - only support GET
+// Un-guarded: to only support GET
 //
 
 @controller('/template')
@@ -33,36 +34,6 @@ export class TemplateController {
         @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService
     ) {}
 
-
-    @httpGet('/pages', queryParamValidate(OntoPageFilterVm))
-    public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
-        // TODO: Duplicated in onto-page.controller.ts
-
-        const query: OntoPageFilterVm = request.query as any;
-        logger.info(`TemplateController:getPagtemplatees: query = ${JSON.stringify(query)}`);
-
-        try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(query);
-            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data );
-            const ontoPageExtDtos: OntoPageExtDto[] = [];
-            for (let ontoPageDto of ontoPageDtos) {
-                ontoPageExtDtos.push({
-                    ...ontoPageDto,
-                    vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
-                });
-            }
-
-            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
-            resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
-            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
-
-            response.status(200).send(resultDto);
-        } catch (e) {
-            logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
-            next(new SomethingWentWrong(e.message));
-        }
-    }
 
     @httpGet('/pages/search/', queryParamValidate(OntoPageSearchFilterVm))
     public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -85,6 +56,39 @@ export class TemplateController {
             next(new SearchError(e.message));
         }
     }
+
+    @httpGet('/pages/:pageType/:visType/', queryParamValidate(OntoPageFilterVm))
+    public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
+        // TODO: Review the onto-page.controller.ts
+        const pageType: PAGE_TYPE = request.params.pageType as any;
+        const visType: VIS_TYPE = request.params.visType as any;
+        const ontoPageFilterVm: OntoPageFilterVm = request.query as any;
+        // prettier-ignore
+        logger.info(`TemplateController:getPages: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
+
+        try {
+            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(pageType, visType, ontoPageFilterVm);
+            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data );
+            const ontoPageExtDtos: OntoPageExtDto[] = [];
+            for (let ontoPageDto of ontoPageDtos) {
+                ontoPageExtDtos.push({
+                    ...ontoPageDto,
+                    vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
+                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                });
+            }
+
+            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
+            resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
+            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
+
+            response.status(200).send(resultDto);
+        } catch (e) {
+            logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
+    }
+
 
     // TODO: Duplicated in onto-page.controller.ts
     @httpGet('/page/:pageId')

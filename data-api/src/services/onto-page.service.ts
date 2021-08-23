@@ -15,6 +15,8 @@ import { SORT_ORDER } from '../infrastructure/sort-order.enum';
 import { MAPPING_TYPES } from './config/automapper.config';
 import { OntoVisService } from './onto-vis.service';
 import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
+import { VIS_TYPE } from '../infrastructure/onto-vis/onto-vis-type.enum';
+import { logger } from '../utils/logger';
 
 @provide(TYPES.OntoPageService)
 export class OntoPageService extends DataService<IOntoPage> {
@@ -29,38 +31,44 @@ export class OntoPageService extends DataService<IOntoPage> {
         return await this.getAll({ _id: { $in: ids.map((id) => new ObjectId(id)) } });
     }
 
-    async getPaginated(ontoPageFilterVm: OntoPageFilterVm): Promise<PaginationVm<IOntoPage>> {
-        console.log('OntoPageService:getPaginated: ontoPageFilterVm = ', ontoPageFilterVm);
-
+    async getPaginated(
+        pageType: PAGE_TYPE,
+        visType: VIS_TYPE = null as any,
+        ontoPageFilterVm: OntoPageFilterVm = null as any
+    ): Promise<PaginationVm<IOntoPage>> {
+        logger.info(`OntoPageService:getPaginated: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
         let query: any = {};
 
-        let visTypeClause = ontoPageFilterVm.filterVisType ? { type: ontoPageFilterVm.filterVisType } : {};
-        const visIds: string[] = (await this.ontoVisService.getAll(visTypeClause)).map(
-            (d: IOntoVis) => d._id as string
-        );
-        console.log('OntoPageService:getPaginated: visIds = ', visIds);
-
-        query = ontoPageFilterVm.filterPageType
-            ? { pageType: ontoPageFilterVm.filterPageType, visId: { $in: visIds } }
-            : { visId: { $in: visIds } };
+        if (visType) {
+            let visIds: string[] = (await this.ontoVisService.getAll({ type: visType })).map(
+                (d: IOntoVis) => d._id as string
+            );
+            console.log('OntoPageService:getPaginated: visIds = ', visIds);
+            query = pageType
+                ? { pageType: pageType, visId: { $in: visIds } }
+                : { visId: { $in: visIds } };
+        } else if (pageType) {
+            query = { pageType: pageType }
+        }
 
         let totalCount: number = await this.getDbCollection().find(query).count();
-        console.log('OntoPageService:getPaginated: query = ', query, 'totalCount = ', totalCount);
+        console.log('OntoPageService:getPaginated: query = ', query);
 
         if (ontoPageFilterVm.filterId) {
             query._id = new ObjectId(ontoPageFilterVm.filterId);
         }
 
-        const pageIndex: number = ontoPageFilterVm.pageIndex ? parseInt(ontoPageFilterVm.pageIndex) : 1;
+        const pageIndex: number = ontoPageFilterVm.pageIndex ? parseInt(ontoPageFilterVm.pageIndex) : 0;
         const pageSize: number = ontoPageFilterVm.pageSize ? parseInt(ontoPageFilterVm.pageSize) : totalCount;
         const sortOrder: number = ontoPageFilterVm.sortOrder == SORT_ORDER.ASC ? 1 : -1;
 
-        console.log('OntoPageService:getPaginated: query = ', query);
+        console.log('OntoPageService:getPaginated: pageSize, pageIndex, sortOrder = ', pageSize, pageIndex, sortOrder, ', totalCount = ', totalCount);
+
         let ontoPages: IOntoPage[] = [];
         ontoPages = await this.getDbCollection()
             .find(query)
             .sort({ date: sortOrder })
-            .skip(pageSize * (pageIndex - 1))
+            .skip(pageSize * (pageIndex))
             .limit(pageSize)
             .toArray();
         return {
