@@ -57,6 +57,7 @@ export class TemplateController {
         }
     }
 
+    @httpGet('/pages/:pageType/', queryParamValidate(OntoPageFilterVm))
     @httpGet('/pages/:pageType/:visType/', queryParamValidate(OntoPageFilterVm))
     public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
         // TODO: Review the onto-page.controller.ts
