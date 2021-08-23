@@ -55,7 +55,7 @@ export class TemplateController {
 
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
             resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
-            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
+            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
 
             response.status(200).send(resultDto);
         } catch (e) {

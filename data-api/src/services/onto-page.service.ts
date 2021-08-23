@@ -13,12 +13,14 @@ import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../infrastructure/onto-page/
 import { PaginationVm } from '../infrastructure/pagination.vm';
 import { SORT_ORDER } from '../infrastructure/sort-order.enum';
 import { MAPPING_TYPES } from './config/automapper.config';
-
+import { OntoVisService } from './onto-vis.service';
+import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
 
 @provide(TYPES.OntoPageService)
 export class OntoPageService extends DataService<IOntoPage> {
     public constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
+        @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService
     ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_page'));
     }
@@ -28,18 +30,22 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     async getPaginated(ontoPageFilterVm: OntoPageFilterVm): Promise<PaginationVm<IOntoPage>> {
-        console.log('OntoPageService:getPaginated: ontoPageFilterVm = ', ontoPageFilterVm)
-        let totalCount: number = 0;
-        const query:  any = {};
+        console.log('OntoPageService:getPaginated: ontoPageFilterVm = ', ontoPageFilterVm);
 
-        if (ontoPageFilterVm.filterPageType) {
-            totalCount = await this.getDbCollection().find({ pageType: ontoPageFilterVm.filterPageType }).count();
-            query.pageType = ontoPageFilterVm.filterPageType;
-        } else {
-            totalCount = await this.getDbCollection().countDocuments();
-        }
+        let query: any = {};
 
-        // TODO: Implement filterVisType
+        let visTypeClause = ontoPageFilterVm.filterVisType ? { type: ontoPageFilterVm.filterVisType } : {};
+        const visIds: string[] = (await this.ontoVisService.getAll(visTypeClause)).map(
+            (d: IOntoVis) => d._id as string
+        );
+        console.log('OntoPageService:getPaginated: visIds = ', visIds);
+
+        query = ontoPageFilterVm.filterPageType
+            ? { pageType: ontoPageFilterVm.filterPageType, visId: { $in: visIds } }
+            : { visId: { $in: visIds } };
+
+        let totalCount: number = await this.getDbCollection().find(query).count();
+        console.log('OntoPageService:getPaginated: query = ', query, 'totalCount = ', totalCount);
 
         if (ontoPageFilterVm.filterId) {
             query._id = new ObjectId(ontoPageFilterVm.filterId);
@@ -49,14 +55,14 @@ export class OntoPageService extends DataService<IOntoPage> {
         const pageSize: number = ontoPageFilterVm.pageSize ? parseInt(ontoPageFilterVm.pageSize) : totalCount;
         const sortOrder: number = ontoPageFilterVm.sortOrder == SORT_ORDER.ASC ? 1 : -1;
 
-        console.log("OntoPageService:getPaginated: query = ", query);
+        console.log('OntoPageService:getPaginated: query = ', query);
         let ontoPages: IOntoPage[] = [];
         ontoPages = await this.getDbCollection()
             .find(query)
-            .sort( { date: sortOrder } )
+            .sort({ date: sortOrder })
             .skip(pageSize * (pageIndex - 1))
             .limit(pageSize)
-            .toArray()
+            .toArray();
         return {
             data: automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, ontoPages),
             page: pageIndex,
@@ -67,11 +73,16 @@ export class OntoPageService extends DataService<IOntoPage> {
 
     public async getPagesBindingVisIdAndDataId(_visId: string, _dataId: string): Promise<string[]> {
         const pages = await this.getAll({ visId: _visId, dataIds: { $in: [_dataId] } });
-        console.log('OntoPageService:getPagesBindingVisIdAndDataId: visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages)
-        return pages.map(d => d._id.toString())
+        // prettier-ignore
+        console.log( 'OntoPageService:getPagesBindingVisIdAndDataId: visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages );
+        return pages.map((d) => d._id.toString());
     }
 
-    private async getPageBindingVisIdAndDataIds(_pageType: PAGE_TYPE, _visId: string, _dataIds: string[]): Promise<IOntoPage[]> {
+    private async getPageBindingVisIdAndDataIds(
+        _pageType: PAGE_TYPE,
+        _visId: string,
+        _dataIds: string[]
+    ): Promise<IOntoPage[]> {
         const pages = await this.getAll({ pageType: _pageType, visId: _visId, dataIds: { $in: _dataIds } });
         return pages;
     }
@@ -81,10 +92,10 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {
-
         let exits = await this.getPageBindingVisIdAndDataIds(ontoPageVm.pageType, ontoPageVm.visId, ontoPageVm.dataIds);
         if (exits.length) {
-            throw new DuplicateEntry(`page type: ${ontoPageVm.pageType}, visId: ${ontoPageVm.visId} and dataIds: ${JSON.stringify(ontoPageVm.dataIds)}`);
+            // prettier-ignore
+            throw new DuplicateEntry(`page type: ${ontoPageVm.pageType}, visId: ${ontoPageVm.visId} and dataIds: ${JSON.stringify(ontoPageVm.dataIds)}` );
         }
 
         console.log('OntoPageService:createPage: ontoPageVm = ', ontoPageVm);
@@ -121,17 +132,17 @@ export class OntoPageService extends DataService<IOntoPage> {
 
     public async updatePageDataIds(pageId: string, dataIds: string[]): Promise<any> {
         return this.getDbCollection().updateOne(
-            { _id: new ObjectId(pageId)},
-            { $set: { "dataIds": dataIds} },
+            { _id: new ObjectId(pageId) },
+            { $set: { dataIds: dataIds } },
             { upsert: false }
-         );
+        );
     }
 
     public async updatePageType(pageId: string, pageType: PAGE_TYPE): Promise<any> {
         return this.getDbCollection().updateOne(
-            { _id: new ObjectId(pageId)},
-            { $set: { 'pageType': pageType} },
+            { _id: new ObjectId(pageId) },
+            { $set: { pageType: pageType } },
             { upsert: false }
-         );
+        );
     }
 }
