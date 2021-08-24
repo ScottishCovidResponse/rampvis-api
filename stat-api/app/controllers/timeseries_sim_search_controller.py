@@ -5,7 +5,7 @@ from fastapi import APIRouter, Query, Response, Depends
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
 import pandas as pd
-
+import json
 from app.core.settings import DATA_PATH_LIVE
 from app.algorithms.sim_search.precomputation import to_cube
 from app.utils.jwt_service import validate_user_token
@@ -13,8 +13,8 @@ from app.utils.jwt_service import validate_user_token
 timeseries_sim_search_controller = APIRouter()
 
 @timeseries_sim_search_controller.get("/")
-async def search(q1=Query(None), q2=Query(None)):
-    logger.info(f"timeseries_sim_search_controller q1 = {q1}, q2={q2}")
+async def search(start_date=Query(None),country = Query(None),end_date=Query(None),indicator=Query(None),method=Query(None),result_number=Query(None),q2=Query(None)):
+    logger.info(f"timeseries_sim_search_controller start_date = {start_date}, country = {country}, end_date={end_date},indicator={indicator},method={method},result_number={result_number},q2={q2}")
 
     # TODO: Just hard code to always return nhs_health_board_date_covid19_patients_in_hospital_confirmed_normalized
     folder = Path(DATA_PATH_LIVE)
@@ -24,6 +24,7 @@ async def search(q1=Query(None), q2=Query(None)):
     df = pd.read_csv(filename)
     result = df.to_json(orient="records")
     return Response(content=result, media_type="application/json")
+
 
 def precompute():
     """Run any kind of precomputation that is slow for real-time search.
