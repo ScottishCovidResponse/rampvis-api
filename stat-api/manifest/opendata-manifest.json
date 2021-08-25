@@ -16,7 +16,7 @@
             {
                 "name": "daily_sex_agegroup",
                 "dataType": "timeseries",
-                "keywords": ["opendata", "scotland", "vaccination", "daily", "entire_country", "all_sexes", "all_agegroups"],
+                "keywords": ["opendata", "scotland", "vaccination", "daily", "entire_country", "all_sexes", "all_agegroups", "all_sexes_agegroups"],
                 "description": "Scotland - Daily vaccination by Sex and Age group"
             }
         ]

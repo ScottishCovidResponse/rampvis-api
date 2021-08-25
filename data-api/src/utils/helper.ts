@@ -12,3 +12,12 @@ export function splitKeywordsString(keywords: any): string[] {
     }
     return result;
 }
+
+export function splitPageIndexKeywordsString(keywords: any): string[] {
+    let result: string[] = [];
+    if (keywords && typeof keywords === 'string') {
+        // Convert to array and filter empty strings
+        result = keywords.split(' ').filter((d: string) => d);
+    }
+    return result;
+}

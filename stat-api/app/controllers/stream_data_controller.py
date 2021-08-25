@@ -10,7 +10,7 @@ from starlette.status import (
 )
 
 from app.utils.jwt_service import validate_user_token
-from app.services.download_service import download_to_csvs, download_owid
+from app.services.download_service import download_to_csvs, download_owid, download_open_data
 from app.core.settings import DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC
 
 stream_data_controller = APIRouter()
@@ -27,6 +27,7 @@ def download_data():
         #     download_to_csvs(manifest, DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC)
 
         download_owid(DATA_PATH_LIVE)
+        download_open_data(DATA_PATH_LIVE)
     except Exception as e:
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
@@ -41,7 +42,7 @@ scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
 
 # Uncomment this to make it run every minute for debugging
-# scheduler.add_job(precompute, "cron", second=0)
+# scheduler.add_job(download_data, "cron", second=0)
 
 scheduler.start()
 

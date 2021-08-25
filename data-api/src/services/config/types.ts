@@ -13,8 +13,8 @@ const TYPES = {
     SearchService: Symbol.for('SearchService'),
     OntoDataSearchService: Symbol.for('OntoDataSearchService'),
     OntoVisSearchService: Symbol.for('OntoVisSearchService'),
+    OntoPageSearchService: Symbol.for('OntoPageSearchService'),
     SearchServiceV05: Symbol.for('SearchServiceV05'),
-
     CSVService: Symbol.for('CSVService'),
 };
 

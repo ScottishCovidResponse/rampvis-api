@@ -18,8 +18,6 @@ import { OntoDataDto } from '../../infrastructure/onto-data/onto-data.dto';
 import { OntoVisSearchService } from '../../services/onto-vis-search.service';
 import { OntoVisSearchFilterVm } from '../../infrastructure/onto-page/onto-vis-search-filter.vm';
 import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
-import { BindingDto } from '../../infrastructure/onto-page/binding.dto';
-import { BindingExtDto } from '../../infrastructure/onto-page/binding.dto';
 import { OntoPageService } from '../../services/onto-page.service';
 import { OntoDataService } from '../../services/onto-data.service';
 import { OntoPageDto } from '../../infrastructure/onto-page/onto-page.dto';
@@ -185,7 +183,7 @@ export class OntoVisController {
         const visId: string = request.params.visId;
         try {
             const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
-            const ontoData: IOntoData[] = await this.ontoDataService.getMultiple(ontoPages[0].bindings[0].dataIds)
+            const ontoData: IOntoData[] = await this.ontoDataService.getMultiple(ontoPages[0].dataIds)
             const ontoDataDto: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
 
             logger.info(`OntoVisController:getExampleOntoDataBindingVisId: ontoDataDto = ${JSON.stringify(ontoDataDto)}`);
@@ -196,54 +194,36 @@ export class OntoVisController {
         }
     }
 
-    @httpGet('/:visId/links')
-    public async getExampleLinksBindingVisId(request: Request, response: Response, next: NextFunction): Promise<void> {
+    @httpGet('/:visId/pages')
+    public async getExamplePagesBindingVisId(request: Request, response: Response, next: NextFunction): Promise<void> {
         const visId: string = request.params.visId;
-        logger.info(`OntoVisController:getExampleLinksBindingVisId: visId = ${JSON.stringify(visId)}`);
+        logger.info(`OntoVisController:getExamplePagesBindingVisId: visId = ${JSON.stringify(visId)}`);
 
         try {
             const ontoPages1: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
             let links: IOntoPage[] = [];
 
-            if (ontoPages1[0]?.bindings[0]?.pageIds?.length) {
-                links = await this.ontoPageService.getMultiple(ontoPages1[0]?.bindings[0]?.pageIds);
+            if (ontoPages1[0]?.pageIds?.length) {
+                links = await this.ontoPageService.getMultiple(ontoPages1[0]?.pageIds);
             }
 
-            console.log('OntoVisController:getExampleLinksBindingVisId: pageIds = ', ontoPages1[0].bindings[0].pageIds, 'links = ', links);
+            console.log('OntoVisController:getExamplePagesBindingVisId: pageIds = ', ontoPages1[0].pageIds, 'links = ', links);
 
-            const linkDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, links);
-            const linkExtDtos: OntoPageExtDto[] = [];
-
-            for (let ontoPageDto of linkDtos) {
-                let exts: BindingExtDto[] = await this.bindingDtoToBindingExtDto(ontoPageDto.bindings);
-                linkExtDtos.push({ ...ontoPageDto, bindingExts: exts });
+            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, links);
+            const ontoPageExtDtos: OntoPageExtDto[] = [];
+            for (let ontoPageDto of ontoPageDtos) {
+                ontoPageExtDtos.push({
+                    ...ontoPageDto,
+                    vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
+                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                });
             }
 
-            logger.info(`OntoVisController:getExampleLinksBindingVisId: linkExtDtos = ${JSON.stringify(linkExtDtos)}`);
-            response.status(200).send(linkExtDtos);
+            logger.info(`OntoVisController:getExamplePagesBindingVisId: ontoPageExtDtos = ${JSON.stringify(ontoPageExtDtos)}`);
+            response.status(200).send(ontoPageExtDtos);
         } catch (e) {
-            logger.error(`OntoVisController:getExampleLinksBindingVisId: error = ${JSON.stringify(e)}`);
+            logger.error(`OntoVisController:getExamplePagesBindingVisId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
-    }
-
-    public async bindingDtoToBindingExtDto(bindings: BindingDto[]) {
-        let bindingExts: BindingExtDto[] = [];
-
-        for (let d of bindings) {
-            const ontoVis: IOntoVis = await this.ontoVisService.get(d.visId);
-            const ontoVisDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
-
-            let ontoDataDtos: OntoDataDto[] = [];
-            for (let dataId of d.dataIds) {
-                const ontoData: IOntoData = await this.ontoDataService.get(dataId);
-                let ontoDataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
-                ontoDataDtos.push(ontoDataDto);
-            }
-
-            bindingExts.push({ vis: ontoVisDto, data: ontoDataDtos } as BindingExtDto);
-        }
-
-        return bindingExts;
     }
 }

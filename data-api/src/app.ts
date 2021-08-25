@@ -18,6 +18,7 @@ import { SearchClient, getSearchClient } from './infrastructure/db/elasticsearch
 import { OntoDataService } from './services/onto-data.service';
 import { OntoDataSearchService } from './services/onto-data-search.service';
 import { OntoVisSearchService } from './services/onto-vis-search.service';
+import { OntoPageSearchService } from './services/onto-page-search.service';
 
 export class App {
     public app!: express.Application;
@@ -97,7 +98,10 @@ export class App {
             const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(TYPES.OntoVisSearchService);
             await ontoVisSearchService.createIndexes();
 
-            logger.info(`Created search indexes for data and VIS.`);
+            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(TYPES.OntoPageSearchService);
+            await ontoPageSearchService.createIndexes();
+
+            logger.info(`Created search indexes for ontologies- data, vis, page.`);
         } catch (err) {
             logger.error(`Error creating indexes, error: ${JSON.stringify(err)}`);
             process.exit();
@@ -112,7 +116,10 @@ export class App {
             const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(TYPES.OntoVisSearchService);
             await ontoVisSearchService.putMapping();
 
-            logger.info(`Created search mappings for data and VIS.`);
+            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(TYPES.OntoPageSearchService);
+            await ontoPageSearchService.putMapping();
+
+            logger.info(`Created search mappings for ontologies- data, vis, page.`);
         } catch (err) {
             logger.error(`Error creating mappings, error: ${err}`);
             process.exit();

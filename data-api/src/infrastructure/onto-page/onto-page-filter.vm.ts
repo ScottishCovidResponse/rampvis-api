@@ -1,18 +1,14 @@
 import { IsOptional, IsEnum, IsString } from 'class-validator';
 import { SORT_ORDER } from '../sort-order.enum';
-import { BINDING_TYPE } from './onto-page.interface';
 
 export enum ONTOPAGE_SORT_BY {
-    BINDING_TYPE = 'bindingType',
+    PAGE_TYPE = 'pageType',
+    VIS_TYPE = 'visType',
     DATE = 'date',
     FUNCTION = 'function'
 }
 
 export class OntoPageFilterVm {
-    @IsOptional()
-    @IsEnum(BINDING_TYPE)
-    filterPageType!: BINDING_TYPE;
-
     @IsOptional()
     @IsString()
     pageIndex!: string;

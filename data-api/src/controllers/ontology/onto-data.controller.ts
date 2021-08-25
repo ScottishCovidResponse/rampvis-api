@@ -20,9 +20,6 @@ import { OntoDataSearchService } from '../../services/onto-data-search.service';
 import { OntoDataSearchFilterVm } from '../../infrastructure/onto-data/onto-data-search-filter.vm';
 import { IOntoDataSearch } from '../../infrastructure/onto-data/onto-data-search.interface';
 import { OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data-search.dto';
-import { IOntoDataSearchGroup } from '../../infrastructure/onto-data/onto-data-search-group.interface';
-import { OntoDataSearchGroupDto } from '../../infrastructure/onto-data/onto-data-search-group.dto';
-import { IOntoPage } from '../../infrastructure/onto-page/onto-page.interface';
 import { OntoPageService } from '../../services/onto-page.service';
 import { ActivityService } from '../../services/activity.service';
 import { IUser } from '../../infrastructure/user/user.interface';
@@ -103,30 +100,6 @@ export class OntoDataController {
             next(new SearchError(e.message));
         }
     }
-
-    @httpGet('/search-group')
-    public async searchGroup(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const visId: string = request.query.visId as any;
-        logger.info(`OntoDataController:searchGroup: visId = ${JSON.stringify(visId)}`);
-
-        try {
-            //
-            // TODO
-            //  I am just grouping arbitrarily
-            //
-            const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
-            const groupLen = ontoPages[0].bindings[0].dataIds.length;
-            let results: IOntoDataSearchGroup[] = await this.ontoDataService.getGroupsMatchingExampleDataOfVis(groupLen);
-            const resultsDto: OntoDataSearchGroupDto[] = automapper.map(MAPPING_TYPES.IOntoDataSearchGroup, MAPPING_TYPES.OntoDataSearchGroupDto, results);
-
-            logger.info(`OntoDataController:search: searchGroup = ${JSON.stringify(resultsDto)}`);
-            response.status(200).send(resultsDto);
-        } catch (e) {
-            logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
-            next(new SearchError(e.message));
-        }
-    }
-
 
     @httpGet('/:dataId')
     public async getData(request: Request, response: Response, next: NextFunction): Promise<void> {

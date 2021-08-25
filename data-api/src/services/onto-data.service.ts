@@ -16,6 +16,8 @@ import { DATA_TYPE } from '../infrastructure/onto-data/onto-data-types';
 import { logger } from '../utils/logger';
 import { SORT_ORDER } from '../infrastructure/sort-order.enum';
 import { IOntoDataSearchGroup } from '../infrastructure/onto-data/onto-data-search-group.interface';
+import { OntoDataDto } from '../infrastructure/onto-data/onto-data.dto';
+import { MAPPING_TYPES } from './config/automapper.config';
 
 @provide(TYPES.OntoDataService)
 export class OntoDataService extends DataService<IOntoData> {
@@ -23,6 +25,16 @@ export class OntoDataService extends DataService<IOntoData> {
         @inject(TYPES.DbClient) dbClient: DbClient,
     ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_data'));
+    }
+
+    public async getOntoDataDtos(ids: string[]): Promise<OntoDataDto[]> {
+        let ontoDataDtos: OntoDataDto[] = [];
+        for (let id of ids) {
+            const ontoData: IOntoData = await this.get(id);
+            let ontoDataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
+            ontoDataDtos.push(ontoDataDto);
+        }
+        return ontoDataDtos;
     }
 
     public async getAllData(ontoDataFilterVm: OntoDataFilterVm): Promise<PaginationVm<IOntoData>> {
