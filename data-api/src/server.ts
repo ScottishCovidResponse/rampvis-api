@@ -11,4 +11,3 @@ const app = new App();
     await app.init();
     app.listen();
 })();
-
