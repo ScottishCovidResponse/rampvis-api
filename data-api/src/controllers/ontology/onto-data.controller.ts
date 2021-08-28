@@ -32,7 +32,6 @@ export class OntoDataController {
         @inject(TYPES.ActivityService) private activityService: ActivityService,
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
         @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
-        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
     ) {}
 
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
