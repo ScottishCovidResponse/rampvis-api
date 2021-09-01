@@ -1,9 +1,7 @@
 import { ObjectId } from 'bson';
 
-export interface IBookmark {
+export interface IThumbnail {
     _id: string | ObjectId;
-
     pageId: string;
-    userId: string;
     thumbnail?: any
 }

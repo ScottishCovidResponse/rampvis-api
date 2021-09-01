@@ -1,4 +1,4 @@
-import { controller, httpGet, httpPost, httpPut } from 'inversify-express-utils';
+import { controller, httpDelete, httpGet, httpPost, httpPut } from 'inversify-express-utils';
 import { NextFunction } from 'connect';
 import { Response } from 'express-serve-static-core';
 import { inject } from 'inversify';
@@ -20,25 +20,18 @@ import { IRequestWithUser } from '../../infrastructure/user/request-with-user.in
 import { ACTIVITY_TYPE } from '../../infrastructure/activity/activity.interface';
 import { ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
 
-@controller('/user', JwtToken.verify)
+@controller('/', JwtToken.verify)
 export class UserController {
     constructor(
         @inject(TYPES.UserService) private userService: UserService,
-        @inject(TYPES.ActivityService) private activityService: ActivityService,
+        @inject(TYPES.ActivityService) private activityService: ActivityService
     ) {}
 
-    @httpGet('/:id')
-    public async getUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const userId = request.params.id;
-        logger.debug('UserController: getUser: request.user = ' + JSON.stringify(request.user) + ', read userId = ' + userId);
+    //
+    // Admin can
+    //
 
-        const result: IUser = await this.userService.getUser(userId);
-        const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
-        logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
-        response.status(200).send(resultDto);
-    }
-
-    @httpGet('/')
+    @httpGet('/users')
     public async getAllUsers(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         logger.debug('UserController: getAllUsers: request.user = ' + JSON.stringify(request.user));
 
@@ -48,11 +41,16 @@ export class UserController {
         response.status(200).send(resultDto);
     }
 
-    @httpPost('/', vmValidate(UserVm))
+    @httpPost('/user', vmValidate(UserVm))
     public async createUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const userDto: UserVm = request.body;
         const user: IUser = request.user as IUser;
-        logger.debug('UserController: createUser: request.user = ' + JSON.stringify(request.user) + ', create userDto = ' + JSON.stringify(userDto));
+        logger.debug(
+            'UserController: createUser: request.user = ' +
+                JSON.stringify(request.user) +
+                ', create userDto = ' +
+                JSON.stringify(userDto)
+        );
 
         try {
             const result = await this.userService.findByEmail(<string>userDto.email);
@@ -69,7 +67,7 @@ export class UserController {
                         user,
                         ACTIVITY_TYPE.USER,
                         ACTIVITY_ACTION.CREATE,
-                        result._id.toString(),
+                        result._id.toString()
                     );
 
                     response.status(200).send(resultDto);
@@ -82,12 +80,17 @@ export class UserController {
         }
     }
 
-    @httpPut('/:id/password', vmValidate(UpdatePasswordVm))
+    @httpPut('/user/:userId/password', vmValidate(UpdatePasswordVm))
     public async updateOwnPassword(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const userId = request.params.id;
+        const userId = request.params.userId;
         const newPassword = request.body.newPassword;
         const oldPassword = request.body.oldPassword;
-        logger.debug( 'UserController: updatePassword: request.user = ' + JSON.stringify(request.user) + ', update userId = ' + userId);
+        logger.debug(
+            'UserController: updatePassword: request.user = ' +
+                JSON.stringify(request.user) +
+                ', update userId = ' +
+                userId
+        );
 
         try {
             const result = await this.userService.updatePassword(userId, oldPassword, newPassword);
@@ -99,12 +102,14 @@ export class UserController {
         }
     }
 
-    @httpPut('/:id', vmValidate(UpdateUserVm))
+    @httpPut('/user/:userId', vmValidate(UpdateUserVm))
     public async updateUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const userId = request.params.id;
+        const userId = request.params.userId;
         const updateUserDto: UpdateUserVm = request.body;
         const user: IUser = request.user as IUser;
-        logger.debug( 'UserController: updateUser: request.user = ' + JSON.stringify(request.user) + ', update userId = ' + userId);
+        logger.debug(
+            'UserController: updateUser: request.user = ' + JSON.stringify(request.user) + ', update userId = ' + userId
+        );
 
         try {
             const result = await this.userService.updateUser(userId, updateUserDto);
@@ -115,7 +120,7 @@ export class UserController {
                 user,
                 ACTIVITY_TYPE.USER,
                 ACTIVITY_ACTION.UPDATE,
-                result._id.toString(),
+                result._id.toString()
             );
 
             response.status(200).send(resultDto);
@@ -124,11 +129,16 @@ export class UserController {
         }
     }
 
-    @httpPut('/state/:id')
+    @httpPut('/user/state/:userId')
     public async enableOrDisableUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const userId = request.params.id;
+        const userId = request.params.userId;
         const user: IUser = request.user as IUser;
-        logger.debug( 'UserController: enableOrDisableUser: request.user = ' + JSON.stringify(request.user) + ', userId = ' + userId);
+        logger.debug(
+            'UserController: enableOrDisableUser: request.user = ' +
+                JSON.stringify(request.user) +
+                ', userId = ' +
+                userId
+        );
 
         try {
             const result: IUser = await this.userService.enableOrDisableUser(userId);
@@ -138,9 +148,69 @@ export class UserController {
                 user,
                 ACTIVITY_TYPE.USER,
                 ACTIVITY_ACTION.DELETE,
-                result._id.toString(),
+                result._id.toString()
             );
 
+            response.status(200).send(resultDto);
+        } catch (error) {
+            next(new SomethingWentWrong(error.message));
+        }
+    }
+
+    //
+    // User can trigger
+    //
+
+    @httpGet('/user')
+    public async getUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        const userId = request.params.userId;
+        logger.debug(
+            'UserController: getUser: request.user = ' + JSON.stringify(request.user) + ', read userId = ' + userId
+        );
+
+        const result: IUser = await this.userService.getUser(userId);
+        const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+        logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
+        response.status(200).send(resultDto);
+    }
+
+    @httpPut('/bookmark/:pageId')
+    public async bookmarkPage(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        const { pageId } = request.params;
+        const user: IUser = <IUser>request.user;
+        logger.debug('UserController: bookmarkPage: request.user = ', JSON.stringify(request.user), pageId);
+
+        try {
+            const result: IUser = await this.userService.bookmarkPage(user._id.toString(), pageId);
+            const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.BOOKMARK,
+                ACTIVITY_ACTION.CREATE,
+                user._id.toString()
+            );
+            response.status(200).send(resultDto);
+        } catch (error) {
+            next(new SomethingWentWrong(error.message));
+        }
+    }
+
+    @httpDelete('/bookmark/:pageId')
+    public async unbookmarkPage(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        const { pageId } = request.params;
+        const user: IUser = <IUser>request.user;
+        logger.debug('UserController: unbookmarkPage: request.user = ', JSON.stringify(request.user), pageId);
+
+        try {
+            const result: IUser = await this.userService.unbookmarkPage(user._id.toString(), pageId);
+            const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+
+            await this.activityService.createActivity(
+                user,
+                ACTIVITY_TYPE.BOOKMARK,
+                ACTIVITY_ACTION.DELETE,
+                user._id.toString()
+            );
             response.status(200).send(resultDto);
         } catch (error) {
             next(new SomethingWentWrong(error.message));

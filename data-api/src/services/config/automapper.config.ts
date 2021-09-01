@@ -10,8 +10,8 @@ import { OntoDataSearchGroupDto } from '../../infrastructure/onto-data/onto-data
 import { OntoPageSearchDto } from '../../infrastructure/onto-page/onto-page-search.dto';
 
 const MAPPING_TYPES = {
-    IBookmark: 'IBookmark',
-    BookmarkDto: 'BookmarkDto',
+    IThumbnail: 'IThumbnail',
+    ThumbnailDto: 'ThumbnailDto',
 
     IUser: 'IUser',
     UserDto: 'UserDto',
@@ -48,7 +48,7 @@ function configureAutoMapper() {
         .forMember('_id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.sourceObject._id.toString());
 
     automapper
-        .createMap(MAPPING_TYPES.IBookmark, MAPPING_TYPES.BookmarkDto)
+        .createMap(MAPPING_TYPES.IThumbnail, MAPPING_TYPES.ThumbnailDto)
         .forMember('id', (opts: AutoMapperJs.IMemberConfigurationOptions) => opts.mapFrom('_id'))
         .forMember('thumbnail', (opts: AutoMapperJs.IMemberConfigurationOptions) =>
             opts.sourceObject.thumbnail === null ? '' : opts.sourceObject.thumbnail

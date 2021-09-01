@@ -14,4 +14,6 @@ export interface IUser {
 
     role: ROLES;
     deleted?: boolean;
+
+    bookmarks?: string[];
 }
