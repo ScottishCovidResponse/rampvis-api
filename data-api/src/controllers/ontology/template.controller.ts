@@ -20,6 +20,7 @@ import { OntoPageSearchFilterVm } from '../../infrastructure/onto-page/onto-page
 import { IOntoPageSearch } from '../../infrastructure/onto-page/onto-page-search.interface';
 import { OntoPageSearchDto } from '../../infrastructure/onto-page/onto-page-search.dto';
 import { VIS_TYPE } from '../../infrastructure/onto-vis/onto-vis-type.enum';
+import generateTitle from '../../utils/title-generation';
 
 //
 // Un-guarded: to only support GET
@@ -101,10 +102,15 @@ export class TemplateController {
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
             const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
+            const keywordsList = Object.values(data).map(d => d.keywords);
+            const title = generateTitle(keywordsList);
+
             const ontoPageExtDto: OntoPageExtDto = {
                 ...ontoPageDto,
                 vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                data: data,
+                title: title
             };
             logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
 
