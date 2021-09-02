@@ -35,23 +35,31 @@ export class TemplateController {
         @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService
     ) {}
 
-
     @httpGet('/pages/search/', queryParamValidate(OntoPageSearchFilterVm))
     public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
         const ontPageSearchFilterVm: OntoPageSearchFilterVm = request.query as any;
         logger.info(`OntoPageController:search: ontPageSearchFilterVm = ${JSON.stringify(ontPageSearchFilterVm)}`);
 
         try {
-            let ontoPageSearch: IOntoPageSearch[] = await this.ontoPageSearchService.search(ontPageSearchFilterVm);
+            let ontoPageSearchList: IOntoPageSearch[] = await this.ontoPageSearchService.search(ontPageSearchFilterVm);
             // const resultDto: PaginationVm<OntoDataDto> = {
             //     data: automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, result.data),
             //     page: result.page,
             //     pageCount: result.pageCount,
             //     totalCount: result.totalCount,
             // };
-            let ontoPageSearchDto: OntoPageSearchDto = automapper.map(MAPPING_TYPES.IOntoPageSearch, MAPPING_TYPES.OntoPageSearchDto, ontoPageSearch)
-            logger.info(`OntoPageController:search: ontoPageSearchDto = ${JSON.stringify(ontoPageSearchDto)}`);
-            response.status(200).send(ontoPageSearchDto);
+
+            let ontoPageSearchDtos: OntoPageSearchDto[] = automapper.map(
+                MAPPING_TYPES.IOntoPageSearch,
+                MAPPING_TYPES.OntoPageSearchDto,
+                ontoPageSearchList
+            );
+            ontoPageSearchDtos = ontoPageSearchDtos.map((d: OntoPageSearchDto) => {
+                console.log("id = ", d.id, "keywords = ", d.keywords);
+                return { ...d, title: generateTitle([d.keywords]) };
+            });
+            // logger.info(`OntoPageController:search: ontoPageSearchDtos = ${JSON.stringify(ontoPageSearchDto)}`);
+            response.status(200).send(ontoPageSearchDtos);
         } catch (e) {
             logger.error(`OntoPageController:search: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
@@ -69,19 +77,27 @@ export class TemplateController {
         logger.info(`TemplateController:getPages: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
 
         try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(pageType, visType, ontoPageFilterVm);
-            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data );
+            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(
+                pageType,
+                visType,
+                ontoPageFilterVm
+            );
+            const ontoPageDtos: OntoPageDto[] = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                result.data
+            );
             const ontoPageExtDtos: OntoPageExtDto[] = [];
             for (let ontoPageDto of ontoPageDtos) {
                 ontoPageExtDtos.push({
                     ...ontoPageDto,
                     vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds),
                 });
             }
 
-            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
-            resultDto.data.sort((d1, d2) => d2.date.getTime() -d1.date.getTime())
+            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos };
+            resultDto.data.sort((d1, d2) => d2.date.getTime() - d1.date.getTime());
             logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
 
             response.status(200).send(resultDto);
@@ -91,26 +107,30 @@ export class TemplateController {
         }
     }
 
-
     // TODO: Duplicated in onto-page.controller.ts
     @httpGet('/page/:pageId')
     public async getPageTemplate(request: Request, response: Response, next: NextFunction): Promise<void> {
-
         const pageId: string = request.params.pageId;
         logger.info(`TemplateController:getPageTemplate: pageId = ${pageId}`);
 
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
-            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const ontoPageDto: OntoPageDto = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                ontoPage
+            );
             const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
-            const keywordsList = Object.values(data).map(d => d.keywords);
+            const keywordsList = Object.values(data).map((d) => d.keywords);
+            console.log("keywords = ", keywordsList);
+
             const title = generateTitle(keywordsList);
 
             const ontoPageExtDto: OntoPageExtDto = {
                 ...ontoPageDto,
                 vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
                 data: data,
-                title: title
+                title: title,
             };
             logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
 

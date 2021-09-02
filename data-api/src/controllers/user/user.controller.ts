@@ -20,6 +20,10 @@ import { IRequestWithUser } from '../../infrastructure/user/request-with-user.in
 import { ACTIVITY_TYPE } from '../../infrastructure/activity/activity.interface';
 import { ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
 
+//
+// Admin can only call
+//
+
 @controller('/', JwtToken.verify)
 export class UserController {
     constructor(
@@ -27,9 +31,6 @@ export class UserController {
         @inject(TYPES.ActivityService) private activityService: ActivityService
     ) {}
 
-    //
-    // Admin can
-    //
 
     @httpGet('/users')
     public async getAllUsers(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
@@ -151,66 +152,6 @@ export class UserController {
                 result._id.toString()
             );
 
-            response.status(200).send(resultDto);
-        } catch (error) {
-            next(new SomethingWentWrong(error.message));
-        }
-    }
-
-    //
-    // User can trigger
-    //
-
-    @httpGet('/user')
-    public async getUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const userId = request.params.userId;
-        logger.debug(
-            'UserController: getUser: request.user = ' + JSON.stringify(request.user) + ', read userId = ' + userId
-        );
-
-        const result: IUser = await this.userService.getUser(userId);
-        const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
-        logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
-        response.status(200).send(resultDto);
-    }
-
-    @httpPut('/bookmark/:pageId')
-    public async bookmarkPage(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const { pageId } = request.params;
-        const user: IUser = <IUser>request.user;
-        logger.debug('UserController: bookmarkPage: request.user = ', JSON.stringify(request.user), pageId);
-
-        try {
-            const result: IUser = await this.userService.bookmarkPage(user._id.toString(), pageId);
-            const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
-            await this.activityService.createActivity(
-                user,
-                ACTIVITY_TYPE.BOOKMARK,
-                ACTIVITY_ACTION.CREATE,
-                user._id.toString()
-            );
-            response.status(200).send(resultDto);
-        } catch (error) {
-            next(new SomethingWentWrong(error.message));
-        }
-    }
-
-    @httpDelete('/bookmark/:pageId')
-    public async unbookmarkPage(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        const { pageId } = request.params;
-        const user: IUser = <IUser>request.user;
-        logger.debug('UserController: unbookmarkPage: request.user = ', JSON.stringify(request.user), pageId);
-
-        try {
-            const result: IUser = await this.userService.unbookmarkPage(user._id.toString(), pageId);
-            const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
-
-            await this.activityService.createActivity(
-                user,
-                ACTIVITY_TYPE.BOOKMARK,
-                ACTIVITY_ACTION.DELETE,
-                user._id.toString()
-            );
             response.status(200).send(resultDto);
         } catch (error) {
             next(new SomethingWentWrong(error.message));

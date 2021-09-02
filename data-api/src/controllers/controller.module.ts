@@ -1,4 +1,5 @@
 import { AuthController } from './auth/auth.controller';
+import { MeController } from './user/me.controller';
 import { UserController } from './user/user.controller';
 import { ActivityControllerInt } from './activity.controller';
 import { NhsBoardController } from './scotland/nhs-board.controller';
@@ -15,6 +16,7 @@ import { OntoPageController } from './ontology/onto-page.controller';
 
 export {
     AuthController,
+    MeController,
     UserController,
     ActivityControllerInt,
     SearchControllerV05,

@@ -6,5 +6,6 @@ export class OntoPageSearchDto extends OntoPageDto {
     dataDescription: string = undefined as any;
     visDescription: string = undefined as any;
     visType: VIS_TYPE = undefined as any;
-    keywords: string = undefined as any;
+    keywords: string[] = undefined as any;
+    title: string = undefined as any;
 }
