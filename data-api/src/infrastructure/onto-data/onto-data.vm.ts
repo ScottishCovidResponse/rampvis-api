@@ -19,5 +19,6 @@ export class OntoDataVm {
     public keywords!: string[];
 
     @IsString()
+    @IsOptional()
     public description!: string;
 }

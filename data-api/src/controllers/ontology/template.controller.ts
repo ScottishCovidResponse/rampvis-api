@@ -88,17 +88,22 @@ export class TemplateController {
                 result.data
             );
             const ontoPageExtDtos: OntoPageExtDto[] = [];
+
             for (let ontoPageDto of ontoPageDtos) {
+                const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
+                const keywordsList = Object.values(data).map((d) => d.keywords);
+                const title = generateTitle(keywordsList)
                 ontoPageExtDtos.push({
                     ...ontoPageDto,
                     vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds),
+                    data: data,
+                    title: title,
                 });
             }
 
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos };
             resultDto.data.sort((d1, d2) => d2.date.getTime() - d1.date.getTime());
-            logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
+            // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
 
             response.status(200).send(resultDto);
         } catch (e) {
