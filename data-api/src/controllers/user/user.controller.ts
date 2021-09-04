@@ -19,12 +19,13 @@ import { ActivityService } from '../../services/activity.service';
 import { IRequestWithUser } from '../../infrastructure/user/request-with-user.interface';
 import { ACTIVITY_TYPE } from '../../infrastructure/activity/activity.interface';
 import { ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
+import { UserDto } from '../../infrastructure/user/user.dto';
 
 //
-// Admin can only call
+// Admin should only be allowed
 //
 
-@controller('/', JwtToken.verify)
+@controller('', JwtToken.verify)
 export class UserController {
     constructor(
         @inject(TYPES.UserService) private userService: UserService,
@@ -37,9 +38,26 @@ export class UserController {
         logger.debug('UserController: getAllUsers: request.user = ' + JSON.stringify(request.user));
 
         const result: Array<IUser> = await this.userService.getAllUsers();
-        const resultDto: Array<UserVm> = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+        const resultDto: Array<UserDto> = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
         logger.debug(`UserController: getAllUsers: resultDto = ${JSON.stringify(resultDto)}`);
         response.status(200).send(resultDto);
+    }
+
+
+    @httpGet('/user/:userId')
+    public async getUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
+        const userId = request.params.userId;
+        const user: IUser = <IUser>request.user;
+        logger.debug('UserController: getUser: request.user = ', JSON.stringify(request.user) , ', read userId = ', userId );
+
+        try {
+        const result: IUser = await this.userService.getUser(userId);
+        const resultDto: UserDto = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+        logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
+        response.status(200).send(resultDto);
+        } catch (error) {
+            next(new SomethingWentWrong(error.message));
+        }
     }
 
     @httpPost('/user', vmValidate(UserVm))
