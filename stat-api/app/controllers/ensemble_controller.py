@@ -6,6 +6,7 @@ from loguru import logger
 from fastapi import APIRouter, Query, Response
 import pandas as pd
 from app.core.settings import DATA_PATH_LIVE
+from app.utils.numpy_encoder import NumpyEncoder
 
 DATA_DIR = Path(DATA_PATH_LIVE)/"ensemble"
 
@@ -16,7 +17,6 @@ async def meta():
     filenames = ["posterior_parameters_meta", "posterior_parameters_original", "posterior_parameters"]
     results = { filename:pd.read_csv(DATA_DIR/(filename + ".csv")).to_dict(orient="records") 
                 for filename in filenames }
-    
     return Response(content=json.dumps(results), media_type="application/json")
 
 @ensemble_controller.get("/data")
@@ -34,7 +34,9 @@ def folder_to_dict_recursive(data_dir):
     """Return a dict of the given folder. Leaf nodes are csv files.
     """
     if data_dir.is_file():
-        return pd.read_csv(data_dir).to_dict(orient="records") 
+        df = pd.read_csv(data_dir)
+        df = df.fillna('NULL')
+        return df.to_dict(orient="records") 
 
     results = {}
     for name in os.listdir(data_dir):
@@ -43,7 +45,9 @@ def folder_to_dict_recursive(data_dir):
 
         # Leaf node: list of records
         if name.endswith(".csv"):
-            results[name[:-4]] = pd.read_csv(data_dir/name).to_dict(orient="records") 
+            df = pd.read_csv(data_dir/name)
+            df = df.fillna('NULL')
+            results[name[:-4]] = df.to_dict(orient="records") 
 
         # Directory: continue cursively
         if (data_dir/name).is_dir():
