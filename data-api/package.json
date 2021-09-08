@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "ts-node src/server.ts",
-        "dev": "export PORT=2000 && export NODE_ENV=development && export UV_THREADPOOL_SIZE=8 && node ./node_modules/nodemon/bin/nodemon.js",
+        "dev": "export PORT=4000 && export NODE_ENV=development && export UV_THREADPOOL_SIZE=8 && node ./node_modules/nodemon/bin/nodemon.js",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "dev:debug": "nodemon --inspect src/server.ts"
     },

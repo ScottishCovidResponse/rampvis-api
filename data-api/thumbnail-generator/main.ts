@@ -5,7 +5,7 @@ import { SingleBar, Presets } from "cli-progress";
 import { Database } from "./database";
 import { Screenshot } from "./screenshot";
 
-// const url = "http://localhost:5000/page/";
+// const url = "http://localhost:3000/page/";
 
 const cli = new Command();
 cli
