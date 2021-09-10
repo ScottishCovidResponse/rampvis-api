@@ -53,7 +53,10 @@
         "rimraf": "^3.0.2",
         "s": "^1.0.0",
         "underscore": "^1.13.1",
-        "winston": "^3.3.3"
+        "winston": "^3.3.3",
+        "cli-progress": "^3.9.0",
+        "commander": "^8.1.0",
+        "puppeteer": "^10.2.0"
     },
     "devDependencies": {
         "@types/app-root-path": "^1.2.4",
