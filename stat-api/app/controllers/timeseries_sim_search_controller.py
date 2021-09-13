@@ -9,23 +9,34 @@ import json
 from app.core.settings import DATA_PATH_LIVE
 from app.algorithms.sim_search.precomputation import to_cube
 from app.utils.jwt_service import validate_user_token
+from pydantic import BaseModel
+from typing import List,Dict
+from datetime import date
 
 timeseries_sim_search_controller = APIRouter()
 
+class FirstRunForm(BaseModel):
+    targetCountry: str 
+    firstDate: date
+    lastDate: date
+    indicator: str
+    method: str
+    numberOfResults: int
+    minPopulation: int
+    startDate: date
+    endDate: date
+    continentCheck: Dict[str,bool]
+
+
+@timeseries_sim_search_controller.post("/firstRunForm")
+async def createform(firstRunForm:FirstRunForm):
+    delta = (firstRunForm.lastDate - firstRunForm.firstDate)
+    timeSeriesLength = delta.days
+    #return firstRunForm
+    return delta.days
+
+
 @timeseries_sim_search_controller.get("/")
-async def search(start_date=Query(None),country = Query(None),end_date=Query(None),indicator=Query(None),method=Query(None),result_number=Query(None),q2=Query(None)):
-    logger.info(f"timeseries_sim_search_controller start_date = {start_date}, country = {country}, end_date={end_date},indicator={indicator},method={method},result_number={result_number},q2={q2}")
-
-    # TODO: Just hard code to always return nhs_health_board_date_covid19_patients_in_hospital_confirmed_normalized
-    folder = Path(DATA_PATH_LIVE)
-    product = 'records/SARS-CoV-2/scotland/cases-and-management/hospital'
-    component = 'nhs_health_board_date_covid19_patients_in_hospital_confirmed_normalized'
-    filename = folder/product/(component + '.csv')
-    df = pd.read_csv(filename)
-    result = df.to_json(orient="records")
-    return Response(content=result, media_type="application/json")
-
-
 def precompute():
     """Run any kind of precomputation that is slow for real-time search.
     """
@@ -44,7 +55,7 @@ scheduler.add_job(precompute, "cron", hour=1, minute=0, second=0)
 
 scheduler.start()
 
-@timeseries_sim_search_controller.get("/start", dependencies=[Depends(validate_user_token)])
+@timeseries_sim_search_controller.get("/start")
 def start():
     # Start if hasn't
     if scheduler.state == STATE_STOPPED:
@@ -70,7 +81,7 @@ def start():
         )
 
 
-@timeseries_sim_search_controller.get("/status", dependencies=[Depends(validate_user_token)])
+@timeseries_sim_search_controller.get("/status")
 def status():
     if scheduler.state == STATE_STOPPED:
         return Response(
@@ -91,7 +102,7 @@ def status():
         )
 
 
-@timeseries_sim_search_controller.get("/stop", dependencies=[Depends(validate_user_token)])
+@timeseries_sim_search_controller.get("/stop")
 def stop():
     scheduler.pause()
     return Response(
