@@ -1,5 +1,6 @@
-import pandas
+import pandas as pd
 import datetime
+import numpy as np
 # data transformations functions
 def country_filter(country_name,df):    # group by country name
     count_index = df.groupby('location').groups[country_name].values
@@ -22,6 +23,7 @@ def country_filter(country_name,df):    # group by country name
     country_data["weekly_deaths_rate"] = country_data["weekly_deaths"].diff(periods=7) / country_data["weekly_deaths"] * 100
     country_data["biweekly_deaths_rate"] = country_data["biweekly_deaths"].diff(periods=14) / country_data["biweekly_deaths"] * 100
     country_data.fillna(0,inplace=True)
+    country_data.replace([np.inf,-np.inf],0,inplace=True)
     return country_data  
 
 def cube_sample(country,df): # change OWID structure from cube for a single country

@@ -8,6 +8,7 @@ import pandas as pd
 import json
 from app.core.settings import DATA_PATH_LIVE
 from app.algorithms.sim_search.precomputation import to_cube
+from app.algorithms.sim_search.firstrunfunctions import firstRunOutput
 from app.utils.jwt_service import validate_user_token
 from pydantic import BaseModel
 from typing import List,Dict
@@ -30,19 +31,18 @@ class FirstRunForm(BaseModel):
 
 @timeseries_sim_search_controller.post("/firstRunForm")
 async def createform(firstRunForm:FirstRunForm):
-    delta = (firstRunForm.lastDate - firstRunForm.firstDate)
-    timeSeriesLength = delta.days
-    #return firstRunForm
-    return delta.days
+    cube = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
+    res = json.dumps(cube["United Kingdom"].iloc[1])
+    return Response(res,media_type="application/json")
 
 
 @timeseries_sim_search_controller.get("/")
 def precompute():
     """Run any kind of precomputation that is slow for real-time search.
     """
-    df = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/full.csv')
+    df = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/full.csv',parse_dates=[3])
     new_df = to_cube(df)
-    new_df.to_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv', index=False)
+    new_df.to_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
 
 # Precomputation job
 scheduler = BackgroundScheduler(daemon=True)
@@ -51,7 +51,8 @@ scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(precompute, "cron", hour=1, minute=0, second=0)
 
 # Uncomment this to make it run every minute for debugging
-# scheduler.add_job(precompute, "cron", second=0)
+
+#scheduler.add_job(precompute, "cron", second=0)
 
 scheduler.start()
 
