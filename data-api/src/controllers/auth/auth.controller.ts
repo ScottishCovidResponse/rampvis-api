@@ -84,4 +84,5 @@ export class AuthController {
             next(new WrongCredentialsException(JSON.stringify(e)));
         }
     }
+
 }

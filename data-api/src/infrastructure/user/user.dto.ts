@@ -11,4 +11,6 @@ export class UserDto {
 
     public githubId?: string = '';
     public githubUsername?: string = '';
+
+    public bookmarks?: string[] = undefined as any;
 }

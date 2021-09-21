@@ -1,6 +1,5 @@
 const TYPES = {
     ActivityService: Symbol.for('ActivityService'),
-    BookmarkService: Symbol.for('BookmarkService'),
     DataService: Symbol.for('DataService'),
     ThumbnailService: Symbol.for('ThumbnailService'),
     UserService: Symbol.for('UserService'),

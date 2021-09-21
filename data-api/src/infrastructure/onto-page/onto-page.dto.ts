@@ -15,4 +15,5 @@ export class OntoPageDto {
 export class OntoPageExtDto extends OntoPageDto {
     public vis: OntoVisDto = undefined as any;
     public data: OntoDataDto[] = undefined as any;
+    public title?: string = undefined as any;
 }

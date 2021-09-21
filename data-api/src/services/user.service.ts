@@ -11,7 +11,11 @@ import { UpdateUserVm } from '../infrastructure/user/update-user.vm';
 import { TYPES } from './config/types';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { DataService } from './data.service';
-import { UserPasswordDoesNotMatchException, RedundantUpdateErrorException, ObjectNotFoundException, } from '../exceptions/exception';
+import {
+    UserPasswordDoesNotMatchException,
+    RedundantUpdateErrorException,
+    ObjectNotFoundException,
+} from '../exceptions/exception';
 import { ERROR_CODES } from '../exceptions/error.codes';
 import { logger } from '../utils/logger';
 import { ROLES } from '../infrastructure/user/roles.enum';
@@ -72,10 +76,7 @@ export class UserService extends DataService<IUser> {
     }
 
     isUser(accountRole: ROLES): boolean {
-        return (
-            accountRole === ROLES.ADMIN ||
-            accountRole === ROLES.USER
-        );
+        return accountRole === ROLES.ADMIN || accountRole === ROLES.USER;
     }
 
     async findByEmail(email: string): Promise<IUser> {
@@ -114,7 +115,6 @@ export class UserService extends DataService<IUser> {
         return result;
     }
 
-
     async updateUser(id: string, updateUserVm: UpdateUserVm): Promise<IUser> {
         const user: IUser = await this.getUser(id);
         const updateUser: IUser = {} as IUser;
@@ -150,5 +150,25 @@ export class UserService extends DataService<IUser> {
         const result: IUser = await this.updateAndGet(id, updateUser);
 
         return result;
+    }
+
+    async bookmarkPage(userId: string, pageId: string): Promise<IUser> {
+        const user: IUser = await this.getUser(userId);
+        const result = await this.getDbCollection().update(
+            { _id: new ObjectId(userId) },
+            { $addToSet: { bookmarks: pageId } }
+        );
+
+        return await this.getUser(userId);
+    }
+
+    async unbookmarkPage(userId: string, pageId: string): Promise<IUser> {
+        const user: IUser = await this.getUser(userId);
+        const result = await this.getDbCollection().update(
+            { _id: new ObjectId(userId) },
+            { $pull: { bookmarks: pageId } }
+        );
+
+        return await this.getUser(userId);
     }
 }
