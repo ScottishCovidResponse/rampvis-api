@@ -28,12 +28,17 @@ class FirstRunForm(BaseModel):
     endDate: date
     continentCheck: Dict[str,bool]
 
+class FirstRunOut(BaseModel):
+    method: str
 
-@timeseries_sim_search_controller.post("/firstRunForm")
+
+
+@timeseries_sim_search_controller.post("/",response_model=FirstRunOut)
 async def createform(firstRunForm:FirstRunForm):
-    cube = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
-    res = json.dumps(cube["United Kingdom"].iloc[1])
-    return Response(res,media_type="application/json")
+    #cube = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
+    #res = json.dumps(cube["United Kingdom"].iloc[1])
+    res = firstRunForm
+    return res
 
 
 @timeseries_sim_search_controller.get("/")
