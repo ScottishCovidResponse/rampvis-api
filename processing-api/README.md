@@ -19,5 +19,5 @@ Start a development instance.
 
 ```bash
 source ./venv/bin/activate
-uvicorn app.main:app --reload --port 3000 --host 0.0.0.0
+uvicorn app.main:app --reload --port 4010 --host 0.0.0.0
 ```

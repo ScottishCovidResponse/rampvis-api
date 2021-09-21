@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "ts-node src/server.ts",
-        "dev": "export PORT=2000 && export NODE_ENV=development && export UV_THREADPOOL_SIZE=8 && node ./node_modules/nodemon/bin/nodemon.js",
+        "dev": "export PORT=4000 && export NODE_ENV=development && export UV_THREADPOOL_SIZE=8 && node ./node_modules/nodemon/bin/nodemon.js",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "dev:debug": "nodemon --inspect src/server.ts"
     },
@@ -53,7 +53,10 @@
         "rimraf": "^3.0.2",
         "s": "^1.0.0",
         "underscore": "^1.13.1",
-        "winston": "^3.3.3"
+        "winston": "^3.3.3",
+        "cli-progress": "^3.9.0",
+        "commander": "^8.1.0",
+        "puppeteer": "^10.2.0"
     },
     "devDependencies": {
         "@types/app-root-path": "^1.2.4",

@@ -27,7 +27,11 @@ export class App {
 
     public async init() {
         process.env['UV_THREADPOOL_SIZE'] = os.cpus().length.toString();
-        logger.info(`App: init: UV_THREADPOOL_SIZE = ${JSON.stringify(process.env.UV_THREADPOOL_SIZE)}, CPUs = ${os.cpus().length}`);
+        logger.info(
+            `App: init: UV_THREADPOOL_SIZE = ${JSON.stringify(process.env.UV_THREADPOOL_SIZE)}, CPUs = ${
+                os.cpus().length
+            }`
+        );
 
         let container: Container = DIContainer;
 
@@ -71,7 +75,6 @@ export class App {
 
             const ontoDataService: OntoDataService = container.get<OntoDataService>(TYPES.OntoDataService);
             await ontoDataService.createTextIndex({ productDesc: 'text', streamDesc: 'text' });
-
         } catch (err) {
             logger.error(`Error creating indexes, error= ${JSON.stringify(err)}`);
             process.exit();
@@ -92,13 +95,19 @@ export class App {
 
     private static async createSearchIndexes(container: Container) {
         try {
-            const ontoDataSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
+            const ontoDataSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(
+                TYPES.OntoDataSearchService
+            );
             await ontoDataSearchService.createIndexes();
 
-            const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(TYPES.OntoVisSearchService);
+            const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(
+                TYPES.OntoVisSearchService
+            );
             await ontoVisSearchService.createIndexes();
 
-            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(TYPES.OntoPageSearchService);
+            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(
+                TYPES.OntoPageSearchService
+            );
             await ontoPageSearchService.createIndexes();
 
             logger.info(`Created search indexes for ontologies- data, vis, page.`);
@@ -110,13 +119,19 @@ export class App {
 
     private static async putSearchMappings(container: Container) {
         try {
-            const ontoDataSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(TYPES.OntoDataSearchService);
+            const ontoDataSearchService: OntoDataSearchService = container.get<OntoDataSearchService>(
+                TYPES.OntoDataSearchService
+            );
             await ontoDataSearchService.putMapping();
 
-            const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(TYPES.OntoVisSearchService);
+            const ontoVisSearchService: OntoVisSearchService = container.get<OntoVisSearchService>(
+                TYPES.OntoVisSearchService
+            );
             await ontoVisSearchService.putMapping();
 
-            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(TYPES.OntoPageSearchService);
+            const ontoPageSearchService: OntoPageSearchService = container.get<OntoPageSearchService>(
+                TYPES.OntoPageSearchService
+            );
             await ontoPageSearchService.putMapping();
 
             logger.info(`Created search mappings for ontologies- data, vis, page.`);
@@ -141,8 +156,8 @@ export class App {
     }
 
     public listen() {
-        this.app.listen(process.env.PORT || 3000, () => {
-            logger.info(`App listening on the port ${process.env.PORT}`);
+        this.app.listen(4000 || 4000, () => {
+            logger.info(`App listening on the port: ${4000}, env: ${process.env.NODE_ENV}`);
         });
     }
 }

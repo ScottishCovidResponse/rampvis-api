@@ -1,10 +1,10 @@
 # Introduction
-This is the RESTful API of the RAMPVIS system. This repository consist of a two projects.
+This is the RESTful API of the RAMPVIS system. This repository consist of the following top-level folders.
 
-1. [data-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/data-api)
-   - Implemented in Typescript, Node.js, Express, and other JavaScript libraries.
-   - APIs for Authentication, user management, ontology operations, data service, etc.
+1. data-api
+   - Implemented in Typescript, Node.js, Express.js, and other JavaScript libraries.
+   - APIs for ontology database operations; authentication and user management; other database related services.
 
-2. [stat-api](https://github.com/ScottishCovidResponse/rampvis-api/tree/master/stat-api)
+2. processing-api
    - Implemented in Python, FastAPI, and other Python libraries.
-   - APIs for data service, search algorithms, grouping, ranking and propagation algorithms, analytical algorithms, scheduler agents, etc.
+   - APIs for data and processing functions; search, grouping, ranking, and algorithms for propagation; analytical algorithms; scheduler agents, etc.
