@@ -5,6 +5,13 @@ import numpy as np
 from scipy.spatial import distance
 from tslearn.metrics import dtw,lcss
 
+def continentTransformer(continentCheck):
+    temp  = []
+    for i in continentCheck:
+        if (continentCheck[i] == True):
+            temp.append(i)
+    return temp
+
 def advancedfilters(cube,minPopulation,continentCheck,startDate,endDate):
     cube.fillna(0,inplace=True)
     dropped = []

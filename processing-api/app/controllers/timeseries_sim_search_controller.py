@@ -8,7 +8,7 @@ import pandas as pd
 import json
 from app.core.settings import DATA_PATH_LIVE
 from app.algorithms.sim_search.precomputation import to_cube
-from app.algorithms.sim_search.firstrunfunctions import firstRunOutput
+from app.algorithms.sim_search.firstrunfunctions import firstRunOutput,continentTransformer
 from app.utils.jwt_service import validate_user_token
 from pydantic import BaseModel
 from typing import List,Dict
@@ -33,12 +33,22 @@ class FirstRunOut(BaseModel):
 
 
 
-@timeseries_sim_search_controller.post("/",response_model=FirstRunOut)
+@timeseries_sim_search_controller.post("/")
 async def createform(firstRunForm:FirstRunForm):
-    #cube = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
-    #res = json.dumps(cube["United Kingdom"].iloc[1])
-    res = firstRunForm
-    return res
+    cube = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
+    targetCountry = firstRunForm.targetCountry
+    firstDate = firstRunForm.firstDate
+    lastDate = firstRunForm.lastDate
+    indicator = firstRunForm.indicator
+    method = firstRunForm.method
+    numberOfResults = firstRunForm.numberOfResults
+    minPopulation = firstRunForm.minPopulation
+    startDate = firstRunForm.startDate
+    endDate = firstRunForm.endDate
+    continentCheck = firstRunForm.continentCheck
+    continentCheck = continentTransformer(continentCheck)
+    out = firstRunOutput(cube,targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
+    return out
 
 
 @timeseries_sim_search_controller.get("/")
