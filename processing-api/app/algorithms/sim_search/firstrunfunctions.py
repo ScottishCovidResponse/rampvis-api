@@ -98,8 +98,8 @@ def firstRunOutput(cube,targetCountry,firstDate,lastDate,indicator,method,number
     result = ranker(sliced,targetCountry,datetime.datetime(lastDate.year,lastDate.month,lastDate.day),method,numberOfResults)
     master_dict = dict()
     for i in result:
-        vec = sliced[i.split()[0]][i.split()[1]]
-        date = pd.date_range(end=i.split()[1],start=datetime.datetime.strptime(i.split()[1],"%Y-%m-%d") - datetime.timedelta(days=(lastDate-firstDate).days-1))
+        vec = sliced[" ".join(i.split()[0:-1])][i.split()[-1]]
+        date = pd.date_range(end=i.split()[-1],start=datetime.datetime.strptime(i.split()[-1],"%Y-%m-%d") - datetime.timedelta(days=(lastDate-firstDate).days-1))
         dict_sample = dict(zip(date,vec))
         master_dict[i]=dict_sample
     return master_dict
