@@ -1,14 +1,14 @@
-
 # Data API
+
 APIs for Authentication, user management, ontology operations, data service, etc.
 
-## Development 
+## Development
 
 ### Requirements
 
 - Node version 14.17.1
 - Mongodb
-- Elasticsearch 
+- Elasticsearch
 
 Start a development server:
 
@@ -17,6 +17,13 @@ npm install
 npm run dev
 ```
 
-### Config
+### Environment Variables
 
-We did not share all contents of the `data-api/config` folder due to security reasons. 
+A development environment file,
+
+**.env.dev**
+
+```bash
+SERVER_PORT=4000
+NODE_ENV=development
+```

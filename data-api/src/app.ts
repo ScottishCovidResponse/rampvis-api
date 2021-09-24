@@ -156,8 +156,8 @@ export class App {
     }
 
     public listen() {
-        this.app.listen(4000 || 4000, () => {
-            logger.info(`App listening on the port: ${4000}, env: ${process.env.NODE_ENV}`);
+        this.app.listen(process.env.SERVER_PORT || 4000, () => {
+            logger.info(`App listening on the port: ${process.env.SERVER_PORT}, env: ${process.env.NODE_ENV}`);
         });
     }
 }

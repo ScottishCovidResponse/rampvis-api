@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "ts-node src/server.ts",
-        "dev": "export PORT=4000 && export NODE_ENV=development && export UV_THREADPOOL_SIZE=8 && node ./node_modules/nodemon/bin/nodemon.js",
+        "dev": "env-cmd -f .env.dev node ./node_modules/nodemon/bin/nodemon.js",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "dev:debug": "nodemon --inspect src/server.ts"
     },
@@ -76,6 +76,7 @@
         "@types/passport-github2": "^1.2.4",
         "@types/request-promise": "^4.1.47",
         "@types/underscore": "^1.11.2",
+        "env-cmd": "^10.1.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
         "nodemon": "^2.0.7",
