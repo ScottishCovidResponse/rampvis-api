@@ -67,7 +67,7 @@ def distfunc(target,comp,method):
     if method == 'euclidean': 
         return distance.euclidean(target,comp)
     if method == 'manhattan':
-        return distance.manhattan(target,comp) 
+        return distance.cityblock(target,comp) 
     if method == 'chebyshev':
         return distance.chebyshev(target,comp)
     if method == 'dtw':
@@ -86,16 +86,28 @@ def ranker(cube,target_country,target_date,method,top_n):
                 identifier.append(i + ' ' + datetime.datetime.strftime(j,"%Y-%m-%d"))
                 comp_values.append(distfunc(cube[target_country][target_date],cube[i][j],method))
 
-    for i in np.argsort(comp_values)[:top_n].tolist():
+    for i in np.argsort(comp_values).tolist():
         result.append(identifier[i])
+    count_set = []
+    res = []
+    i = 0
+    while len(res)<10:
+        if " ".join(result[i].split()[0:-1]) in count_set:
+            i = i+1
+            continue
+        else:
+            count_set.append(" ".join(result[i].split()[0:-1]))
+            res.append(result[i])
+            i = i+1
     
-    return result
+    return res
 
 def firstRunOutput(cube,targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck):
     cube_filtered = advancedfilters(cube,minPopulation,continentCheck,startDate,endDate)
     sliced = slicer(cube_filtered,indicator)
     sliced = time_series(sliced,(lastDate-firstDate).days)
     result = ranker(sliced,targetCountry,datetime.datetime(lastDate.year,lastDate.month,lastDate.day),method,numberOfResults)
+    result.insert(0,targetCountry+" "+datetime.datetime.strftime(lastDate,"%Y-%m-%d"))
     master_dict = dict()
     for i in result:
         vec = sliced[" ".join(i.split()[0:-1])][i.split()[-1]]

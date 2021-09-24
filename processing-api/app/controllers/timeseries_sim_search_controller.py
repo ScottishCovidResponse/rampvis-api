@@ -28,9 +28,6 @@ class FirstRunForm(BaseModel):
     endDate: date
     continentCheck: Dict[str,bool]
 
-class FirstRunOut(BaseModel):
-    method: str
-
 
 
 @timeseries_sim_search_controller.post("/")

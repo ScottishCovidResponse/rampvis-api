@@ -24,6 +24,7 @@ def country_filter(country_name,df):    # group by country name
     country_data["biweekly_deaths_rate"] = country_data["biweekly_deaths"].diff(periods=14) / country_data["biweekly_deaths"] * 100
     country_data.fillna(0,inplace=True)
     country_data.replace([np.inf,-np.inf],0,inplace=True)
+    country_data = country_data.round(1)
     return country_data  
 
 def cube_sample(country,df): # change OWID structure from cube for a single country
