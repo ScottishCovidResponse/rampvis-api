@@ -1,13 +1,12 @@
 import { MongoClient, ObjectId } from 'mongodb';
 
-const uri = ''; // TODO: Read from environment
-
 export class Database {
     client: any;
     ontoPageColl: any;
     thumbnailColl: any;
 
     private async getCollection() {
+        const uri: string = process.env.MONGO_URI as string;
         this.client = new MongoClient(uri);
         await this.client.connect();
         let db = this.client.db('rampvis');

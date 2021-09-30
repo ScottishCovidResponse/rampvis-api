@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 
 export class Screenshot {
-    browser = null;
-    page = null;
+    browser: any = null;
+    page: any = null;
 
     async takeScreenshot(args: { url: string; el: string; target: string }) {
         if (!this.browser) {
@@ -23,13 +23,13 @@ export class Screenshot {
             timeout: 0,
         });
 
-        await this.page.waitForResponse((response) => response.status() === 200);
+        await this.page.waitForResponse((response: any) => response.status() === 200);
         await this.delay(3000); // Added a fixed amount of delay, need to wait until drawing completes only
         await this.page.waitForSelector(args.el); // wait for the selector to load
         let chart = await this.page.$(args.el); // declare a variable with an ElementHandle
         const box = await chart.boundingBox(); // this method returns an array of geometric parameters of the element in pixels.
-        const x = box['x']; // coordinate x
-        const y = box['y']; // coordinate y
+        const x = box['x'] || 10; // coordinate x
+        const y = box['y'] || 10; // coordinate y
         const w = box['width'] || 1; // area width
         const h = box['height'] || 1; // area height
 
@@ -64,7 +64,7 @@ export class Screenshot {
         this.page = null;
     }
 
-    delay(time) {
+    delay(time: any) {
         return new Promise(function (resolve) {
             setTimeout(resolve, time);
         });

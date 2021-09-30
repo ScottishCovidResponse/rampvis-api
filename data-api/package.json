@@ -61,6 +61,7 @@
     "devDependencies": {
         "@types/app-root-path": "^1.2.4",
         "@types/bcryptjs": "^2.4.2",
+        "@types/cli-progress": "^3.9.2",
         "@types/compression": "1.7.0",
         "@types/config": "0.0.38",
         "@types/connect-mongo": "3.1.3",
