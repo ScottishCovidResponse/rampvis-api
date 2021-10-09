@@ -37,7 +37,7 @@ export class AuthController {
     )
     public async githubCallback(request: Request, response: Response, next: NextFunction): Promise<void> {
         const currentUser = (request as any).currentUser;
-        logger.debug('AuthController: callback: currentUser = ', currentUser);
+        logger.info('AuthController: callback: currentUser = ', currentUser);
 
         const tokenData: ITokenData = await JwtToken.create(currentUser);
         response.redirect(`${config.get('github.successRedirect')}/?token=${tokenData.token}`);
@@ -84,5 +84,4 @@ export class AuthController {
             next(new WrongCredentialsException(JSON.stringify(e)));
         }
     }
-
 }

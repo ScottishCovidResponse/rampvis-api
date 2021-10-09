@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "ts-node src/server.ts",
-        "dev": "env-cmd -f .env.dev node ./node_modules/nodemon/bin/nodemon.js",
+        "dev": "export SERVER_PORT=4000 && export NODE_ENV=development && node ./node_modules/nodemon/bin/nodemon.js",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "dev:debug": "nodemon --inspect src/server.ts"
     },

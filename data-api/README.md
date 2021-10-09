@@ -17,13 +17,6 @@ npm install
 npm run dev
 ```
 
-### Environment Variables
+### Configuration
 
-A development environment file,
-
-**.env.dev**
-
-```bash
-SERVER_PORT=4000
-NODE_ENV=development
-```
+Add your preferred configuration, e.g., MongoDB URI, Elasticsearch host, keys etc. in the `rampvis-api/data-api/config/default.json` file.
