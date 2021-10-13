@@ -65,7 +65,7 @@ def distfunc(target,comp,method):
     target = np.array(target)
     comp = np.array(comp)
     if method == 'euclidean': 
-        return distance.euclidean(target,comp)
+        return distance.sqeuclidean(target,comp)
     if method == 'manhattan':
         return distance.cityblock(target,comp) 
     if method == 'chebyshev':
@@ -75,7 +75,7 @@ def distfunc(target,comp,method):
     if method == "lcs":
         return 1-lcss(target,comp)
     
-def ranker(cube,target_country,target_date,method,top_n):
+def ranker(cube,target_country,target_date,method,numberOfResults):
     target_identifier = target_country + ' ' + datetime.datetime.strftime(target_date,"%Y-%m-%d")
     identifier = []
     comp_values = []
@@ -91,7 +91,7 @@ def ranker(cube,target_country,target_date,method,top_n):
     count_set = []
     res = []
     i = 0
-    while len(res)<10:
+    while len(res)<numberOfResults:
         if " ".join(result[i].split()[0:-1]) in count_set:
             i = i+1
             continue
@@ -111,7 +111,9 @@ def firstRunOutput(cube,targetCountry,firstDate,lastDate,indicator,method,number
     master_dict = dict()
     for i in result:
         vec = sliced[" ".join(i.split()[0:-1])][i.split()[-1]]
-        date = pd.date_range(end=i.split()[-1],start=datetime.datetime.strptime(i.split()[-1],"%Y-%m-%d") - datetime.timedelta(days=(lastDate-firstDate).days-1))
-        dict_sample = dict(zip(date,vec))
-        master_dict[i]=dict_sample
+        date = pd.date_range(end=result[0].split()[-1],start=datetime.datetime.strptime(result[0].split()[-1],"%Y-%m-%d") - datetime.timedelta(days=(lastDate-firstDate).days-1)).date
+        temp_lst = []
+        for j in range(len(vec)):
+            temp_lst.append({"date":date[j],"measurement":vec[j]})
+        master_dict[i] = temp_lst
     return master_dict
