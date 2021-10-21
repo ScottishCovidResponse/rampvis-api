@@ -17,7 +17,7 @@ def advancedfilters(cube:pd.DataFrame,minPopulation:int,continentCheck:list,star
     advancedfilters function reduces the search space by date, continent, and minimum population
     
     Args
-    :cube: covid data-cub
+    :cube: covid data-cube
     :minPopulation: population threshold to include countries
     :continentCheck: continents to include
     :startDate: first date of the search space 
