@@ -55,12 +55,12 @@ export class TemplateController {
                 ontoPageSearchList
             );
             ontoPageSearchDtos = ontoPageSearchDtos.map((d: OntoPageSearchDto) => {
-                console.log("id = ", d.id, "keywords = ", d.keywords);
+                console.log('id = ', d.id, 'keywords = ', d.keywords);
                 return { ...d, title: generateTitle([d.keywords]) };
             });
             // logger.info(`OntoPageController:search: ontoPageSearchDtos = ${JSON.stringify(ontoPageSearchDto)}`);
             response.status(200).send(ontoPageSearchDtos);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:search: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
         }
@@ -92,7 +92,7 @@ export class TemplateController {
             for (let ontoPageDto of ontoPageDtos) {
                 const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
                 const keywordsList = Object.values(data).map((d) => d.keywords);
-                const title = generateTitle(keywordsList)
+                const title = generateTitle(keywordsList);
                 ontoPageExtDtos.push({
                     ...ontoPageDto,
                     vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
@@ -106,7 +106,7 @@ export class TemplateController {
             // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
 
             response.status(200).send(resultDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -127,7 +127,7 @@ export class TemplateController {
             );
             const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
             const keywordsList = Object.values(data).map((d) => d.keywords);
-            console.log("keywords = ", keywordsList);
+            console.log('keywords = ', keywordsList);
 
             const title = generateTitle(keywordsList);
 
@@ -140,7 +140,7 @@ export class TemplateController {
             logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
 
             response.status(200).send(ontoPageExtDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }

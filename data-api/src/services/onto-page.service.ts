@@ -6,10 +6,10 @@ import { ObjectId } from 'mongodb';
 import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { DuplicateEntry, IdDoesNotExist, SomethingWentWrong } from '../exceptions/exception';
+import { DuplicateEntry, IdDoesNotExist } from '../exceptions/exception';
 import { IOntoPage, PAGE_TYPE } from '../infrastructure/onto-page/onto-page.interface';
 import { OntoPageVm } from '../infrastructure/onto-page/onto-page.vm';
-import { OntoPageFilterVm, ONTOPAGE_SORT_BY } from '../infrastructure/onto-page/onto-page-filter.vm';
+import { OntoPageFilterVm } from '../infrastructure/onto-page/onto-page-filter.vm';
 import { PaginationVm } from '../infrastructure/pagination.vm';
 import { SORT_ORDER } from '../infrastructure/sort-order.enum';
 import { MAPPING_TYPES } from './config/automapper.config';
@@ -36,7 +36,8 @@ export class OntoPageService extends DataService<IOntoPage> {
         visType: VIS_TYPE = null as any,
         ontoPageFilterVm: OntoPageFilterVm = null as any
     ): Promise<PaginationVm<IOntoPage>> {
-        logger.info(`OntoPageService:getPaginated: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
+        // prettier-ignore
+        logger.info( `OntoPageService:getPaginated: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify( ontoPageFilterVm )}` );
         let query: any = {};
 
         if (visType) {
@@ -44,11 +45,9 @@ export class OntoPageService extends DataService<IOntoPage> {
                 (d: IOntoVis) => d._id as string
             );
             console.log('OntoPageService:getPaginated: visIds = ', visIds);
-            query = pageType
-                ? { pageType: pageType, visId: { $in: visIds } }
-                : { visId: { $in: visIds } };
+            query = pageType ? { pageType: pageType, visId: { $in: visIds } } : { visId: { $in: visIds } };
         } else if (pageType) {
-            query = { pageType: pageType }
+            query = { pageType: pageType };
         }
 
         let totalCount: number = await this.getDbCollection().find(query).count();
@@ -60,15 +59,15 @@ export class OntoPageService extends DataService<IOntoPage> {
 
         const pageIndex: number = ontoPageFilterVm.pageIndex ? parseInt(ontoPageFilterVm.pageIndex) : 0;
         const pageSize: number = ontoPageFilterVm.pageSize ? parseInt(ontoPageFilterVm.pageSize) : totalCount;
-        const sortOrder: number = ontoPageFilterVm.sortOrder == SORT_ORDER.ASC ? 1 : -1;
 
-        console.log('OntoPageService:getPaginated: pageSize, pageIndex, sortOrder = ', pageSize, pageIndex, sortOrder, ', totalCount = ', totalCount);
+        // prettier-ignore
+        console.log( 'OntoPageService:getPaginated: pageSize, pageIndex, sortOrder = ', pageSize, pageIndex, ontoPageFilterVm.sortOrder, ', totalCount = ', totalCount );
 
         let ontoPages: IOntoPage[] = [];
         ontoPages = await this.getDbCollection()
             .find(query)
-            .sort({ date: sortOrder })
-            .skip(pageSize * (pageIndex))
+            .sort('date', ontoPageFilterVm.sortOrder)
+            .skip(pageSize * pageIndex)
             .limit(pageSize)
             .toArray();
         return {

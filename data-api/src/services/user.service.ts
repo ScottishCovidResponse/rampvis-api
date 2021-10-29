@@ -1,8 +1,8 @@
 import * as bcrypt from 'bcryptjs';
 import 'reflect-metadata';
 import config from 'config';
-import { injectable, inject } from 'inversify';
-import { ObjectId, FilterQuery } from 'mongodb';
+import { inject } from 'inversify';
+import { ObjectId, Filter } from 'mongodb';
 import { provide } from 'inversify-binding-decorators';
 
 import { IUser } from '../infrastructure/user/user.interface';
@@ -31,7 +31,7 @@ export class UserService extends DataService<IUser> {
     //
 
     async getGitHubUser(githubId: string): Promise<IUser> {
-        return await this.get({ githubId: githubId } as FilterQuery<IUser>);
+        return await this.get({ githubId: githubId } as Filter<IUser>);
     }
 
     async saveGitHubUser(userDto: UserVm): Promise<IUser> {
@@ -47,7 +47,7 @@ export class UserService extends DataService<IUser> {
     }
 
     async getUser(id: string): Promise<IUser> {
-        const user: IUser = await this.get({ _id: new ObjectId(id) } as FilterQuery<IUser>);
+        const user: IUser = await this.get({ _id: new ObjectId(id) } as Filter<IUser>);
 
         if (!user) {
             logger.debug(`UserService: getUser: throw`);
@@ -67,12 +67,12 @@ export class UserService extends DataService<IUser> {
 
     async getUsers(ids: Array<string>): Promise<Array<IUser>> {
         const objectIds: Array<ObjectId> = ids.map((d) => new ObjectId(d));
-        return await this.getAll({ _id: { $in: objectIds } } as FilterQuery<IUser>);
+        return await this.getAll({ _id: { $in: objectIds } } as Filter<IUser>);
     }
 
     // Filter deleted user on login
     async getLoggedInUser(email: string): Promise<IUser> {
-        return await this.get({ email: email, deleted: { $in: [null, false] } } as FilterQuery<IUser>);
+        return await this.get({ email: email, deleted: { $in: [null, false] } } as Filter<IUser>);
     }
 
     isUser(accountRole: ROLES): boolean {
@@ -80,7 +80,7 @@ export class UserService extends DataService<IUser> {
     }
 
     async findByEmail(email: string): Promise<IUser> {
-        return await this.get({ email: email } as FilterQuery<IUser>);
+        return await this.get({ email: email } as Filter<IUser>);
     }
 
     async saveUser(userDto: UserVm): Promise<IUser> {
@@ -154,7 +154,7 @@ export class UserService extends DataService<IUser> {
 
     async bookmarkPage(userId: string, pageId: string): Promise<IUser> {
         const user: IUser = await this.getUser(userId);
-        const result = await this.getDbCollection().update(
+        const result = await this.getDbCollection().updateOne(
             { _id: new ObjectId(userId) },
             { $addToSet: { bookmarks: pageId } }
         );
@@ -164,7 +164,7 @@ export class UserService extends DataService<IUser> {
 
     async unbookmarkPage(userId: string, pageId: string): Promise<IUser> {
         const user: IUser = await this.getUser(userId);
-        const result = await this.getDbCollection().update(
+        const result = await this.getDbCollection().updateOne(
             { _id: new ObjectId(userId) },
             { $pull: { bookmarks: pageId } }
         );

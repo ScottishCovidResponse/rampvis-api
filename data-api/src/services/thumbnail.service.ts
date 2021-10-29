@@ -8,7 +8,7 @@ import { DbClient } from '../infrastructure/db/mongodb.connection';
 import { logger } from '../utils/logger';
 import { TYPES } from './config/types';
 import { DataService } from './data.service';
-import { FilterQuery, FindAndModifyWriteOpResultObject } from 'mongodb';
+import { Filter, ModifyResult } from 'mongodb';
 import { MAPPING_TYPES } from './config/automapper.config';
 
 @provide(TYPES.ThumbnailService)
@@ -40,9 +40,9 @@ export class ThumbnailService extends DataService<any> {
     }
 
     async deleteThumbnail(pageId: string): Promise<IThumbnail> {
-        const res: FindAndModifyWriteOpResultObject<IThumbnail> = await this.getDbCollection().findOneAndDelete({
+        const res: ModifyResult<IThumbnail> = await this.getDbCollection().findOneAndDelete({
             pageId: pageId,
-        } as FilterQuery<IThumbnail>);
+        } as Filter<IThumbnail>);
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
     }
 }

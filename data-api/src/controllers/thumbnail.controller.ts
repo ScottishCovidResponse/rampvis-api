@@ -42,9 +42,13 @@ export class ThumbnailController {
                 ACTIVITY_ACTION.CREATE,
                 user._id.toString()
             );
-            const resultDto: ThumbnailDto = automapper.map(MAPPING_TYPES.IThumbnail, MAPPING_TYPES.ThumbnailDto, result);
+            const resultDto: ThumbnailDto = automapper.map(
+                MAPPING_TYPES.IThumbnail,
+                MAPPING_TYPES.ThumbnailDto,
+                result
+            );
             response.status(200).send(resultDto);
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }
@@ -56,9 +60,13 @@ export class ThumbnailController {
         logger.debug('ThumbnailController: getThumbnailInfo: request.user = ' + JSON.stringify(request.user));
         try {
             const result: IThumbnail = await this.thumbnailService.getThumbnail(pageId);
-            const resultDto: ThumbnailDto = automapper.map(MAPPING_TYPES.IThumbnail, MAPPING_TYPES.ThumbnailDto, result);
+            const resultDto: ThumbnailDto = automapper.map(
+                MAPPING_TYPES.IThumbnail,
+                MAPPING_TYPES.ThumbnailDto,
+                result
+            );
             response.status(200).send(result);
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }
@@ -71,7 +79,11 @@ export class ThumbnailController {
 
         try {
             const result: IThumbnail = await this.thumbnailService.deleteThumbnail(pageId);
-            const resultDto: ThumbnailDto = automapper.map(MAPPING_TYPES.IThumbnail, MAPPING_TYPES.ThumbnailDto, result);
+            const resultDto: ThumbnailDto = automapper.map(
+                MAPPING_TYPES.IThumbnail,
+                MAPPING_TYPES.ThumbnailDto,
+                result
+            );
 
             await this.activityService.createActivity(
                 user,
@@ -81,7 +93,7 @@ export class ThumbnailController {
             );
 
             response.status(200).send(resultDto);
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }

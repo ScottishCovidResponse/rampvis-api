@@ -6,7 +6,7 @@ APIs for Authentication, user management, ontology operations, data service, etc
 
 ### Requirements
 
-- Node version 14.17.1
+- Node version 16.13.0
 - Mongodb
 - Elasticsearch
 

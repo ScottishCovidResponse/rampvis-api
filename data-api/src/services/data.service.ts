@@ -3,14 +3,12 @@ import { provide } from 'inversify-binding-decorators';
 import {
     AggregationCursor,
     Collection,
-    FilterQuery,
-    FindAndModifyWriteOpResultObject,
-    FindOneAndUpdateOption,
-    FindOneOptions,
+    Filter,
+    ModifyResult,
+    FindOneAndUpdateOptions,
     ObjectId,
-    UpdateOneOptions,
-    UpdateQuery,
-    UpdateWriteOpResult,
+    UpdateFilter,
+    UpdateResult,
 } from 'mongodb';
 
 import { DbClient } from '../infrastructure/db/mongodb.connection';
@@ -26,7 +24,7 @@ export abstract class DataService<T extends { _id: any }> {
     protected constructor(
         @inject(TYPES.DbClient) dbClient: DbClient,
         @unmanaged() dbName: string,
-        @unmanaged() collectionName: string,
+        @unmanaged() collectionName: string
     ) {
         this.dbName = dbName;
         this.dbCollectionName = collectionName;
@@ -37,13 +35,13 @@ export abstract class DataService<T extends { _id: any }> {
         return this.dbCollection;
     }
 
-    public async get(arg: string | FilterQuery<T>): Promise<T> {
+    public async get(arg: string | Filter<T>): Promise<T> {
         let doc: T; // typeof _id = ObjectId
 
         if (typeof arg === 'string') {
-            doc = (await this.dbCollection.findOne({ _id: new ObjectId(arg) } as FilterQuery<T>)) as T;
+            doc = (await this.dbCollection.findOne({ _id: new ObjectId(arg) } as Filter<T>)) as T;
         } else if (typeof arg === 'object') {
-            doc = (await this.dbCollection.findOne(arg as FilterQuery<T>)) as T;
+            doc = (await this.dbCollection.findOne(arg as Filter<T>)) as T;
         } else {
             return null as any;
         }
@@ -52,16 +50,16 @@ export abstract class DataService<T extends { _id: any }> {
     }
 
     public async matchAny(arg: any): Promise<T> {
-        return (await this.dbCollection.findOne({$or: arg})) as T;
+        return (await this.dbCollection.findOne({ $or: arg })) as T;
     }
 
-    public async getAll(query: FilterQuery<T> = {}, options: FindOneOptions<any> = {}): Promise<T[]> {
+    public async getAll(query: Filter<T> = {}, options: any = {}): Promise<T[]> {
         const docs: any[] = await this.dbCollection.find(query).project(options).toArray();
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, docs);
     }
 
     // Get latest numDocs number of document from a collection passing the query
-    public async getLatest(query: FilterQuery<T> = {}, numDocs: number = 1): Promise<T> {
+    public async getLatest(query: Filter<T> = {}, numDocs: number = 1): Promise<T> {
         // Auto created _id field it has a lastPostDate embedded in it (_id: 1) or use natural order ($natural: 1)
         // 1 will sort ascending (oldest to newest) and -1 will sort descending (newest to oldest.)
         const docs: any[] = await this.dbCollection.find(query).sort({ $natural: -1 }).limit(numDocs).toArray();
@@ -69,14 +67,14 @@ export abstract class DataService<T extends { _id: any }> {
     }
 
     // get or create and get object
-    public async getOrCreate(query: FilterQuery<T> = {}, entity: T): Promise<T> {
-        const res: FindAndModifyWriteOpResultObject<T> = await this.getDbCollection().findOneAndUpdate(
+    public async getOrCreate(query: Filter<T> = {}, entity: T): Promise<T> {
+        const res: ModifyResult<T> = await this.getDbCollection().findOneAndUpdate(
             query,
-            { $setOnInsert: entity } as UpdateQuery<T>,
+            { $setOnInsert: entity } as UpdateFilter<T>,
             {
-                returnOriginal: false, // When false, returns the updated document rather than the original. The default is true.
+                returnNewDocument: true, // When false, returns the updated document rather than the original. The default is true.
                 upsert: true,
-            } as FindOneAndUpdateOption<T>,
+            } as FindOneAndUpdateOptions
         );
 
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
@@ -84,37 +82,38 @@ export abstract class DataService<T extends { _id: any }> {
 
     public async create(entity: T): Promise<T> {
         const res = await this.dbCollection.insertOne(entity as any);
-        return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.ops[0]);
+        const doc = await this.get({ _id: res.insertedId });
+        return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, doc);
     }
 
     public async delete(id: string): Promise<T> {
-        const res: FindAndModifyWriteOpResultObject<T> = await this.dbCollection.findOneAndDelete({
+        const res: ModifyResult<T> = await this.dbCollection.findOneAndDelete({
             _id: new ObjectId(id),
-        } as FilterQuery<T>);
+        } as Filter<T>);
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
     }
 
     // update and get update status
     public async update(id: string, entity: T): Promise<boolean> {
-        const res: UpdateWriteOpResult = await this.dbCollection.updateOne(
-            { _id: new ObjectId(id) } as FilterQuery<T>,
-            { $set: entity } as UpdateQuery<T>,
+        const res: UpdateResult = await this.dbCollection.updateOne(
+            { _id: new ObjectId(id) } as Filter<T>,
+            { $set: entity } as UpdateFilter<T>,
             {
                 upsert: false, // does not insert a new document when no match is found
-            } as UpdateOneOptions,
+            }
         );
-        return res.result.ok === 1;
+        return res.modifiedCount === 1;
     }
 
     // update and get the updated doc
     public async updateAndGet(id: string, entity: T): Promise<T> {
-        const res: FindAndModifyWriteOpResultObject<T> = await this.getDbCollection().findOneAndUpdate(
-            { _id: new ObjectId(id) } as FilterQuery<T>,
-            { $set: entity } as UpdateQuery<T>,
+        const res: ModifyResult<T> = await this.getDbCollection().findOneAndUpdate(
+            { _id: new ObjectId(id) } as Filter<T>,
+            { $set: entity } as UpdateFilter<T>,
             {
-                returnOriginal: false, // When false, returns the updated document rather than the original. The default is true.
+                returnNewDocument: false, // When false, returns the updated document rather than the original. The default is true.
                 upsert: false,
-            } as FindOneAndUpdateOption<T>,
+            } as FindOneAndUpdateOptions
         );
 
         const result: T = automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
@@ -150,11 +149,11 @@ export abstract class DataService<T extends { _id: any }> {
 
     public async createTextIndex(obj: any): Promise<void> {
         try {
-            await Promise.all(Object.keys(obj).map(async (d) => await this.getDbCollection().dropIndex(d) ));
+            await Promise.all(Object.keys(obj).map(async (d) => await this.getDbCollection().dropIndex(d)));
         } catch (e) {
             Promise.resolve();
         }
 
-        await this.getDbCollection().createIndex(obj,);
+        await this.getDbCollection().createIndex(obj);
     }
 }

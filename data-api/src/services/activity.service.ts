@@ -1,7 +1,7 @@
 import config from 'config';
 import { inject, injectable } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
-import { FilterQuery, ObjectId } from 'mongodb';
+import { Filter, ObjectId } from 'mongodb';
 
 import { ActivityFilterVm } from '../infrastructure/activity/activity-filter.vm';
 import { ACTIVITY_ACTION, ACTIVITY_TYPE, IActivity } from '../infrastructure/activity/activity.interface';
@@ -17,7 +17,10 @@ import { ActivityDto } from '../infrastructure/activity/activity.dto';
 
 @provide(TYPES.ActivityService)
 export class ActivityService extends DataService<IActivity> {
-    public constructor(@inject(TYPES.DbClient) dbClient: DbClient, @inject(TYPES.UserService) private userService: UserService) {
+    public constructor(
+        @inject(TYPES.DbClient) dbClient: DbClient,
+        @inject(TYPES.UserService) private userService: UserService
+    ) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.activities'));
     }
 
@@ -25,7 +28,7 @@ export class ActivityService extends DataService<IActivity> {
         const page: number = activityFilterVm.page ? parseInt(activityFilterVm.page, 10) : 0;
         const pageCount: number = activityFilterVm.pageCount ? parseInt(activityFilterVm.pageCount, 10) : 1;
         let filter: string = activityFilterVm.filter || '';
-        const query: FilterQuery<IActivity> = {};
+        const query: Filter<IActivity> = {};
 
         return new Promise<PaginationVm<ActivityDto>>(async (resolve) => {
             if (filter.length > 0) {
@@ -41,28 +44,44 @@ export class ActivityService extends DataService<IActivity> {
                 .sort({ createdAt: -1 })
                 .skip(pageCount * page)
                 .limit(pageCount)
-                .toArray(async (err, activities) => {
+                .toArray(async (err: any, activities: IActivity[] | undefined) => {
                     if (err) {
                         throw err;
                     }
 
-                    const users: IUser[] = await this.userService.getUsers(activities.filter((a) => this.userService.isUser(a.role)).map((a) => a.userId));
-                    const activitiesDtos: ActivityDto[] = automapper.map(MAPPING_TYPES.IActivity, MAPPING_TYPES.ActivityDto, activities);
+                    const users: IUser[] = await this.userService.getUsers(
+                        activities?.filter((a) => this.userService.isUser(a.role)).map((a) => a.userId) as any
+                    );
+                    const activitiesDtos: ActivityDto[] = automapper.map(
+                        MAPPING_TYPES.IActivity,
+                        MAPPING_TYPES.ActivityDto,
+                        activities
+                    );
 
                     activitiesDtos.forEach((activityDto: ActivityDto) => {
-                        const activity = activities.find((a) => a._id.toString() === activityDto.id.toString());
+                        const activity = activities?.find((a) => a._id.toString() === activityDto.id.toString());
                         if (activity) {
                             const user = users.find((u) => u._id.toString() === activity.userId.toString());
                             activityDto.name = <string>(user ? user.name : '');
                         }
                     });
 
-                    resolve({ data: activitiesDtos, page, pageCount, totalCount: activitiesCount } as PaginationVm<ActivityDto>);
+                    resolve({
+                        data: activitiesDtos,
+                        page,
+                        pageCount,
+                        totalCount: activitiesCount,
+                    } as PaginationVm<ActivityDto>);
                 });
         });
     }
 
-    public async createActivity(user: IUser, type: ACTIVITY_TYPE, action: ACTIVITY_ACTION, objectId: string): Promise<IActivity | void> {
+    public async createActivity(
+        user: IUser,
+        type: ACTIVITY_TYPE,
+        action: ACTIVITY_ACTION,
+        objectId: string
+    ): Promise<IActivity | void> {
         try {
             const activity: IActivity = {
                 _id: new ObjectId(),
@@ -81,7 +100,7 @@ export class ActivityService extends DataService<IActivity> {
     }
 
     public async removeActivitiesOfAccount(accountId: string): Promise<number> {
-        const result = await this.getDbCollection().deleteMany({ userId: accountId } as FilterQuery<IActivity>);
+        const result = await this.getDbCollection().deleteMany({ userId: accountId });
         return result.deletedCount as number;
     }
 }
