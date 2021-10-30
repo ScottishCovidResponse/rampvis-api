@@ -12,6 +12,7 @@ def create_stream(p, c, col=None):
         'keywords': c['keywords'],
         'description': c.get('description', '')
     }
+    
     if col:
         stream['endpoint'] += f'&field={col}'
         
@@ -23,6 +24,13 @@ def create_stream(p, c, col=None):
                 stream['description'] = col + ', ' + desc
             else:
                 stream['description'] = col
+                
+    if c.get('keys'):
+        stream['endpoint'] += f'&keys={c["keys"]}'
+    if c.get('values'):
+        stream['endpoint'] += f'&values={c["values"]}'
+    if c.get('format'):
+        stream['endpoint'] += f'&format={c["format"]}'
                 
     return stream
 

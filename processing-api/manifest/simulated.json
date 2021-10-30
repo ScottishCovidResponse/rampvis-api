@@ -1,0 +1,13 @@
+[
+    {
+        "product": "simulated/scotland",
+        "components": [
+            {
+                "name": "daily_nhsboard_sex_agegroup_common",
+                "dataType": "timeseries",
+                "keywords": ["simulated", "scotland", "daily", "sex", "agegroup", "cases", "hospital", "icu"],
+                "filter": ""
+            }
+        ]
+    }
+]
