@@ -4,7 +4,7 @@
     "private": true,
     "main": "dist/server.js",
     "scripts": {
-        "build": "tsc",
+        "build": "rimraf ./dist && tsc",
         "start": "ts-node src/server.ts",
         "dev": "export PORT=4000 && export NODE_ENV=development && node ./node_modules/nodemon/bin/nodemon.js",
         "lint": "tslint -p tsconfig.json -c tslint.json",
@@ -25,7 +25,6 @@
         "commander": "^8.3.0",
         "compression": "^1.7.4",
         "config": "^3.3.6",
-        "connect-mongo": "^4.6.0",
         "convert-csv-to-json": "1.3.1",
         "cors": "^2.8.5",
         "csvtojson": "^2.0.10",
@@ -52,8 +51,6 @@
         "puppeteer": "^10.4.0",
         "python-shell": "^3.0.1",
         "reflect-metadata": "^0.1.13",
-        "request-promise": "^4.2.6",
-        "rimraf": "^3.0.2",
         "s": "^1.0.0",
         "underscore": "^1.13.1",
         "winston": "^3.3.3"
@@ -80,8 +77,8 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
         "nodemon": "^2.0.14",
+        "rimraf": "^3.0.2",
         "ts-node": "^10.4.0",
-        "tslint": "^6.1.3",
         "typescript": "^4.4.4"
     }
 }
