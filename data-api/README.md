@@ -13,8 +13,8 @@ APIs for Authentication, user management, ontology operations, data service, etc
 Start a development server:
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
 ### Configuration
