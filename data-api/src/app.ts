@@ -60,7 +60,7 @@ export class App {
             container.bind<DbClient>(TYPES.DbClient).toConstantValue(dbClient);
             logger.info(`Connected to MongoDB, url: ${url}`);
         } catch (err) {
-            logger.error(`Error connecting to MongoDB, url: ${url}`);
+            logger.error(`Error connecting to MongoDB, url = ${url}, error = ${JSON.stringify(err)}`);
             process.exit();
         }
     }
