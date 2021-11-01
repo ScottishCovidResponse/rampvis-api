@@ -1,0 +1,7 @@
+[
+    {
+        "name": "sobol",
+        "url": "https://raw.githubusercontent.com/ErikRZH/Sobol_Sensitivity/main/parameters_output.csv",
+        "save_to": "models/sobol/raw.csv"
+    }
+]
