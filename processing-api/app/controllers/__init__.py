@@ -12,6 +12,9 @@ from app.controllers.process_data_controller import process_data_controller
 from app.controllers.timeseries_sim_search_controller import (
     timeseries_sim_search_controller,
 )
+from app.controllers.ensemble_controller import (
+    ensemble_controller,
+)
 
 # Just load the module so that the scheduler can start
 import app.controllers.sensitivity_analysis_agent
@@ -26,6 +29,9 @@ router.include_router(static_data_controller, prefix="/stat/v1/static_data")
 router.include_router(onto_data_search_controller, prefix="/stat/v1/onto-data/search")
 router.include_router(
     timeseries_sim_search_controller, prefix="/stat/v1/timeseries-sim-search"
+)
+router.include_router(
+    ensemble_controller, prefix="/stat/v1/ensemble"
 )
 
 # V0.4 (to check again)
