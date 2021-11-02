@@ -402,6 +402,10 @@ const TOPICS = [
     'hospital_admission',
     'cumulative_cases',
     'case_trends',
+    'icu',
+    'hospital',
+    'cases',
+    'sobol'
 ];
 const TIMES = ['daily', 'weekly', 'model', 'correlation'];
 const GROUPS = [
@@ -472,19 +476,19 @@ function generateTitle(keywordsList: string[][]): string {
     for (const keywords of keywordsList) {
         let loc = findKeyword(keywords, LOCATIONS);
         if (loc === null) {
-            throw new Error(keywords.toString() + ' location missing');
+            return '[keywords error] location missing';
         }
         locs.push(loc);
 
         let time = findKeyword(keywords, TIMES);
         if (time === null) {
-            throw new Error(keywords.toString() + ' should have daily, weekly, model, correlation');
+            return '[keywords error] should have daily, weekly, model, correlation';
         }
         times.push(time);
 
         let topic = findKeyword(keywords, TOPICS);
         if (topic === null) {
-            throw new Error(keywords.toString() + ' topic missing');
+            return '[keywords error] topic missing';
         }
         topics.push(topic);
 
