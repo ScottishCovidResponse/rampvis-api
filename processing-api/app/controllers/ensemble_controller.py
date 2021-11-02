@@ -6,7 +6,6 @@ from loguru import logger
 from fastapi import APIRouter, Query, Response
 import pandas as pd
 from app.core.settings import DATA_PATH_LIVE
-from app.utils.numpy_encoder import NumpyEncoder
 
 DATA_DIR = Path(DATA_PATH_LIVE)/"ensemble"
 
