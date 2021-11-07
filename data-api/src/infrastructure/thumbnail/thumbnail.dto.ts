@@ -1,9 +1,9 @@
-import { IsOptional, IsString} from "class-validator";
+import { IsOptional, IsString } from 'class-validator';
 
 export class ThumbnailDto {
     @IsString()
-    pageId!: string;
+    id!: string;
 
     @IsOptional()
-    thumbnail!: any
+    thumbnail!: any;
 }

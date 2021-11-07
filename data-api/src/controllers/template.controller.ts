@@ -3,24 +3,27 @@ import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
 import { Request, Response } from 'express-serve-static-core';
 
-import { TYPES } from '../../services/config/types';
-import { OntoPageService } from '../../services/onto-page.service';
-import { logger } from '../../utils/logger';
-import { SearchError, SomethingWentWrong } from '../../exceptions/exception';
-import { IOntoPage, PAGE_TYPE } from '../../infrastructure/onto-page/onto-page.interface';
-import { OntoPageDto, OntoPageExtDto } from '../../infrastructure/onto-page/onto-page.dto';
-import { MAPPING_TYPES } from '../../services/config/automapper.config';
-import { queryParamValidate } from '../../middleware/validators';
-import { OntoPageFilterVm } from '../../infrastructure/onto-page/onto-page-filter.vm';
-import { PaginationVm } from '../../infrastructure/pagination.vm';
-import { OntoDataService } from '../../services/onto-data.service';
-import { OntoVisService } from '../../services/onto-vis.service';
-import { OntoPageSearchService } from '../../services/onto-page-search.service';
-import { OntoPageSearchFilterVm } from '../../infrastructure/onto-page/onto-page-search-filter.vm';
-import { IOntoPageSearch } from '../../infrastructure/onto-page/onto-page-search.interface';
-import { OntoPageSearchDto } from '../../infrastructure/onto-page/onto-page-search.dto';
-import { VIS_TYPE } from '../../infrastructure/onto-vis/onto-vis-type.enum';
-import generateTitle from '../../utils/title-generation';
+import { TYPES } from '../services/config/types';
+import { OntoPageService } from '../services/onto-page.service';
+import { logger } from '../utils/logger';
+import { SearchError, SomethingWentWrong } from '../exceptions/exception';
+import { IOntoPage, PAGE_TYPE } from '../infrastructure/onto-page/onto-page.interface';
+import { OntoPageDto, OntoPageExtDto } from '../infrastructure/onto-page/onto-page.dto';
+import { MAPPING_TYPES } from '../services/config/automapper.config';
+import { queryParamValidate } from '../middleware/validators';
+import { OntoPageFilterVm } from '../infrastructure/onto-page/onto-page-filter.vm';
+import { PaginationVm } from '../infrastructure/pagination.vm';
+import { OntoDataService } from '../services/onto-data.service';
+import { OntoVisService } from '../services/onto-vis.service';
+import { OntoPageSearchService } from '../services/onto-page-search.service';
+import { OntoPageSearchFilterVm } from '../infrastructure/onto-page/onto-page-search-filter.vm';
+import { IOntoPageSearch } from '../infrastructure/onto-page/onto-page-search.interface';
+import { OntoPageSearchDto } from '../infrastructure/onto-page/onto-page-search.dto';
+import { VIS_TYPE } from '../infrastructure/onto-vis/onto-vis-type.enum';
+import generateTitle from '../utils/title-generation';
+import { ThumbnailService } from '../services/thumbnail.service';
+import { IThumbnail } from '../infrastructure/thumbnail/thumbnail.interface';
+import { ThumbnailDto } from '../infrastructure/thumbnail/thumbnail.dto';
 
 //
 // Un-guarded: to only support GET
@@ -32,7 +35,8 @@ export class TemplateController {
         @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
         @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
-        @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService
+        @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService,
+        @inject(TYPES.ThumbnailService) private thumbnailService: ThumbnailService
     ) {}
 
     @httpGet('/pages/search/', queryParamValidate(OntoPageSearchFilterVm))
@@ -143,6 +147,29 @@ export class TemplateController {
         } catch (e: any) {
             logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
+        }
+    }
+
+    @httpGet('/thumbnail/:pageId')
+    public async getThumbnail(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const pageId = request.params.pageId;
+        logger.debug(`TemplateController: getThumbnail: pageId = ${pageId}`);
+        try {
+            const result: IThumbnail = await this.thumbnailService.getThumbnail(pageId);
+            const resultDto: ThumbnailDto = automapper.map(
+                MAPPING_TYPES.IThumbnail,
+                MAPPING_TYPES.ThumbnailDto,
+                result
+            );
+            logger.debug(`TemplateController: getThumbnail: resultDto = ${result}`);
+
+            // const fs = require('fs');
+            // let buffer = Buffer.from(result.thumbnail, 'base64');
+            // fs.writeFileSync('new-path.jpeg', buffer);
+
+            response.status(200).send(result.thumbnail);
+        } catch (error: any) {
+            next(new SomethingWentWrong(error.message));
         }
     }
 }

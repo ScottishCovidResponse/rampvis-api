@@ -1,4 +1,9 @@
+#!/usr/bin/env node
+
+import config from 'config';
 import { MongoClient, ObjectId } from 'mongodb';
+import { exit } from 'process';
+import { logger } from '../utils/logger';
 
 export class Database {
     client: any;
@@ -6,12 +11,24 @@ export class Database {
     thumbnailColl: any;
 
     private async getCollection() {
-        const uri: string = process.env.MONGO_URI as string;
+        const uri: string = config.get('mongodb.url');
+        const dbName: string = config.get('mongodb.db');
+        const ontoPageCollName = config.get('mongodb.collection.onto_page');
+        const thumbnailCollName = config.get('mongodb.collection.thumbnails');
+
+        if (!uri || !dbName || !ontoPageCollName || !thumbnailCollName) {
+            logger.error(`thumbnail-generator:Database: database parameter undefined,
+                uri = ${uri}, dbName = ${dbName},  ontoPageCollName = ${ontoPageCollName}, thumbnailCollName = ${thumbnailCollName}`);
+            exit(0);
+        }
+        logger.info(`thumbnail-generator:Database: database parameters,
+                uri = ${uri}, dbName = ${dbName},  ontoPageCollName = ${ontoPageCollName}, thumbnailCollName = ${thumbnailCollName}`);
+
         this.client = new MongoClient(uri);
         await this.client.connect();
-        let db = this.client.db('rampvis');
-        this.ontoPageColl = await db.collection('onto_page');
-        this.thumbnailColl = await db.collection('thumbnails');
+        let db = this.client.db(dbName);
+        this.ontoPageColl = await db.collection(ontoPageCollName);
+        this.thumbnailColl = await db.collection(thumbnailCollName);
     }
 
     async getAllPages() {
