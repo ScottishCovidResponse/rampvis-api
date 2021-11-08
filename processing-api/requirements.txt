@@ -23,3 +23,4 @@ pydantic
 loguru
 dependency-injector
 python-multipart
+sandu
