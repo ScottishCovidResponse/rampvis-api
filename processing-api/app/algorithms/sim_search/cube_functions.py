@@ -13,7 +13,7 @@ def clean_df(df:pd.DataFrame)->pd.DataFrame:
     :df: filtered data
     
     """     
-    df.drop(df.columns[46:],axis=1,inplace=True) # remove categorical variables
+    df.drop(df.columns[48:],axis=1,inplace=True) # remove categorical variables
     df.drop(['iso_code','population','continent','population_density','reproduction_rate'],axis=1,inplace=True)
     smoothed = []  # list to remove all smoothed lines
     for i in df.columns:
