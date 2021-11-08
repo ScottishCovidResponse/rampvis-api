@@ -127,3 +127,9 @@ def download_open_data(folder):
         Path(folder)/'opendata/scotland/case_trends',
         'daily_sex_agegroup.csv'
     )
+
+def download_urls(urls, folder):
+    folder = Path(folder)
+    for url in urls:
+        df = pd.read_csv(url['url'])
+        df.to_csv(folder/url['save_to'], index=None)

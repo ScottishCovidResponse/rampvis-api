@@ -25,7 +25,6 @@ import { UpdateOntoPageDataIdsVm } from '../../infrastructure/onto-page/update-o
 import { UpdateOntoPageTypeVm } from '../../infrastructure/onto-page/update-onto-page-type.vm';
 import { VIS_TYPE } from '../../infrastructure/onto-vis/onto-vis-type.enum';
 
-
 @controller('/ontology', JwtToken.verify)
 export class OntoPageController {
     constructor(
@@ -44,14 +43,22 @@ export class OntoPageController {
         logger.info(`OntoPageController:getPages: pageType=${pageType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
 
         try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(pageType, null as any, ontoPageFilterVm);
-            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, result.data);
+            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(
+                pageType,
+                null as any,
+                ontoPageFilterVm
+            );
+            const ontoPageDtos: OntoPageDto[] = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                result.data
+            );
             const ontoPageExtDtos: OntoPageExtDto[] = [];
             for (let ontoPageDto of ontoPageDtos) {
                 ontoPageExtDtos.push({
                     ...ontoPageDto,
                     vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds),
                 });
             }
 
@@ -70,11 +77,11 @@ export class OntoPageController {
                 });
             }
 
-            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos, };
+            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos };
 
             // logger.info(`OntoPageController:getPages: pageDtos = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:getPages: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -87,9 +94,13 @@ export class OntoPageController {
 
         try {
             const ontoPage: any = await this.ontoPageService.createPage(ontoPageVm);
-            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const ontoPageDto: OntoPageDto = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                ontoPage
+            );
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_PAGE,
@@ -99,7 +110,7 @@ export class OntoPageController {
 
             logger.info(`OntoPageController:createPage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
             response.status(200).send(ontoPageDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:createPage: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -113,9 +124,13 @@ export class OntoPageController {
 
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.updatePage(pageId, ontoPageVm);
-            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const ontoPageDto: OntoPageDto = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                ontoPage
+            );
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_PAGE,
@@ -125,7 +140,7 @@ export class OntoPageController {
 
             logger.info(`OntoPageController:updatePage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
             response.status(200).send(ontoPageDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:updatePage: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -135,12 +150,16 @@ export class OntoPageController {
     public async updatePageDataIds(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
         const updateOntoPageDataVm: UpdateOntoPageDataIdsVm = request.body as any;
-        logger.info(`OntoPageController:updatePageData: pageId = ${pageId}, updateOntoPageDataVm = ${JSON.stringify(updateOntoPageDataVm)}`);
+        logger.info(
+            `OntoPageController:updatePageData: pageId = ${pageId}, updateOntoPageDataVm = ${JSON.stringify(
+                updateOntoPageDataVm
+            )}`
+        );
 
         try {
             const res: any = await this.ontoPageService.updatePageDataIds(pageId, updateOntoPageDataVm.dataIds);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_PAGE,
@@ -150,7 +169,7 @@ export class OntoPageController {
 
             logger.info(`OntoPageController:updatePageData: ontoPageDto = ${JSON.stringify(res)}`);
             response.status(200).send(res);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:updatePageData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -160,12 +179,16 @@ export class OntoPageController {
     public async updatePageBindingType(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
         const updateOntoPageBindingTypeVm: UpdateOntoPageTypeVm = request.body as any;
-        logger.info(`OntoPageController:updatePageBindingType: pageId = ${pageId}, updateOntoPageBindingTypeVm = ${JSON.stringify(updateOntoPageBindingTypeVm)}`);
+        logger.info(
+            `OntoPageController:updatePageBindingType: pageId = ${pageId}, updateOntoPageBindingTypeVm = ${JSON.stringify(
+                updateOntoPageBindingTypeVm
+            )}`
+        );
 
         try {
             const res: any = await this.ontoPageService.updatePageType(pageId, updateOntoPageBindingTypeVm.pageType);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_PAGE,
@@ -175,7 +198,7 @@ export class OntoPageController {
 
             logger.info(`OntoPageController:updatePageBindingType: ontoPageDto = ${JSON.stringify(res)}`);
             response.status(200).send(res);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:updatePageBindingType: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -188,9 +211,13 @@ export class OntoPageController {
 
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.delete(pageId);
-            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const ontoPageDto: OntoPageDto = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                ontoPage
+            );
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_PAGE,
@@ -200,7 +227,7 @@ export class OntoPageController {
 
             logger.info(`OntoPageController:deletePage: ontoPageDto = ${JSON.stringify(ontoPageDto)}`);
             response.status(200).send(ontoPageDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:deletePage: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -213,19 +240,22 @@ export class OntoPageController {
 
         try {
             const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
-            const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+            const ontoPageDto: OntoPageDto = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                ontoPage
+            );
             const ontoPageExtDto: OntoPageExtDto = {
                 ...ontoPageDto,
                 vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds),
             };
             logger.info(`OntoPageController:getOntoPageExt: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
 
             response.status(200).send(ontoPageExtDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoPageController:getBindings: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
-
 }

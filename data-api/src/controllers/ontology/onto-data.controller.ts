@@ -20,18 +20,16 @@ import { OntoDataSearchService } from '../../services/onto-data-search.service';
 import { OntoDataSearchFilterVm } from '../../infrastructure/onto-data/onto-data-search-filter.vm';
 import { IOntoDataSearch } from '../../infrastructure/onto-data/onto-data-search.interface';
 import { OntoDataSearchDto } from '../../infrastructure/onto-data/onto-data-search.dto';
-import { OntoPageService } from '../../services/onto-page.service';
 import { ActivityService } from '../../services/activity.service';
 import { IUser } from '../../infrastructure/user/user.interface';
 import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
-
 
 @controller('/ontology/data', JwtToken.verify)
 export class OntoDataController {
     constructor(
         @inject(TYPES.ActivityService) private activityService: ActivityService,
         @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
-        @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService,
+        @inject(TYPES.OntoDataSearchService) private ontoDataSearchService: OntoDataSearchService
     ) {}
 
     @httpGet('/', queryParamValidate(OntoDataFilterVm))
@@ -50,7 +48,7 @@ export class OntoDataController {
 
             // logger.info(`OntoDataController:getAllData: resultDto = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:getAllData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -68,11 +66,15 @@ export class OntoDataController {
 
         try {
             const data: IOntoDataSearch[] = await this.ontoDataSearchService.searchAsYouType(queryStr, dataType);
-            const dataDto: OntoDataSearchDto = automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, data);
+            const dataDto: OntoDataSearchDto = automapper.map(
+                MAPPING_TYPES.IOntoDataSearch,
+                MAPPING_TYPES.OntoDataSearchDto,
+                data
+            );
 
             logger.info(`OntoDataController:suggest: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:suggest: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
         }
@@ -94,7 +96,7 @@ export class OntoDataController {
 
             logger.info(`OntoDataController:search: dataDto = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
         }
@@ -110,7 +112,7 @@ export class OntoDataController {
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
             logger.info(`OntoDataController:getData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:getData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -125,7 +127,7 @@ export class OntoDataController {
             const data: IOntoData = await this.ontoDataService.createData(dataVm);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_DATA,
@@ -135,7 +137,7 @@ export class OntoDataController {
 
             logger.info(`OntoDataController:createData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:createData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -150,7 +152,7 @@ export class OntoDataController {
             const data: IOntoData = await this.ontoDataService.updateData(dataId, dataVm);
             const dataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, data);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_DATA,
@@ -160,7 +162,7 @@ export class OntoDataController {
 
             logger.info(`OntoDataController:updateData: dataDto = ${JSON.stringify(dataDto)}`);
             response.status(200).send(dataDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:updateData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -173,9 +175,13 @@ export class OntoDataController {
 
         try {
             const ontoData: IOntoData = await this.ontoDataService.delete(dataId);
-            const ontoDataDto: OntoDataDto = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
+            const ontoDataDto: OntoDataDto = automapper.map(
+                MAPPING_TYPES.IOntoData,
+                MAPPING_TYPES.OntoDataDto,
+                ontoData
+            );
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_DATA,
@@ -185,7 +191,7 @@ export class OntoDataController {
 
             logger.info(`OntoDataController:deleteData: ontoDataDto = ${JSON.stringify(ontoDataDto)}`);
             response.status(200).send(ontoDataDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:deleteData: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }

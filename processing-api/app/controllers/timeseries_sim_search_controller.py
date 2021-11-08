@@ -67,6 +67,10 @@ scheduler.add_job(precompute, "cron", hour=1, minute=0, second=0)
 #scheduler.add_job(precompute, "cron", second=0)
 
 scheduler.start()
+logger.info('Timeseries similarity agent starts. Will run immediately now and every 1am.')
+
+# Run immediately after server starts
+precompute()
 
 @timeseries_sim_search_controller.get("/start")
 def start():

@@ -35,3 +35,5 @@ data/live/records/SARS-CoV-2/scotland/cases-and-management/hospital/date_delayed
 .gitignore
 data/live/owid/cube.csv
 data/live/owid/full.csv
+data/live/owid/cube.csv
+data/live/owid/full.csv

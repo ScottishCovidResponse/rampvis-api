@@ -21,9 +21,7 @@ import { MAPPING_TYPES } from './config/automapper.config';
 
 @provide(TYPES.OntoDataService)
 export class OntoDataService extends DataService<IOntoData> {
-    public constructor(
-        @inject(TYPES.DbClient) dbClient: DbClient,
-    ) {
+    public constructor(@inject(TYPES.DbClient) dbClient: DbClient) {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.onto_data'));
     }
 
@@ -90,8 +88,12 @@ export class OntoDataService extends DataService<IOntoData> {
         return await this.updateAndGet(dataId, data);
     }
 
-    private getPaginatedOntoDataList(ontoDataList: Array<IOntoData>, ontoDataFilterVm: OntoDataFilterVm): PaginationVm<IOntoData> {
-        logger.debug(`OntoDataService:getPaginatedOntoDataList: ontoDataFilterVm = ${JSON.stringify(ontoDataFilterVm)}`);
+    private getPaginatedOntoDataList(
+        ontoDataList: Array<IOntoData>,
+        ontoDataFilterVm: OntoDataFilterVm
+    ): PaginationVm<IOntoData> {
+        // prettier-ignore
+        logger.debug( `OntoDataService:getPaginatedOntoDataList: ontoDataFilterVm = ${JSON.stringify(ontoDataFilterVm)}` );
 
         const pageIndex: number = ontoDataFilterVm.pageIndex ? parseInt(ontoDataFilterVm.pageIndex) : 0;
         let pageSize: number = ontoDataFilterVm.pageSize ? parseInt(ontoDataFilterVm.pageSize) : Infinity;
@@ -158,7 +160,7 @@ export class OntoDataService extends DataService<IOntoData> {
             },
             { $sort: { score: { $meta: 'textScore' } } },
         ];
-        return this.getDbCollection().aggregate(pipeline).toArray();
+        return this.getDbCollection().aggregate<IOntoData>(pipeline).toArray();
     }
 
     //
@@ -166,7 +168,6 @@ export class OntoDataService extends DataService<IOntoData> {
     //
 
     public async getGroupsMatchingExampleDataOfVis(len: number): Promise<IOntoDataSearchGroup[]> {
-
         const ontoData: IOntoData[] = await this.getAll();
         const ontoDataSearchGroup: IOntoDataSearchGroup[] = [];
         for (let d of _.chunk(ontoData, len)) {

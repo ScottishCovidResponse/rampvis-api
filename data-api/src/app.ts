@@ -13,7 +13,6 @@ import { TYPES } from './services/config/types';
 import { logger } from './utils/logger';
 import { DIContainer } from './services/config/inversify.config';
 import './controllers/controller.module';
-import { SearchServiceV05 } from './services/search.service.v0.5';
 import { SearchClient, getSearchClient } from './infrastructure/db/elasticsearch.connection';
 import { OntoDataService } from './services/onto-data.service';
 import { OntoDataSearchService } from './services/onto-data-search.service';
@@ -61,22 +60,18 @@ export class App {
             container.bind<DbClient>(TYPES.DbClient).toConstantValue(dbClient);
             logger.info(`Connected to MongoDB, url: ${url}`);
         } catch (err) {
-            logger.error(`Error connecting to MongoDB, url: ${url}`);
+            logger.error(`Error connecting to MongoDB, url = ${url}, error = ${JSON.stringify(err)}`);
             process.exit();
         }
     }
 
     private static async createDbSearchIndexes(container: Container) {
         try {
-            // v0.5
-            // Manually create pages collection from v0.5 pages.json file
-            const searchServiceV05: SearchServiceV05 = container.get<SearchServiceV05>(TYPES.SearchServiceV05);
-            await searchServiceV05.createTextIndex({ title: 'text', description: 'text' });
-
             const ontoDataService: OntoDataService = container.get<OntoDataService>(TYPES.OntoDataService);
             await ontoDataService.createTextIndex({ productDesc: 'text', streamDesc: 'text' });
+            logger.info(`Created search indexes for OntoData at MongoDB.`);
         } catch (err) {
-            logger.error(`Error creating indexes, error= ${JSON.stringify(err)}`);
+            logger.error(`Error creating indexes at MongoDB, error= ${JSON.stringify(err)}`);
             process.exit();
         }
     }
@@ -156,8 +151,8 @@ export class App {
     }
 
     public listen() {
-        this.app.listen(4000 || 4000, () => {
-            logger.info(`App listening on the port: ${4000}, env: ${process.env.NODE_ENV}`);
+        this.app.listen(process.env.PORT || 4000, () => {
+            logger.info(`App listening on the port: ${process.env.PORT}, env: ${process.env.NODE_ENV}`);
         });
     }
 }

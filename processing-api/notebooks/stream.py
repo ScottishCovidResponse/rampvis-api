@@ -12,6 +12,7 @@ def create_stream(p, c, col=None):
         'keywords': c['keywords'],
         'description': c.get('description', '')
     }
+    
     if col:
         stream['endpoint'] += f'&field={col}'
         
@@ -23,6 +24,13 @@ def create_stream(p, c, col=None):
                 stream['description'] = col + ', ' + desc
             else:
                 stream['description'] = col
+                
+    if c.get('keys'):
+        stream['endpoint'] += f'&keys={c["keys"]}'
+    if c.get('values'):
+        stream['endpoint'] += f'&values={c["values"]}'
+    if c.get('format'):
+        stream['endpoint'] += f'&format={c["format"]}'
                 
     return stream
 
@@ -50,17 +58,17 @@ def generate_streams(manifest, names=None, folder='../../data/live/', split=True
                     streams.append(stream)
     return streams
 
-def test_endpoints(streams, base_url='http://localhost:3000/stat/v1'):
+def test_endpoints(streams, base_url='http://localhost:4010/stat/v1'):
     # Can the endpoints be accessed?
     for s in streams:
         response = requests.get(base_url + s['endpoint'])
         assert response.status_code == 200
         
 def get_token(prod=False):
-    url = 'http://vis.scrc.uk/api/v1/auth/login' if prod else 'http://localhost:2000/api/v1/auth/login'
+    url = 'https://vis.scrc.uk/api/v1/auth/login' if prod else 'http://localhost:4000/api/v1/auth/login'
     token = None
     try:
-        res = requests.post(url, {'password': "ztxwBJU2k4", 'email': "phong@admin.com"})
+        res = requests.post(url, {'password': "", 'email': ""})
         if res and res.json() and res.json()['token']:
             token = res.json()['token']
 
@@ -74,7 +82,7 @@ def get_token(prod=False):
         return token
 
 def register(data, token, prod=False):
-    url = 'http://vis.scrc.uk/api/v1/ontology/data' if prod else 'http://localhost:2000/api/v1/ontology/data'
+    url = 'https://vis.scrc.uk/api/v1/ontology/data' if prod else 'http://localhost:4000/api/v1/ontology/data'
     headers = {'Authorization': 'Bearer ' + token}
     try:
         response = requests.post(url, data, headers=headers)

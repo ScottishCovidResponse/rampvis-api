@@ -1,22 +1,22 @@
-
 # Data API
+
 APIs for Authentication, user management, ontology operations, data service, etc.
 
-## Development 
+## Development
 
 ### Requirements
 
-- Node version 14.17.1
+- Node version 16.13.0
 - Mongodb
-- Elasticsearch 
+- Elasticsearch
 
 Start a development server:
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
-### Config
+### Configuration
 
-We did not share all contents of the `data-api/config` folder due to security reasons. 
+Add your preferred configuration, e.g., MongoDB URI, Elasticsearch host, keys etc. in the `rampvis-api/data-api/config/default.json` file.

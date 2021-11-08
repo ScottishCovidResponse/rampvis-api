@@ -32,7 +32,6 @@ export class UserController {
         @inject(TYPES.ActivityService) private activityService: ActivityService
     ) {}
 
-
     @httpGet('/users')
     public async getAllUsers(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         logger.debug('UserController: getAllUsers: request.user = ' + JSON.stringify(request.user));
@@ -43,19 +42,23 @@ export class UserController {
         response.status(200).send(resultDto);
     }
 
-
     @httpGet('/user/:userId')
     public async getUser(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
         const userId = request.params.userId;
         const user: IUser = <IUser>request.user;
-        logger.debug('UserController: getUser: request.user = ', JSON.stringify(request.user) , ', read userId = ', userId );
+        logger.debug(
+            'UserController: getUser: request.user = ',
+            JSON.stringify(request.user),
+            ', read userId = ',
+            userId
+        );
 
         try {
-        const result: IUser = await this.userService.getUser(userId);
-        const resultDto: UserDto = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
-        logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
-        response.status(200).send(resultDto);
-        } catch (error) {
+            const result: IUser = await this.userService.getUser(userId);
+            const resultDto: UserDto = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
+            logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
+            response.status(200).send(resultDto);
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }
@@ -90,11 +93,11 @@ export class UserController {
                     );
 
                     response.status(200).send(resultDto);
-                } catch (error) {
+                } catch (error: any) {
                     throw new SomethingWentWrong(error.message);
                 }
             }
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }
@@ -116,7 +119,7 @@ export class UserController {
             const resultDto: UserVm = automapper.map(MAPPING_TYPES.IUser, MAPPING_TYPES.UserDto, result);
             logger.debug('UserController: getUser: resultDto = ' + JSON.stringify(resultDto));
             response.status(200).send(resultDto);
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }
@@ -143,7 +146,7 @@ export class UserController {
             );
 
             response.status(200).send(resultDto);
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }
@@ -171,7 +174,7 @@ export class UserController {
             );
 
             response.status(200).send(resultDto);
-        } catch (error) {
+        } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
     }

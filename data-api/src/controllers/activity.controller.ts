@@ -13,16 +13,16 @@ import { ActivityFilterVm } from '../infrastructure/activity/activity-filter.vm'
 import { ActivityDto } from '../infrastructure/activity/activity.dto';
 
 @controller('/activities', JwtToken.verify)
-export class ActivityControllerInt {
+export class ActivityController {
     constructor(@inject(TYPES.ActivityService) private activityService: ActivityService) {}
 
     @httpGet('/', queryParamValidate(ActivityFilterVm))
     public async getAllActivities(request: IRequestWithUser, response: Response, next: NextFunction): Promise<void> {
-        logger.debug(`ActivityControllerInt: getAllActivities: request.user = ${JSON.stringify(request.user)}`);
+        logger.debug(`ActivityController: getAllActivities: request.user = ${JSON.stringify(request.user)}`);
         const query: ActivityFilterVm = request.query as any;
 
         const result: PaginationVm<ActivityDto> = await this.activityService.getActivities(query);
-        logger.debug('ActivityControllerInt: getAllActivities: result = ' + JSON.stringify(result));
+        logger.debug('ActivityController: getAllActivities: result = ' + JSON.stringify(result));
         response.status(200).send(result);
     }
 }

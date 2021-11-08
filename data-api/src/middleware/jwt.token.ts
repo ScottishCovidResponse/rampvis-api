@@ -1,6 +1,6 @@
 import config from 'config';
 import { NextFunction, Response } from 'express';
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import * as jwt from 'jsonwebtoken';
 import moment from 'moment';
 import util from 'util';
@@ -21,8 +21,8 @@ export class JwtToken {
     private static jwtSign = util.promisify(jwt.sign);
     private static jwtVerify = util.promisify(jwt.verify);
 
-    private static RSA_PVT_KEY: string = fs.readFileSync(config.get('jwt.pvtKey'), 'utf8');
-    private static RSA_PUB_KEY: string = fs.readFileSync(config.get('jwt.pubKey'), 'utf8');
+    private static RSA_PVT_KEY: string = readFileSync(config.get('jwt.pvtKey'), 'utf8');
+    private static RSA_PUB_KEY: string = readFileSync(config.get('jwt.pubKey'), 'utf8');
 
     constructor() {}
 
@@ -68,8 +68,8 @@ export class JwtToken {
             const verificationResponse: any = jwt.verify(token, JwtToken.RSA_PUB_KEY);
             userId = verificationResponse?.id;
             logger.debug('JwtToken: verify: DataStoredInToken = ' + JSON.stringify(verificationResponse));
-        } catch (error) {
-            logger.debug(`JwtToken: verify: error = ${error.message}`);
+        } catch (error: any) {
+            logger.debug(`JwtToken: verify: error = ${error?.message}`);
             return next(new WrongAuthenticationTokenException());
         }
 

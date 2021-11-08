@@ -26,7 +26,6 @@ import { ActivityService } from '../../services/activity.service';
 import { IUser } from '../../infrastructure/user/user.interface';
 import { ACTIVITY_TYPE, ACTIVITY_ACTION } from '../../infrastructure/activity/activity.interface';
 
-
 @controller('/ontology/vis', JwtToken.verify)
 export class OntoVisController {
     constructor(
@@ -44,7 +43,7 @@ export class OntoVisController {
             const visDtos: OntoVisDto[] = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, visList);
             logger.info(`OntoVisController:getAllVis: visDtos = ${JSON.stringify(visDtos)}`);
             response.status(200).send(visDtos);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:getAllVis: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -59,7 +58,7 @@ export class OntoVisController {
             const vis: IOntoVis = await this.ontoVisService.createVis(visVm);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_VIS,
@@ -69,7 +68,7 @@ export class OntoVisController {
 
             logger.info(`OntoVisController:createVis: visDto = ${visDto}`);
             response.status(200).send(visDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:createVis: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -86,11 +85,15 @@ export class OntoVisController {
 
         try {
             const vis: IOntoVisSearch[] = await this.ontoVisSearchService.searchAsYouType(queryStr);
-            const visDto: OntoVisSearchDto = automapper.map(MAPPING_TYPES.IOntoVisSearch, MAPPING_TYPES.OntoVisSearchDto, vis);
+            const visDto: OntoVisSearchDto = automapper.map(
+                MAPPING_TYPES.IOntoVisSearch,
+                MAPPING_TYPES.OntoVisSearchDto,
+                vis
+            );
 
             logger.info(`OntoVisController:suggest: visDto = ${JSON.stringify(visDto)}`);
             response.status(200).send(visDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:suggest: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
         }
@@ -107,7 +110,7 @@ export class OntoVisController {
 
             logger.info(`OntoVisController:search: resultDto = ${JSON.stringify(resultDto)}`);
             response.status(200).send(resultDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoDataController:search: error = ${JSON.stringify(e)}`);
             next(new SearchError(e.message));
         }
@@ -121,7 +124,7 @@ export class OntoVisController {
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
             logger.info(`OntoVisController:getVis: visDto = ${JSON.stringify(visDto)}`);
             response.status(200).send(visDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:getVis: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -137,7 +140,7 @@ export class OntoVisController {
             const vis: IOntoVis = await this.ontoVisService.updateVis(visId, visVm);
             const visDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, vis);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_VIS,
@@ -147,7 +150,7 @@ export class OntoVisController {
 
             logger.info(`OntoVisController:updateVis: visDto = ${visDto}`);
             response.status(200).send(visDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:updateVis: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -162,7 +165,7 @@ export class OntoVisController {
             const ontoVis: IOntoVis = await this.ontoVisService.delete(visId);
             const ontoVisDto: OntoVisDto = automapper.map(MAPPING_TYPES.IOntoVis, MAPPING_TYPES.OntoVisDto, ontoVis);
 
-            const user = request.user as IUser
+            const user = request.user as IUser;
             await this.activityService.createActivity(
                 user,
                 ACTIVITY_TYPE.ONTO_VIS,
@@ -172,23 +175,32 @@ export class OntoVisController {
 
             logger.info(`OntoVisController:deleteVis: ontoVisDto = ${JSON.stringify(ontoVisDto)}`);
             response.status(200).send(ontoVisDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:deleteVis: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
 
     @httpGet('/:visId/data')
-    public async getExampleOntoDataBindingVisId(request: Request, response: Response, next: NextFunction): Promise<void> {
+    public async getExampleOntoDataBindingVisId(
+        request: Request,
+        response: Response,
+        next: NextFunction
+    ): Promise<void> {
         const visId: string = request.params.visId;
         try {
             const ontoPages: IOntoPage[] = await this.ontoPageService.getExamplePagesBindingVisId(visId);
-            const ontoData: IOntoData[] = await this.ontoDataService.getMultiple(ontoPages[0].dataIds)
-            const ontoDataDto: OntoDataDto[] = automapper.map(MAPPING_TYPES.IOntoData, MAPPING_TYPES.OntoDataDto, ontoData);
+            const ontoData: IOntoData[] = await this.ontoDataService.getMultiple(ontoPages[0].dataIds);
+            const ontoDataDto: OntoDataDto[] = automapper.map(
+                MAPPING_TYPES.IOntoData,
+                MAPPING_TYPES.OntoDataDto,
+                ontoData
+            );
 
-            logger.info(`OntoVisController:getExampleOntoDataBindingVisId: ontoDataDto = ${JSON.stringify(ontoDataDto)}`);
+            // prettier-ignore
+            logger.info( `OntoVisController:getExampleOntoDataBindingVisId: ontoDataDto = ${JSON.stringify(ontoDataDto)}` );
             response.status(200).send(ontoDataDto);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:getExampleOntoDataBindingVisId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
@@ -207,21 +219,27 @@ export class OntoVisController {
                 links = await this.ontoPageService.getMultiple(ontoPages1[0]?.pageIds);
             }
 
-            console.log('OntoVisController:getExamplePagesBindingVisId: pageIds = ', ontoPages1[0].pageIds, 'links = ', links);
+            // prettier-ignore
+            console.log( 'OntoVisController:getExamplePagesBindingVisId: pageIds = ', ontoPages1[0].pageIds, 'links = ', links );
 
-            const ontoPageDtos: OntoPageDto[] = automapper.map( MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, links);
+            const ontoPageDtos: OntoPageDto[] = automapper.map(
+                MAPPING_TYPES.IOntoPage,
+                MAPPING_TYPES.OntoPageDto,
+                links
+            );
             const ontoPageExtDtos: OntoPageExtDto[] = [];
             for (let ontoPageDto of ontoPageDtos) {
                 ontoPageExtDtos.push({
                     ...ontoPageDto,
                     vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds)
+                    data: await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds),
                 });
             }
 
-            logger.info(`OntoVisController:getExamplePagesBindingVisId: ontoPageExtDtos = ${JSON.stringify(ontoPageExtDtos)}`);
+            // prettier-ignore
+            logger.info( `OntoVisController:getExamplePagesBindingVisId: ontoPageExtDtos = ${JSON.stringify(ontoPageExtDtos)}` );
             response.status(200).send(ontoPageExtDtos);
-        } catch (e) {
+        } catch (e: any) {
             logger.error(`OntoVisController:getExamplePagesBindingVisId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
