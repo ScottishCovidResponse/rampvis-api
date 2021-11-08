@@ -122,7 +122,7 @@ def distfunc(target:list,comp:list,method:str)->int:
     if method == 'euclidean': 
         return distance.euclidean(target,comp)
     if method == 'manhattan':
-        return distance.manhattan(target,comp) 
+        return distance.cityblock(target,comp) 
     if method == 'chebyshev':
         return distance.chebyshev(target,comp)
     if method == 'dtw':
