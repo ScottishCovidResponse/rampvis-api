@@ -1,7 +1,7 @@
 [
     {
         "name": "sobol",
-        "url": "https://gist.githubusercontent.com/ErikRZH/3df7b6aa5a2c7c915bf200f9c79570da/raw/example_sensitivity_input",
+        "url": "https://gist.githubusercontent.com/ErikRZH/3df7b6aa5a2c7c915bf200f9c79570da/raw/example_sensitivity_input.json",
         "save_to": "models/sobol/raw.json"
     }
 ]

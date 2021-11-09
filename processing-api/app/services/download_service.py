@@ -4,6 +4,7 @@ import re
 import shutil
 from pathlib import Path
 from dateutil.parser import isoparse
+import requests
 
 import h5py
 import pandas as pd
@@ -131,5 +132,10 @@ def download_open_data(folder):
 def download_urls(urls, folder):
     folder = Path(folder)
     for url in urls:
-        df = pd.read_csv(url['url'])
-        df.to_csv(folder/url['save_to'], index=None)
+        if url['url'].lower().endswith('.csv'):
+            df = pd.read_csv(url['url'])
+            df.to_csv(folder/url['save_to'], index=None)
+        elif url['url'].lower().endswith('.json'):
+            r = requests.get(url['url'])
+            with open(folder/url['save_to'], "w", encoding="utf-8") as f:
+                json.dump(r.json(), f, ensure_ascii=False, indent=4)
