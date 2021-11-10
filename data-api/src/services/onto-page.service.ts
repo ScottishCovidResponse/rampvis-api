@@ -32,26 +32,27 @@ export class OntoPageService extends DataService<IOntoPage> {
     }
 
     async getPaginated(
-        pageType: PAGE_TYPE,
-        visType: VIS_TYPE = null as any,
+        pageType: PAGE_TYPE | 'all',
+        visType: VIS_TYPE | 'all',
         ontoPageFilterVm: OntoPageFilterVm = null as any
     ): Promise<PaginationVm<IOntoPage>> {
         // prettier-ignore
         logger.info( `OntoPageService:getPaginated: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify( ontoPageFilterVm )}` );
         let query: any = {};
 
-        if (visType) {
+        if (pageType !== 'all') {
+            query.pageType = pageType;
+        }
+
+        if (visType !== 'all') {
             let visIds: string[] = (await this.ontoVisService.getAll({ type: visType })).map(
                 (d: IOntoVis) => d._id as string
             );
-            console.log('OntoPageService:getPaginated: visIds = ', visIds);
-            query = pageType ? { pageType: pageType, visId: { $in: visIds } } : { visId: { $in: visIds } };
-        } else if (pageType) {
-            query = { pageType: pageType };
+            query.visId = { $in: visIds };
         }
 
         let totalCount: number = await this.getDbCollection().find(query).count();
-        console.log('OntoPageService:getPaginated: query = ', query);
+        logger.info(`OntoPageService:getPaginated: query = ${JSON.stringify(query)}`);
 
         if (ontoPageFilterVm.filterId) {
             query._id = new ObjectId(ontoPageFilterVm.filterId);
@@ -61,7 +62,7 @@ export class OntoPageService extends DataService<IOntoPage> {
         const pageSize: number = ontoPageFilterVm.pageSize ? parseInt(ontoPageFilterVm.pageSize) : totalCount;
 
         // prettier-ignore
-        console.log( 'OntoPageService:getPaginated: pageSize, pageIndex, sortOrder = ', pageSize, pageIndex, ontoPageFilterVm.sortOrder, ', totalCount = ', totalCount );
+        logger.info(`OntoPageService:getPaginated: pageSize = ${pageSize}, pageIndex = ${pageIndex}, , sortOrder = ${ontoPageFilterVm.sortOrder}, totalCount = ${totalCount}`);
 
         let ontoPages: IOntoPage[] = [];
         ontoPages = await this.getDbCollection()

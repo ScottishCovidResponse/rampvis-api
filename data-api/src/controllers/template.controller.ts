@@ -74,8 +74,8 @@ export class TemplateController {
     @httpGet('/pages/:pageType/:visType/', queryParamValidate(OntoPageFilterVm))
     public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
         // TODO: Review the onto-page.controller.ts
-        const pageType: PAGE_TYPE = request.params.pageType as any;
-        const visType: VIS_TYPE = request.params.visType as any;
+        const pageType: PAGE_TYPE | 'all' = request.params.pageType as any;
+        const visType: VIS_TYPE | 'all' = request.params.visType as any;
         const ontoPageFilterVm: OntoPageFilterVm = request.query as any;
         // prettier-ignore
         logger.info(`TemplateController:getPages: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
