@@ -45,7 +45,7 @@ export class OntoPageController {
         try {
             const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(
                 pageType,
-                null as any,
+                'all',
                 ontoPageFilterVm
             );
             const ontoPageDtos: OntoPageDto[] = automapper.map(
