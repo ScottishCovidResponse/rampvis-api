@@ -24,3 +24,4 @@ loguru
 dependency-injector
 python-multipart
 sandu
+tslearn

@@ -17,31 +17,32 @@ export class ThumbnailService extends DataService<any> {
         super(dbClient, config.get('mongodb.db'), config.get('mongodb.collection.thumbnails'));
     }
 
+    // TODO: review this function
     public async saveThumbnail(thumbnail: any): Promise<IThumbnail> {
         logger.debug('ThumbnailService: saveThumbnail: thumbnail = ', thumbnail);
-        const pageId = thumbnail.originalname.split('.')[0];
-        if (!pageId) {
+        const id = thumbnail.originalname.split('.')[0];
+        if (!id) {
             return undefined as any;
         }
-        const exists = await this.get({ pageId });
+        const exists = await this.get(id);
         if (exists) {
             return await this.updateAndGet(exists._id.toString(), thumbnail);
         } else {
-            return await this.create({ ...thumbnail, pageId });
+            return await this.create({ ...thumbnail, pageId: id });
         }
     }
 
-    public async getThumbnail(pageId: string): Promise<IThumbnail> {
-        return await this.get({ pageId });
+    public async getThumbnail(id: string): Promise<IThumbnail> {
+        return await this.get(id);
     }
 
     public async getAllThumbnails(): Promise<IThumbnail[]> {
         return await this.getAll();
     }
 
-    async deleteThumbnail(pageId: string): Promise<IThumbnail> {
+    async deleteThumbnail(id: string): Promise<IThumbnail> {
         const res: ModifyResult<IThumbnail> = await this.getDbCollection().findOneAndDelete({
-            pageId: pageId,
+            id,
         } as Filter<IThumbnail>);
         return automapper.map(MAPPING_TYPES.MongoDbObjectId, MAPPING_TYPES.TsString, res.value);
     }

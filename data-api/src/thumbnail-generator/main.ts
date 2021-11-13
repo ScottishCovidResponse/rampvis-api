@@ -29,7 +29,7 @@ let args = cli.opts();
     if (!args.url || !args.el) {
         console.log(
             'Please add --url, --el parameters.\n' +
-                'Something like this: $ screenshoteer --url "http://localhost:3000" --el "#charts"'
+                'For example: $ screenshoteer --url "http://localhost:3000" --el "#charts"'
         );
         process.exit();
     }
