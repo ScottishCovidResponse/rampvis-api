@@ -22,7 +22,7 @@ def convert_data():
 
     Si_df = sobol.get_indices(x.df(), x.parameters, x.bounds, x.quantity_mean, x.quantity_variance, N)  # Perform analysis
     Si_df.index.name = "Parameter"
-    Si_df.to_csv(folder/"models/sobol/processed.csv", index=False)
+    Si_df.to_csv(folder/"models/sobol/processed.csv")
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
