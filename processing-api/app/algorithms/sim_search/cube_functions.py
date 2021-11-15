@@ -2,6 +2,8 @@ import pandas as pd
 import datetime
 import numpy as np
 
+from loguru import logger
+
 def clean_df(df:pd.DataFrame)->pd.DataFrame:
     """
     removes unwanted features such as categorical variables, smoothed lines
@@ -86,11 +88,11 @@ def cube_master(df:pd.DataFrame)->pd.DataFrame:
     :countryData: data for the given country 
     
     """ 
-    
+    logger.info('cube_master will take a few minutes...')
     countryList = df['location'].unique()
     dfLst = []
     for country in countryList:
-        
+        logger.info(country)
         dfLst.append(cube_sample(country,df))
         
     return pd.concat(dfLst,axis=1)
