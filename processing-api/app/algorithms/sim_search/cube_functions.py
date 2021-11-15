@@ -12,15 +12,12 @@ def clean_df(df:pd.DataFrame)->pd.DataFrame:
     Return
     :df: filtered data
     
-    """     
-    df.drop(df.columns[48:],axis=1,inplace=True) # remove categorical variables
-    df.drop(['iso_code','population','continent','population_density','reproduction_rate'],axis=1,inplace=True)
-    smoothed = []  # list to remove all smoothed lines
-    for i in df.columns:
-        if "smoothed" in i:
-            smoothed.append(i)
-    df.drop(smoothed,axis=1,inplace=True)
-    return df
+    """ 
+    dfClean = df.copy()
+    dfClean.drop(dfClean.columns[50:],axis=1,inplace=True) # remove categorical variables
+    dfClean.drop(['iso_code','population','continent','population_density','reproduction_rate'],axis=1,inplace=True)
+    dfClean = dfClean[dfClean.columns.drop(list(dfClean.filter(regex='smoothed')))]
+    return dfClean
 
 def cube_sample(countryName:str,df:pd.DataFrame)->pd.DataFrame:   
     """
@@ -41,6 +38,8 @@ def cube_sample(countryName:str,df:pd.DataFrame)->pd.DataFrame:
     countryData = df.loc[countIndex].copy(deep = True)
     countryData.set_index('date',inplace = True)  
     # adding derived data streams for each country
+    countryData["new_cases"] = countryData["new_cases"].rolling(14).mean()
+    countryData["new_deaths"] = countryData["new_deaths"].rolling(14).mean()
     countryData["weekly_cases"] = countryData["new_cases"].rolling(7).sum()
     countryData["biweekly_cases"] = countryData["new_cases"].rolling(14).sum()
     countryData["weekly_cases_per_million"] = countryData["new_cases_per_million"].rolling(7).sum()
@@ -75,6 +74,7 @@ def cube_sample(countryName:str,df:pd.DataFrame)->pd.DataFrame:
  
 
 def cube_master(df:pd.DataFrame)->pd.DataFrame: 
+    
     """  
     merges all country cube samples to create the data cube
     
