@@ -52,9 +52,12 @@ async def createform(firstRunForm:FirstRunForm):
 def precompute():
     """Run any kind of precomputation that is slow for real-time search.
     """
-    df = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/full.csv',parse_dates=[3])
-    new_df = to_cube(df)
-    new_df.to_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
+    try:
+        df = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/full.csv',parse_dates=[3])
+        new_df = to_cube(df)
+        new_df.to_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
+    except:
+        logger.error('Cube creation error check owid file')
 
 # Precomputation job
 scheduler = BackgroundScheduler(daemon=True)

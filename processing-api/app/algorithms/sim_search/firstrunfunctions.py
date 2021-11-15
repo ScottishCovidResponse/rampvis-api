@@ -12,12 +12,13 @@ def continentTransformer(continentCheck):
             temp.append(i)
     return temp
 
+
 def advancedfilters(cube:pd.DataFrame,minPopulation:int,continentCheck:list,startDate:datetime.date,endDate:datetime.date)->pd.DataFrame:
     """
     advancedfilters function reduces the search space by date, continent, and minimum population
     
     Args
-    :cube: covid data-cube
+    :cube: covid data-cub
     :minPopulation: population threshold to include countries
     :continentCheck: continents to include
     :startDate: first date of the search space 
@@ -27,24 +28,26 @@ def advancedfilters(cube:pd.DataFrame,minPopulation:int,continentCheck:list,star
     :cube: filtered covid data-cube 
     
     """ 
-    
-    cube.fillna(0,inplace=True)
+    cubeFiltered = cube.copy()
+    cubeFiltered.fillna(0,inplace=True)
     
     dropped = [] # columns to be dropped by continent and minimum population using last two rows from cube
     
-    for i in range(1,len(cube.columns)):
-        if(cube.iloc[-1][i] not in continentCheck or int(float(cube.iloc[-2][i])) <= minPopulation):
-            dropped.append(cube.columns[i])
+    for i in range(1,len(cubeFiltered.columns)):
+        if(cubeFiltered.iloc[-1][i] not in continentCheck or int(float(cubeFiltered.iloc[-2][i])) <= minPopulation):
+            dropped.append(cubeFiltered.columns[i])
 
-    cube.drop(columns=dropped,inplace=True) # drop columns which do not satisfy filters
-    cube.drop(cube.tail(2).index,inplace=True) # drop last two rows(information on continent and population)
+    cubeFiltered.drop(columns=dropped,inplace=True) # drop columns which do not satisfy filters
+    cubeFiltered.drop(cubeFiltered.tail(2).index,inplace=True) # drop last two rows(information on continent and population)
     
-    cube.set_index(cube.columns[0],inplace=True) # set index to date
-    cube.index = pd.to_datetime(cube.index) # parse dates to datetime
-    cube = cube.loc[startDate:endDate] # filter search space by date
-    cube.index.names = ['Date'] 
+    cubeFiltered.set_index(cubeFiltered.columns[0],inplace=True) # set index to date
+    cubeFiltered.index = pd.to_datetime(cubeFiltered.index) # parse dates to datetime
+    cubeFiltered = cubeFiltered.loc[startDate:endDate] # filter search space by date
+    cubeFiltered.index.names = ['Date'] 
     
-    return cube
+    return cubeFiltered
+
+
 
 def slicer(cube:pd.DataFrame,indicator:str)->pd.DataFrame:
     """
@@ -58,14 +61,15 @@ def slicer(cube:pd.DataFrame,indicator:str)->pd.DataFrame:
     :cube: sliced covid data-cube
     
     """ 
+    cubeNew = cube.copy()
     
     for i in cube.columns:
         for j in range(len(cube)):
             try:
-                cube[i].iloc[j] = ast.literal_eval(cube[i].iloc[j])[indicator] #parses string back to dict and takes the indicator
+                cubeNew[i].iloc[j] = ast.literal_eval(cube[i].iloc[j])[indicator] #parses string back to dict and takes the indicator
             except:
                 continue
-    return cube
+    return cubeNew
 
 def timeseries(cube:pd.DataFrame,period:int)->pd.DataFrame:
     """
@@ -79,7 +83,7 @@ def timeseries(cube:pd.DataFrame,period:int)->pd.DataFrame:
     :cube: covid data-cube with time-series vectors in each cell
 
     """     
-    count = period - 1 
+    count = period 
     tempLst = []
     masterLst = []
     columnNames = []
@@ -91,7 +95,7 @@ def timeseries(cube:pd.DataFrame,period:int)->pd.DataFrame:
                 count = count-1
             masterLst.append(tempLst)
             columnNames.append(cube.index[k])
-            count = period-1
+            count = period
             tempLst = []
         columnLabel = i 
         tempSr = pd.Series(masterLst,columnNames)
@@ -146,9 +150,11 @@ def ranker(cube:pd.DataFrame,targetCountry:str,targetDate:datetime.date,method:s
     :res: list of results in the format [countryName + ' ' + countryDate]
     
     """ 
+    targetIdentifier = targetCountry + ' ' + datetime.datetime.strftime(targetDate,"%Y-%m-%d")
     identifier = []
     compValues = []
     result =[]
+    distanceVal = []
     for i in cube.columns:
         for j in cube.index:
             if i != targetCountry:
@@ -157,25 +163,32 @@ def ranker(cube:pd.DataFrame,targetCountry:str,targetDate:datetime.date,method:s
 
     for i in np.argsort(compValues).tolist():
         result.append(identifier[i]) 
+        distanceVal.append(compValues[i])
     countSet = []
     res = []
+    dis = []
     i = 0
-    while len(res)<10:
+    while len(res)<topN:
         if " ".join(result[i].split()[0:-1]) in countSet:
             i = i+1
             continue
         else:
             countSet.append(" ".join(result[i].split()[0:-1]))
             res.append(result[i])
+            dis.append(distanceVal[i])
             i = i+1
     
-    return res
+    return res,dis
+
+def normalizeTransparency(data):
+    a = 0.3*(data - np.min(data)) / (np.max(data) - np.min(data))+0.3
+    return a[::-1]
 
 
-def firstRunOutput(cube:pd.DataFrame,targetCountry:str,firstDate:datetime.date,lastDate:datetime.date,indicator:str,method:str,topN:int,minPopulation:int,startDate:datetime.date,endDate:datetime.date,continentCheck:list)->dict:
+
+def firstRunOutput(cube:pd.DataFrame,targetCountry:str,firstDate:datetime.date,lastDate:datetime.date,indicator:str,method:str,numberOfResults:int,minPopulation:int,startDate:datetime.date,endDate:datetime.date,continentCheck:list)->dict:
     """
     function to read cube and user inputs and return ranked data streams including sub processes above
-    
     Args
     :cube: covid data cube
     :targetCountry: target country for the search
@@ -196,14 +209,28 @@ def firstRunOutput(cube:pd.DataFrame,targetCountry:str,firstDate:datetime.date,l
     cubeFiltered = advancedfilters(cube,minPopulation,continentCheck,startDate,endDate)
     cubeSliced = slicer(cubeFiltered,indicator)
     cubeTimeSeries = timeseries(cubeSliced,(lastDate-firstDate).days)
-    result = ranker(cubeTimeSeries,targetCountry,datetime.datetime(lastDate.year,lastDate.month,lastDate.day),method,topN)
-    result.insert(0,targetCountry+" "+datetime.datetime.strftime(lastDate,"%Y-%m-%d"))
-    masterDict = dict()
-    for i in result:
-        vec = cubeTimeSeries[" ".join(i.split()[0:-1])][i.split()[-1]]
-        date = pd.date_range(end=result[0].split()[-1],start=datetime.datetime.strptime(result[0].split()[-1],"%Y-%m-%d") - datetime.timedelta(days=(lastDate-firstDate).days-1)).date
-        tempLst = []
+    result = ranker(cubeTimeSeries,targetCountry,datetime.datetime(lastDate.year,lastDate.month,lastDate.day),method,numberOfResults)
+    
+    result[0].insert(0,targetCountry+" "+datetime.datetime.strftime(lastDate,"%Y-%m-%d"))
+    result[1].insert(0,0)
+    obj = []
+    transparency = normalizeTransparency(result[1])
+    for i in range(len(result[0])):
+        country = " ".join(result[0][i].split()[0:-1])
+        test = cubeSliced[country]
+        vec = test.values
+        date = test.index.date
+        value = []
         for j in range(len(vec)):
-            tempLst.append({"date":date[j],"measurement":vec[j]})
-        masterDict[i] = tempLst
-    return masterDict
+            value.append({"date":date[j],"value":vec[j]})
+            isQuery = True if country == targetCountry else False; 
+            dictSample = {
+                'key':country,
+                'values':value, # update to values from 1/1/2021
+                'isQuery': isQuery,
+                'transparency': transparency[i],
+                'matchedPeriodStart':(datetime.datetime.strptime(result[0][i].split()[-1],"%Y-%m-%d")-datetime.timedelta(days=(lastDate-firstDate).days)).date(),
+                'matchedPeriodEnd':datetime.datetime.strptime(result[0][i].split()[-1],"%Y-%m-%d").date()
+            }  
+        obj.append(dictSample)
+    return obj
