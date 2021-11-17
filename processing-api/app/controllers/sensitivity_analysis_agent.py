@@ -11,7 +11,7 @@ from sandu.sensitivity_analysis import sobol
 from app.core.settings import DATA_PATH_LIVE
 
 def convert_data():
-    """Convert raw data to the format required by sensitivity analysis.
+    """Computes sobol indicies for plotting from raw data.
     """
     folder = Path(DATA_PATH_LIVE)
     
