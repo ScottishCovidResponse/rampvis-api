@@ -46,8 +46,8 @@ def query(product=Query(None), component=Query(None), field=Query(None), keys=Qu
     # - each product is in a folder with subfolders as components
     # - each component is a csv containing all fields
     filename = component_to_csv_file(folder, product, component)
-    filename_json = filename.replace(".csv", ".json")
-    if Path(filename).isfile():
+    filename_json = str(filename).replace(".csv", ".json")
+    if Path(filename).is_file():
         df = pd.read_csv(filename)
 
         if format != 'long':
@@ -65,7 +65,7 @@ def query(product=Query(None), component=Query(None), field=Query(None), keys=Qu
         result = df.to_json(orient="records")
         return Response(content=result, media_type="application/json")
 
-    elif Path(filename_json).isfile():
+    elif Path(filename_json).is_file():
         with open(filename_json, "r") as read_file:
-            result = json.load(read_file)
+            result = read_file.read()
         return Response(content=result, media_type="application/json")
