@@ -46,19 +46,26 @@ def query(product=Query(None), component=Query(None), field=Query(None), keys=Qu
     # - each product is in a folder with subfolders as components
     # - each component is a csv containing all fields
     filename = component_to_csv_file(folder, product, component)
-    df = pd.read_csv(filename)
+    filename_json = filename.replace(".csv", ".json")
+    if Path(filename).isfile():
+        df = pd.read_csv(filename)
 
-    if format != 'long':
-        df.rename(columns={df.columns[0]: "index"}, inplace=True)
+        if format != 'long':
+            df.rename(columns={df.columns[0]: "index"}, inplace=True)
 
-        if field is not None:
-            df = df[["index", field]]
+            if field is not None:
+                df = df[["index", field]]
 
-    if keys is not None and values is not None:
-        keys = keys.split(';')
-        values = values.split(';')
-        query_string = ' & '.join([f'{k} == "{v}"' for k,v in zip(keys,values)])
-        df = df.query(query_string)
+        if keys is not None and values is not None:
+            keys = keys.split(';')
+            values = values.split(';')
+            query_string = ' & '.join([f'{k} == "{v}"' for k, v in zip(keys, values)])
+            df = df.query(query_string)
 
-    result = df.to_json(orient="records")
-    return Response(content=result, media_type="application/json")
+        result = df.to_json(orient="records")
+        return Response(content=result, media_type="application/json")
+
+    elif Path(filename_json).isfile():
+        with open(filename_json, "r") as read_file:
+            result = json.load(read_file)
+        return Response(content=result, media_type="application/json")
