@@ -134,7 +134,11 @@ def download_open_data(folder):
 def download_urls(urls, folder):
     folder = Path(folder)
     for url in urls:
+<<<<<<< HEAD
         Path(folder / url['save_to']).parents[0].mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
+=======
+        Path(folder/url['save_to']).parents[0].mkdir(parents=True, exist_ok=True) #Create directory for file if not already present
+>>>>>>> nextjs-migrate
         if url['url'].lower().endswith('.csv'):
             df = pd.read_csv(url['url'])
             df.to_csv(folder/url['save_to'], index=None)

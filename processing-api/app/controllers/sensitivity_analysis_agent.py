@@ -21,9 +21,9 @@ def convert_data():
     N = 2 ** 12  # Note: Must be a power of 2.  (N*(2D+2) parameter value samples are used in the Sobol analysis.
 
     Si_df = sobol.get_indices(x.df(), x.parameters, x.bounds, x.quantity_mean, x.quantity_variance, N)  # Perform analysis
-    Si_df.index.name = "Parameter"
-    Si_df.to_csv(folder/"models/sobol/processed.csv")
-
+    Si_df.index.name = "index"
+    Si_df.reset_index().to_json(folder/"models/sobol/processed.json", orient="records", index=True)
+        
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 
