@@ -1,10 +1,12 @@
 import json
 import os
-import re
 import shutil
 from pathlib import Path
 from dateutil.parser import isoparse
 import requests
+from urllib.request import urlopen
+from io import BytesIO
+from zipfile import ZipFile
 
 import h5py
 import pandas as pd
@@ -132,7 +134,8 @@ def download_open_data(folder):
 def download_urls(urls, folder):
     folder = Path(folder)
     for url in urls:
-        Path(folder/url['save_to']).parents[0].mkdir(parents=True, exist_ok=True) #Create directory for file if not already present
+        parentfolder = Path(folder/url['save_to']).parents[0]
+        parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
         if url['url'].lower().endswith('.csv'):
             df = pd.read_csv(url['url'])
             df.to_csv(folder/url['save_to'], index=None)
@@ -140,3 +143,12 @@ def download_urls(urls, folder):
             r = requests.get(url['url'])
             with open(folder/url['save_to'], "w", encoding="utf-8") as f:
                 json.dump(r.json(), f, ensure_ascii=False, indent=4)
+        elif url['url'].lower().endswith('.zip'): #download and unzip zip files
+            http_response = urlopen(url['url'])
+            zipfile = ZipFile(BytesIO(http_response.read()))
+            zipinfos = zipfile.infolist()
+            # iterate through each file and remove the top directory
+            for zipinfo in zipinfos:
+                zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
+                zipfile.extract(zipinfo, path=folder/url['save_to'])
+
