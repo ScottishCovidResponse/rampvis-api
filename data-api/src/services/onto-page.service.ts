@@ -82,7 +82,7 @@ export class OntoPageService extends DataService<IOntoPage> {
     public async getPagesBindingVisIdAndDataId(_visId: string, _dataId: string): Promise<string[]> {
         const pages = await this.getAll({ visId: _visId, dataIds: { $in: [_dataId] } });
         // prettier-ignore
-        console.log( 'OntoPageService:getPagesBindingVisIdAndDataId: visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages );
+        // console.log( 'OntoPageService:getPagesBindingVisIdAndDataId: visId = ', _visId, 'dataId = ', _dataId, 'pages = ', pages );
         return pages.map((d) => d._id.toString());
     }
 
@@ -99,14 +99,23 @@ export class OntoPageService extends DataService<IOntoPage> {
         return await this.getAll({ pageType: PAGE_TYPE.EXAMPLE, visId: _visId });
     }
 
+    // Ref. on how to query array?
+    // https://docs.mongodb.com/manual/tutorial/query-arrays/
+    public async getPagesBindingDataId(dataId: string): Promise<IOntoPage[]> {
+        return await this.getAll({ dataIds: [dataId] });
+    }
+
     public async createPage(ontoPageVm: OntoPageVm): Promise<IOntoPage> {
         let exits = await this.getPageBindingVisIdAndDataIds(ontoPageVm.pageType, ontoPageVm.visId, ontoPageVm.dataIds);
         if (exits.length) {
-            // prettier-ignore
-            throw new DuplicateEntry(`page type: ${ontoPageVm.pageType}, visId: ${ontoPageVm.visId} and dataIds: ${JSON.stringify(ontoPageVm.dataIds)}` );
+            throw new DuplicateEntry(
+                `page type: ${ontoPageVm.pageType}, visId: ${ontoPageVm.visId} and dataIds: ${JSON.stringify(
+                    ontoPageVm.dataIds
+                )}`
+            );
         }
 
-        console.log('OntoPageService:createPage: ontoPageVm = ', ontoPageVm);
+        // console.log('OntoPageService:createPage: ontoPageVm = ', ontoPageVm);
 
         let ontoPage: IOntoPage = {
             _id: new ObjectId(),

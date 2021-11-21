@@ -46,6 +46,8 @@ export class TemplateController {
 
         try {
             let ontoPageSearchList: IOntoPageSearch[] = await this.ontoPageSearchService.search(ontPageSearchFilterVm);
+
+            // TODO: pagination
             // const resultDto: PaginationVm<OntoDataDto> = {
             //     data: automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, result.data),
             //     page: result.page,
@@ -108,7 +110,6 @@ export class TemplateController {
             const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos };
             resultDto.data.sort((d1, d2) => d2.date.getTime() - d1.date.getTime());
             // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
-
             response.status(200).send(resultDto);
         } catch (e: any) {
             logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
@@ -116,7 +117,7 @@ export class TemplateController {
         }
     }
 
-    // TODO: Duplicated in onto-page.controller.ts
+    // TODO: refactor as it is also duplicated in onto-page.controller.ts
     @httpGet('/page/:pageId')
     public async getPageTemplate(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
@@ -141,11 +142,26 @@ export class TemplateController {
                 data: data,
                 title: title,
             };
-            logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
-
+            // logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
             response.status(200).send(ontoPageExtDto);
         } catch (e: any) {
             logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
+            next(new SomethingWentWrong(e.message));
+        }
+    }
+
+    @httpGet('/link/:dataId')
+    public async getPagesBindingDataId(request: Request, response: Response, next: NextFunction): Promise<void> {
+        const dataId: string = request.params.dataId;
+        logger.info(`TemplateController:getPagesBindingDataId: dataId = ${dataId}`);
+
+        try {
+            const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(dataId);
+            const ontoPageIds: string[] = ontoPages.map((d: IOntoPage) => d._id.toString());
+
+            response.status(200).send(ontoPageIds);
+        } catch (e: any) {
+            logger.error(`TemplateController:getPagesBindingDataId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
         }
     }
@@ -161,12 +177,7 @@ export class TemplateController {
                 MAPPING_TYPES.ThumbnailDto,
                 result
             );
-            logger.debug(`TemplateController: getThumbnail: resultDto = ${result}`);
-
-            // const fs = require('fs');
-            // let buffer = Buffer.from(result.thumbnail, 'base64');
-            // fs.writeFileSync('new-path.jpeg', buffer);
-
+            // logger.debug(`TemplateController: getThumbnail: resultDto = ${result}`);
             response.status(200).send(result.thumbnail);
         } catch (error: any) {
             next(new SomethingWentWrong(error.message));
