@@ -1,4 +1,5 @@
 from pathlib import Path
+import threading
 
 from loguru import logger
 from fastapi import APIRouter, Query, Response, Depends
@@ -73,7 +74,7 @@ scheduler.start()
 logger.info('Timeseries similarity agent starts. Will run immediately now and every 1am.')
 
 # Run immediately after server starts
-precompute()
+threading.Thread(target=precompute).start()
 
 @timeseries_sim_search_controller.get("/start")
 def start():

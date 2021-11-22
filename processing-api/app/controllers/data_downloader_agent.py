@@ -1,4 +1,5 @@
 import json
+import threading
 from loguru import logger
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import STATE_STOPPED, STATE_RUNNING, STATE_PAUSED
@@ -52,7 +53,7 @@ scheduler.start()
 logger.info('Download data agent starts. Will run immediately now and every midnight.')
 
 # Run immediately after server starts
-download_data()
+threading.Thread(target=download_data).start()
 
 @data_downloader_agent.get("/download", dependencies=[Depends(validate_user_token)])
 def download():

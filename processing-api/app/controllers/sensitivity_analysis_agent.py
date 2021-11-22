@@ -1,4 +1,5 @@
 from pathlib import Path
+import threading
 
 from loguru import logger
 import pandas as pd
@@ -14,8 +15,13 @@ def convert_data():
     """Computes sobol indicies for plotting from raw data.
     """
     folder = Path(DATA_PATH_LIVE)
+    filename = folder/"models/sobol/raw.json"
+
+    # Check if file exists
+    if not filename.is_file():
+        return
     
-    with open(folder/"models/sobol/raw.json", "r") as read_file:
+    with open(filename, "r") as read_file:
         x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
 
     N = 2 ** 12  # Note: Must be a power of 2.  (N*(2D+2) parameter value samples are used in the Sobol analysis.
@@ -34,4 +40,4 @@ scheduler.start()
 logger.info('Sensitivity analysis agent starts. Will run immediately now and every 1am.')
 
 # Run immediately after server starts
-convert_data()
+threading.Thread(target=convert_data).start()
