@@ -106,7 +106,9 @@ def download_owid(folder):
     print('Download owid ...')
     url = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
     df = pd.read_csv(url)
-    df.to_csv(Path(folder)/'owid/full.csv', index=False)
+    folder = Path(folder)/'owid'
+    folder.mkdir(exist_ok=True)
+    df.to_csv(folder/'full.csv', index=False)
 
 def download_open_data_qf(base_url, folder, filename):
     url = f'https://www.opendata.nhs.scot/dataset/{base_url}/download'
