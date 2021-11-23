@@ -52,8 +52,8 @@ scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
 scheduler.start()
 logger.info('Download data agent starts. Will run immediately now and every midnight.')
 
-# Run immediately after server starts
-threading.Thread(target=download_data).start()
+# Run immediately after server starts. Not running in a thread to finish before other agents start.
+download_data()
 
 @data_downloader_agent.get("/download", dependencies=[Depends(validate_user_token)])
 def download():
