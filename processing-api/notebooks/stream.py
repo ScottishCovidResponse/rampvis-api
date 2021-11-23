@@ -1,3 +1,4 @@
+import os
 import requests
 from pathlib import Path
 import pandas as pd
@@ -68,7 +69,7 @@ def get_token(prod=False):
     url = 'https://vis.scrc.uk/api/v1/auth/login' if prod else 'http://localhost:4000/api/v1/auth/login'
     token = None
     try:
-        res = requests.post(url, {'password': "", 'email': ""})
+        res = requests.post(url, {'password': os.getenv('RAMPVIS_ONTOLOGY_PASSWORD'), 'email': os.getenv('RAMPVIS_ONTOLOGY_EMAIL')})
         if res and res.json() and res.json()['token']:
             token = res.json()['token']
 
@@ -91,3 +92,17 @@ def register(data, token, prod=False):
             print(response)
     except Exception as e:
         print(e)
+        
+def url_to_stream(url):
+    folder = Path(url['save_to']).parent
+    filename = Path(url['save_to']).stem
+    return {
+        'urlCode': 'API_PY',
+        'endpoint': f'/data/?product={folder}&component={filename}&format={url.get("format", "long")}',
+        'dataType': url['dataType'],
+        'keywords': url['keywords'],
+        'description': url.get('description', '')
+    }
+
+def generate_streams_from_urls(urls):
+    return [url_to_stream(url) for url in urls]

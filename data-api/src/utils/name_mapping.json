@@ -338,6 +338,7 @@
     "scotland": "Scotland",
     "england": "England",
     "wales": "Wales",
+    "uk": "UK",
     "aberdeen_city": "Aberdeen City",
     "aberdeenshire": "Aberdeenshire",
     "angus": "Angus",
@@ -404,5 +405,8 @@
     "vaccination": "vaccination",
     "people_tested": "people tested",
     "tests_carried_out": "tests carried out",
-    "cumulative": "cumulative"
+    "cumulative": "cumulative",
+    "vaccine_first": "people vaccinated first dose",
+    "vaccine_second": "people vaccinated second dose",
+    "vaccine_third": "people vaccinated third dose"
 }

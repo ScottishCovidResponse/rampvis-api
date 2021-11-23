@@ -387,7 +387,7 @@ const REGIONS = [
     'tayside',
     'western_isles',
 ];
-const COUNTRIES = ['england', 'scotland', 'wales'];
+const COUNTRIES = ['uk', 'england', 'scotland', 'wales'];
 const LOCATIONS = COUNCILS.concat(REGIONS).concat(COUNTRIES);
 const TOPICS = [
     'vaccination',
@@ -405,7 +405,10 @@ const TOPICS = [
     'icu',
     'hospital',
     'cases',
-    'sobol'
+    'sobol',
+    'vaccine_first',
+    'vaccine_second',
+    'vaccine_third',
 ];
 const TIMES = ['daily', 'weekly', 'model', 'correlation'];
 const GROUPS = [

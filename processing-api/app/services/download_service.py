@@ -136,7 +136,7 @@ def download_urls(urls, folder):
     for url in urls:
         parentfolder = Path(folder/url['save_to']).parents[0]
         parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
-        if url['url'].lower().endswith('.csv'):
+        if url['name'] == 'phe' or url['url'].lower().endswith('.csv'):
             df = pd.read_csv(url['url'])
             df.to_csv(folder/url['save_to'], index=None)
         elif url['url'].lower().endswith('.json'):
@@ -151,4 +151,3 @@ def download_urls(urls, folder):
             for zipinfo in zipinfos:
                 zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
                 zipfile.extract(zipinfo, path=folder/url['save_to'])
-
