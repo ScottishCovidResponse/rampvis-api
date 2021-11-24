@@ -136,14 +136,16 @@ def download_open_data(folder):
 def download_urls(urls, folder):
     folder = Path(folder)
     for url in urls:
-        parentfolder = Path(folder/url['save_to']).parents[0]
+        # Convert to lower case to make it consistent with previous convention
+        save_to = str(folder/url['save_to']).lower()
+        parentfolder = Path(save_to).parents[0]
         parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
         if url['name'] == 'phe' or url['url'].lower().endswith('.csv'):
             df = pd.read_csv(url['url'])
-            df.to_csv(folder/url['save_to'], index=None)
+            df.to_csv(save_to, index=None)
         elif url['url'].lower().endswith('.json'):
             r = requests.get(url['url'])
-            with open(folder/url['save_to'], "w", encoding="utf-8") as f:
+            with open(save_to, "w", encoding="utf-8") as f:
                 json.dump(r.json(), f, ensure_ascii=False, indent=4)
         elif url['url'].lower().endswith('.zip'): #download and unzip zip files
             http_response = urlopen(url['url'])
@@ -152,4 +154,4 @@ def download_urls(urls, folder):
             # iterate through each file and remove the top directory
             for zipinfo in zipinfos:
                 zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
-                zipfile.extract(zipinfo, path=folder/url['save_to'])
+                zipfile.extract(zipinfo, path=save_to)

@@ -64,8 +64,12 @@ def query(product=Query(None), component=Query(None), field=Query(None), keys=Qu
 
         result = df.to_json(orient="records")
         return Response(content=result, media_type="application/json")
-
     elif Path(filename_json).is_file():
         with open(filename_json, "r") as read_file:
             result = read_file.read()
         return Response(content=result, media_type="application/json")
+    else:
+        raise HTTPException(
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"{filename} doesn't exist with .csv or .json",
+        )
