@@ -18,9 +18,9 @@ def compute_mean_sample():
     """Computes the mean of a group of time series and draws a random sample for plotting.
     """
     folder = Path(DATA_PATH_LIVE)
-    filename = folder / "models/uncertainty/example/huis_data50percent.json"
-    output_filename = folder / "models/uncertainty/example/processed2.json"
-    
+    filename = folder / "models/uncertainty/example/raw.json"
+    output_filename = folder / "models/uncertainty/example/mean_all.json"
+
     # Check if file exists
     if not filename.is_file():
         print("CANNOT FIND ", filename)

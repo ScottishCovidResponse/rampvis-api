@@ -81,7 +81,7 @@ def get_k_mean_clusters(df_in: pd.DataFrame, run_name_in: str, time_name_in: str
         df_out: The df_in with an added column containing the cluster index.
     """
     my_time_series, run_time_series = make_time_series_dataset(df_in, run_name_in, time_name_in, quantity_name_in)
-    clusters = TimeSeriesKMeans(n_clusters=k_in, verbose=True, random_state=seed, metric=metric_in).fit_predict(
+    clusters = TimeSeriesKMeans(n_clusters=k_in, verbose=False, random_state=seed, metric=metric_in).fit_predict(
         my_time_series)
     df_out = df_in
     df_out["cluster"] = df_out[run_name_in].map(run_time_series)

@@ -20,6 +20,8 @@ from app.controllers.ensemble_controller import (
 import app.controllers.sensitivity_analysis_agent
 
 import app.controllers.uncertainty_mean_sample_agent
+import app.controllers.uncertanty_clustering_agent
+import app.controllers.uncertainty_cluster_mean_sample_agent
 
 router = APIRouter()
 
