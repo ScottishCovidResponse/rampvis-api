@@ -157,9 +157,15 @@ export class TemplateController {
 
         try {
             const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(dataId);
-            const ontoPageIds: string[] = ontoPages.map((d: IOntoPage) => d._id.toString());
+            const links: { pageId: string; visFunction: string }[] = await Promise.all(
+                ontoPages.map(async (d: IOntoPage) => {
+                    const pageId = d._id.toString();
+                    const ontoPage = await this.ontoVisService.get(d.visId);
+                    return { pageId: pageId, visFunction: ontoPage.function };
+                })
+            );
 
-            response.status(200).send(ontoPageIds);
+            response.status(200).send(links);
         } catch (e: any) {
             logger.error(`TemplateController:getPagesBindingDataId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
