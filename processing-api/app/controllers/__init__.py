@@ -19,6 +19,9 @@ from app.controllers.ensemble_controller import (
 # Just load the module so that the scheduler can start
 import app.controllers.sensitivity_analysis_agent
 
+import app.controllers.uncertainty_mean_sample_agent
+import app.controllers.uncertainty_clustering_agent
+import app.controllers.uncertainty_cluster_mean_sample_agent
 
 router = APIRouter()
 
