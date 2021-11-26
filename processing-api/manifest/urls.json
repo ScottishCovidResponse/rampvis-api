@@ -4,6 +4,11 @@
         "url": "https://gist.githubusercontent.com/rampvisdevelopment/a73ff62e4b648541e5fa75ce0a5edae4/raw/example_sensitivity_input.json",
         "save_to": "models/sobol/raw.json"
     },
+        {
+        "name": "example_structured_data",
+        "url": "https://github.com/rampvisdevelopment/example/archive/main.zip",
+        "save_to": "models/uncertainty/example"
+    },
     {
         "name": "ensemble",
         "url": "https://github.com/rampvisdevelopment/ensemble/archive/master.zip",
