@@ -25,3 +25,4 @@ dependency-injector
 python-multipart
 sandu
 tslearn
+ujson
