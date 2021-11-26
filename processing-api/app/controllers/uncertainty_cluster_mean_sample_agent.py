@@ -1,12 +1,8 @@
 from pathlib import Path
 import threading
 import json
-import ujson
-import numpy as np
 from loguru import logger
 from apscheduler.schedulers.background import BackgroundScheduler
-
-from sandu.data_types import UncertaintyInput
 
 import app.controllers.uncertainty_analysis.clustering_tools as ct
 import app.controllers.uncertainty_analysis.uncertainty_mean_sample as ums
@@ -39,7 +35,7 @@ def clusters_mean_sample():
         with open(filename, "r") as read_file:
             imported = json.load(read_file)
 
-        processed_clusters = ct.function_on_clusters(imported, ums.mean_all)  # Evaluate the function mean_all on all clusters
+        processed_clusters = ct.function_on_clusters(imported, ums.mean_and_sample)  # Evaluate the function mean_all on all clusters
 
         ct.save_cluster_data(processed_clusters, "processed", output_filename, imported["metric"], imported["k"],
                              imported["model"])  # Save the processed data

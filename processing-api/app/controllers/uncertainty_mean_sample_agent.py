@@ -2,12 +2,10 @@ from pathlib import Path
 import threading
 import json
 import ujson
-import numpy as np
 from loguru import logger
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from sandu.data_types import UncertaintyInput
-from sandu.uncertainty_quantification import mean_time_series
 
 import app.controllers.uncertainty_analysis.uncertainty_mean_sample as ums
 
@@ -28,7 +26,7 @@ def compute_mean_sample():
 
     with open(filename, "r") as read_file:
         x = json.load(read_file, object_hook=lambda d: UncertaintyInput(**d))
-        data_dict = ums.mean_all(x)
+        data_dict = ums.mean_and_sample(x)
     with open(output_filename, "w", encoding="utf-8") as f:
         ujson.dump(data_dict, f, ensure_ascii=False, indent=4)
 
