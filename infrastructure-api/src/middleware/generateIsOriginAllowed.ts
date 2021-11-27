@@ -2,29 +2,52 @@ import { Logger } from 'winston';
 
 type IsOriginAllowed = (origin: string | undefined) => boolean;
 
-export function generateIsOriginAllowed(allowedOrigins: unknown, logger: Logger): IsOriginAllowed {
+/**
+ * This function accepts a list of allowed origins (hosts) and returns a function
+ * that can check a given origin.
+ *
+ * Wildcard matching is supported for origin endings.
+ *
+ * Example values:
+ *     ✅ example.com
+ *     ✅ demo.example.com
+ *     ✅ *.example.com
+ *     ✅ *--demo.example.com
+ *     ✅ *example.com
+ *     ✅ 42.42.42.42
+ *
+ * Invalid values in the list of allowedOrigins are ignored with a warning.
+ *     🗑 ExAmple.COM
+ *     🗑 example.*
+ *     🗑     example  .  com
+ *     🗑 demo.*.example.com
+ *     🗑 42 (number)
+ *     🗑 null
+ *     🗑 {}
+ */
+export function generateIsOriginAllowed(allowedOrigins: unknown, logger?: Logger): IsOriginAllowed {
     const allowedOriginLookup: Record<string, true> = {};
     const allowedOriginEndingLookup: Record<string, true> = {};
 
     if (!Array.isArray(allowedOrigins)) {
-        logger.warn('Expected allowedOrigins to be an array. Allowing all origins.');
+        logger?.warn('Expected allowedOrigins to be an array. Allowing all origins.');
         return () => true;
     }
 
     for (const allowedOrigin of allowedOrigins) {
         if (typeof allowedOrigin !== 'string') {
-            logger.warn(`Ignoring allowedOrigins → ${allowedOrigin} (expected a string)`);
+            logger?.warn(`Ignoring allowedOrigins → ${allowedOrigin} (expected a string)`);
             continue;
         }
 
         const normalisedAllowedOrigin = allowedOrigin.replace(/\s/g, '').toLowerCase();
         if (!normalisedAllowedOrigin.length) {
-            logger.warn(`Ignoring allowedOrigins → "${allowedOrigin}" (expected a non-empty string)`);
+            logger?.warn(`Ignoring allowedOrigins → "${allowedOrigin}" (expected a non-empty string)`);
             continue;
         }
 
         if (normalisedAllowedOrigin !== allowedOrigin) {
-            logger.warn(
+            logger?.warn(
                 `Ignoring allowedOrigins → "${allowedOrigin}" (expected a normalised string: "${normalisedAllowedOrigin}")`
             );
             continue;
@@ -35,14 +58,14 @@ export function generateIsOriginAllowed(allowedOrigins: unknown, logger: Logger)
 
         if (!normalisedAllowedOrigin.includes('*')) {
             if (allowedOriginLookup[normalisedAllowedOrigin]) {
-                logger.warn(`Duplicate value in allowedOrigins: "${allowedOrigin}"`);
+                logger?.warn(`Duplicate value in allowedOrigins: "${allowedOrigin}"`);
             } else {
                 allowedOriginLookup[normalisedAllowedOrigin] = true;
             }
         }
 
         if (normalisedAllowedOrigin.lastIndexOf('*') !== 0) {
-            logger.warn(
+            logger?.warn(
                 `Ignoring allowedOrigins → "${allowedOrigin}" (only values like "*.example.com" or "*--demo.example.com" are supported)`
             );
             continue;
@@ -50,7 +73,7 @@ export function generateIsOriginAllowed(allowedOrigins: unknown, logger: Logger)
 
         const normalisedAllowedOriginEnding = normalisedAllowedOrigin.substring(1);
         if (normalisedAllowedOrigin) {
-            logger.warn(`Duplicate value in allowedOrigins: "${allowedOrigin}"`);
+            logger?.warn(`Duplicate value in allowedOrigins: "${allowedOrigin}"`);
         } else {
             allowedOriginEndingLookup[normalisedAllowedOriginEnding] = true;
         }
@@ -59,7 +82,7 @@ export function generateIsOriginAllowed(allowedOrigins: unknown, logger: Logger)
     const allowedOriginEndings = Object.keys(allowedOriginEndingLookup);
 
     if (!allowedOriginEndings.length && !Object.keys(allowedOriginLookup).length) {
-        logger.warn('No valid values found in allowedOrigins. Allowing all origins.');
+        logger?.warn('No valid values found in allowedOrigins. Allowing all origins.');
         return () => true;
     }
 
