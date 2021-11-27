@@ -56,27 +56,27 @@ export function generateIsOriginAllowed(allowedOrigins: unknown, logger?: Logger
         // TODO: improve host matching if needed, e.g. by using
         // https://github.com/validatorjs/validator.js/blob/master/src/lib/isFQDN.js
 
-        if (!normalisedAllowedOrigin.includes('*')) {
-            if (allowedOriginLookup[normalisedAllowedOrigin]) {
+        if (normalisedAllowedOrigin.includes('*')) {
+            if (normalisedAllowedOrigin.lastIndexOf('*') !== 0) {
+                logger?.warn(
+                    `Ignoring allowedOrigins → "${allowedOrigin}" (only patterns like "*.example.com" or "*--demo.example.com" are supported)`
+                );
+                continue;
+            }
+
+            const normalisedAllowedOriginEnding = normalisedAllowedOrigin.substring(1);
+            if (normalisedAllowedOrigin) {
                 logger?.warn(`Duplicate value in allowedOrigins: "${allowedOrigin}"`);
             } else {
-                allowedOriginLookup[normalisedAllowedOrigin] = true;
+                allowedOriginEndingLookup[normalisedAllowedOriginEnding] = true;
             }
             continue;
         }
 
-        if (normalisedAllowedOrigin.lastIndexOf('*') !== 0) {
-            logger?.warn(
-                `Ignoring allowedOrigins → "${allowedOrigin}" (only values like "*.example.com" or "*--demo.example.com" are supported)`
-            );
-            continue;
-        }
-
-        const normalisedAllowedOriginEnding = normalisedAllowedOrigin.substring(1);
-        if (normalisedAllowedOrigin) {
+        if (allowedOriginLookup[normalisedAllowedOrigin]) {
             logger?.warn(`Duplicate value in allowedOrigins: "${allowedOrigin}"`);
         } else {
-            allowedOriginEndingLookup[normalisedAllowedOriginEnding] = true;
+            allowedOriginLookup[normalisedAllowedOrigin] = true;
         }
     }
 
