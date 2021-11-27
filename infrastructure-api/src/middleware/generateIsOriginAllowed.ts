@@ -39,7 +39,7 @@ export function generateIsOriginAllowed(allowOriginRegex: unknown, logger?: Logg
         if (regexString[regexString.length - 1] !== '$') {
             regexString = regexString + '$';
         }
-        regex = new RegExp(regexString, 'i');
+        regex = new RegExp(regexString, 'i'); // i means case-insensitive
     } catch (e) {
         logger?.warn(
             `Provided allowOriginRegex ${allowOriginRegex} is not a valid regular expression. Allowing all origins.`
