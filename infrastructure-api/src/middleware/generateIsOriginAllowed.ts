@@ -3,7 +3,7 @@ import { Logger } from 'winston';
 type IsOriginAllowed = (origin: string | undefined) => boolean;
 
 /**
- * This function accepts a stringified regex of the origin and returns a function
+ * This function accepts a stringified regex of the allowed origins and returns a function
  * that can check a given origin.
  *
  * Note that ^ and $ are automatically applied to the value to match the whole string.
