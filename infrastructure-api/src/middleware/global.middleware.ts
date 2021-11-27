@@ -15,7 +15,7 @@ import { TYPES } from '../services/config/types';
 import { generateIsOriginAllowed } from './generateIsOriginAllowed';
 import { IUser } from '../infrastructure/user/user.interface';
 
-const isOriginAllowed = generateIsOriginAllowed(config.get('allowOrigins'), logger);
+const isOriginAllowed = generateIsOriginAllowed(config.get('allowOriginRegex'), logger);
 
 function GlobalMiddleware(app: express.Application) {
     logger.info('Initialize global middleware.');
