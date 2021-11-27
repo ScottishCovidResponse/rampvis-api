@@ -1,22 +1,23 @@
-# Data API
-
-APIs for Authentication, user management, ontology operations, data service, etc.
+# Stat API 
 
 ## Development
 
 ### Requirements
 
-- Node version 16.13.0
+- Python 3.9.2
 - Mongodb
-- Elasticsearch
-
-Start a development server:
+- Elasticsearch 
 
 ```bash
-yarn install
-yarn dev
+pip install virtualenv
+virtualenv venv
+source ./venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### Configuration
+Start a development instance.
 
-Add your preferred configuration, e.g., MongoDB URI, Elasticsearch host, keys etc. in the `rampvis-api/data-api/config/default.json` file.
+```bash
+source ./venv/bin/activate
+uvicorn app.main:app --reload --port 4010 --host 0.0.0.0
+```
