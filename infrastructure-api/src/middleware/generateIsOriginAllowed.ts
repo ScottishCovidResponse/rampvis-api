@@ -62,6 +62,7 @@ export function generateIsOriginAllowed(allowedOrigins: unknown, logger?: Logger
             } else {
                 allowedOriginLookup[normalisedAllowedOrigin] = true;
             }
+            continue;
         }
 
         if (normalisedAllowedOrigin.lastIndexOf('*') !== 0) {
