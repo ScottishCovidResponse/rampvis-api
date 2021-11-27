@@ -12,7 +12,10 @@ import { configureGithubStrategy } from './passport-github';
 import { UserService } from '../services/user.service';
 import { DIContainer } from '../services/config/inversify.config';
 import { TYPES } from '../services/config/types';
+import { generateIsOriginAllowed } from './generateIsOriginAllowed';
 import { IUser } from '../infrastructure/user/user.interface';
+
+const isOriginAllowed = generateIsOriginAllowed(config.get('allowOrigins'), logger);
 
 function GlobalMiddleware(app: express.Application) {
     logger.info('Initialize global middleware.');
@@ -72,13 +75,7 @@ function GlobalMiddleware(app: express.Application) {
                 // Allow all
                 // return callback(null, true);
 
-                const allowedOrigins: string[] = config.get('allowOrigins');
-                // allow requests with no origin, e.g., like mobile apps or curl requests
-                if (!origin) {
-                    logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
-                    return callback(null, true);
-                }
-                if (allowedOrigins.indexOf(origin) !== -1) {
+                if (isOriginAllowed(origin)) {
                     logger.debug(`GlobalMiddleware: origin = ${origin}, allowed`);
                     return callback(null, true);
                 } else {
