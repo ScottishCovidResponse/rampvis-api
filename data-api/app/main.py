@@ -16,7 +16,7 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 logger.info(f"GLOBAL_CONFIG_OBJ = {GLOBAL_CONFIG_OBJ}")
 
 app.add_middleware(CORSMiddleware, 
-        allow_origins=GLOBAL_CONFIG_OBJ["allowOrigins"],
+        allow_origin_regex=GLOBAL_CONFIG_OBJ["allowOriginRegex"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
