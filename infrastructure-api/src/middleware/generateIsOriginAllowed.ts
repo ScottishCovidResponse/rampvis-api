@@ -1,6 +1,6 @@
 import { Logger } from 'winston';
 
-type IsOriginAllowed = (originRegex: string | undefined) => boolean;
+type IsOriginAllowed = (origin: string | undefined) => boolean;
 
 /**
  * This function accepts a stringified regex of the origin and returns a function
@@ -24,15 +24,15 @@ type IsOriginAllowed = (originRegex: string | undefined) => boolean;
  *     ⏹ http://example.com
  *     ⏹ https://example.com
  */
-export function generateIsOriginAllowed(allowedOriginRegex: unknown, logger?: Logger): IsOriginAllowed {
-    if (typeof allowedOriginRegex !== 'string' || !allowedOriginRegex) {
-        logger?.warn('Expected allowedOriginRegex to be a non-empty string. Allowing all origins.');
+export function generateIsOriginAllowed(allowOriginRegex: unknown, logger?: Logger): IsOriginAllowed {
+    if (typeof allowOriginRegex !== 'string' || !allowOriginRegex) {
+        logger?.warn('Expected allowOriginRegex to be a non-empty string. Allowing all origins.');
         return () => true;
     }
 
     let regex: RegExp;
     try {
-        let regexString = allowedOriginRegex;
+        let regexString = allowOriginRegex;
         if (regexString[0] !== '^') {
             regexString = '^' + regexString;
         }
@@ -42,7 +42,7 @@ export function generateIsOriginAllowed(allowedOriginRegex: unknown, logger?: Lo
         regex = new RegExp(regexString, 'i');
     } catch (e) {
         logger?.warn(
-            `Provided allowedOriginRegex ${allowedOriginRegex} is not a valid regular expression. Allowing all origins.`
+            `Provided allowOriginRegex ${allowOriginRegex} is not a valid regular expression. Allowing all origins.`
         );
         return () => true;
     }
