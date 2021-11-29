@@ -9,12 +9,12 @@ import app.controllers.uncertainty_analysis.uncertainty_mean_sample as ums
 
 from app.core.settings import DATA_PATH_LIVE
 
-raw_clusters = [{"filename": "models/uncertainty/example/raw-k3-E.json",
-                 "output_filename": "models/uncertainty/example/mean_all_k3_E.json"},
-                {"filename": "models/uncertainty/example/raw-k4-E.json",
-                 "output_filename": "models/uncertainty/example/mean_all_k4_E.json"},
-                {"filename": "models/uncertainty/example/raw-k5-E.json",
-                 "output_filename": "models/uncertainty/example/mean_all_k5_E.json"},
+raw_clusters = [{"filename": "models/uncertainty/example/raw_k3_e.json",
+                 "output_filename": "models/uncertainty/example/mean_all_k3_e.json"},
+                {"filename": "models/uncertainty/example/raw_k4_e.json",
+                 "output_filename": "models/uncertainty/example/mean_all_k4_e.json"},
+                {"filename": "models/uncertainty/example/raw_k5_e.json",
+                 "output_filename": "models/uncertainty/example/mean_all_k5_e.json"},
                 ]
 
 

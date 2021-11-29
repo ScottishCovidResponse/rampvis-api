@@ -14,19 +14,19 @@ from app.core.settings import DATA_PATH_LIVE
 
 clusters = [{"metric": 'euclidean',
              "filename": "models/uncertainty/example/raw.json",
-             "output_filename": "models/uncertainty/example/raw-k3-E.json",
+             "output_filename": "models/uncertainty/example/raw_k3_e.json",
              "k": 3,
              "model": "example"},
 
             {"metric": 'euclidean',
              "filename": "models/uncertainty/example/raw.json",
-             "output_filename": "models/uncertainty/example/raw-k4-E.json",
+             "output_filename": "models/uncertainty/example/raw_k4_e.json",
              "k": 4,
              "model": "example"},
 
             {"metric": 'euclidean',
              "filename": "models/uncertainty/example/raw.json",
-             "output_filename": "models/uncertainty/example/raw-k5-E.json",
+             "output_filename": "models/uncertainty/example/raw_k5_e.json",
              "k": 5,
              "model": "example"
              }
