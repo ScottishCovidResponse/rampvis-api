@@ -11,8 +11,8 @@ DATA_DIR = Path(DATA_PATH_LIVE)/"ensemble"
 
 ensemble_controller = APIRouter()
 
-@ensemble_controller.get("/meta")
-async def meta(name=Query("default")):
+@ensemble_controller.get("/meta/{name}")
+async def meta(name:str):
     """Return all available meta files.
     `name` is a subfolder of ensemble.
     """
@@ -24,7 +24,14 @@ async def meta(name=Query("default")):
     return Response(content=json.dumps(results), media_type="application/json")
 
 @ensemble_controller.get("/data")
-async def data(path=Query(""), name=Query("default")):
+async def data():
+    """Return subfolders of ensemble data.
+    """
+    sub_folders = [d for d in os.listdir(DATA_DIR) if (DATA_DIR/d).is_dir()]
+    return Response(content=json.dumps(sub_folders), media_type="application/json")
+
+@ensemble_controller.get("/data/{name}")
+async def data(name:str, path=Query("")):
     """Return data.
     `name` is a subfolder of ensemble.
     `path` is the folder such as data/output/simu_0.
