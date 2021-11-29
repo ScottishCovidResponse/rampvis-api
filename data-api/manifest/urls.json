@@ -10,6 +10,11 @@
         "save_to": "models/uncertainty/example"
     },
     {
+        "name": "Uncertainty invntory",
+        "url": "https://gist.githubusercontent.com/rampvisdevelopment/52a5836735eff0d33692cfd06d049197/raw/uncertainty_inventory.json",
+        "save_to": "models/uncertainty/uncertainty_inventory.json"
+    },
+    {
         "name": "ensemble",
         "url": "https://github.com/rampvisdevelopment/ensemble/archive/master.zip",
         "save_to": "ensemble"
