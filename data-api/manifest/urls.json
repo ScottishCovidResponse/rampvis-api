@@ -10,7 +10,7 @@
         "save_to": "models/uncertainty/example"
     },
     {
-        "name": "Uncertainty invntory",
+        "name": "uncertainty inventory",
         "url": "https://gist.githubusercontent.com/rampvisdevelopment/52a5836735eff0d33692cfd06d049197/raw/uncertainty_inventory.json",
         "save_to": "models/uncertainty/uncertainty_inventory.json"
     },
