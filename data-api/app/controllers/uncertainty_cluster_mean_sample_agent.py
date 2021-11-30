@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List
 import threading
 import json
 from loguru import logger
@@ -6,19 +7,12 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 import app.controllers.uncertainty_analysis.clustering_tools as ct
 import app.controllers.uncertainty_analysis.uncertainty_mean_sample as ums
+import app.controllers.uncertainty_analysis.uncertainty_model_inventory as inventory
 
 from app.core.settings import DATA_PATH_LIVE
 
-raw_clusters = [{"filename": "models/uncertainty/example/raw_k3_e.json",
-                 "output_filename": "models/uncertainty/example/mean_all_k3_e.json"},
-                {"filename": "models/uncertainty/example/raw_k4_e.json",
-                 "output_filename": "models/uncertainty/example/mean_all_k4_e.json"},
-                {"filename": "models/uncertainty/example/raw_k5_e.json",
-                 "output_filename": "models/uncertainty/example/mean_all_k5_e.json"},
-                ]
 
-
-def clusters_mean_sample():
+def clusters_mean_sample(raw_clusters):
     """Computes the mean of a group of time series and draws a random sample for plotting.
     """
 
@@ -41,14 +35,39 @@ def clusters_mean_sample():
                              imported["model"])  # Save the processed data
 
 
+def get_cluster_list(model_list: List[dict]) -> List[dict]:
+    """Form a list of dictionaries containing the information needed to compute clusters, based on the information in model_list.
+
+    Args:
+        model_list: List containing a dictionary with: the name, k-values, and distance metrics to be used for cluster analysis of model data.
+    """
+    models = model_list
+    cluster_list = []
+    metric_abbreviation = {"euclidean": "e", "dtw": "dtw"}
+    for model in models:
+        for i in model["k"]:
+            for metric in model["metric"]:
+                cluster_list.append(
+                    {"filename": "models/uncertainty/" + model["name"] + "/raw_k" + str(i) + "_" + metric_abbreviation[metric] + ".json",
+                     "output_filename": "models/uncertainty/" + model["name"] + "/mean_all_k" + str(i) + "_" + metric_abbreviation[metric] + ".json"}
+                )
+    return cluster_list
+
+
+def uncertainty_cluster_mean_sample_agent():
+    model_list = inventory.get_uncertainty_models()
+    list_of_clusters = get_cluster_list(model_list)
+    clusters_mean_sample(list_of_clusters)
+
+
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 
 # Cron runs at 1am daily
-scheduler.add_job(clusters_mean_sample, "cron", hour=1, minute=0, second=0)
+scheduler.add_job(uncertainty_cluster_mean_sample_agent, "cron", hour=1, minute=0, second=0)
 
 scheduler.start()
 logger.info('Uncertainty-clustering-agent starts. Will run immediately now and every 1am.')
 
 # Run immediately after server starts
-threading.Thread(target=clusters_mean_sample).start()
+threading.Thread(target=uncertainty_cluster_mean_sample_agent).start()
