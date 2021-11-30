@@ -7,6 +7,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 import app.controllers.uncertainty_analysis.clustering_tools as ct
 import app.controllers.uncertainty_analysis.uncertainty_mean_sample as ums
+import app.controllers.uncertainty_analysis.uncertainty_model_inventory as inventory
 
 from app.core.settings import DATA_PATH_LIVE
 
@@ -54,14 +55,7 @@ def get_cluster_list(model_list: List[dict]) -> List[dict]:
 
 
 def uncertainty_cluster_mean_sample_agent():
-    filename_model_list = Path(DATA_PATH_LIVE) / "models/uncertainty/uncertainty_inventory.json"
-
-    if not filename_model_list.is_file():
-        print("CANNOT FIND ", filename_model_list)
-        return
-    with open(filename_model_list) as f:
-        model_list = json.load(f)
-        
+    model_list = inventory.get_uncertainty_models()
     list_of_clusters = get_cluster_list(model_list)
     clusters_mean_sample(list_of_clusters)
 

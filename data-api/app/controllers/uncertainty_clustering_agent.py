@@ -8,6 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from sandu.data_types import UncertaintyInput
 
 import app.controllers.uncertainty_analysis.clustering_tools as ct
+import app.controllers.uncertainty_analysis.uncertainty_model_inventory as inventory
 
 from app.core.settings import DATA_PATH_LIVE
 
@@ -46,6 +47,8 @@ def get_cluster_list(model_list: List[dict]) -> List[dict]:
     Args:
         model_list: List containing a dictionary with: the name, k-values, and distance metrics to be used for cluster analysis of model data.
         
+    Returns:
+        cluster_list: A list containing a dictionary with information on each cluster needed to form the clusters.
     
     """
     models = model_list
@@ -65,16 +68,9 @@ def get_cluster_list(model_list: List[dict]) -> List[dict]:
 
 
 def uncertainty_clustering_agent():
-    filename_model_list = Path(DATA_PATH_LIVE) / "models/uncertainty/uncertainty_inventory.json"
-    
-    if not filename_model_list.is_file():
-        print("CANNOT FIND ", filename_model_list)
-        return
-    with open(filename_model_list) as f:
-        model_list = json.load(f)
-        
-    list_of_clusters = get_cluster_list(model_list)
-    uncertainty_form_clusters(list_of_clusters)
+    model_list = inventory.get_uncertainty_models()
+    cluster_list = get_cluster_list(model_list)
+    uncertainty_form_clusters(cluster_list)
 
 
 # A recurrent job
