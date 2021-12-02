@@ -29,16 +29,3 @@ def compute_mean_sample():
         data_dict = ums.mean_and_sample(x)
     with open(output_filename, "w", encoding="utf-8") as f:
         ujson.dump(data_dict, f, ensure_ascii=False, indent=4)
-
-
-# A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at 1am daily
-scheduler.add_job(compute_mean_sample, "cron", hour=1, minute=0, second=0)
-
-scheduler.start()
-logger.info('Uncertainty-mean-sample-analysis agent starts. Will run immediately now and every 1am.')
-
-# Run immediately after server starts
-threading.Thread(target=compute_mean_sample).start()

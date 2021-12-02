@@ -39,16 +39,3 @@ def clusters_mean_sample():
 
         ct.save_cluster_data(processed_clusters, "processed", output_filename, imported["metric"], imported["k"],
                              imported["model"])  # Save the processed data
-
-
-# A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at 1am daily
-scheduler.add_job(clusters_mean_sample, "cron", hour=1, minute=0, second=0)
-
-scheduler.start()
-logger.info('Uncertainty-clustering-agent starts. Will run immediately now and every 1am.')
-
-# Run immediately after server starts
-threading.Thread(target=clusters_mean_sample).start()

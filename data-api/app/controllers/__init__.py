@@ -1,5 +1,9 @@
 from fastapi import APIRouter
 
+from apscheduler.schedulers.background import BackgroundScheduler
+from loguru import logger
+import threading
+
 from app.controllers.token_controller import token_controller
 from app.controllers.data_serve_controller import data_serve_controller
 from app.controllers.data_downloader_agent import data_downloader_agent
@@ -53,3 +57,19 @@ router.include_router(process_data_controller, prefix="/stat/v1/process_data")
 # router.include_router(
 #     hello_router, prefix="/hello", dependencies=[Depends(validate_request)]
 # )
+def uncertainty_agents():
+    uncertainty_mean_sample_agent()
+    uncertainty_clustering_agent()
+    uncertainty_clustering_agent()
+
+# A recurrent job
+scheduler = BackgroundScheduler(daemon=True)
+
+# Cron runs at 1am daily
+scheduler.add_job(uncertainty_agents, "cron", hour=1, minute=0, second=0)
+
+scheduler.start()
+logger.info('Uncertainty-clustering-agent starts. Will run immediately now and every 1am.')
+
+# Run immediately after server starts
+threading.Thread(target=uncertainty_agents).start()
