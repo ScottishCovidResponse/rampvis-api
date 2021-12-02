@@ -58,16 +58,3 @@ def uncertainty_cluster_mean_sample_agent():
     model_list = inventory.get_uncertainty_models()
     list_of_clusters = get_cluster_list(model_list)
     clusters_mean_sample(list_of_clusters)
-
-
-# A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at 1am daily
-scheduler.add_job(uncertainty_cluster_mean_sample_agent, "cron", hour=1, minute=0, second=0)
-
-scheduler.start()
-logger.info('Uncertainty-clustering-agent starts. Will run immediately now and every 1am.')
-
-# Run immediately after server starts
-threading.Thread(target=uncertainty_cluster_mean_sample_agent).start()

@@ -23,9 +23,9 @@ from app.controllers.ensemble_controller import (
 # Just load the module so that the scheduler can start
 import app.controllers.sensitivity_analysis_agent
 
-import app.controllers.uncertainty_mean_sample_agent
-import app.controllers.uncertainty_clustering_agent
-import app.controllers.uncertainty_cluster_mean_sample_agent
+from app.controllers.uncertainty_mean_sample_agent import uncertainty_mean_sample_agent
+from app.controllers.uncertainty_clustering_agent import uncertainty_clustering_agent
+from app.controllers.uncertainty_cluster_mean_sample_agent import uncertainty_cluster_mean_sample_agent
 
 router = APIRouter()
 
@@ -58,9 +58,10 @@ router.include_router(process_data_controller, prefix="/stat/v1/process_data")
 #     hello_router, prefix="/hello", dependencies=[Depends(validate_request)]
 # )
 def uncertainty_agents():
+    print("Running Uncertainty Analysis Agents")
     uncertainty_mean_sample_agent()
     uncertainty_clustering_agent()
-    uncertainty_clustering_agent()
+    uncertainty_cluster_mean_sample_agent()
 
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
