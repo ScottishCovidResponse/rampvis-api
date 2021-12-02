@@ -1,40 +1,23 @@
 from pathlib import Path
+from typing import List
 import threading
 import json
-import ujson
-import numpy as np
 from loguru import logger
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from sandu.data_types import UncertaintyInput
 
 import app.controllers.uncertainty_analysis.clustering_tools as ct
+import app.controllers.uncertainty_analysis.uncertainty_model_inventory as inventory
 
 from app.core.settings import DATA_PATH_LIVE
 
-clusters = [{"metric": 'euclidean',
-             "filename": "models/uncertainty/example/raw.json",
-             "output_filename": "models/uncertainty/example/raw_k3_e.json",
-             "k": 3,
-             "model": "example"},
 
-            {"metric": 'euclidean',
-             "filename": "models/uncertainty/example/raw.json",
-             "output_filename": "models/uncertainty/example/raw_k4_e.json",
-             "k": 4,
-             "model": "example"},
-
-            {"metric": 'euclidean',
-             "filename": "models/uncertainty/example/raw.json",
-             "output_filename": "models/uncertainty/example/raw_k5_e.json",
-             "k": 5,
-             "model": "example"
-             }
-            ]
-
-
-def uncertainty_form_clusters():
-    """Clusters raw input data for cluster wise analysis.
+def uncertainty_form_clusters(clusters: List[dict]):
+    """Find clusters in raw input data, to enable for cluster-wise analysis.
+    
+    Args:
+        clusters: List containing dictionaries with the paramters and information for computing clusters.
     """
 
     for values in clusters:
@@ -56,3 +39,48 @@ def uncertainty_form_clusters():
         df_clusters = ct.get_k_mean_clusters(x.df(), x.run_name, x.time_name, x.quantity_name, k, metric)
         input_clusters = ct.form_input_clusters(df_clusters, x.run_name, x.time_name, x.quantity_name)
         ct.save_cluster_data(input_clusters, "clusters", output_filename, metric, k, model)
+
+
+def get_cluster_list(model_list: List[dict]) -> List[dict]:
+    """Form a list of dictionaries containing the information needed to compute clusters, based on the information in model_list.
+    
+    Args:
+        model_list: List containing a dictionary with: the name, k-values, and distance metrics to be used for cluster analysis of model data.
+        
+    Returns:
+        cluster_list: A list containing a dictionary with information on each cluster needed to form the clusters.
+    
+    """
+    models = model_list
+    cluster_list = []
+    metric_abbreviation = {"euclidean": "e", "dtw": "dtw"}
+    for model in models:
+        for i in model["k"]:
+            for metric in model["metric"]:
+                cluster_list.append(
+                    {"metric": metric,
+                     "filename": "models/uncertainty/" + model["name"] + "/raw.json",
+                     "output_filename": "models/uncertainty/" + model["name"] + "/raw_k" + str(i) + "_" + metric_abbreviation[metric] + ".json",
+                     "k": i,
+                     "model": model["name"]}
+                )
+    return cluster_list
+
+
+def uncertainty_clustering_agent():
+    model_list = inventory.get_uncertainty_models()
+    cluster_list = get_cluster_list(model_list)
+    uncertainty_form_clusters(cluster_list)
+
+
+# A recurrent job
+scheduler = BackgroundScheduler(daemon=True)
+
+# Cron runs at 1am daily
+scheduler.add_job(uncertainty_clustering_agent, "cron", hour=1, minute=0, second=0)
+
+scheduler.start()
+logger.info('Uncertainty-clustering-agent starts. Will run immediately now and every 1am.')
+
+# Run immediately after server starts
+threading.Thread(target=uncertainty_clustering_agent).start()
