@@ -1,3 +1,4 @@
 data/* linguist-generated=true
+*.csv linguist-generated=true
 data-api/notebooks/* linguist-generated=true
-
+*.ipynb linguist-generated=true
