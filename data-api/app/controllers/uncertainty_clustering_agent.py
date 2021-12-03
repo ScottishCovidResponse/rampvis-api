@@ -32,7 +32,6 @@ def uncertainty_form_clusters(clusters: List[dict]):
         if not filename.is_file():
             print("CANNOT FIND ", filename)
             return
-        print("Clustering Uncertainty Data")
         with open(filename, "r") as read_file:
             x = json.load(read_file, object_hook=lambda d: UncertaintyInput(**d))
 

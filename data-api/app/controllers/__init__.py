@@ -19,13 +19,8 @@ from app.controllers.timeseries_sim_search_controller import (
 from app.controllers.ensemble_controller import (
     ensemble_controller,
 )
-
-# Just load the module so that the scheduler can start
-import app.controllers.sensitivity_analysis_agent
-
-from app.controllers.uncertainty_mean_sample_agent import uncertainty_mean_sample_agent
-from app.controllers.uncertainty_clustering_agent import uncertainty_clustering_agent
-from app.controllers.uncertainty_cluster_mean_sample_agent import uncertainty_cluster_mean_sample_agent
+#Run agents
+import app.controllers.agents
 
 router = APIRouter()
 
@@ -57,20 +52,4 @@ router.include_router(process_data_controller, prefix="/stat/v1/process_data")
 # router.include_router(
 #     hello_router, prefix="/hello", dependencies=[Depends(validate_request)]
 # )
-def uncertainty_agents():
-    print("Running Uncertainty Analysis Agents")
-    uncertainty_mean_sample_agent()
-    uncertainty_clustering_agent()
-    uncertainty_cluster_mean_sample_agent()
 
-# A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at 1am daily
-scheduler.add_job(uncertainty_agents, "cron", hour=1, minute=0, second=0)
-
-scheduler.start()
-logger.info('Uncertainty-clustering-agent starts. Will run immediately now and every 1am.')
-
-# Run immediately after server starts
-threading.Thread(target=uncertainty_agents).start()
