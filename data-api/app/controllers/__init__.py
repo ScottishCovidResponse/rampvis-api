@@ -4,9 +4,11 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from loguru import logger
 import threading
 
+#Run agents
+import app.controllers.agents
 from app.controllers.token_controller import token_controller
 from app.controllers.data_serve_controller import data_serve_controller
-from app.controllers.data_downloader_agent import data_downloader_agent
+from app.controllers.agents.data_downloader_agent import data_downloader_agent
 from app.controllers.static_data_controller import static_data_controller
 from app.controllers.onto_data_search_controller import onto_data_search_controller
 from app.controllers.analytics_controller import analytics_controller
@@ -19,8 +21,6 @@ from app.controllers.timeseries_sim_search_controller import (
 from app.controllers.ensemble_controller import (
     ensemble_controller,
 )
-#Run agents
-import app.controllers.agents
 
 router = APIRouter()
 

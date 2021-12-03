@@ -7,8 +7,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from sandu.data_types import UncertaintyInput
 
-import app.controllers.uncertainty_analysis.clustering_tools as ct
-import app.controllers.uncertainty_analysis.uncertainty_model_inventory as inventory
+import app.controllers.agents.uncertainty_analysis.clustering_tools as ct
+import app.controllers.agents.uncertainty_analysis.uncertainty_model_inventory as inventory
 
 from app.core.settings import DATA_PATH_LIVE
 
