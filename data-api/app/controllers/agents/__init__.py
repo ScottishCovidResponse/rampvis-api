@@ -6,6 +6,7 @@ from app.controllers.agents.data_downloader_agent import download_data
 from app.controllers.agents.uncertainty_mean_sample_agent import uncertainty_mean_sample_agent
 from app.controllers.agents.uncertainty_clustering_agent import uncertainty_clustering_agent
 from app.controllers.agents.uncertainty_cluster_mean_sample_agent import uncertainty_cluster_mean_sample_agent
+from app.controllers.timeseries_sim_search_controller import precompute
 
 
 def uncertainty_agents():
@@ -32,7 +33,8 @@ def sensitivity_agents():
 def run_agents():
     logger.info('Download data agent starts. Will run immediately now and every midnight.')
     download_data()
-    threading.main_thread().run()  # Resume main thread
+    logger.info('Timeseries similarity agent starts. Will run immediately now and every 1am.')
+    threading.Thread(target=precompute).start()
     threading.Thread(target=uncertainty_agents).start()
     threading.Thread(target=sensitivity_agents).start()
 
@@ -46,4 +48,4 @@ scheduler.add_job(run_agents, "cron", hour=0, minute=0, second=0)
 scheduler.start()
 
 # Run immediately after server starts
-run_agents()
+threading.Thread(target=run_agents()).start

@@ -59,22 +59,7 @@ def precompute():
         new_df.to_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
     except:
         logger.error('Cube creation error check owid file')
-
-# Precomputation job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at 1am daily
-scheduler.add_job(precompute, "cron", hour=1, minute=0, second=0)
-
-# Uncomment this to make it run every minute for debugging
-
-#scheduler.add_job(precompute, "cron", second=0)
-
-scheduler.start()
-logger.info('Timeseries similarity agent starts. Will run immediately now and every 1am.')
-
-# Run immediately after server starts
-threading.Thread(target=precompute).start()
+        
 
 @timeseries_sim_search_controller.get("/start")
 def start():
