@@ -6,7 +6,7 @@ from app.controllers.agents.data_downloader_agent import download_data
 from app.controllers.agents.uncertainty_mean_sample_agent import uncertainty_mean_sample_agent
 from app.controllers.agents.uncertainty_clustering_agent import uncertainty_clustering_agent
 from app.controllers.agents.uncertainty_cluster_mean_sample_agent import uncertainty_cluster_mean_sample_agent
-from app.controllers.timeseries_sim_search_controller import precompute
+from app.controllers.agents.time_series_precompute_agent import precompute
 
 
 def uncertainty_agents():

@@ -15,6 +15,8 @@ from pydantic import BaseModel
 from typing import List,Dict
 from datetime import date
 
+from app.controllers.agents.time_series_precompute_agent import precompute
+
 timeseries_sim_search_controller = APIRouter()
 
 class FirstRunForm(BaseModel):
@@ -48,18 +50,6 @@ async def createform(firstRunForm:FirstRunForm):
     out = firstRunOutput(cube,targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
     return out
 
-
-@timeseries_sim_search_controller.get("/")
-def precompute():
-    """Run any kind of precomputation that is slow for real-time search.
-    """
-    try:
-        df = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/full.csv',parse_dates=[3])
-        new_df = to_cube(df)
-        new_df.to_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
-    except:
-        logger.error('Cube creation error check owid file')
-        
 
 @timeseries_sim_search_controller.get("/start")
 def start():
