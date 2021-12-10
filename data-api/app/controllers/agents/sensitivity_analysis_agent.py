@@ -29,15 +29,3 @@ def convert_data():
     Si_df = sobol.get_indices(x.df(), x.parameters, x.bounds, x.quantity_mean, x.quantity_variance, N)  # Perform analysis
     Si_df.index.name = "index"
     Si_df.reset_index().to_json(folder/"models/sobol/processed.json", orient="records", index=True)
-        
-# A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at 1am daily
-scheduler.add_job(convert_data, "cron", hour=1, minute=0, second=0)
-
-scheduler.start()
-logger.info('Sensitivity analysis agent starts. Will run immediately now and every 1am.')
-
-# Run immediately after server starts
-threading.Thread(target=convert_data).start()

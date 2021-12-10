@@ -34,26 +34,7 @@ def download_data():
             urls = json.load(f)
             download_urls(urls, DATA_PATH_LIVE)
     except Exception as e:
-        raise HTTPException(
-            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"{e}",
-        )
-
-
-# A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
-
-# Cron runs at midnight daily
-scheduler.add_job(download_data, "cron", hour=0, minute=0, second=0)
-
-# Uncomment this to make it run every minute for debugging
-# scheduler.add_job(download_data, "cron", second=0)
-
-scheduler.start()
-logger.info('Download data agent starts. Will run immediately now and every midnight.')
-
-# Run immediately after server starts. Not running in a thread to finish before other agents start.
-download_data()
+        logger.exception(e)
 
 @data_downloader_agent.get("/download", dependencies=[Depends(validate_user_token)])
 def download():
