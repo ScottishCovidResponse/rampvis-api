@@ -34,10 +34,7 @@ def download_data():
             urls = json.load(f)
             download_urls(urls, DATA_PATH_LIVE)
     except Exception as e:
-        raise HTTPException(
-            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"{e}",
-        )
+        logger.exception(e)
 
 @data_downloader_agent.get("/download", dependencies=[Depends(validate_user_token)])
 def download():
