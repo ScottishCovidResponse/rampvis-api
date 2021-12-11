@@ -31,9 +31,7 @@ def sensitivity_agents():
 
 
 def run_agents():
-    logger.info('Download data agent starts. Will run immediately now and every midnight.')
     download_data()
-    logger.info('Timeseries similarity agent starts. Will run immediately now and every 1am.')
     threading.Thread(target=precompute).start()
     threading.Thread(target=uncertainty_agents).start()
     threading.Thread(target=sensitivity_agents).start()
@@ -48,4 +46,4 @@ scheduler.add_job(run_agents, "cron", hour=0, minute=0, second=0)
 scheduler.start()
 
 # Run immediately after server starts
-threading.Thread(target=run_agents()).start
+threading.Thread(target=run_agents).start()
