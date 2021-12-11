@@ -7,6 +7,7 @@ import requests
 from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
+from urllib.parse import urlparse, parse_qs
 
 import h5py
 import pandas as pd
@@ -133,14 +134,36 @@ def download_open_data(folder):
         'daily_sex_agegroup.csv'
     )
 
+def save_code(df, save_to):
+    area_code = df.iloc[0]['areaCode']
+    
+    # Add a subfolder right before filename
+    save_to = Path(save_to)
+    new_save_to = save_to.parent/area_code.lower()
+    new_save_to.mkdir(parents=True, exist_ok=True)
+    
+    df.to_csv(new_save_to/save_to.name, index=None)
+
 def download_urls(urls, folder):
+    print('Download from URLs ...')
     folder = Path(folder)
     for url in urls:
+        print('Download', url['url'])
         # Convert to lower case to make it consistent with previous convention
         save_to = str(folder/url['save_to']).lower()
         parentfolder = Path(save_to).parents[0]
         parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
-        if url['name'] == 'phe' or url['url'].lower().endswith('.csv'):
+
+        if url['name'] == 'phe':
+            df = pd.read_csv(url['url'])
+
+            # Split the file based on area code
+            area_types = parse_qs(urlparse(url['url']).query).get('areaType')
+            if area_types and len(area_types) and area_types[0] != 'overview':
+                df.groupby('areaCode').apply(lambda x: save_code(x, save_to))
+            else:
+                df.to_csv(save_to, index=None)
+        elif url['url'].lower().endswith('.csv'):
             df = pd.read_csv(url['url'])
             df.to_csv(save_to, index=None)
         elif url['url'].lower().endswith('.json'):
@@ -155,3 +178,4 @@ def download_urls(urls, folder):
             for zipinfo in zipinfos:
                 zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
                 zipfile.extract(zipinfo, path=save_to)
+    print('Download from URLs has finished')

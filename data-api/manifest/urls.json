@@ -22,7 +22,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumAdmissions&format=csv",
-        "save_to": "phe/cumAdmissions.csv",
+        "save_to": "phe/overview/cumAdmissions.csv",
         "dataType": "cum_timeseries",
         "keywords": [
             "phe",
@@ -34,7 +34,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumCasesBySpecimenDate&format=csv",
-        "save_to": "phe/cumCasesBySpecimenDate.csv",
+        "save_to": "phe/overview/cumCasesBySpecimenDate.csv",
         "dataType": "cum_timeseries",
         "keywords": [
             "phe",
@@ -46,7 +46,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumDeaths28DaysByDeathDate&format=csv",
-        "save_to": "phe/cumDeaths28DaysByDeathDate.csv",
+        "save_to": "phe/overview/cumDeaths28DaysByDeathDate.csv",
         "dataType": "cum_timeseries",
         "keywords": [
             "phe",
@@ -58,7 +58,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumPeopleVaccinatedFirstDoseByPublishDate&format=csv",
-        "save_to": "phe/cumPeopleVaccinatedFirstDoseByPublishDate.csv",
+        "save_to": "phe/overview/cumPeopleVaccinatedFirstDoseByPublishDate.csv",
         "dataType": "cum_timeseries",
         "keywords": [
             "phe",
@@ -70,7 +70,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumPeopleVaccinatedSecondDoseByPublishDate&format=csv",
-        "save_to": "phe/cumPeopleVaccinatedSecondDoseByPublishDate.csv",
+        "save_to": "phe/overview/cumPeopleVaccinatedSecondDoseByPublishDate.csv",
         "dataType": "cum_timeseries",
         "keywords": [
             "phe",
@@ -82,7 +82,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumPeopleVaccinatedThirdInjectionByPublishDate&format=csv",
-        "save_to": "phe/cumPeopleVaccinatedThirdInjectionByPublishDate.csv",
+        "save_to": "phe/overview/cumPeopleVaccinatedThirdInjectionByPublishDate.csv",
         "dataType": "cum_timeseries",
         "keywords": [
             "phe",
@@ -94,7 +94,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=newAdmissions&format=csv",
-        "save_to": "phe/newAdmissions.csv",
+        "save_to": "phe/overview/newAdmissions.csv",
         "dataType": "timeseries",
         "keywords": [
             "phe",
@@ -106,19 +106,19 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=newCasesBySpecimenDate&format=csv",
-        "save_to": "phe/newCasesBySpecimenDate.csv",
+        "save_to": "phe/overview/newCasesBySpecimenDate.csv",
         "dataType": "timeseries",
         "keywords": [
             "phe",
             "uk",
-            "new_cases",
+            "cases",
             "daily"
         ]
     },
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=newDeaths28DaysByDeathDate&format=csv",
-        "save_to": "phe/newDeaths28DaysByDeathDate.csv",
+        "save_to": "phe/overview/newDeaths28DaysByDeathDate.csv",
         "dataType": "timeseries",
         "keywords": [
             "phe",
@@ -130,7 +130,7 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=newPeopleVaccinatedFirstDoseByPublishDate&format=csv",
-        "save_to": "phe/newPeopleVaccinatedFirstDoseByPublishDate.csv",
+        "save_to": "phe/overview/newPeopleVaccinatedFirstDoseByPublishDate.csv",
         "dataType": "timeseries",
         "keywords": [
             "phe",
@@ -142,8 +142,8 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=newPeopleVaccinatedSecondDoseByPublishDate&format=csv",
-        "save_to": "phe/newPeopleVaccinatedSecondDoseByPublishDate.csv",
-        "dataType": "cum_timeseries",
+        "save_to": "phe/overview/newPeopleVaccinatedSecondDoseByPublishDate.csv",
+        "dataType": "timeseries",
         "keywords": [
             "phe",
             "uk",
@@ -154,12 +154,60 @@
     {
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=newPeopleVaccinatedThirdInjectionByPublishDate&format=csv",
-        "save_to": "phe/newPeopleVaccinatedThirdInjectionByPublishDate.csv",
-        "dataType": "cum_timeseries",
+        "save_to": "phe/overview/newPeopleVaccinatedThirdInjectionByPublishDate.csv",
+        "dataType": "timeseries",
         "keywords": [
             "phe",
             "uk",
             "vaccine_third",
+            "daily"
+        ]
+    },
+    {
+        "name": "phe",
+        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=cumCasesBySpecimenDate&metric=newCasesBySpecimenDate&format=csv",
+        "save_to": "phe/ltla/newCasesBySpecimenDate.csv",
+        "dataType": "timeseries",
+        "keywords": [
+            "phe",
+            "ltla",
+            "new_cases",
+            "daily"
+        ]
+    },
+    {
+        "name": "phe",
+        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=cumWeeklyNsoDeathsByRegDate&metric=newWeeklyNsoDeathsByRegDate&format=csv",
+        "save_to": "phe/ltla/newWeeklyNsoDeathsByRegDate.csv",
+        "dataType": "cum_timeseries",
+        "keywords": [
+            "phe",
+            "ltla",
+            "covid_deaths",
+            "weekly"
+        ]
+    },
+    {
+        "name": "phe",
+        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&format=csv",
+        "save_to": "phe/ltla/cumVaccinationSecondDoseUptakeByVaccinationDatePercentage.csv",
+        "dataType": "cum_timeseries",
+        "keywords": [
+            "phe",
+            "ltla",
+            "vaccine_second",
+            "daily"
+        ]
+    },
+    {
+        "name": "phe",
+        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=vaccinationsAgeDemographics&format=csv",
+        "save_to": "phe/ltla/vaccinationsAgeDemographics.csv",
+        "dataType": "timeseries",
+        "keywords": [
+            "phe",
+            "ltla",
+            "vaccination",
             "daily"
         ]
     }
