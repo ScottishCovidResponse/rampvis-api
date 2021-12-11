@@ -7,6 +7,7 @@
         "build": "rimraf ./dist && tsc",
         "start": "ts-node src/server.ts",
         "dev": "export PORT=4000 && export NODE_ENV=development && node ./node_modules/nodemon/bin/nodemon.js",
+        "dev-win": "set PORT=4000 && set NODE_ENV=development && node ./node_modules/nodemon/bin/nodemon.js",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "dev:debug": "nodemon --inspect src/server.ts"
     },

@@ -17,12 +17,29 @@ import { DIContainer } from '../services/config/inversify.config';
 import { ROLES } from '../infrastructure/user/roles.enum';
 import { getUserGrants } from '../controllers/user/user.access';
 
-export class JwtToken {
-    private static jwtSign = util.promisify(jwt.sign);
-    private static jwtVerify = util.promisify(jwt.verify);
+function readPvtkey() {
+    let key: string = config.get('jwt.pvtKey');
+    try {
+        return readFileSync(key, 'utf8');
+    } catch (e) {
+        logger.error(`JwtToken: error reading private key = ${key}, error = ${e}`);
+        process.exit();
+    }
+}
 
-    private static RSA_PVT_KEY: string = readFileSync(config.get('jwt.pvtKey'), 'utf8');
-    private static RSA_PUB_KEY: string = readFileSync(config.get('jwt.pubKey'), 'utf8');
+function readPubkey() {
+    let key: string = config.get('jwt.pubKey');
+    try {
+        return readFileSync(key, 'utf8');
+    } catch (e) {
+        logger.error(`JwtToken: error reading public key = ${key}, error = ${e}`);
+        process.exit();
+    }
+}
+
+export class JwtToken {
+    private static RSA_PVT_KEY: string = readPvtkey() as string;
+    private static RSA_PUB_KEY: string = readFileSync(config.get('jwt.pubKey'), 'utf8') as string;
 
     constructor() {}
 
