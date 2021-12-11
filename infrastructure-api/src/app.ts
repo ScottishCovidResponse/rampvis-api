@@ -26,11 +26,8 @@ export class App {
 
     public async init() {
         process.env['UV_THREADPOOL_SIZE'] = os.cpus().length.toString();
-        logger.info(
-            `App: init: UV_THREADPOOL_SIZE = ${JSON.stringify(process.env.UV_THREADPOOL_SIZE)}, CPUs = ${
-                os.cpus().length
-            }`
-        );
+        // prettier-ignore
+        logger.info(`App: init: UV_THREADPOOL_SIZE = ${JSON.stringify(process.env.UV_THREADPOOL_SIZE)}, CPUs = ${os.cpus().length}`);
 
         let container: Container = DIContainer;
 
