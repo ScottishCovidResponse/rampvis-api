@@ -24,6 +24,10 @@ import generateTitle from '../utils/title-generation';
 import { ThumbnailService } from '../services/thumbnail.service';
 import { IThumbnail } from '../infrastructure/thumbnail/thumbnail.interface';
 import { ThumbnailDto } from '../infrastructure/thumbnail/thumbnail.dto';
+import { OntoDataDto } from '../infrastructure/onto-data/onto-data.dto';
+import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
+import { ILink } from '../infrastructure/onto-page/link.interface';
+import { IOntoPageTemplate } from '../infrastructure/onto-page/onto-page-template.interface';
 
 //
 // Un-guarded: to only support GET
@@ -97,7 +101,8 @@ export class TemplateController {
 
             for (let ontoPageDto of ontoPageDtos) {
                 const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
-                const keywordsList = Object.values(data).map((d) => d.keywords);
+                console.log(data);
+                const keywordsList = Object.values(data).map((d) => d?.keywords);
                 const title = generateTitle(keywordsList);
                 ontoPageExtDtos.push({
                     ...ontoPageDto,
@@ -117,7 +122,6 @@ export class TemplateController {
         }
     }
 
-    // TODO: refactor as it is also duplicated in onto-page.controller.ts
     @httpGet('/page/:pageId')
     public async getPageTemplate(request: Request, response: Response, next: NextFunction): Promise<void> {
         const pageId: string = request.params.pageId;
@@ -130,20 +134,38 @@ export class TemplateController {
                 MAPPING_TYPES.OntoPageDto,
                 ontoPage
             );
-            const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
-            const keywordsList = Object.values(data).map((d) => d.keywords);
-            console.log('keywords = ', keywordsList);
 
+            // onto data
+            const ontoDataDtos: OntoDataDto[] = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
+            // onto data and link of each onto data
+            const ontoDataDtoWithLinks: OntoDataDto[] = await Promise.all(
+                ontoDataDtos.map(async (d: OntoDataDto) => {
+                    const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(d.id);
+                    const links: ILink[] = await this.getPageLinks1(ontoPages);
+
+                    return { ...d, links };
+                })
+            );
+
+            // title
+            const keywordsList = Object.values(ontoDataDtos).map((d) => d.keywords);
             const title = generateTitle(keywordsList);
 
-            const ontoPageExtDto: OntoPageExtDto = {
+            const ontoPageTemplate: IOntoPageTemplate = {
                 ...ontoPageDto,
-                vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                data: data,
+                ontoVis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
+                ontoData: ontoDataDtoWithLinks,
                 title: title,
             };
-            // logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
-            response.status(200).send(ontoPageExtDto);
+
+            // example or propagated links
+            if (ontoPageDto?.pageIds) {
+                ontoPageTemplate.links = await this.getPageLinks2(ontoPageDto?.pageIds);
+            }
+
+            console.log('ontoPageTemplate = ', ontoPageTemplate);
+            // logger.info(`TemplateController:getPageTemplate: ontoPageTemplate = ${JSON.stringify(ontoPageTemplate)}`);
+            response.status(200).send(ontoPageTemplate);
         } catch (e: any) {
             logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
@@ -157,15 +179,9 @@ export class TemplateController {
 
         try {
             const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(dataId);
-            const links: { pageId: string; visFunction: string }[] = await Promise.all(
-                ontoPages.map(async (d: IOntoPage) => {
-                    const pageId = d._id.toString();
-                    const ontoPage = await this.ontoVisService.get(d.visId);
-                    return { pageId: pageId, visFunction: ontoPage.function };
-                })
-            );
+            const pageLinks: ILink[] = await this.getPageLinks1(ontoPages);
 
-            response.status(200).send(links);
+            response.status(200).send(pageLinks);
         } catch (e: any) {
             logger.error(`TemplateController:getPagesBindingDataId: error = ${JSON.stringify(e)}`);
             next(new SomethingWentWrong(e.message));
@@ -188,5 +204,26 @@ export class TemplateController {
         } catch (error: any) {
             next(new SomethingWentWrong(error.message));
         }
+    }
+
+    private async getPageLinks1(ontoPages: IOntoPage[]): Promise<ILink[]> {
+        const pageLinks: ILink[] = await Promise.all(
+            ontoPages.map(async (d: IOntoPage) => {
+                const ontoVis: IOntoVis = await this.ontoVisService.get(d.visId);
+                return { pageId: d._id.toString(), visFunction: ontoVis.function };
+            })
+        );
+        return pageLinks;
+    }
+
+    private async getPageLinks2(pageIds: string[]): Promise<ILink[]> {
+        const pageLinks: ILink[] = await Promise.all(
+            pageIds.map(async (d: string) => {
+                const ontoPage: IOntoPage = await this.ontoPageService.get(d);
+                const ontoVis: IOntoVis = await this.ontoVisService.get(ontoPage.visId);
+                return { pageId: ontoPage._id.toString(), visFunction: ontoVis.function };
+            })
+        );
+        return pageLinks;
     }
 }
