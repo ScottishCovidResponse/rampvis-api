@@ -8,6 +8,7 @@ from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
 from urllib.parse import urlparse, parse_qs
+from loguru import logger
 
 import h5py
 import pandas as pd
@@ -148,34 +149,37 @@ def download_urls(urls, folder):
     print('Download from URLs ...')
     folder = Path(folder)
     for url in urls:
-        print('Download', url['url'])
-        # Convert to lower case to make it consistent with previous convention
-        save_to = str(folder/url['save_to']).lower()
-        parentfolder = Path(save_to).parents[0]
-        parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
+        try:
+            # Convert to lower case to make it consistent with previous convention
+            save_to = str(folder/url['save_to']).lower()
+            parentfolder = Path(save_to).parents[0]
+            parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
-        if url['name'] == 'phe':
-            df = pd.read_csv(url['url'], encoding='iso-8859-1')
+            if url['name'] == 'phe':
+                df = pd.read_csv(url['url'], encoding='iso-8859-1')
 
-            # Split the file based on area code
-            area_types = parse_qs(urlparse(url['url']).query).get('areaType')
-            if area_types and len(area_types) and area_types[0] != 'overview':
-                df.groupby('areaCode').apply(lambda x: save_code(x, save_to))
-            else:
+                # Split the file based on area code
+                area_types = parse_qs(urlparse(url['url']).query).get('areaType')
+                if area_types and len(area_types) and area_types[0] != 'overview':
+                    df.groupby('areaCode').apply(lambda x: save_code(x, save_to))
+                else:
+                    df.to_csv(save_to, index=None)
+            elif url['url'].lower().endswith('.csv'):
+                df = pd.read_csv(url['url'])
                 df.to_csv(save_to, index=None)
-        elif url['url'].lower().endswith('.csv'):
-            df = pd.read_csv(url['url'])
-            df.to_csv(save_to, index=None)
-        elif url['url'].lower().endswith('.json'):
-            r = requests.get(url['url'])
-            with open(save_to, "w", encoding="utf-8") as f:
-                json.dump(r.json(), f, ensure_ascii=False, indent=4)
-        elif url['url'].lower().endswith('.zip'): #download and unzip zip files
-            http_response = urlopen(url['url'])
-            zipfile = ZipFile(BytesIO(http_response.read()))
-            zipinfos = zipfile.infolist()
-            # iterate through each file and remove the top directory
-            for zipinfo in zipinfos:
-                zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
-                zipfile.extract(zipinfo, path=save_to)
+            elif url['url'].lower().endswith('.json'):
+                r = requests.get(url['url'])
+                with open(save_to, "w", encoding="utf-8") as f:
+                    json.dump(r.json(), f, ensure_ascii=False, indent=4)
+            elif url['url'].lower().endswith('.zip'): #download and unzip zip files
+                http_response = urlopen(url['url'])
+                zipfile = ZipFile(BytesIO(http_response.read()))
+                zipinfos = zipfile.infolist()
+                # iterate through each file and remove the top directory
+                for zipinfo in zipinfos:
+                    zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
+                    zipfile.extract(zipinfo, path=save_to)
+        except Exception as e:
+            logger.exception(e)
+
     print('Download from URLs has finished')
