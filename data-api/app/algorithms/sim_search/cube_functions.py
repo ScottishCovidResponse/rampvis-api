@@ -92,7 +92,7 @@ def cube_master(df:pd.DataFrame)->pd.DataFrame:
     countryList = df['location'].unique()
     dfLst = []
     for country in countryList:
-        logger.info(country)
+        # logger.info(country)
         dfLst.append(cube_sample(country,df))
         
     return pd.concat(dfLst,axis=1)

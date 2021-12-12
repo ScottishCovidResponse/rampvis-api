@@ -155,7 +155,7 @@ def download_urls(urls, folder):
         parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
         if url['name'] == 'phe':
-            df = pd.read_csv(url['url'])
+            df = pd.read_csv(url['url'], encoding='iso-8859-1')
 
             # Split the file based on area code
             area_types = parse_qs(urlparse(url['url']).query).get('areaType')
