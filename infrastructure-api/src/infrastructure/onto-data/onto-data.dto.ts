@@ -1,4 +1,5 @@
 import { DATA_TYPE } from './onto-data-types';
+import { ILink } from '../onto-page/link.interface';
 
 export class OntoDataDto {
     public id: string = undefined as any;
@@ -8,4 +9,5 @@ export class OntoDataDto {
     public date: Date = undefined as any;
     public description: string = undefined as any;
     public keywords: string[] = undefined as any;
+    public links?: ILink[] = undefined as any;
 }
