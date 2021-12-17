@@ -4,5 +4,6 @@ export const OntoPageMapping = {
     keywords: { type: 'search_as_you_type' },
     pageType: { type: 'keyword' },
     visType: { type: 'keyword' },
+    visFunction: { type: 'keyword' },
     date: { type: 'date' },
 };

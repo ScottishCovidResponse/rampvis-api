@@ -1,26 +1,36 @@
-import { Type } from 'class-transformer';
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { PAGE_TYPE } from './onto-page.interface';
+import { Type } from "class-transformer";
+import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
+import { PAGE_TYPE } from "./onto-page.interface";
 
-export class BindingVm {
-
-}
+export class BindingVm {}
 
 export class OntoPageVm {
-    @IsOptional()
-    @IsString()
-    public id!: string;
+  @IsOptional()
+  @IsString()
+  public id!: string;
 
-    @IsEnum(PAGE_TYPE)
-    public pageType!: PAGE_TYPE;
+  @IsEnum(PAGE_TYPE)
+  public pageType!: PAGE_TYPE;
 
-    @IsString()
-    visId!: string;
+  @IsString()
+  visId!: string;
 
-    @IsString({ each: true })
-    dataIds!: string[];
+  @IsString({ each: true })
+  dataIds!: string[];
 
-    @IsOptional()
-    @IsString({ each: true })
-    pageIds!: string[];
+  @IsOptional()
+  @IsString({ each: true })
+  pageIds!: string[];
+
+  @IsOptional()
+  @IsString({ each: true })
+  childrenPageIds!: string[];
+
+  @IsOptional()
+  @IsString()
+  parentPageId!: string;
+
+  @IsOptional()
+  @IsString({ each: true })
+  neighborPageIds!: string[];
 }
