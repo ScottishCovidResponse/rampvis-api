@@ -2,6 +2,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 from loguru import logger
 from app.controllers.agents.sensitivity_analysis_agent import convert_data
+from app.controllers.agents.sensitivity_clustering_agent import sensitivity_clustering_agent
+from app.controllers.agents.sensitivity_range_mean_sample_agent import sensitivity_clustering_range_mean_agent
 from app.controllers.agents.data_downloader_agent import download_data
 from app.controllers.agents.uncertainty_mean_sample_agent import uncertainty_mean_sample_agent
 from app.controllers.agents.uncertainty_clustering_agent import uncertainty_clustering_agent
@@ -27,8 +29,15 @@ def uncertainty_agents():
 
 def sensitivity_agents():
     print("Running Sensitivity Analysis Agents")
+    t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)
+    t_s_cluster.start()
+    
+    # Start non clustered threads
     threading.Thread(target=convert_data).start()
-
+    
+    t_s_cluster.join()
+    print("Sensitivity Clustering Complete")
+    threading.Thread(target=sensitivity_clustering_range_mean_agent).start()
 
 def run_agents():
     download_data()

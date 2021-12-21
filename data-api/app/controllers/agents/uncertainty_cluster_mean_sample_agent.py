@@ -12,7 +12,7 @@ import app.controllers.agents.uncertainty_analysis.uncertainty_model_inventory a
 from app.core.settings import DATA_PATH_LIVE
 
 
-def clusters_mean_sample(raw_clusters):
+def clusters_mean_sample(raw_clusters: List[dict]):
     """Computes the mean of a group of time series and draws a random sample for plotting.
     """
 
@@ -29,7 +29,7 @@ def clusters_mean_sample(raw_clusters):
         with open(filename, "r") as read_file:
             imported = json.load(read_file)
 
-        processed_clusters = ct.function_on_clusters(imported, ums.mean_and_sample)  # Evaluate the function mean_all on all clusters
+        processed_clusters = ct.unc_function_on_clusters(imported, ums.mean_and_sample)  # Evaluate the function mean_all on all clusters
 
         ct.save_cluster_data(processed_clusters, "processed", output_filename, imported["metric"], imported["k"],
                              imported["model"])  # Save the processed data
