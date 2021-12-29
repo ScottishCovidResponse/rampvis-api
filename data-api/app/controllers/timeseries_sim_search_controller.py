@@ -33,7 +33,6 @@ class FirstRunForm(BaseModel):
 
 @timeseries_sim_search_controller.post("/")
 async def createform(firstRunForm:FirstRunForm):
-    cube = pd.read_csv(Path(DATA_PATH_LIVE)/'owid/cube.csv')
     targetCountry = firstRunForm.targetCountry
     firstDate = firstRunForm.firstDate
     lastDate = firstRunForm.lastDate
@@ -45,5 +44,5 @@ async def createform(firstRunForm:FirstRunForm):
     endDate = firstRunForm.endDate
     continentCheck = firstRunForm.continentCheck
     continentCheck = continentTransformer(continentCheck)
-    out = firstRunOutput(cube,targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
+    out = firstRunOutput(targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
     return out
