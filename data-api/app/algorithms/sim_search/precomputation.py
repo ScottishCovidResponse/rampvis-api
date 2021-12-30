@@ -7,11 +7,11 @@ def to_cube(df:pd.DataFrame):
     PATH_SEARCH = DATA_PATH_LIVE + "/owid"
     continents = ["Asia","Africa",'Europe','North America','South America','Oceania'] 
     df = df[df.continent.isin(continents)] # get only country objects 
-    df = df[df.date> datetime.datetime.strptime("2020-10-10","%Y-%m-%d")] # data from 1st of January 2021
+    df = df[df.date> datetime.datetime.strptime("2021-01-01","%Y-%m-%d")] # data from 1st of January 2021
 
     raw_streams = ["new_cases","new_deaths","new_cases_per_million","new_deaths_per_million"] 
 
-# Creating Data Streams for Time Series Search and Save #
+    # Creating Data Streams for Time Series Search and Save #
 
     for streams in raw_streams:
         df_filtered = df.filter(items=[streams,"continent","location","date","population"])
@@ -25,23 +25,22 @@ def to_cube(df:pd.DataFrame):
             dates = df_count_prot.date
             df_count = pd.DataFrame(data=indicator.values,index=dates,columns=[country])
             df_count_lst.append(df_count)
-        
+            
 
         df_stream = pd.concat(df_count_lst,axis=1)
-        df_stream = df_stream.dropna(axis=1)
         df_stream = df_stream.rolling(14).mean() # 14-day moving average filter
-        df_stream = df_stream.dropna(axis=0)
+        df_stream.fillna(0,inplace=True)
         df_stream.to_csv(PATH_SEARCH +"/{}.csv".format(streams))
         
         idd = "_".join(streams.split("_")[1:]) # get rids of "new" 
         
         df_stream_weekly = df_stream.rolling(7).sum()
-        df_stream_weekly = df_stream_weekly.dropna(axis=0)
+        df_stream_weekly.fillna(0,inplace=True)
         df_stream_weekly.to_csv(PATH_SEARCH +"/{}.csv".format("_".join(["weekly",idd])))
         
         
         df_stream_biweekly = df_stream.rolling(14).sum()
-        df_stream_biweekly = df_stream_biweekly.dropna(axis=0)
+        df_stream_biweekly.fillna(0,inplace=True)
         df_stream_biweekly.to_csv(PATH_SEARCH +"/{}.csv".format("_".join(["biweekly",idd])))
 
     # Create Population and Continent LookUp Tables
@@ -79,5 +78,7 @@ def to_cube(df:pd.DataFrame):
             df_count = pd.DataFrame(data=indicator.values,index=dates,columns=[country])
             df_count_lst.append(df_count)
         df_stream = pd.concat(df_count_lst,axis=1)
-        df_stream.to_csv(PATH_SEARCH +"/{}.csv".format(streams))   
-    
+        df_stream.to_csv(PATH_SEARCH +"/{}.csv".format(streams))
+
+
+        

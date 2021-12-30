@@ -158,7 +158,7 @@ def firstRunOutput(targetCountry:str,firstDate:datetime.date,lastDate:datetime.d
     country_filter_lst = []
 
     for i in df_prot.columns:
-        if populationLookUp[i]>minPopulation and continentLookUp[i] in continentTransformer(continentCheck):
+        if populationLookUp[i]>minPopulation and continentLookUp[i] in continentCheck:
             country_filter_lst.append(i)
     country_filter_lst
     cubeSliced = df_prot.filter(items=country_filter_lst) 

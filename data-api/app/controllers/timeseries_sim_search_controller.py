@@ -45,4 +45,5 @@ async def createform(firstRunForm:FirstRunForm):
     continentCheck = firstRunForm.continentCheck
     continentCheck = continentTransformer(continentCheck)
     out = firstRunOutput(targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
+    
     return out
