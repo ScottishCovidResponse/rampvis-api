@@ -1,19 +1,14 @@
+from os import lstat
 from pathlib import Path
-import threading
 
 from loguru import logger
-from fastapi import APIRouter, Query, Response, Depends
-import pandas as pd
-import json
+from fastapi import APIRouter
 from app.core.settings import DATA_PATH_LIVE
-from app.algorithms.sim_search.precomputation import to_cube
 from app.algorithms.sim_search.firstrunfunctions import firstRunOutput,continentTransformer
 from app.utils.jwt_service import validate_user_token
 from pydantic import BaseModel
 from typing import List,Dict
 from datetime import date
-
-from app.controllers.agents.time_series_precompute_agent import precompute
 
 timeseries_sim_search_controller = APIRouter()
 
@@ -28,11 +23,14 @@ class FirstRunForm(BaseModel):
     startDate: date
     endDate: date
     continentCheck: Dict[str,bool]
+class BenchmarkCountries(BaseModel):
+    countries: list
 
 
 
-@timeseries_sim_search_controller.post("/")
-async def createform(firstRunForm:FirstRunForm):
+
+@timeseries_sim_search_controller.post("/search/")
+async def searchform(firstRunForm:FirstRunForm):
     targetCountry = firstRunForm.targetCountry
     firstDate = firstRunForm.firstDate
     lastDate = firstRunForm.lastDate
@@ -47,3 +45,9 @@ async def createform(firstRunForm:FirstRunForm):
     out = firstRunOutput(targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
     
     return out
+
+@timeseries_sim_search_controller.post("/compare/")
+async def compareform(benchmarkCountries:BenchmarkCountries):
+    return benchmarkCountries   
+    
+
