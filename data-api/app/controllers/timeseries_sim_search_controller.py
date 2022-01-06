@@ -5,6 +5,7 @@ from loguru import logger
 from fastapi import APIRouter
 from app.core.settings import DATA_PATH_LIVE
 from app.algorithms.sim_search.firstrunfunctions import firstRunOutput,continentTransformer
+from app.algorithms.sim_search.comparefunction import compareOutput
 from app.utils.jwt_service import validate_user_token
 from pydantic import BaseModel
 from typing import List,Dict
@@ -23,6 +24,7 @@ class FirstRunForm(BaseModel):
     startDate: date
     endDate: date
     continentCheck: Dict[str,bool]
+
 class BenchmarkCountries(BaseModel):
     countries: list
 
@@ -48,6 +50,9 @@ async def searchform(firstRunForm:FirstRunForm):
 
 @timeseries_sim_search_controller.post("/compare/")
 async def compareform(benchmarkCountries:BenchmarkCountries):
-    return benchmarkCountries   
+    countries = benchmarkCountries.countries
+    out = compareOutput(countries)
+    return out
+
     
 
