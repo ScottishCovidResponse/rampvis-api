@@ -1,229 +1,220 @@
-import { NextFunction } from 'connect';
-import { inject } from 'inversify';
-import { controller, httpGet } from 'inversify-express-utils';
-import { Request, Response } from 'express-serve-static-core';
+import { NextFunction } from "connect";
+import { inject } from "inversify";
+import { controller, httpGet } from "inversify-express-utils";
+import { Request, Response } from "express-serve-static-core";
 
-import { TYPES } from '../services/config/types';
-import { OntoPageService } from '../services/onto-page.service';
-import { logger } from '../utils/logger';
-import { SearchError, SomethingWentWrong } from '../exceptions/exception';
-import { IOntoPage, PAGE_TYPE } from '../infrastructure/onto-page/onto-page.interface';
-import { OntoPageDto, OntoPageExtDto } from '../infrastructure/onto-page/onto-page.dto';
-import { MAPPING_TYPES } from '../services/config/automapper.config';
-import { queryParamValidate } from '../middleware/validators';
-import { OntoPageFilterVm } from '../infrastructure/onto-page/onto-page-filter.vm';
-import { PaginationVm } from '../infrastructure/pagination.vm';
-import { OntoDataService } from '../services/onto-data.service';
-import { OntoVisService } from '../services/onto-vis.service';
-import { OntoPageSearchService } from '../services/onto-page-search.service';
-import { OntoPageSearchFilterVm } from '../infrastructure/onto-page/onto-page-search-filter.vm';
-import { IOntoPageSearch } from '../infrastructure/onto-page/onto-page-search.interface';
-import { OntoPageSearchDto } from '../infrastructure/onto-page/onto-page-search.dto';
-import { VIS_TYPE } from '../infrastructure/onto-vis/onto-vis-type.enum';
-import generateTitle from '../utils/title-generation';
-import { ThumbnailService } from '../services/thumbnail.service';
-import { IThumbnail } from '../infrastructure/thumbnail/thumbnail.interface';
-import { ThumbnailDto } from '../infrastructure/thumbnail/thumbnail.dto';
-import { OntoDataDto } from '../infrastructure/onto-data/onto-data.dto';
-import { IOntoVis } from '../infrastructure/onto-vis/onto-vis.interface';
-import { ILink } from '../infrastructure/onto-page/link.interface';
-import { IOntoPageTemplate } from '../infrastructure/onto-page/onto-page-template.interface';
+import { TYPES } from "../services/config/types";
+import { OntoPageService } from "../services/onto-page.service";
+import { logger } from "../utils/logger";
+import { SearchError, SomethingWentWrong } from "../exceptions/exception";
+import { IOntoPage, PAGE_TYPE } from "../infrastructure/onto-page/onto-page.interface";
+import { OntoPageDto, OntoPageExtDto } from "../infrastructure/onto-page/onto-page.dto";
+import { MAPPING_TYPES } from "../services/config/automapper.config";
+import { queryParamValidate } from "../middleware/validators";
+import { OntoPageFilterVm } from "../infrastructure/onto-page/onto-page-filter.vm";
+import { PaginationVm } from "../infrastructure/pagination.vm";
+import { OntoDataService } from "../services/onto-data.service";
+import { OntoVisService } from "../services/onto-vis.service";
+import { OntoPageSearchService } from "../services/onto-page-search.service";
+import { OntoPageSearchFilterVm } from "../infrastructure/onto-page/onto-page-search-filter.vm";
+import { IOntoPageSearch } from "../infrastructure/onto-page/onto-page-search.interface";
+import { OntoPageSearchDto } from "../infrastructure/onto-page/onto-page-search.dto";
+import { VIS_TYPE } from "../infrastructure/onto-vis/onto-vis-type.enum";
+import generateTitle from "../utils/title-generation";
+import { ThumbnailService } from "../services/thumbnail.service";
+import { IThumbnail } from "../infrastructure/thumbnail/thumbnail.interface";
+import { ThumbnailDto } from "../infrastructure/thumbnail/thumbnail.dto";
+import { OntoDataDto } from "../infrastructure/onto-data/onto-data.dto";
+import { IOntoVis } from "../infrastructure/onto-vis/onto-vis.interface";
+import { ILink } from "../infrastructure/onto-page/link.interface";
+import { IOntoPageTemplate } from "../infrastructure/onto-page/onto-page-template.interface";
 
 //
 // Un-guarded: to only support GET
 //
 
-@controller('/template')
+@controller("/template")
 export class TemplateController {
-    constructor(
-        @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
-        @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
-        @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
-        @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService,
-        @inject(TYPES.ThumbnailService) private thumbnailService: ThumbnailService
-    ) {}
+  constructor(
+    @inject(TYPES.OntoVisService) private ontoVisService: OntoVisService,
+    @inject(TYPES.OntoDataService) private ontoDataService: OntoDataService,
+    @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
+    @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService,
+    @inject(TYPES.ThumbnailService) private thumbnailService: ThumbnailService
+  ) {}
 
-    @httpGet('/pages/search/', queryParamValidate(OntoPageSearchFilterVm))
-    public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const ontPageSearchFilterVm: OntoPageSearchFilterVm = request.query as any;
-        logger.info(`OntoPageController:search: ontPageSearchFilterVm = ${JSON.stringify(ontPageSearchFilterVm)}`);
+  @httpGet("/pages/search/", queryParamValidate(OntoPageSearchFilterVm))
+  public async search(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const ontPageSearchFilterVm: OntoPageSearchFilterVm = request.query as any;
+    logger.info(`OntoPageController:search: ontPageSearchFilterVm = ${JSON.stringify(ontPageSearchFilterVm)}`);
 
-        try {
-            let ontoPageSearchList: IOntoPageSearch[] = await this.ontoPageSearchService.search(ontPageSearchFilterVm);
+    try {
+      let ontoPageSearchList: IOntoPageSearch[] = await this.ontoPageSearchService.search(ontPageSearchFilterVm);
 
-            // TODO: pagination
-            // const resultDto: PaginationVm<OntoDataDto> = {
-            //     data: automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, result.data),
-            //     page: result.page,
-            //     pageCount: result.pageCount,
-            //     totalCount: result.totalCount,
-            // };
+      // TODO: pagination
+      // const resultDto: PaginationVm<OntoDataDto> = {
+      //     data: automapper.map(MAPPING_TYPES.IOntoDataSearch, MAPPING_TYPES.OntoDataSearchDto, result.data),
+      //     page: result.page,
+      //     pageCount: result.pageCount,
+      //     totalCount: result.totalCount,
+      // };
 
-            let ontoPageSearchDtos: OntoPageSearchDto[] = automapper.map(
-                MAPPING_TYPES.IOntoPageSearch,
-                MAPPING_TYPES.OntoPageSearchDto,
-                ontoPageSearchList
-            );
-            ontoPageSearchDtos = ontoPageSearchDtos.map((d: OntoPageSearchDto) => {
-                console.log('id = ', d.id, 'keywords = ', d.keywords);
-                return { ...d, title: generateTitle([d.keywords]) };
-            });
-            // logger.info(`OntoPageController:search: ontoPageSearchDtos = ${JSON.stringify(ontoPageSearchDto)}`);
-            response.status(200).send(ontoPageSearchDtos);
-        } catch (e: any) {
-            logger.error(`OntoPageController:search: error = ${JSON.stringify(e)}`);
-            next(new SearchError(e.message));
-        }
+      let ontoPageSearchDtos: OntoPageSearchDto[] = automapper.map(
+        MAPPING_TYPES.IOntoPageSearch,
+        MAPPING_TYPES.OntoPageSearchDto,
+        ontoPageSearchList
+      );
+      ontoPageSearchDtos = ontoPageSearchDtos.map((d: OntoPageSearchDto) => {
+        console.log("id = ", d.id, "keywords = ", d.keywords);
+        return { ...d, title: generateTitle([d.keywords]) };
+      });
+      // logger.info(`OntoPageController:search: ontoPageSearchDtos = ${JSON.stringify(ontoPageSearchDto)}`);
+      response.status(200).send(ontoPageSearchDtos);
+    } catch (e: any) {
+      logger.error(`OntoPageController:search: error = ${JSON.stringify(e)}`);
+      next(new SearchError(e.message));
     }
+  }
 
-    @httpGet('/pages/:pageType/', queryParamValidate(OntoPageFilterVm))
-    @httpGet('/pages/:pageType/:visType/', queryParamValidate(OntoPageFilterVm))
-    public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
-        // TODO: Review the onto-page.controller.ts
-        const pageType: PAGE_TYPE | 'all' = request.params.pageType as any;
-        const visType: VIS_TYPE | 'all' = request.params.visType as any;
-        const ontoPageFilterVm: OntoPageFilterVm = request.query as any;
-        // prettier-ignore
-        logger.info(`TemplateController:getPages: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
+  @httpGet("/pages/:pageType/", queryParamValidate(OntoPageFilterVm))
+  @httpGet("/pages/:pageType/:visType/", queryParamValidate(OntoPageFilterVm))
+  public async getPages(request: Request, response: Response, next: NextFunction): Promise<void> {
+    // TODO: Review the onto-page.controller.ts
+    const pageType: PAGE_TYPE | "all" = request.params.pageType as any;
+    const visType: VIS_TYPE | "all" = request.params.visType as any;
+    const ontoPageFilterVm: OntoPageFilterVm = request.query as any;
+    // prettier-ignore
+    logger.info(`TemplateController:getPages: pageType=${pageType}, visType=${visType}, ontoPageFilterVm=${JSON.stringify(ontoPageFilterVm)}`);
 
-        try {
-            const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(
-                pageType,
-                visType,
-                ontoPageFilterVm
-            );
-            const ontoPageDtos: OntoPageDto[] = automapper.map(
-                MAPPING_TYPES.IOntoPage,
-                MAPPING_TYPES.OntoPageDto,
-                result.data
-            );
-            const ontoPageExtDtos: OntoPageExtDto[] = [];
+    try {
+      const result: PaginationVm<IOntoPage> = await this.ontoPageService.getPaginated(
+        pageType,
+        visType,
+        ontoPageFilterVm
+      );
+      const ontoPageDtos: OntoPageDto[] = automapper.map(
+        MAPPING_TYPES.IOntoPage,
+        MAPPING_TYPES.OntoPageDto,
+        result.data
+      );
+      const ontoPageExtDtos: OntoPageExtDto[] = [];
 
-            for (let ontoPageDto of ontoPageDtos) {
-                const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
-                console.log(data);
-                const keywordsList = Object.values(data).map((d) => d?.keywords);
-                const title = generateTitle(keywordsList);
-                ontoPageExtDtos.push({
-                    ...ontoPageDto,
-                    vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                    data: data,
-                    title: title,
-                });
-            }
+      for (let ontoPageDto of ontoPageDtos) {
+        const data = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
+        const keywordsList = Object.values(data).map((d) => d?.keywords);
+        const title = generateTitle(keywordsList);
+        ontoPageExtDtos.push({
+          ...ontoPageDto,
+          vis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
+          data: data,
+          title: title,
+        });
+      }
 
-            const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos };
-            resultDto.data.sort((d1, d2) => d2.date.getTime() - d1.date.getTime());
-            // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
-            response.status(200).send(resultDto);
-        } catch (e: any) {
-            logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
-            next(new SomethingWentWrong(e.message));
-        }
+      const resultDto: PaginationVm<OntoPageExtDto> = { ...result, data: ontoPageExtDtos };
+      resultDto.data.sort((d1, d2) => d2.date.getTime() - d1.date.getTime());
+      // logger.info(`TemplateController:getPages: pageDtos = ${JSON.stringify(resultDto.data.length)}`);
+      response.status(200).send(resultDto);
+    } catch (e: any) {
+      logger.error(`TemplateController:getPages: error = ${JSON.stringify(e)}`);
+      next(new SomethingWentWrong(e.message));
     }
+  }
 
-    @httpGet('/page/:pageId')
-    public async getPageTemplate(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const pageId: string = request.params.pageId;
-        logger.info(`TemplateController:getPageTemplate: pageId = ${pageId}`);
+  @httpGet("/page/:pageId")
+  public async getPageTemplate(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const pageId: string = request.params.pageId;
+    logger.info(`TemplateController:getPageTemplate: pageId = ${pageId}`);
 
-        try {
-            const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
-            const ontoPageDto: OntoPageDto = automapper.map(
-                MAPPING_TYPES.IOntoPage,
-                MAPPING_TYPES.OntoPageDto,
-                ontoPage
-            );
+    try {
+      const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
+      const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
 
-            // onto data
-            const ontoDataDtos: OntoDataDto[] = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
-            // onto data and link of each onto data
-            const ontoDataDtoWithLinks: OntoDataDto[] = await Promise.all(
-                ontoDataDtos.map(async (d: OntoDataDto) => {
-                    const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(d.id);
-                    const links: ILink[] = await this.getPageLinks1(ontoPages);
+      // onto data
+      const ontoDataDtos: OntoDataDto[] = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
+      // onto data and link of each onto data
+      const ontoDataDtoWithLinks: OntoDataDto[] = await Promise.all(
+        ontoDataDtos.map(async (d: OntoDataDto) => {
+          const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(d.id);
+          const links: ILink[] = await this.getPageLinks1(ontoPages);
 
-                    return { ...d, links };
-                })
-            );
+          return { ...d, links };
+        })
+      );
 
-            // title
-            const keywordsList = Object.values(ontoDataDtos).map((d) => d.keywords);
-            const title = generateTitle(keywordsList);
+      // title
+      const keywordsList = Object.values(ontoDataDtos).map((d) => d.keywords);
+      const title = generateTitle(keywordsList);
 
-            const ontoPageTemplate: IOntoPageTemplate = {
-                ...ontoPageDto,
-                ontoVis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
-                ontoData: ontoDataDtoWithLinks,
-                title: title,
-            };
+      const ontoPageTemplate: IOntoPageTemplate = {
+        ...ontoPageDto,
+        ontoVis: await this.ontoVisService.getOntoVisDto(ontoPageDto.visId),
+        ontoData: ontoDataDtoWithLinks,
+        title: title,
+      };
 
-            // example or propagated links
-            if (ontoPageDto?.pageIds) {
-                ontoPageTemplate.links = await this.getPageLinks2(ontoPageDto?.pageIds);
-            }
+      // example or propagated links
+      if (ontoPageDto?.pageIds) {
+        ontoPageTemplate.links = await this.getPageLinks2(ontoPageDto?.pageIds);
+      }
 
-            console.log('ontoPageTemplate = ', ontoPageTemplate);
-            // logger.info(`TemplateController:getPageTemplate: ontoPageTemplate = ${JSON.stringify(ontoPageTemplate)}`);
-            response.status(200).send(ontoPageTemplate);
-        } catch (e: any) {
-            logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
-            next(new SomethingWentWrong(e.message));
-        }
+      console.log("ontoPageTemplate = ", ontoPageTemplate);
+      // logger.info(`TemplateController:getPageTemplate: ontoPageTemplate = ${JSON.stringify(ontoPageTemplate)}`);
+      response.status(200).send(ontoPageTemplate);
+    } catch (e: any) {
+      logger.error(`TemplateController: getPageTemplate: error = ${JSON.stringify(e)}`);
+      next(new SomethingWentWrong(e.message));
     }
+  }
 
-    @httpGet('/link/:dataId')
-    public async getPagesBindingDataId(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const dataId: string = request.params.dataId;
-        logger.info(`TemplateController:getPagesBindingDataId: dataId = ${dataId}`);
+  @httpGet("/link/:dataId")
+  public async getPagesBindingDataId(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const dataId: string = request.params.dataId;
+    logger.info(`TemplateController:getPagesBindingDataId: dataId = ${dataId}`);
 
-        try {
-            const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(dataId);
-            const pageLinks: ILink[] = await this.getPageLinks1(ontoPages);
+    try {
+      const ontoPages: IOntoPage[] = await this.ontoPageService.getPagesBindingDataId(dataId);
+      const pageLinks: ILink[] = await this.getPageLinks1(ontoPages);
 
-            response.status(200).send(pageLinks);
-        } catch (e: any) {
-            logger.error(`TemplateController:getPagesBindingDataId: error = ${JSON.stringify(e)}`);
-            next(new SomethingWentWrong(e.message));
-        }
+      response.status(200).send(pageLinks);
+    } catch (e: any) {
+      logger.error(`TemplateController:getPagesBindingDataId: error = ${JSON.stringify(e)}`);
+      next(new SomethingWentWrong(e.message));
     }
+  }
 
-    @httpGet('/thumbnail/:pageId')
-    public async getThumbnail(request: Request, response: Response, next: NextFunction): Promise<void> {
-        const pageId = request.params.pageId;
-        logger.debug(`TemplateController: getThumbnail: pageId = ${pageId}`);
-        try {
-            const result: IThumbnail = await this.thumbnailService.getThumbnail(pageId);
-            const resultDto: ThumbnailDto = automapper.map(
-                MAPPING_TYPES.IThumbnail,
-                MAPPING_TYPES.ThumbnailDto,
-                result
-            );
-            // logger.debug(`TemplateController: getThumbnail: resultDto = ${result}`);
-            response.status(200).send(result.thumbnail);
-        } catch (error: any) {
-            next(new SomethingWentWrong(error.message));
-        }
+  @httpGet("/thumbnail/:pageId")
+  public async getThumbnail(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const pageId = request.params.pageId;
+    logger.debug(`TemplateController: getThumbnail: pageId = ${pageId}`);
+    try {
+      const result: IThumbnail = await this.thumbnailService.getThumbnail(pageId);
+      const resultDto: ThumbnailDto = automapper.map(MAPPING_TYPES.IThumbnail, MAPPING_TYPES.ThumbnailDto, result);
+      // logger.debug(`TemplateController: getThumbnail: resultDto = ${result}`);
+      response.status(200).send(result.thumbnail);
+    } catch (error: any) {
+      next(new SomethingWentWrong(error.message));
     }
+  }
 
-    private async getPageLinks1(ontoPages: IOntoPage[]): Promise<ILink[]> {
-        const pageLinks: ILink[] = await Promise.all(
-            ontoPages.map(async (d: IOntoPage) => {
-                const ontoVis: IOntoVis = await this.ontoVisService.get(d.visId);
-                return { pageId: d._id.toString(), visFunction: ontoVis.function };
-            })
-        );
-        return pageLinks;
-    }
+  private async getPageLinks1(ontoPages: IOntoPage[]): Promise<ILink[]> {
+    const pageLinks: ILink[] = await Promise.all(
+      ontoPages.map(async (d: IOntoPage) => {
+        const ontoVis: IOntoVis = await this.ontoVisService.get(d.visId);
+        return { pageId: d._id.toString(), visFunction: ontoVis.function };
+      })
+    );
+    return pageLinks;
+  }
 
-    private async getPageLinks2(pageIds: string[]): Promise<ILink[]> {
-        const pageLinks: ILink[] = await Promise.all(
-            pageIds.map(async (d: string) => {
-                const ontoPage: IOntoPage = await this.ontoPageService.get(d);
-                const ontoVis: IOntoVis = await this.ontoVisService.get(ontoPage.visId);
-                return { pageId: ontoPage._id.toString(), visFunction: ontoVis.function };
-            })
-        );
-        return pageLinks;
-    }
+  private async getPageLinks2(pageIds: string[]): Promise<ILink[]> {
+    const pageLinks: ILink[] = await Promise.all(
+      pageIds.map(async (d: string) => {
+        const ontoPage: IOntoPage = await this.ontoPageService.get(d);
+        const ontoVis: IOntoVis = await this.ontoVisService.get(ontoPage.visId);
+        return { pageId: ontoPage._id.toString(), visFunction: ontoVis.function };
+      })
+    );
+    return pageLinks;
+  }
 }

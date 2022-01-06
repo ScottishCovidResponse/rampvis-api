@@ -31,9 +31,9 @@ export class DashboardLinking {
     @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService
   ) {
     try {
-      let hierarchyJSON = readFileSync("src/infrastructure/db/uk-dashboard-hierarchy.json", "utf-8");
+      let hierarchyJSON = readFileSync("src/../../data/assets/uk-dashboard-hierarchy.json", "utf-8");
       this.root = JSON.parse(hierarchyJSON);
-      let namingJSON = readFileSync("src/infrastructure/db/uk-dashboard-visfunction-map.json", "utf-8");
+      let namingJSON = readFileSync("src/../../data/assets/uk-dashboard-visfunction-map.json", "utf-8");
       this.visFunctionMap = JSON.parse(namingJSON);
       this.getVisFunction = (type: string) => this.visFunctionMap[type];
     } catch (e) {
