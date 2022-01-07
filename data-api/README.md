@@ -1,6 +1,6 @@
-# Data API 
+# About
 
-API for data, processing functions, algorithms and propagation. 
+APIs for data, processing functions, algorithms and propagation. 
 
 ## Getting Started
 

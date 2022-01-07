@@ -1,4 +1,4 @@
-# Infrastructure API
+# About
 
 Infrastructure APIs: authentication, user management, ontology operations, data service, etc.
 
