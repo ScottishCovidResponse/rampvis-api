@@ -1,0 +1,8 @@
+node_modules
+logs
+dist
+.tmp
+
+# IDE, editors
+.idea
+.vscode

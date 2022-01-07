@@ -1,23 +1,26 @@
-# Stat API 
+# Data API 
 
-## Development
+API for data, processing functions, algorithms and propagation. 
 
-### Requirements
+## Getting Started
 
-- Python 3.9.2
-- Mongodb
-- Elasticsearch 
+### Prerequisites
+
+- Python >3.9.2
+- MongoDB, Elasticsearch [see](../README.md)
+
+### Start Development Instance
+
+Start an instance in host machine:
 
 ```bash
+# create python 3.9.* environment 
 pip install virtualenv
 virtualenv venv
 source ./venv/bin/activate
 pip install -r requirements.txt
-```
 
-Start a development instance.
-
-```bash
+# start the server
 source ./venv/bin/activate
 uvicorn app.main:app --reload --port 4010 --host 0.0.0.0
 ```
