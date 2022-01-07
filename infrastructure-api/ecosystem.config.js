@@ -4,7 +4,7 @@ module.exports = {
   apps: [
     {
       name: "infrastructure-api",
-      script: "./dist/server.js",
+      script: "./dist/infrastructure-api/src/server.js",
       instances: "max",
       exec_mode: "cluster",
       // watch: true,

@@ -763,7 +763,7 @@ const GROUPS = [
 const TYPES = ['cumulative'];
 const MODELS = ['eera'];
 
-import nameMappings from './name_mapping.json';
+import nameMappings from '../../../data/assets/name_mapping.json';
 const NAME_MAPPINGS: { [key: string]: any } = nameMappings;
 
 function findKeyword(keywords: string[], checkList: string[]): string | null {
