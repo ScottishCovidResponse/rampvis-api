@@ -29,7 +29,9 @@ The screenshot of the API document page:
 
 The documentation work is ongoing and we will complete it soon.
 
-# Thumbnail Generator
+# Thumbnail and Index Services
+
+## Thumbnail Generator
 
 This service generates thumbnail of the pages registered (propagated) to the ontology.
 
@@ -41,7 +43,7 @@ npx ts-node ./thumbnail-generator/main.ts --url "http://localhost:3000/page?id="
 npx ts-node .\thumbnail-generator\main.ts --url "http://localhost:3000/page?id=" --target "file" --el "#charts"
 ```
 
-# Search Indexer
+## Search Indexer
 
 This service index the ontology data into a search engine.
 
