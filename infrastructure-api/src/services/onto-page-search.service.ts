@@ -40,7 +40,7 @@ export class OntoPageSearchService extends SearchService<IOntoPageSearch> {
       },
     };
 
-    logger.info(`OntoPageSearchService:search: dsl =  ${JSON.stringify(dsl)}`);
+    // logger.info(`OntoPageSearchService:search: dsl =  ${JSON.stringify(dsl)}`);
 
     const res = await this._search(dsl);
     let result: IOntoPageSearch[] = res?.hits?.hits?.map((d: any) => {
@@ -61,6 +61,7 @@ export class OntoPageSearchService extends SearchService<IOntoPageSearch> {
         },
       },
     };
+
     // logger.info(`OntoPageSearchService:searchLink: dsl =  ${JSON.stringify(dsl)}`);
 
     const res = await this._search(dsl);

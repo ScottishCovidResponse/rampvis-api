@@ -1,3 +1,6 @@
+//
+// We are resolving links in runtime, so this file can be deleted later on
+//
 import { NextFunction } from "connect";
 import { Request, Response } from "express-serve-static-core";
 import { controller, httpGet } from "inversify-express-utils";
