@@ -48,6 +48,6 @@ echo 262144 >> /proc/sys/vm/max_map_count
 ```
 
 ### Start Internal Services
-The data-api and infrastructure-api are our internal services. See the [data-api README](data-api/README) and [infrastructure-api README](infrastructure-api/README) files.
+The data-api and infrastructure-api are our internal services. See the [data-api README](./data-api/README) and [infrastructure-api README](./infrastructure-api/README) files.
 
 ## BibTex
