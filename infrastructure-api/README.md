@@ -6,7 +6,7 @@ Infrastructure APIs: authentication, user management, ontology operations, data 
 
 ### Prerequisites
 
-- Node version > 16.13.0
+- Node version 16.13.0
 - MongoDB, Elasticsearch [see](../README.md)
 
 ### Start Development Instance

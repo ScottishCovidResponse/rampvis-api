@@ -12,7 +12,14 @@ RESTful APIs of the RAMPVIS system. This repository consist of the following top
    - APIs for ontology and database operations; authentication and user management; other infrastructure related services.
    - Thumbnail and search index services.
 
-## Start External Services
+## Getting Started
+
+Sequence of starting the services:
+
+1. External services
+2. Internal Services
+
+### Start External Services
 
 The infrastructure APIs are dependent on following external services:
 1. MongoDB 
@@ -30,12 +37,17 @@ Run the command to check the containers (e.g., es*, kib*, and mongod*) are start
 docker-compose ps
 ```
 
-### Known Issues and Solutions
+**Known Issues and Solutions**
 
-1. Elasticsearch container requires more than 2GB VM. To setup the VM size run:
+1. The elasticsearch containers require more than 2GB VM. To setup the VM size run:
 
 ```bash
 # Windows-11
 wsl -d docker-desktop 
 echo 262144 >> /proc/sys/vm/max_map_count
 ```
+
+### Start Internal Services
+The data-api and infrastructure-api are our internal services. See the README files in data-api and infrastructure-api folder.
+
+## BibTex
