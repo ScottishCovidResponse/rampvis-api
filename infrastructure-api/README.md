@@ -21,6 +21,14 @@ yarn dev
 yarn dev-win
 ```
 
+## API Documentation
+
+The API documentation and testing endpoints are automatically generated in a web page. The documentation interface can be accessed via: http://localhost:4000/api-docs/swagger.
+The screenshot of the API document page:
+![Screenshot of the API document page](./swagger/apis.png)
+
+The documentation work is ongoing and we will complete it soon.
+
 # Thumbnail Generator
 
 This service generates thumbnail of the pages registered (propagated) to the ontology.

@@ -31,8 +31,9 @@ uvicorn app.main:app --reload --port 4010 --host 0.0.0.0
 ```
 
 
-## API Document
+## API Documentation
 
-In development, the API documentation and testing endpoints are automatically generated and can be accessed via: http://localhost:4010/docs
-![Screenshot](./docs/apis.png)
+The API documentation and testing endpoints are automatically generated in a web page. The documentation interface can be accessed via: http://localhost:4010/docs. The screenshot of the API document page:
+
+![The screenshot of the API document page:](./docs/apis.png)
 
