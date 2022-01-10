@@ -1,6 +1,5 @@
 import pandas as pd
 from app.core.settings import DATA_PATH_LIVE
-countries = ["France","Belgium","Germany","Hungary"];
 PATH_SEARCH = DATA_PATH_LIVE + "/owid"
 streams_to_show = ["biweekly_cases_per_million","biweekly_deaths_per_million","people_vaccinated_per_hundred","weekly_icu_admissions_per_million"];
 
@@ -12,7 +11,7 @@ def compareOutput(benchmarkCountries):
 
         obj = {}
         obj["key"] = streams
-        df_filt = df_prot.filter(items=countries).tail(30).fillna(0)
+        df_filt = df_prot.filter(items=benchmarkCountries).tail(60).fillna(0)
         obj["value"] = df_filt.to_dict()
         obj_lst.append(obj)
     obj_cat  = {}
