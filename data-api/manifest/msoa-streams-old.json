@@ -1,0 +1,37 @@
+[
+   {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=newCasesBySpecimenDateRollingSum&format=csv",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "msoa", "new_cases", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=newCasesBySpecimenDateRollingRate&format=csv",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "msoa", "new_cases_rate", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=newCasesBySpecimenDateChangePercentage&format=csv",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "msoa", "new_cases_change", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&format=csv",
+        "dataType": "cum_timeseries",
+        "keywords": [ "phe", "msoa", "vaccine_first", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&format=csv",
+        "dataType": "cum_timeseries",
+        "keywords": [ "phe", "msoa", "vaccine_second", "daily" ],
+        "description": ""
+    }
+]

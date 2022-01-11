@@ -1,0 +1,8 @@
+indexer.log
+logs
+dist
+.tmp
+
+# IDE, editors
+.idea
+.vscode

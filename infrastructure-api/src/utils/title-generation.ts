@@ -763,7 +763,7 @@ const GROUPS = [
 const TYPES = ['cumulative'];
 const MODELS = ['eera'];
 
-import nameMappings from './name_mapping.json';
+import nameMappings from '../../../data/assets/name_mapping.json';
 const NAME_MAPPINGS: { [key: string]: any } = nameMappings;
 
 function findKeyword(keywords: string[], checkList: string[]): string | null {
@@ -810,7 +810,7 @@ function sameKeyword(keywords: (string | null)[]): string | null {
     return null;
 }
 
-function generateTitle(keywordsList: string[][]): string {
+function generateTitle(keywordsList: string[][]): { location: string, title: string } {
     const locs = [];
     const times = [];
     const topics = [];
@@ -820,19 +820,19 @@ function generateTitle(keywordsList: string[][]): string {
     for (const keywords of keywordsList) {
         let loc = findKeyword(keywords, LOCATIONS);
         if (loc === null) {
-            return '[keywords error] location missing';
+            return { location: "", title: '[keywords error] location missing' };
         }
         locs.push(loc);
 
         let time = findKeyword(keywords, TIMES);
         if (time === null) {
-            return '[keywords error] should have daily, weekly, model, correlation';
+            return { location: "", title: '[keywords error] should have daily, weekly, model, correlation'};
         }
         times.push(time);
 
         let topic = findKeyword(keywords, TOPICS);
         if (topic === null) {
-            return '[keywords error] topic missing';
+            return { location: "", title: '[keywords error] topic missing' };
         }
         topics.push(topic);
 
@@ -869,11 +869,13 @@ function combineToTitle(
     group: string | null,
     type: string | null,
     model: string | null
-) {
-    if (topic === null) {
-        return getNameMapping(loc);
-    }
+) : { location: string, title: string } {
     let result = '';
+
+    if (topic === null) {
+        result = getNameMapping(loc);
+    }
+
     if (model === null) {
         if (time === null) {
             result = `${getNameMapping(loc)} - ${getNameMapping(topic)}`;
@@ -891,7 +893,8 @@ function combineToTitle(
     if (type !== null) {
         result += ' (cumulative)';
     }
-    return result;
+
+    return { location:loc as string, title:result };
 }
 
 function getNameMapping(key: string | null): string {
