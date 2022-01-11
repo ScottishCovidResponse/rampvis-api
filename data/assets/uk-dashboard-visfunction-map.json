@@ -2,5 +2,9 @@
   "toplevel": "DashboardUK",
   "nation_scotland": "DashboardScotland",
   "nhsregion_scotland": "DashboardScotlandNHSBoard",
-  "council_scotland": "DashboardScotlandCouncil"
+  "council_scotland": "DashboardScotlandCouncil", 
+  "nation": "DashboardNation", 
+  "nhs_region_england": "DashboardNHSEnglandRegion", 
+  "utla": "DashboardLTLA",
+  "msoa": "DashboardMSOA"
 }
