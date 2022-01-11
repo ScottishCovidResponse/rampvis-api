@@ -20,6 +20,11 @@
         "save_to": "models/sensitivity/sensitivity_inventory.json"
     },
     {
+        "name": "ents example data set",
+        "url": "https://github.com/rampvisdevelopment/ents_example_dataset/archive/main.zip",
+        "save_to": "ents_format_datasets/example"
+    },
+    {
         "name": "ensemble",
         "url": "https://github.com/rampvisdevelopment/ensemble/archive/master.zip",
         "save_to": "ensemble"
