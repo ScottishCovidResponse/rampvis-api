@@ -23,6 +23,6 @@ pydantic
 loguru
 dependency-injector
 python-multipart
-sandu >= 0.1.0
+sandu >= 0.1.2
 tslearn
 ujson
