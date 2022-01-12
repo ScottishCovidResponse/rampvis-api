@@ -17,7 +17,7 @@ def uncertainty_form_clusters(clusters: List[dict]):
     """Find clusters in raw input data, to enable for cluster-wise analysis.
     
     Args:
-        clusters: List containing dictionaries with the paramters and information for computing clusters.
+        clusters: List containing dictionaries with the parameters and information for computing clusters.
     """
 
     for values in clusters:
@@ -35,8 +35,8 @@ def uncertainty_form_clusters(clusters: List[dict]):
         with open(filename, "r") as read_file:
             x = json.load(read_file, object_hook=lambda d: UncertaintyInput(**d))
 
-        df_clusters = ct.get_k_mean_clusters(x.df(), x.run_name, x.time_name, x.quantity_name, k, metric)
-        input_clusters = ct.form_input_clusters(df_clusters, x.run_name, x.time_name, x.quantity_name)
+        df_clusters = ct.unc_get_k_mean_clusters(x.df(), x.run_name, x.time_name, x.quantity_name, k, metric)
+        input_clusters = ct.unc_form_input_clusters(df_clusters, x.run_name, x.time_name, x.quantity_name)
         ct.save_cluster_data(input_clusters, "clusters", output_filename, metric, k, model)
 
 

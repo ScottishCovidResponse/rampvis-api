@@ -15,6 +15,16 @@
         "save_to": "models/uncertainty/uncertainty_inventory.json"
     },
     {
+        "name": "sensitivity inventory",
+        "url": "https://gist.githubusercontent.com/rampvisdevelopment/acb6a1e6e33d0358553d7de09d6232e0/raw/sensitivity_inventory.json",
+        "save_to": "models/sensitivity/sensitivity_inventory.json"
+    },
+    {
+        "name": "ents example data set",
+        "url": "https://github.com/rampvisdevelopment/ents_example_dataset/archive/main.zip",
+        "save_to": "ents_format_datasets/example"
+    },
+    {
         "name": "ensemble",
         "url": "https://github.com/rampvisdevelopment/ensemble/archive/master.zip",
         "save_to": "ensemble"

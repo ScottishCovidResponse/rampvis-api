@@ -1,18 +1,19 @@
-import { Container } from 'inversify';
-import 'reflect-metadata';
+import { Container } from "inversify";
+import "reflect-metadata";
 
-import { ActivityService } from '../activity.service';
-import { CSVService } from '../csv.service';
-import { ThumbnailService } from '../thumbnail.service';
-import { UserService } from '../user.service';
-import { OntoDataService } from '../onto-data.service';
-import { OntoPageService } from '../onto-page.service';
-import { OntoVisService } from '../onto-vis.service';
-import { OntoDataSearchService } from '../onto-data-search.service';
-import { OntoVisSearchService } from '../onto-vis-search.service';
-import { OntoPageSearchService } from '../onto-page-search.service';
+import { ActivityService } from "../activity.service";
+import { CSVService } from "../csv.service";
+import { ThumbnailService } from "../thumbnail.service";
+import { UserService } from "../user.service";
+import { OntoDataService } from "../onto-data.service";
+import { OntoPageService } from "../onto-page.service";
+import { OntoVisService } from "../onto-vis.service";
+import { OntoDataSearchService } from "../onto-data-search.service";
+import { OntoVisSearchService } from "../onto-vis-search.service";
+import { OntoPageSearchService } from "../onto-page-search.service";
+import { TemplateService } from "../template.service";
 
-import { TYPES } from './types';
+import { TYPES } from "./types";
 
 const DIContainer = new Container();
 
@@ -26,5 +27,6 @@ DIContainer.bind<OntoPageService>(TYPES.OntoPageService).to(OntoPageService);
 DIContainer.bind<OntoDataSearchService>(TYPES.OntoDataSearchService).to(OntoDataSearchService);
 DIContainer.bind<OntoVisSearchService>(TYPES.OntoVisSearchService).to(OntoVisSearchService);
 DIContainer.bind<OntoPageSearchService>(TYPES.OntoPageSearchService).to(OntoPageSearchService);
+DIContainer.bind<TemplateService>(TYPES.TemplateService).to(TemplateService);
 
 export { DIContainer };
