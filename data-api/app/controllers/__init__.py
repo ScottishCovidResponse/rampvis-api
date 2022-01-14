@@ -4,7 +4,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from loguru import logger
 import threading
 
-#Run agents
+# Run agents
 import app.controllers.agents
 from app.controllers.token_controller import token_controller
 from app.controllers.data_serve_controller import data_serve_controller
@@ -21,6 +21,8 @@ from app.controllers.timeseries_sim_search_controller import (
 from app.controllers.ensemble_controller import (
     ensemble_controller,
 )
+from app.controllers.storyboarding_data_controller import storyboarding_data_controller
+
 
 router = APIRouter()
 
@@ -32,9 +34,9 @@ router.include_router(onto_data_search_controller, prefix="/stat/v1/onto-data/se
 router.include_router(
     timeseries_sim_search_controller, prefix="/stat/v1/timeseries-sim-search"
 )
-router.include_router(
-    ensemble_controller, prefix="/stat/v1/ensemble"
-)
+router.include_router(ensemble_controller, prefix="/stat/v1/ensemble")
+router.include_router(storyboarding_data_controller, prefix="/stat/v1/storyboarding")
+
 
 # V0.4 (to check again)
 router.include_router(
@@ -52,4 +54,3 @@ router.include_router(process_data_controller, prefix="/stat/v1/process_data")
 # router.include_router(
 #     hello_router, prefix="/hello", dependencies=[Depends(validate_request)]
 # )
-
