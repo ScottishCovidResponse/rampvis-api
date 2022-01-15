@@ -175,50 +175,7 @@
     },
     {
         "name": "phe",
-        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=cumCasesBySpecimenDate&metric=newCasesBySpecimenDate&format=csv",
-        "save_to": "phe/ltla/newCasesBySpecimenDate.csv",
-        "dataType": "timeseries",
-        "keywords": [
-            "phe",
-            "ltla",
-            "new_cases",
-            "daily"
-        ]
-    },
-    {
-        "name": "phe",
-        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=cumWeeklyNsoDeathsByRegDate&metric=newWeeklyNsoDeathsByRegDate&format=csv",
-        "save_to": "phe/ltla/newWeeklyNsoDeathsByRegDate.csv",
-        "dataType": "cum_timeseries",
-        "keywords": [
-            "phe",
-            "ltla",
-            "covid_deaths",
-            "weekly"
-        ]
-    },
-    {
-        "name": "phe",
-        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&format=csv",
-        "save_to": "phe/ltla/cumVaccinationSecondDoseUptakeByVaccinationDatePercentage.csv",
-        "dataType": "cum_timeseries",
-        "keywords": [
-            "phe",
-            "ltla",
-            "vaccine_second",
-            "daily"
-        ]
-    },
-    {
-        "name": "phe",
-        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=vaccinationsAgeDemographics&format=csv",
-        "save_to": "phe/ltla/vaccinationsAgeDemographics.csv",
-        "dataType": "timeseries",
-        "keywords": [
-            "phe",
-            "ltla",
-            "vaccination",
-            "daily"
-        ]
+        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=newCasesByPublishDate&format=csv",
+        "save_to": "phe/ltla/newCasesByPublishDate.csv"
     }
 ]
