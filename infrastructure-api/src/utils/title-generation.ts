@@ -727,7 +727,8 @@ const REGIONS = [
     'western_isles',
 ];
 const COUNTRIES = ['uk', 'england', 'scotland', 'wales'];
-const LOCATIONS = COUNCILS.concat(REGIONS).concat(COUNTRIES).concat(LTLA_NAMES).concat(MSOA_NAMES);
+const NATIONS = ['e92000001', 'n92000002', 's92000003', 'w92000004'];
+const LOCATIONS = COUNCILS.concat(REGIONS).concat(COUNTRIES).concat(LTLA_NAMES).concat(MSOA_NAMES).concat(NATIONS);
 const TOPICS = [
     'vaccination',
     'all_deaths',

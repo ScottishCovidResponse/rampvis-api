@@ -1,9 +1,44 @@
 [
-   {
+    {
         "urlCode": "API_GOVUK",
-        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumAdmissions&format=json",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumAdmissions&metric=newAdmissions&format=json",
         "dataType": "timeseries",
-        "keywords": [ "phe", "nation", "hospital_admission", "daily", "cumulative" ],
+        "keywords": [ "phe", "nation", "hospital_admission", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumCasesBySpecimenDate&metric=newCasesBySpecimenDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nation", "cases", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumOnsDeathsByRegistrationDate&metric=newOnsDeathsByRegistrationDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nation", "covid_deaths", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=newPeopleVaccinatedFirstDoseByVaccinationDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nation", "vaccine_first", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&metric=newPeopleVaccinatedSecondDoseByVaccinationDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nation", "vaccine_second", "daily" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumVaccinationThirdInjectionUptakeByPublishDatePercentage&metric=newPeopleVaccinatedThirdInjectionByVaccinationDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nation", "vaccine_third", "daily" ],
         "description": ""
     }
 ]
