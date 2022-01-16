@@ -6,7 +6,6 @@
       "name": "England",
       "type": "nation", 
       "children": [
-        [
           {
              "name":"East_of_England",
              "type":"nhs_region_england",
@@ -18566,7 +18565,6 @@
              ]
           }
        ]
-      ]
     },
     {
       "name": "Scotland",
