@@ -1,9 +1,0 @@
-    [
-   {
-        "urlCode": "API_GOVUK",
-        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=vaccinationsAgeDemographics&format=json",
-        "dataType": "timeseries",
-        "keywords": [ "phe", "ltla", "vaccination", "daily" ],
-        "description": ""
-    }
-]
