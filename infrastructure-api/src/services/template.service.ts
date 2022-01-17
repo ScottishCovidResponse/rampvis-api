@@ -147,14 +147,14 @@ export class TemplateService extends DataService<any> {
 
   private async resolveNeighborLinks() {}
 
-  private searchTree(parent: INode | null, current: INode, matchingTitle: string): any {
-    if (current.name.toLocaleLowerCase() == matchingTitle.toLocaleLowerCase()) {
+  private searchTree(parent: INode | null, current: INode, location: string): any {
+    if (current.name.toLocaleLowerCase() == location.toLocaleLowerCase()) {
       return { parent: parent, current: current, children: current?.children, siblings: current?.siblings };
     } else if (current.children != null) {
       let i;
       let result = null;
       for (i = 0; result == null && i < current.children.length; i++) {
-        result = this.searchTree(current, current.children[i], matchingTitle);
+        result = this.searchTree(current, current.children[i], location);
       }
       return result;
     }

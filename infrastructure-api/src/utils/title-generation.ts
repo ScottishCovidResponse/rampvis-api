@@ -647,6 +647,8 @@ const MODELS = ['eera'];
 import nameMappings from '../../../data/assets/name_mapping.json';
 const NAME_MAPPINGS: { [key: string]: any } = nameMappings;
 
+import { logger } from "../utils/logger";
+
 function findKeyword(keywords: string[], checkList: string[]): string | null {
     // Return the keyword in the check list.
     for (const c of checkList) {
@@ -692,6 +694,8 @@ function sameKeyword(keywords: (string | null)[]): string | null {
 }
 
 function generateTitle(keywordsList: string[][]): { location: string, title: string } {
+    logger.info("generateTitle: keywordsList = ", keywordsList.map(d => d));
+
     const locs = [];
     const times = [];
     const topics = [];
@@ -701,18 +705,21 @@ function generateTitle(keywordsList: string[][]): { location: string, title: str
     for (const keywords of keywordsList) {
         let loc = findKeyword(keywords, LOCATIONS);
         if (loc === null) {
+            logger.error(`generateTitle: keywords = ${keywords}, loc is null`);
             return { location: "", title: '[keywords error] location missing' };
         }
         locs.push(loc);
 
         let time = findKeyword(keywords, TIMES);
         if (time === null) {
+            logger.error(`generateTitle: keywords = ${keywords}, time is null`);
             return { location: "", title: '[keywords error] should have daily, weekly, model, correlation'};
         }
         times.push(time);
 
         let topic = findKeyword(keywords, TOPICS);
         if (topic === null) {
+            logger.error(`generateTitle: keywords = ${keywords}, topic is null`);
             return { location: "", title: '[keywords error] topic missing' };
         }
         topics.push(topic);
