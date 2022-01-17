@@ -7,7 +7,6 @@ import { TemplateController } from "./template.controller";
 import { OntoVisController } from "./ontology/onto-vis.controller";
 import { OntoDataController } from "./ontology/onto-data.controller";
 import { OntoPageController } from "./ontology/onto-page.controller";
-import { DashboardLinking } from "./ontology/dashboard-linking.controller";
 
 export {
   AuthController,
@@ -18,6 +17,5 @@ export {
   OntoVisController,
   OntoDataController,
   OntoPageController,
-  DashboardLinking,
   TemplateController,
 };

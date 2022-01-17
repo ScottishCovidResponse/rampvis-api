@@ -7584,5 +7584,9 @@
     "e02000515": "Yiewsley West",
     "e02002784": "York City Centre",
     "e02000929": "York Gardens",
-    "e02006287": "Yoxford, Wenhaston & Walberswick"
+    "e02006287": "Yoxford, Wenhaston & Walberswick",
+    "e92000001": "England",
+    "n92000002": "Northern Ireland", 
+    "s92000003": "Scotland",
+    "w92000004": "Wales"
 }

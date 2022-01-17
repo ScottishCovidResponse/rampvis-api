@@ -25,8 +25,8 @@ import { IOntoPageSearch } from "../infrastructure/onto-page/onto-page-search.in
 interface INode {
   name: string;
   type: string;
-  children: INode[];
-  neighbor?: string[];
+  children?: INode[];
+  siblings?: string[];
 }
 
 @provide(TYPES.TemplateService)
@@ -149,7 +149,7 @@ export class TemplateService extends DataService<any> {
 
   private searchTree(parent: INode | null, current: INode, matchingTitle: string): any {
     if (current.name.toLocaleLowerCase() == matchingTitle.toLocaleLowerCase()) {
-      return { parent: parent, current: current, children: current?.children, neighbor: current?.neighbor };
+      return { parent: parent, current: current, children: current?.children, siblings: current?.siblings };
     } else if (current.children != null) {
       let i;
       let result = null;

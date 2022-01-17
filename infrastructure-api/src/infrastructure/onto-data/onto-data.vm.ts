@@ -1,24 +1,24 @@
-import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
-import { DATA_TYPE } from './onto-data-types';
+import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
+import { DATA_TYPE, URL_CODE } from "./onto-data-types";
 
 export class OntoDataVm {
-    @IsOptional()
-    @IsString()
-    public id!: string;
+  @IsOptional()
+  @IsString()
+  public id!: string;
 
-    @IsString()
-    public urlCode!: string;
+  @IsEnum(URL_CODE)
+  public urlCode!: URL_CODE;
 
-    @IsString()
-    public endpoint!: string;
+  @IsString()
+  public endpoint!: string;
 
-    @IsEnum(DATA_TYPE)
-    public dataType!: DATA_TYPE;
+  @IsEnum(DATA_TYPE)
+  public dataType!: DATA_TYPE;
 
-    @IsArray()
-    public keywords!: string[];
+  @IsArray()
+  public keywords!: string[];
 
-    @IsString()
-    @IsOptional()
-    public description!: string;
+  @IsString()
+  @IsOptional()
+  public description!: string;
 }
