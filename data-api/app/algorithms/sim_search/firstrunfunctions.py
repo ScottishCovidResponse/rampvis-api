@@ -159,9 +159,9 @@ def firstRunOutput(targetCountry:str,firstDate:datetime.date,lastDate:datetime.d
     for i in df_prot.columns:
         if populationLookUp[i]>minPopulation and continentLookUp[i] in continentCheck:
             country_filter_lst.append(i)
-    country_filter_lst
-    cubeSliced = df_prot.filter(items=country_filter_lst) 
+    cubeSliced = df_prot.filter(items=country_filter_lst)
     cubeSliced.index = pd.to_datetime(cubeSliced.index)
+    cubeSliced = cubeSliced.loc[startDate:endDate]
     cubeTimeSeries = timeseries(cubeSliced,(lastDate-firstDate).days)
     result = ranker(cubeTimeSeries,targetCountry,datetime.datetime(lastDate.year,lastDate.month,lastDate.day),method,numberOfResults)
     result[0].insert(0,targetCountry+" "+datetime.datetime.strftime(lastDate,"%Y-%m-%d"))
