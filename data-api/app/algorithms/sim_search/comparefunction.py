@@ -1,7 +1,7 @@
 import pandas as pd
 from app.core.settings import DATA_PATH_LIVE
 PATH_SEARCH = DATA_PATH_LIVE + "/owid"
-streams_to_show = ["biweekly_cases_per_million","biweekly_deaths_per_million","people_vaccinated_per_hundred","weekly_icu_admissions_per_million"];
+streams_to_show = ["biweekly_cases_per_million","biweekly_deaths_per_million","people_vaccinated_per_hundred","weekly_icu_admissions_per_million","stringency_index"];
 
 def compareOutput(benchmarkCountries):
     obj_lst = []
@@ -21,7 +21,7 @@ def compareOutput(benchmarkCountries):
     obj_cat["key"] = "categorical_variables"
     inner_obj = {}
     for i in range(len(df_cat_filt)):
-        inner_obj[df_cat_filt.iloc[i]["location"]] = df_cat_filt.iloc[0].filter(items=df_cat_filt.columns[df_cat_filt.columns.get_loc("stringency_index"):]).to_dict()
+        inner_obj[df_cat_filt.iloc[i]["location"]] = df_cat_filt.iloc[0].filter(items=df_cat_filt.columns[df_cat_filt.columns.get_loc("population"):]).to_dict()
     obj_cat["values"] = inner_obj
     obj_lst.append(obj_cat)
     return obj_lst

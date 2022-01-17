@@ -42,6 +42,21 @@ def to_cube(df:pd.DataFrame):
         df_stream_biweekly = df_stream.rolling(14).sum()
         df_stream_biweekly.fillna(0,inplace=True)
         df_stream_biweekly.to_csv(PATH_SEARCH +"/{}.csv".format("_".join(["biweekly",idd])))
+    
+    df_stringency = df.filter(items=["stringency_index","continent","location","date","population"])
+    country_lst = df_filtered.location.unique()
+    df_grouped = df_filtered.groupby(by=["location"])
+    df_count_lst = []
+
+    for country in country_lst:
+        df_count_prot = df_grouped.get_group(country)
+        indicator = df_count_prot[streams]
+        dates = df_count_prot.date
+        df_count = pd.DataFrame(data=indicator.values,index=dates,columns=[country])
+        df_count_lst.append(df_count)
+    df_stringency = pd.concat(df_count_lst,axis=1) 
+    df_stringency.fillna(0,inplace=True)
+    df_stringency.to_csv(PATH_SEARCH +"/stringency_index.csv")
 
     # Create Population and Continent LookUp Tables
     populationLookUp = {}
@@ -59,7 +74,7 @@ def to_cube(df:pd.DataFrame):
 
 
     # get all quantitative variables from OWID data for qualitative comparison 
-    df_categorical_variables = df_no_dup.filter(items=["continent","location"]+df_no_dup.columns[df_no_dup.columns.get_loc("stringency_index"):].tolist())
+    df_categorical_variables = df_no_dup.filter(items=["continent","location"]+df_no_dup.columns[df_no_dup.columns.get_loc("population"):].tolist())
 
     df_categorical_variables.to_csv(PATH_SEARCH+"/categorical_variables.csv")
 
