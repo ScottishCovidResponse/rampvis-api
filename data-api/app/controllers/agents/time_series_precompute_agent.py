@@ -11,7 +11,7 @@ def precompute():
     try:
         df = pd.read_csv(Path(DATA_PATH_LIVE) / 'owid/full.csv', parse_dates=[3])
         to_cube(df)
-        logger.error("to_cube done")
+        logger.info("to_cube done")
 
     except:
         logger.error('Cube creation error check owid file')
