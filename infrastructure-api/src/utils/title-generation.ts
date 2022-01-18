@@ -149,28 +149,26 @@ function combineToTitle(
     type: string | null,
     model: string | null
 ) : { location: string, title: string } {
-    let result = '';
+    let result = getNameMapping(loc);
 
-    if (topic === null) {
-        result = getNameMapping(loc);
-    }
-
-    if (model === null) {
-        if (time === null) {
-            result = `${getNameMapping(loc)} - ${getNameMapping(topic)}`;
+    if (topic !== null) {
+        if (model === null) {
+            if (time === null) {
+                result = `${getNameMapping(loc)} - ${getNameMapping(topic)}`;
+            }
+            if (loc && time && topic) {
+                result = `${getNameMapping(loc)} - ${getNameMapping(time)} ${getNameMapping(topic)}`;
+            }
+        } else {
+            result = `${getNameMapping(loc)} - ${getNameMapping(time)} ${getNameMapping(model)} ${getNameMapping(topic)}`;
         }
-        if (loc && time && topic) {
-            result = `${getNameMapping(loc)} - ${getNameMapping(time)} ${getNameMapping(topic)}`;
+    
+        if (group !== null) {
+            result += ` by ${getNameMapping(group)}`;
         }
-    } else {
-        result = `${getNameMapping(loc)} - ${getNameMapping(time)} ${getNameMapping(model)} ${getNameMapping(topic)}`;
-    }
-
-    if (group !== null) {
-        result += ` by ${getNameMapping(group)}`;
-    }
-    if (type !== null) {
-        result += ' (cumulative)';
+        if (type !== null) {
+            result += ' (cumulative)';
+        }
     }
 
     return { location:loc as string, title:result };
