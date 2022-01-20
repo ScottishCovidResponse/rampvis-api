@@ -1,0 +1,16 @@
+[
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nhsRegion&metric=cumAdmissions&metric=hospitalCases&metric=newAdmissions&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nhsregion", "group1" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=nhsRegion&metric=cumAdmissionsByAge&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "nhsregion", "group2" ],
+        "description": ""
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumCasesBySpecimenDate&metric=femaleCases&metric=maleCase&metric=newCasesBySpecimenDate&metric=uniqueCasePositivityBySpecimenDateRollingSum&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group1" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=newCasesBySpecimenDateAgeDemographics&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group2" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group3" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumDailyNsoDeathsByDeathDate&metric=femaleDeaths28Days&metric=maleDeaths28Days&metric=newDailyNsoDeathsByDeathDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group4" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_PY",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=vaccinationsAgeDemographics&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group5" ],
+        "description": ""
+    }
+]
