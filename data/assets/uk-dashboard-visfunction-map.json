@@ -5,6 +5,7 @@
   "council_scotland": "DashboardScotlandCouncil", 
   "nation": "DashboardNation", 
   "nhs_region_england": "DashboardNHSEnglandRegion", 
+  "region_england": "DashboardEnglandRegion", 
   "utla": "DashboardUTLA",
   "msoa": "DashboardMSOA"
 }
