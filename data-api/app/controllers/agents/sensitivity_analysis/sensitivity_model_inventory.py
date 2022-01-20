@@ -16,6 +16,7 @@ def get_sensitivity_models() -> List[dict]:
                 name: Name of the quantity, used as a prefix. For example inc_case_raw.json, inc_case_processed.json.
                 mean: Name of column containing mean of quantity.
                 variance: Name of column containing variance of quantity.
+            scalar_features: Scalar features of time series which is used for certain type of analysis, sum for example: [sum, max].
     """
     filename_model_list = Path(DATA_PATH_LIVE) / "models/sensitivity/sensitivity_inventory.json"
 
