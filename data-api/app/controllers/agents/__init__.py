@@ -37,11 +37,10 @@ def sensitivity_agents():
     
     # Start non clustered threads
     threading.Thread(target=convert_data).start()
-    threading.Thread(target=summary_curves_agent).start()
-
     
     t_convert.join()
     print(" SensitivityInput objects created from ents files.")
+    threading.Thread(target=summary_curves_agent).start()
     
     print("Running Sensitivity Analysis Agents")
     t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)
