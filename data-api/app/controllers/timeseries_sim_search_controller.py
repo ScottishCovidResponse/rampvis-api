@@ -10,6 +10,7 @@ from app.utils.jwt_service import validate_user_token
 from pydantic import BaseModel
 from typing import List,Dict
 from datetime import date
+from app.algorithms.sim_search.predictfunctions import predictOutput
 
 timeseries_sim_search_controller = APIRouter()
 
@@ -27,6 +28,10 @@ class FirstRunForm(BaseModel):
 
 class BenchmarkCountries(BaseModel):
     countries: list
+
+class TimeSeries(BaseModel):
+    series : list
+    query :  dict
 
 
 
@@ -55,4 +60,11 @@ async def compareform(benchmarkCountries:BenchmarkCountries):
     return out
 
     
+@timeseries_sim_search_controller.post("/predict/")
+async def predictform(timeSeries:TimeSeries):
+    out = predictOutput(timeSeries)
+    return out
+
+    
+       
 
