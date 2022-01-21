@@ -36,7 +36,7 @@ function upLevel(loc: string): string {
     if (SCOTLAND_COUNCILS.includes(loc)) return 'scotland';
     if (ENGLAND_COUNCILS.includes(loc)) return 'england';
     if (SCOTLAND_REGIONS.includes(loc)) return 'scotland';
-    if (REGIONS.includes(loc)) return 'england';
+    if (NHSREGIONS.includes(loc)) return 'england';
     return '';
 }
 
