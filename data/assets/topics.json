@@ -1,0 +1,23 @@
+[
+    "vaccination",
+    "all_deaths",
+    "covid_deaths",
+    "tests_carried_out",
+    "people_tested",
+    "hospital_confirmed",
+    "icu_confirmed",
+    "tests_reported",
+    "new_cases",
+    "new_cases_rate",
+    "new_cases_change",
+    "hospital_admission",
+    "cumulative_cases",
+    "case_trends",
+    "icu",
+    "hospital",
+    "cases",
+    "sobol",
+    "vaccine_first",
+    "vaccine_second",
+    "vaccine_third"
+]
