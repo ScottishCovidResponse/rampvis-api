@@ -4,12 +4,13 @@ import UTLA_NAMES from '../../../data/assets/utla_codes.json';
 import MSOA_NAMES from '../../../data/assets/msoa_codes.json';
 import SCOTLAND_REGIONS from '../../../data/assets/scotland_regions.json';
 import NHSREGIONS from '../../../data/assets/nhsregions.json';
+import REGIONS from '../../../data/assets/regions.json';
 import TOPICS from '../../../data/assets/topics.json';
 
 const COUNCILS = SCOTLAND_COUNCILS.concat(ENGLAND_COUNCILS);
 const COUNTRIES = ['uk', 'england', 'scotland', 'wales'];
 const NATIONS = ['e92000001', 'n92000002', 's92000003', 'w92000004'];
-const LOCATIONS = COUNCILS.concat(SCOTLAND_REGIONS).concat(NHSREGIONS).concat(COUNTRIES).concat(UTLA_NAMES).concat(MSOA_NAMES).concat(NATIONS);
+const LOCATIONS = COUNCILS.concat(SCOTLAND_REGIONS).concat(NHSREGIONS).concat(REGIONS).concat(COUNTRIES).concat(UTLA_NAMES).concat(MSOA_NAMES).concat(NATIONS);
 
 const TIMES = ['daily', 'weekly', 'model', 'correlation'];
 const GROUPS = ['place_of_death', 'all_sexes_agegroups', 'all_boards', 'all_local_authorities', 'age_group', 'location_type'];
@@ -37,6 +38,7 @@ function upLevel(loc: string): string {
     if (ENGLAND_COUNCILS.includes(loc)) return 'england';
     if (SCOTLAND_REGIONS.includes(loc)) return 'scotland';
     if (NHSREGIONS.includes(loc)) return 'england';
+    if (REGIONS.includes(loc)) return 'england';
     return '';
 }
 
@@ -59,6 +61,11 @@ function maxLoc(locs: string[]): string | null {
     }
     for (const loc of locs) {
         if (NHSREGIONS.includes(loc)) {
+            return locs.length === 1 ? loc : upLevel(loc);
+        }
+    }
+    for (const loc of locs) {
+        if (REGIONS.includes(loc)) {
             return locs.length === 1 ? loc : upLevel(loc);
         }
     }
