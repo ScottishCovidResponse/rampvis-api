@@ -54,7 +54,6 @@ def calculate_summary_curves(input_filename: str, output_filename: str, scalar_m
 def calculate_summary_curves_on_models(model_list):
     folder = Path(DATA_PATH_LIVE)
     for model in model_list:
-        print("Model ", model)
         relative_location = "models/sensitivity/" + model["name"]
         location = str(folder / relative_location)
         for quantity in model["quantities_of_interest"]:
@@ -66,6 +65,6 @@ def calculate_summary_curves_on_models(model_list):
     
         
 def summary_curves_agent():
-    print("SummaryCurves")
     model_list = inventory.get_sensitivity_models()
     calculate_summary_curves_on_models(model_list)
+    print("Summary Curves Calculated")
