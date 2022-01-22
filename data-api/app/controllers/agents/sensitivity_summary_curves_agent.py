@@ -6,7 +6,7 @@ import app.controllers.agents.sensitivity_analysis.sensitivity_model_inventory a
 from typing import Callable
 import random
 import numpy as np
-
+from loguru import logger
 from app.core.settings import DATA_PATH_LIVE
 from pathlib import Path
 
@@ -67,4 +67,4 @@ def calculate_summary_curves_on_models(model_list):
 def summary_curves_agent():
     model_list = inventory.get_sensitivity_models()
     calculate_summary_curves_on_models(model_list)
-    print("Summary Curves Calculated")
+    logger.info("Summary Curves Calculated")

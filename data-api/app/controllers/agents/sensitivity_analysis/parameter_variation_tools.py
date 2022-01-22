@@ -47,7 +47,6 @@ def parameter_variation(df_in: pd.DataFrame, parameters_in: list, bounds_in: lis
     parameters_var = [parameters_in[i] for i in range(len(parameters_in)) if len(bounds_in[i]) > 1]
     bounds_var = [bounds_in[i] for i in range(len(parameters_in)) if len(bounds_in[i]) > 1]
 
-    print("")
     df_s = gpe.get_scalar_features(df_in, quantity_mean_in, quantity_variance_in, scalar_mean_function,
                                  scalar_variance_function)
 
