@@ -12,12 +12,12 @@
     {
         "name": "uncertainty inventory",
         "url": "https://gist.githubusercontent.com/rampvisdevelopment/52a5836735eff0d33692cfd06d049197/raw/uncertainty_inventory.json",
-        "save_to": "models/uncertainty/uncertainty_inventori.json"
+        "save_to": "models/uncertainty/uncertainty_inventory.json"
     },
     {
         "name": "sensitivity inventory",
         "url": "https://gist.githubusercontent.com/rampvisdevelopment/acb6a1e6e33d0358553d7de09d6232e0/raw/sensitivity_inventory.json",
-        "save_to": "models/sensitivity/sensitivity_inventori.json"
+        "save_to": "models/sensitivity/sensitivity_inventory.json"
     },
     {
         "name": "ents example data set",

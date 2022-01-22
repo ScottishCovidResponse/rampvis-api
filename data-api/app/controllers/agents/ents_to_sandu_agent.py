@@ -108,7 +108,7 @@ def ents_to_sandu_agent():
         # filepath to folder containing an Ensemble Time Series (ents) format dataset.
         folder = Path(DATA_PATH_LIVE)
         relative_location = "ents_format_datasets/" + model["name"]
-        location = str(folder / relative_location)
+        location = folder / relative_location
 
         # List containing dictionaries with information needed to make SensitivityInput objects.
         quantities_of_interest = model["quantities_of_interest"]
