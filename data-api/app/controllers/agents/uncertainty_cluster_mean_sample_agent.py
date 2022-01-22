@@ -23,7 +23,7 @@ def clusters_mean_sample(raw_clusters: List[dict]):
 
         # Check if file exists
         if not filename.is_file():
-            logger.info("CANNOT FIND ", filename)
+            logger.info("CANNOT FIND " + filename)
             return
 
         with open(filename, "r") as read_file:

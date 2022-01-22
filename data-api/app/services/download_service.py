@@ -152,6 +152,7 @@ def download_urls(urls, folder):
         try:
             # Convert to lower case to make it consistent with previous convention
             save_to = str(folder/url['save_to']).lower()
+            logger.info("Saving file from URL to: " + save_to)
             parentfolder = Path(save_to).parents[0]
             parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
@@ -180,6 +181,7 @@ def download_urls(urls, folder):
                     zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
                     zipfile.extract(zipinfo, path=save_to)
         except Exception as e:
+            logger.info("Failed to download a file from URL")
             logger.exception(e)
 
     print('Download from URLs has finished')
