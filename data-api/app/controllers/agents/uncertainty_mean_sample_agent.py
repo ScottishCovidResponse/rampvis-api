@@ -19,7 +19,7 @@ def compute_mean_sample(input_filename, output_filename):
 
     # Check if file exists
     if not input_filename.is_file():
-        logger.info("CANNOT FIND " + input_filename)
+        logger.info("CANNOT FIND " + str(input_filename))
         return
 
     with open(input_filename, "r") as read_file:

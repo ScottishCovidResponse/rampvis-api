@@ -25,7 +25,7 @@ def form_output_clusters(clusters: List[dict]):
 
         # Check if file exists
         if not filename.is_file():
-            logger.info("CANNOT FIND " + filename)
+            logger.info("CANNOT FIND " + str(filename))
             return
 
         with open(filename, "r") as read_file:
@@ -57,7 +57,7 @@ def form_input_clusters(clusters: List[dict]):
 
         # Check if file exists
         if not filename.is_file():
-            logger.info("CANNOT FIND " + filename)
+            logger.info("CANNOT FIND " + str(filename))
             return
 
         with open(filename, "r") as read_file:
