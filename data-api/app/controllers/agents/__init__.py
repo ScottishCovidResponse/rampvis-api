@@ -44,7 +44,7 @@ def sensitivity_agents():
         threading.Thread(target=convert_data).start()
         
         t_convert.join()
-        logger.info(" SensitivityInput objects created from ents files.")
+        logger.info("SensitivityInput objects created from ents files.")
         threading.Thread(target=summary_curves_agent).start()
         
         logger.info("Running Sensitivity Analysis Agents")
