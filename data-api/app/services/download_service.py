@@ -180,6 +180,7 @@ def download_urls(urls, folder):
                 for zipinfo in zipinfos:
                     zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
                     zipfile.extract(zipinfo, path=save_to)
+            logger.info("File saved, no Exception raised")
         except Exception as e:
             logger.info("Failed to download a file from URL")
             logger.exception(e)
