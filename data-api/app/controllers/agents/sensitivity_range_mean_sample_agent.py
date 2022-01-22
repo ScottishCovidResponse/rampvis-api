@@ -62,7 +62,7 @@ def get_cluster_list(model_list: List[dict]) -> List[dict]:
         for i in model["k"]:
             for metric in model["metric"]:
                 for quantity in model["quantities_of_interest"]:
-                    with open(str(folder) + "/models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw.json", "r") as read_file:
+                    with open(str(folder / Path("models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw.json")), "r") as read_file:
                         x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
                         
                     parameters = [x.parameters[i] for i in range(len(x.parameters)) if len(x.bounds[i]) > 1]

@@ -55,12 +55,12 @@ def calculate_summary_curves_on_models(model_list):
     folder = Path(DATA_PATH_LIVE)
     for model in model_list:
         relative_location = "models/sensitivity/" + model["name"]
-        location = str(folder / relative_location)
+        location = folder / relative_location
         for quantity in model["quantities_of_interest"]:
-            input_filename = location + "/" + quantity["name"] + "_raw.json"
+            input_filename = location / Path(quantity["name"] + "_raw.json")
             for scalar_feature in model["scalar_features"]:
                 scalar_function = {"sum": sum, "max": np.max}
-                output_filename = location + "/" + quantity["name"] +"_" + scalar_feature + "_summary_curves.json"
+                output_filename = location / Path(quantity["name"] +"_" + scalar_feature + "_summary_curves.json")
                 calculate_summary_curves(input_filename,output_filename,scalar_mean_function = scalar_function[scalar_feature], scalar_variance_function= scalar_function[scalar_feature])
     
         
