@@ -60,7 +60,7 @@ def sensitivity_agents():
 
 def run_agents():
     download_data()
-#    threading.Thread(target=precompute).start()
+    threading.Thread(target=precompute).start()
     threading.Thread(target=uncertainty_agents).start()
     threading.Thread(target=sensitivity_agents).start()
 
