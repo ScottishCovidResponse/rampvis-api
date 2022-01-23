@@ -6,15 +6,19 @@ APIs for data, processing functions, algorithms and propagation.
 
 ### Prerequisites
 
-- Python 3.9.2
+- Python 3.8.12
 - MongoDB, Elasticsearch [see](../README.md)
 
 ### Start Development Instance
 
-Start an instance in host machine:
+Conda environment
 
 ```bash
-# create python 3.9.* environment 
+ conda env create --file environment.yaml
+```
+
+Pip environement
+```bash
 pip install virtualenv
 virtualenv venv
 
@@ -25,8 +29,11 @@ source ./venv/bin/activate
 
 # install dependencies
 pip install -r requirements.txt
+```
 
-# start the server
+Start the server in host machine:
+
+```bash
 uvicorn app.main:app --reload --port 4010 --host 0.0.0.0
 ```
 

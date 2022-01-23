@@ -16,11 +16,15 @@ from app.services.search_service import SearchService
 from app.services.elasticsearch_service import ElasticsearchService
 from app.algorithms.propagation import Propagation
 
+from app.algorithms.cluster_gpu import cluster_gpu
+from numba import cuda
 
-onto_data_search_controller = APIRouter()
+use_gpu = False
+
+propagation_controller = APIRouter()
 
 
-@onto_data_search_controller.get("/ping")
+@propagation_controller.get("/ping")
 async def ping(
     database_service: DatabaseService = Depends(MongoDBService),
     search_service: SearchService = Depends(ElasticsearchService),
@@ -33,7 +37,7 @@ async def ping(
     return status
 
 
-@onto_data_search_controller.post("/group", dependencies=[Depends(validate_user_token)])
+@propagation_controller.post("/group", dependencies=[Depends(validate_user_token)])
 async def search_group(
     query: PropagateDataQueryModel,
     database_service: DatabaseService = Depends(MongoDBService),
@@ -103,7 +107,6 @@ async def search_group(
             detail=f"Propagate: Sdd computation error = {e}",
         )
 
-
     n_clusters = int(len(discovered) / len(example))
 
     logger.info(
@@ -111,7 +114,20 @@ async def search_group(
     )
     logger.debug(f"Propagate: n_clusters = {n_clusters}")
 
-    clusters = propagation.cluster(Sdd, n_clusters)
+    clusters = None
+
+    try:
+        if cuda.is_available() and use_gpu:
+            clusters = cluster_gpu(Sdd, n_clusters)
+        else:
+            clusters = propagation.cluster(Sdd, n_clusters)
+    except Exception as e:
+        logger.error(f"Propagate: clustering error = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Propagate: clustering error = {e}",
+        )
+
     groups = propagation.group_data_streams(Srd, discovered, clusters)
 
     return Response(

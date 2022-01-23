@@ -6,6 +6,8 @@ from sklearn.feature_extraction import text
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.cluster import SpectralClustering
+from sklearn.cluster import MiniBatchKMeans
+from sklearn.cluster import KMeans
 
 
 class Propagation:
@@ -33,20 +35,19 @@ class Propagation:
             f"Propagate: compute jaccard similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
         )
 
-        result = np.zeros(shape=(len(X), len(Y)))
+        sim = np.zeros(shape=(len(X), len(Y)))
         i = 0
         j = 0
 
         for item_x in X:
             for item_y in Y:
-                result[i][j] = jaccard_score(item_x, item_y, average="micro")
+                sim[i][j] = jaccard_score(item_x, item_y, average="micro")
                 j += 1
 
             j = 0
             i += 1
 
-        logger.info(f"Propagate: jaccard similarity; len(result) = {len(result)}")
-        return result
+        return sim
 
     @staticmethod
     def pairwise_cosine_similarity(X, Y):
@@ -69,7 +70,9 @@ class Propagation:
         )
 
         if D is not None:
-            logger.info(f"len(D) = {len(D)}")
+            logger.info(
+                f"Propagate: compute weighted average for Srd, len(D) = {len(D)}"
+            )
             return T * (alpha * K + beta * D)
         else:
             return T * K
@@ -82,7 +85,9 @@ class Propagation:
         )
 
         if D is not None:
-            logger.info(f"len(D) = {len(D)}")
+            logger.info(
+                f"Propagate: compute weighted average for Sdd, len(D) = {len(D)}"
+            )
             return alpha * K + beta * D
         else:
             return K
@@ -97,7 +102,9 @@ class Propagation:
         """
         # TODO: type and empty check
 
-        logger.info(f"Propagate: compute Srd, alpha = {alpha}, beta = {beta}, theta={theta}")
+        logger.info(
+            f"Propagate: compute Srd, alpha = {alpha}, beta = {beta}, theta={theta}"
+        )
 
         data = np.concatenate((reference, discovered))
         rows = len(reference)
@@ -150,7 +157,9 @@ class Propagation:
         Return:
         C: pair-wise similarity matrix
         """
-        logger.info(f"Propagate: compute Sdd, alpha = {alpha}, beta = {beta}, theta={theta}")
+        logger.info(
+            f"Propagate: compute Sdd, alpha = {alpha}, beta = {beta}, theta={theta}"
+        )
 
         keywords = [d["keywords"] for d in discovered]
         count_vectorizer = CountVectorizer(
@@ -185,17 +194,22 @@ class Propagation:
             return [0]
 
         clustering = SpectralClustering(n_clusters=n_clusters).fit(Sdd)
-        # clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage='complete').fit(M2)
-        # clustering = MiniBatchKMeans(n_clusters=n_clusters).fit(M2)
+        # clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage='complete').fit(Sdd)
+        # clustering = MiniBatchKMeans(n_clusters=n_clusters, random_state=0, batch_size=10, max_iter=10).fit(Sdd)
+        # clustering = KMeans(n_clusters=n_clusters, random_state=0).fit(Sdd)
 
-        logger.debug(f"Propagate: computed clusters from Sdd, len(clustering.labels_) = {len(clustering.labels_)}")
+        logger.info(
+            f"Propagate: computed clusters from Sdd, len(clustering.labels_) = {len(clustering.labels_)}"
+        )
         return clustering.labels_
 
     @staticmethod
     def group_data_streams(Srd, discovered, clusters):
         """ """
         np.set_printoptions(threshold=sys.maxsize)
-        logger.info(f"Propagate: group data streams len(Srd) = {len(Srd)}, len(discovered) = {len(discovered)}, len(clusters) = {len(clusters)}")
+        logger.info(
+            f"Propagate: group data streams len(Srd) = {len(Srd)}, len(discovered) = {len(discovered)}, len(clusters) = {len(clusters)}"
+        )
 
         group_dict = dict()
 
@@ -226,5 +240,5 @@ class Propagation:
 
         groups.sort(key=lambda x: x["score"], reverse=True)
         logger.info(f"Propagate: grouped data streams, len(groups) = {len(groups)}")
-        
+
         return groups
