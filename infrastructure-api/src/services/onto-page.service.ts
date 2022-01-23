@@ -127,6 +127,38 @@ export class OntoPageService extends DataService<IOntoPage> {
     return await this.create(ontoPage);
   }
 
+  public async createPages(ontoPageVms: OntoPageVm[]): Promise<any> {
+    const response = { success: 0, duplicate: 0, error: 0 };
+    for (let ontoPageVm of ontoPageVms) {
+      let exits = await this.getPageBindingVisIdAndDataIds(ontoPageVm.visId, ontoPageVm.dataIds);
+      if (exits.length) {
+        response.duplicate += 1;
+        continue;
+      }
+
+      let ontoPage: IOntoPage = {
+        _id: new ObjectId(),
+        pageType: ontoPageVm.pageType,
+        date: new Date(),
+        visId: ontoPageVm.visId,
+        dataIds: ontoPageVm.dataIds,
+      };
+
+      ontoPageVm?.pageIds?.length > 0 && (ontoPage.pageIds = ontoPageVm.pageIds);
+      ontoPageVm?.childrenPageIds?.length > 0 && (ontoPage.childrenPageIds = ontoPageVm.childrenPageIds);
+      ontoPageVm?.parentPageId && (ontoPage.parentPageId = ontoPageVm.parentPageId);
+      ontoPageVm?.neighborPageIds?.length > 0 && (ontoPage.neighborPageIds = ontoPageVm.neighborPageIds);
+
+      try {
+        this.create(ontoPage);
+        response.success += 1;
+      } catch (e) {
+        response.error += 1;
+      }
+    }
+    return response;
+  }
+
   public async updatePage(pageId: string, ontoPageVm: OntoPageVm): Promise<IOntoPage> {
     let existingOntoPage: IOntoPage = await this.get(pageId);
     if (!existingOntoPage) throw new IdDoesNotExist(pageId);
