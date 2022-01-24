@@ -40,10 +40,10 @@ class ElasticsearchService(SearchService):
 
     def build_query(
         self,
-        must_keys: list[str],
-        should_keys: list[str],
-        filter_keys: list[str],
-        must_not_keys: list[str] = None,
+        must_keys: list,
+        should_keys: list,
+        filter_keys: list,
+        must_not_keys: list = None,
         minimum_should_match: int = 1,
     ) -> dict:
 
@@ -54,8 +54,8 @@ class ElasticsearchService(SearchService):
         must_not_keys = [d.lower() for d in must_not_keys]
 
         if len(should_keys) == 0:
-              minimum_should_match = 0
-                
+            minimum_should_match = 0
+
         if not must_not_keys:
             must_not_keys = [d.lower() for d in must_not_keys]
 

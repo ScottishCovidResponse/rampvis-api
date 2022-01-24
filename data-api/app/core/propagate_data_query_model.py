@@ -7,7 +7,7 @@ class PropagateDataQueryModel(BaseModel):
     mustKeys: list
     shouldKeys: list
     filterKeys: list
-    mustNotKeys: Optional[list[str]]
+    mustNotKeys: Optional[list]
     minimumShouldMatch: int
     alpha: float
     beta: float
