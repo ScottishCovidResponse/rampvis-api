@@ -11,13 +11,13 @@ APIs for data, processing functions, algorithms and propagation.
 
 ### Start Development Instance
 
-Conda environment
+Create Python environment using conda
 
 ```bash
  conda env create --file environment.yaml
 ```
 
-Pip environement
+Create Python environment using pip (it will not install all packages, ignore this now)
 ```bash
 pip install virtualenv
 virtualenv venv

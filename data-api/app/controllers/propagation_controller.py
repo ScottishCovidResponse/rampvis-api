@@ -16,11 +16,7 @@ from app.services.search_service import SearchService
 from app.services.elasticsearch_service import ElasticsearchService
 from app.algorithms.propagation import Propagation
 
-from app.algorithms.cluster_gpu import cluster_gpu
-from numba import cuda
-
 use_gpu = False
-
 propagation_controller = APIRouter()
 
 
@@ -117,8 +113,17 @@ async def search_group(
     clusters = None
 
     try:
-        if cuda.is_available() and use_gpu:
-            clusters = cluster_gpu(Sdd, n_clusters)
+        if use_gpu is True:
+            from app.algorithms.cluster_gpu import cluster_gpu
+            from numba import cuda
+
+            if cuda.is_available():
+                clusters = cluster_gpu(Sdd, n_clusters)
+            else:
+                raise HTTPException(
+                    status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Propagate: clustering error = {e}",
+                )
         else:
             clusters = propagation.cluster(Sdd, n_clusters)
     except Exception as e:
