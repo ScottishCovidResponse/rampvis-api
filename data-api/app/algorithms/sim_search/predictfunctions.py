@@ -69,12 +69,14 @@ def callTimeSeries(grouped_obj,query_form):
         df_query = pd.read_csv(PATH_SEARCH+"/{}.csv".format(file),parse_dates=[0],index_col=0)
         df_query = df_query.filter(items= [query_form["country"]]) 
         df_query = df_query.loc[query_form["first_date"]:query_form["last_date"]]
+        df_query.index = df_query.index.date
         time_series["query"][key] = df_query.to_dict()[query_form["country"]]
         time_series["meancurves"][key] = mean_time_series.get_mean(df_trans, "day", key)
          
     return time_series
 
 def objectToUI(time_series,query_form):
+    out_lst =[]
     for key in time_series["meancurves"]:  
         mean_length = len(time_series["meancurves"][key].index)
         last_date = datetime.strptime(query_form["last_date"],"%Y-%m-%d")
@@ -83,15 +85,18 @@ def objectToUI(time_series,query_form):
         predict_lst = beg_predict + np.arange(mean_length) * day_delta
         time_series["meancurves"][key].set_index(predict_lst,inplace=True)
         time_series["meancurves"][key].drop("day",axis=1,inplace=True)
+        time_series["meancurves"][key].index =time_series["meancurves"][key].index.date
         time_series["meancurves"][key] = time_series["meancurves"][key].to_dict()[key]
-        
 
         for countries in time_series["series"][key]:
             series_length = len(time_series["series"][key][countries])
             series_predict_list = beg_predict + np.arange(series_length)*day_delta
             time_series["series"][key][countries].set_index(series_predict_list,inplace=True)
+            time_series["series"][key][countries].index = time_series["series"][key][countries].index.date
             time_series["series"][key][countries] =  time_series["series"][key][countries].to_dict()[countries]
-    return time_series
+    out_lst.append(time_series)
+    return out_lst
+
 
 def predictOutput(predict_input):
     prot = predict_input.series
