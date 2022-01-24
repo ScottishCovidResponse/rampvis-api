@@ -152,13 +152,12 @@ def download_urls(urls, folder):
         try:
             # Convert to lower case to make it consistent with previous convention
             save_to = folder/(url['save_to'].lower())
-            logger.info("Saving file from URL to: " + str(save_to))
             parentfolder = Path(save_to).parents[0]
             parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
             if url['name'] == 'phe':
                 df = pd.read_csv(url['url'], encoding='iso-8859-1')
-
+                logger.info("phe data saved to: " + str(save_to))
                 # Split the file based on area code
                 area_types = parse_qs(urlparse(url['url']).query).get('areaType')
                 if area_types and len(area_types) and area_types[0] != 'overview':
@@ -166,13 +165,16 @@ def download_urls(urls, folder):
                 else:
                     df.to_csv(save_to, index=None)
             elif url['url'].lower().endswith('.csv'):
+                logger.info("CSV file saved to: " + str(save_to))
                 df = pd.read_csv(url['url'])
                 df.to_csv(save_to, index=None)
             elif url['url'].lower().endswith('.json'):
+                logger.info("JSON file saved to: " + str(save_to))
                 r = requests.get(url['url'])
                 with open(save_to, "w", encoding="utf-8") as f:
                     json.dump(r.json(), f, ensure_ascii=False, indent=4)
             elif url['url'].lower().endswith('.zip'): #download and unzip zip files
+                logger.info("Zip file saved to: " + str(save_to))
                 http_response = urlopen(url['url'])
                 zipfile = ZipFile(BytesIO(http_response.read()))
                 zipinfos = zipfile.infolist()
@@ -180,7 +182,7 @@ def download_urls(urls, folder):
                 for zipinfo in zipinfos:
                     zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
                     zipfile.extract(zipinfo, path=save_to)
-            logger.info("File saved, no Exception raised")
+            logger.info("File saved")
         except Exception as e:
             logger.info("Failed to download a file from URL")
             logger.exception(e)
