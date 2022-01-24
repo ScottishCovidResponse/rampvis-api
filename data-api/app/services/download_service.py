@@ -151,8 +151,8 @@ def download_urls(urls, folder):
     for url in urls:
         try:
             # Convert to lower case to make it consistent with previous convention
-            save_to = str(folder/url['save_to']).lower()
-            logger.info("Saving file from URL to: " + save_to)
+            save_to = folder/(url['save_to'].lower())
+            logger.info("Saving file from URL to: " + str(save_to))
             parentfolder = Path(save_to).parents[0]
             parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
