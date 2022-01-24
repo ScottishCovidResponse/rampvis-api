@@ -16,6 +16,7 @@ import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
 from ..utils.naming import format_component_name
+from app.utils.common import own_removeprefix
 
 def to_df(f, key):
     print('converting', key)
@@ -177,12 +178,14 @@ def download_urls(urls, folder):
                 logger.info("Downloading Zip file from: " + url['url'])
                 logger.info("Saving Zip file to: " + str(save_to))
                 http_response = urlopen(url['url'])
+                logger.info("Getting http_response")
                 zipfile = ZipFile(BytesIO(http_response.read()))
+                logger.info("Creating zip file")
                 zipinfos = zipfile.infolist()
-                logger.info("Zip file received")
+                logger.info("Zip file created")
                 # iterate through each file and remove the top directory
                 for zipinfo in zipinfos:
-                    zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
+                    zipinfo.filename = own_removeprefix(zipinfo.filename, (zipinfo.filename.split('/')[0]))  #Removes the top level folder when extracting
                     zipfile.extract(zipinfo, path=save_to)
                 logger.info("Zip file extracted")
             logger.info("File saved")

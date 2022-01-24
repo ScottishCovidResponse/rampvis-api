@@ -74,7 +74,7 @@ def form_input_clusters(clusters: List[dict]):
             df["cluster"] = clusters
 
             # Generate filename
-            output_filename_param = str(output_filename).removesuffix('.json')
+            output_filename_param = own_removesuffix(str(output_filename), '.json')
             output_filename_param = output_filename_param + "_" + parameter + ".json"
 
             # cluster_raw_data:
