@@ -8,6 +8,7 @@ import app.controllers.agents.uncertainty_analysis.clustering_tools as ct
 import app.controllers.agents.sensitivity_analysis.sensitivity_model_inventory as inventory
 from app.core.settings import DATA_PATH_LIVE
 from loguru import logger
+from app.utils.common import own_removesuffix
 
 def form_output_clusters(clusters: List[dict]):
     """Find clusters in raw input data, by looking at the output/time series, to enable for cluster-wise analysis.
