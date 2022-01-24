@@ -174,10 +174,12 @@ def download_urls(urls, folder):
                 with open(save_to, "w", encoding="utf-8") as f:
                     json.dump(r.json(), f, ensure_ascii=False, indent=4)
             elif url['url'].lower().endswith('.zip'): #download and unzip zip files
+                logger.info("Downloading Zip file from: " + url['url'])
                 logger.info("Saving Zip file to: " + str(save_to))
                 http_response = urlopen(url['url'])
                 zipfile = ZipFile(BytesIO(http_response.read()))
                 zipinfos = zipfile.infolist()
+                logger.info("Zip file received")
                 # iterate through each file and remove the top directory
                 for zipinfo in zipinfos:
                     zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
@@ -185,7 +187,7 @@ def download_urls(urls, folder):
                 logger.info("Zip file extracted")
             logger.info("File saved")
         except Exception as e:
-            logger.info("Failed to download a file from URL")
+            logger.error("Failed to download a file from URL", e)
             logger.exception(e)
 
     print('Download from URLs has finished')
