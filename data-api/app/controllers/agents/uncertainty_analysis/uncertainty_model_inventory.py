@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 from app.core.settings import DATA_PATH_LIVE
 from typing import List
-
+from loguru import logger
 
 def get_uncertainty_models() -> List[dict]:
     """Parses the inventory file, containing information on what models and clusterings are present. 
@@ -16,7 +16,7 @@ def get_uncertainty_models() -> List[dict]:
     filename_model_list = Path(DATA_PATH_LIVE) / "models/uncertainty/uncertainty_inventory.json"
 
     if not filename_model_list.is_file():
-        print("CANNOT FIND ", filename_model_list)
+        logger.info("CANNOT FIND " + str(filename_model_list))
         return
     with open(filename_model_list) as f:
         model_list = json.load(f)
