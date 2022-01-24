@@ -112,6 +112,30 @@ export class OntoPageController {
     }
   }
 
+  @httpPost("/pages", vmValidate(OntoPageVm))
+  public async createPages(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const ontoPageVms: OntoPageVm[] = request.body as any;
+    logger.info(`OntoPageController:createPages: ontoPageVms = ${JSON.stringify(ontoPageVms)}`);
+
+    try {
+      const res: any = await this.ontoPageService.createPages(ontoPageVms);
+
+      const user = request.user as IUser;
+      await this.activityService.createActivity(
+        user,
+        ACTIVITY_TYPE.ONTO_PAGES,
+        ACTIVITY_ACTION.CREATE,
+        user._id.toString()
+      );
+
+      logger.info(`OntoPageController:createPage: response = ${JSON.stringify(res)}`);
+      response.status(200).send(res);
+    } catch (e: any) {
+      logger.error(`OntoPageController:createPage: error = ${JSON.stringify(e)}`);
+      next(new SomethingWentWrong(e.message));
+    }
+  }
+
   @httpPut("/page/:pageId", vmValidate(OntoPageVm))
   public async updatePage(request: Request, response: Response, next: NextFunction): Promise<void> {
     const pageId: string = request.params.pageId;
