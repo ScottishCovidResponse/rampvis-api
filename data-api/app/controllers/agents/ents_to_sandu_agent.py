@@ -101,6 +101,82 @@ def get_bounds(ents_in: str, parameters):
         bounds.append(bounds_entry)
     return bounds
 
+def semantic_operation(df_in, parameters_in, bounds_in, input_string):
+
+    parameter_replacement_dictionary = {}
+    for parameter in parameters_in:
+        parameter_replacement_dictionary[str("p:"+parameter)] = parameter
+
+    parameter_replacement_dictionary_rows = {}
+    for parameter in parameters_in:
+        parameter_replacement_dictionary_rows[str("p:"+parameter)] = str('row["'+parameter+'"]')
+    print("here1!")
+    operation_replacement_dictionary_name = {
+        "o:+":"plus",
+        "o:-":"minus",
+        "o:*":"times",
+        "o:/":"div",
+        "o:(":"para",
+        "o:)":"para"
+    }
+    operation_replacement_dictionary = {
+        "o:+":"+",
+        "o:-":"-",
+        "o:*":"*",
+        "o:/":"/",
+        "o:(":"(",
+        "o:)": ")"
+    }
+    replacement_dictionary = dict(parameter_replacement_dictionary, **operation_replacement_dictionary_name)
+
+    # Check all inputs are valid
+    words = input_string.split(" ")
+    for word in words:
+        if word not in replacement_dictionary:
+            print("Prescribed operation: " + input_string)
+            print("Contains invalid entry: "+ word)
+            return df_in, parameters_in, bounds_in
+        
+    operation_name = input_string
+
+    for short_hand, value in replacement_dictionary.items():
+        operation_name = operation_name.replace(short_hand, value)
+        
+    operation_name = ''.join(filter(str.isalpha, operation_name))
+    print("operation_name: ", operation_name)
+    
+    operation_row_expression = input_string
+    replacement_dictionary_rows = dict(parameter_replacement_dictionary_rows, **operation_replacement_dictionary)
+    for short_hand, value in replacement_dictionary_rows.items():
+        operation_row_expression = operation_row_expression.replace(short_hand, value)
+
+    df_out = df_in
+    df_out[operation_name] = df_out.apply(lambda row: eval(operation_row_expression), axis=1)
+    parameters_out = parameters_in
+    parameters_out.append(operation_name)
+    #add new bound
+    upper_bound = df_out[operation_name].max().item()
+    lower_bound = df_out[operation_name].min().item()
+    bounds_entry = [lower_bound, upper_bound] if upper_bound != lower_bound else [upper_bound]
+    bounds_out = bounds_in
+    bounds_out.append(bounds_entry)
+    return df_out, parameters_out, bounds_out
+
+def semantic_operations(df_in, parameters_in, bounds_in):
+    operations = ["p:p_s o:+ p:p_inf"]
+    df_out = df_in
+    parameters_out = parameters_in
+    bounds_out = bounds_in
+    print("here!")
+    try:
+        for operation in operations:
+            print("operation ", operation)
+            df_out, parameters_out, bounds_out = semantic_operation(df_out, parameters_out, bounds_out, operation)
+    except:
+        print("failed to compute interaction")
+        return df_in, parameters_in, bounds_in
+    else:
+        return df_out, parameters_out, bounds_out
 
 def ents_to_sandu_agent():
     model_list = inventory.get_sensitivity_models()
@@ -115,6 +191,8 @@ def ents_to_sandu_agent():
 
         df = make_dataframe(location, quantities_of_interest)
         parameters, bounds = get_parameters_and_bounds(location)
+
+        df, parameters, bounds = semantic_operations(df, parameters, bounds)
 
         for quantity in quantities_of_interest:
             filename = "models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw.json"
