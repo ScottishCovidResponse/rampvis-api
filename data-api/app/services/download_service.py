@@ -157,7 +157,7 @@ def download_urls(urls, folder):
 
             if url['name'] == 'phe':
                 df = pd.read_csv(url['url'], encoding='iso-8859-1')
-                logger.info("phe data saved to: " + str(save_to))
+                logger.info("Saving phe data to: " + str(save_to))
                 # Split the file based on area code
                 area_types = parse_qs(urlparse(url['url']).query).get('areaType')
                 if area_types and len(area_types) and area_types[0] != 'overview':
@@ -165,16 +165,16 @@ def download_urls(urls, folder):
                 else:
                     df.to_csv(save_to, index=None)
             elif url['url'].lower().endswith('.csv'):
-                logger.info("CSV file saved to: " + str(save_to))
+                logger.info("Saving CSV file to: " + str(save_to))
                 df = pd.read_csv(url['url'])
                 df.to_csv(save_to, index=None)
             elif url['url'].lower().endswith('.json'):
-                logger.info("JSON file saved to: " + str(save_to))
+                logger.info("Saving JSON file saved: " + str(save_to))
                 r = requests.get(url['url'])
                 with open(save_to, "w", encoding="utf-8") as f:
                     json.dump(r.json(), f, ensure_ascii=False, indent=4)
             elif url['url'].lower().endswith('.zip'): #download and unzip zip files
-                logger.info("Zip file saved to: " + str(save_to))
+                logger.info("Saving Zip file to: " + str(save_to))
                 http_response = urlopen(url['url'])
                 zipfile = ZipFile(BytesIO(http_response.read()))
                 zipinfos = zipfile.infolist()
@@ -182,6 +182,7 @@ def download_urls(urls, folder):
                 for zipinfo in zipinfos:
                     zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
                     zipfile.extract(zipinfo, path=save_to)
+                logger.info("Zip file extracted")
             logger.info("File saved")
         except Exception as e:
             logger.info("Failed to download a file from URL")
