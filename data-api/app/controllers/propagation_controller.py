@@ -74,7 +74,7 @@ async def search_group(
     logger.info(f"Propagate: search query = {query}")
 
     # 3
-    discovered = search_service.search(query)
+    discovered = search_service.search(query, use_gpu)
     logger.info(
         f"Propagate: search response, len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
     )
