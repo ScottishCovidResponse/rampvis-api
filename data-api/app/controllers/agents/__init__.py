@@ -4,6 +4,7 @@ from loguru import logger
 from app.controllers.agents.sensitivity_analysis_agent import convert_data
 from app.controllers.agents.sensitivity_clustering_agent import sensitivity_clustering_agent
 from app.controllers.agents.sensitivity_range_mean_sample_agent import sensitivity_clustering_range_mean_agent
+from app.controllers.agents.sensitivity_summary_curves_agent import summary_curves_agent
 from app.controllers.agents.ents_to_sandu_agent import ents_to_sandu_agent
 from app.controllers.agents.data_downloader_agent import download_data
 from app.controllers.agents.uncertainty_mean_sample_agent import uncertainty_mean_sample_agent
@@ -39,6 +40,7 @@ def sensitivity_agents():
     
     t_convert.join()
     print(" SensitivityInput objects created from ents files.")
+    threading.Thread(target=summary_curves_agent).start()
     
     print("Running Sensitivity Analysis Agents")
     t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)

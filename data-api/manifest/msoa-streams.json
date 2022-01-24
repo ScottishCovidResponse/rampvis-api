@@ -1,9 +1,16 @@
 [
-   {
+    {
         "urlCode": "API_GOVUK",
-        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=newCasesBySpecimenDateRollingSum&metric=newCasesBySpecimenDateRollingRate&metric=newCasesBySpecimenDateChangePercentage&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&format=json",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=newCasesBySpecimenDateRollingSum&metric=newCasesBySpecimenDateRollingRate&metric=newCasesBySpecimenDateChangePercentage&format=json",
         "dataType": "timeseries",
-        "keywords": [ "phe", "msoa" ],
+        "keywords": [ "phe", "msoa", "group1" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=msoa&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationThirdInjectionUptakeByVaccinationDatePercentage&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "msoa", "group2" ],
         "description": ""
     }
 ]
