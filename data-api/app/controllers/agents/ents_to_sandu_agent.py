@@ -110,7 +110,6 @@ def semantic_operation(df_in, parameters_in, bounds_in, input_string):
     parameter_replacement_dictionary_rows = {}
     for parameter in parameters_in:
         parameter_replacement_dictionary_rows[str("p:"+parameter)] = str('row["'+parameter+'"]')
-    print("here1!")
     operation_replacement_dictionary_name = {
         "o:+":"plus",
         "o:-":"minus",
@@ -167,7 +166,6 @@ def semantic_operations(df_in, parameters_in, bounds_in):
     df_out = df_in
     parameters_out = parameters_in
     bounds_out = bounds_in
-    print("here!")
     try:
         for operation in operations:
             print("operation ", operation)

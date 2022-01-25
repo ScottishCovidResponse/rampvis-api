@@ -10,7 +10,7 @@ from loguru import logger
 from app.core.settings import DATA_PATH_LIVE
 from pathlib import Path
 
-def calculate_summary_curves(input_filename: str, output_filename: str, scalar_mean_function: Callable[[list], float], scalar_variance_function: Callable[[list], float]):
+def calculate_summary_curves(input_filename: str, output_filename: str, scalar_mean_function: Callable[[list], float], scalar_variance_function: Callable[[list], float],interactions = []):
     # Load Sensitivity Input Object
     with open(input_filename, "r") as read_file:
         x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
@@ -27,7 +27,7 @@ def calculate_summary_curves(input_filename: str, output_filename: str, scalar_m
 
     # Saving data to Json
     output = []
-
+    print("Interactions are ", interactions)
     for i, parameter in enumerate(parameters_var):
 
         dataPoints = []
@@ -60,6 +60,7 @@ def calculate_summary_curves_on_models(model_list):
             input_filename = location / Path(quantity["name"] + "_raw.json")
             for scalar_feature in model["scalar_features"]:
                 scalar_function = {"sum": sum, "max": np.max}
+
                 output_filename = location / Path(quantity["name"] +"_" + scalar_feature + "_summary_curves.json")
                 calculate_summary_curves(input_filename,output_filename,scalar_mean_function = scalar_function[scalar_feature], scalar_variance_function= scalar_function[scalar_feature])
     
