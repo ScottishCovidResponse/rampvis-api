@@ -59,8 +59,8 @@ def sensitivity_agents():
         logger.exception(e)
 
 def run_agents():
-#    download_data()
-#    threading.Thread(target=precompute).start()
+    download_data()
+    threading.Thread(target=precompute).start()
     threading.Thread(target=uncertainty_agents).start()
     threading.Thread(target=sensitivity_agents).start()
 
