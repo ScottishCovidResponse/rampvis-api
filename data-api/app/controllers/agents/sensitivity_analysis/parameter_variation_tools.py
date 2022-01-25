@@ -87,7 +87,7 @@ def parameter_variation(df_in: pd.DataFrame, parameters_in: list, bounds_in: lis
     # Now deal with user specified interactions
     df_temp, _ ,_ = it.custom_inputs(df_in, parameters_in, bounds_in, interactions_in)
     df_padded, parameters_padded, bounds_padded = it.custom_inputs_gpe(temp_model, temp_scaler, problem_all, parameters_in, quantity_mean_in,
-                                                                                 bounds_in, N_in, 4, interactions_in)
+                                                                                 bounds_in, N_in, 2, interactions_in)
     param_length = len(parameters_in)
     n_interactions = len(parameters_padded)-param_length
     interacting_parameters = parameters_padded[-n_interactions:]

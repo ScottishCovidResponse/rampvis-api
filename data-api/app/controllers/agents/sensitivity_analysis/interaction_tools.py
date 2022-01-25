@@ -12,12 +12,12 @@ def semantic_operation(df_in, parameters_in, bounds_in, input_string):
     for parameter in parameters_in:
         parameter_replacement_dictionary_rows[str("p:" + parameter)] = str('row["' + parameter + '"]')
     operation_replacement_dictionary_name = {
-        "o:+": "plus",
-        "o:-": "minus",
-        "o:*": "times",
-        "o:/": "div",
-        "o:(": "para",
-        "o:)": "para"
+        "o:+": "_p_",
+        "o:-": "_m_",
+        "o:*": "_t_",
+        "o:/": "_d_",
+        "o:(": "par",
+        "o:)": "par"
     }
     operation_replacement_dictionary = {
         "o:+": "+",
