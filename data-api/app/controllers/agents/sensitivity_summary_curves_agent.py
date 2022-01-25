@@ -10,7 +10,9 @@ from loguru import logger
 from app.core.settings import DATA_PATH_LIVE
 from pathlib import Path
 
-def calculate_summary_curves(input_filename: str, output_filename: str, scalar_mean_function: Callable[[list], float], scalar_variance_function: Callable[[list], float],interactions = []):
+
+def calculate_summary_curves(input_filename: str, output_filename: str, scalar_mean_function: Callable[[list], float],
+                             scalar_variance_function: Callable[[list], float], interactions_in=[]):
     # Load Sensitivity Input Object
     with open(input_filename, "r") as read_file:
         x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
@@ -23,16 +25,15 @@ def calculate_summary_curves(input_filename: str, output_filename: str, scalar_m
     # Compute statistics for a parameter variation plot
     parameters_var, datapoints_x_var, datapoints_y_var, steps_var, y_var, y_mean_var = \
         pvt.parameter_variation(x.df(), x.parameters, x.bounds, x.quantity_mean, x.quantity_variance, N_in, n_steps=n_steps,
-                               scalar_mean_function = scalar_mean_function, scalar_variance_function = scalar_variance_function)
+                                scalar_mean_function=scalar_mean_function, scalar_variance_function=scalar_variance_function, interactions_in=interactions_in)
 
     # Saving data to Json
     output = []
-    print("Interactions are ", interactions)
     for i, parameter in enumerate(parameters_var):
 
         dataPoints = []
         for j, dx in enumerate(datapoints_x_var[i]):
-            dataPoints.append({"x":datapoints_x_var[i][j], "y":datapoints_y_var[i][j]})
+            dataPoints.append({"x": datapoints_x_var[i][j], "y": datapoints_y_var[i][j]})
 
         # all lines
         dataAll = []
@@ -40,16 +41,18 @@ def calculate_summary_curves(input_filename: str, output_filename: str, scalar_m
         y_subset = random.sample(y_var[i], 64)
         for idx, line in enumerate(y_subset):
             for j, y in enumerate(line):
-                dataAll.append({"x":steps_var[i][j], "y": line[j], "iter": idx})
+                dataAll.append({"x": steps_var[i][j], "y": line[j], "iter": idx})
 
         dataMean = []
         for j, y_m in enumerate(y_mean_var[i]):
             dataMean.append({"x": steps_var[i][j], "y": y_mean_var[i][j]})
-        output_temp = {"parameter": parameter, "dataPoints": dataPoints, "dataAll": dataAll, "dataMean": dataMean, "runName": "iter", "quantityName": x.quantity_mean, "scalarFeature": str(scalar_mean_function.__name__)}
+        output_temp = {"parameter": parameter, "dataPoints": dataPoints, "dataAll": dataAll, "dataMean": dataMean, "runName": "iter",
+                       "quantityName": x.quantity_mean, "scalarFeature": str(scalar_mean_function.__name__)}
         output.append(output_temp)
 
     with open(output_filename, "w", encoding="utf-8") as f:
         ujson.dump(output, f, ensure_ascii=False, indent=4)
+
 
 def calculate_summary_curves_on_models(model_list):
     folder = Path(DATA_PATH_LIVE)
@@ -61,10 +64,11 @@ def calculate_summary_curves_on_models(model_list):
             for scalar_feature in model["scalar_features"]:
                 scalar_function = {"sum": sum, "max": np.max}
 
-                output_filename = location / Path(quantity["name"] +"_" + scalar_feature + "_summary_curves.json")
-                calculate_summary_curves(input_filename,output_filename,scalar_mean_function = scalar_function[scalar_feature], scalar_variance_function= scalar_function[scalar_feature])
-    
-        
+                output_filename = location / Path(quantity["name"] + "_" + scalar_feature + "_summary_curves.json")
+                calculate_summary_curves(input_filename, output_filename, scalar_mean_function=scalar_function[scalar_feature],
+                                         scalar_variance_function=scalar_function[scalar_feature], interactions_in=model["interactions"])
+
+
 def summary_curves_agent():
     model_list = inventory.get_sensitivity_models()
     calculate_summary_curves_on_models(model_list)

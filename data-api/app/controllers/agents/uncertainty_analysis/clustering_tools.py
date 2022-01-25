@@ -200,7 +200,7 @@ def sens_form_input_clusters(df_clusters_in, parameters, bounds, quantity_mean, 
     unique_clusters = df_clusters_in["cluster"].unique()
     clusters = []
     for i, cluster in enumerate(unique_clusters):
-        g_df = g.get_group(i)
+        g_df = g.get_group(cluster)
         new_sensitvity_input = SensitivityInput(g_df.to_json(index=False, orient="split"), parameters, bounds,
                                                 quantity_mean, quantity_variance)
         clusters.append(new_sensitvity_input.__dict__)
