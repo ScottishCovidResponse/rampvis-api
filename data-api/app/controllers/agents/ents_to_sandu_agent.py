@@ -27,7 +27,7 @@ def output_file_name(ents_in: str, index: str) -> str:
     Returns:
         output_file_name: The name and path to file output_i.csv.
     """
-    output_file_name = ents_in + "/output_" + str(index) + ".csv"
+    output_file_name = ents_in / Path("output_" + str(index) + ".csv")
     return output_file_name
 
 
@@ -46,8 +46,8 @@ def make_dataframe(ents_in: str, quantities_of_interest: List[dict]) -> pd.DataF
     Returns:
         df: dataframe containing parameters-quantity_of_interests_mean/variance
     """
-    df = pd.read_csv(ents_in + "/parameters.csv")
-    df_temp = pd.read_csv(ents_in + "/output_metadata.csv")
+    df = pd.read_csv(ents_in / "parameters.csv")
+    df_temp = pd.read_csv(ents_in / "output_metadata.csv")
     desc = df_temp["description"]
     time_name = df_temp.loc[df_temp["description"] == "time_unit"]["output"].at[0]
     for quantity in quantities_of_interest:
@@ -75,7 +75,7 @@ def get_parameters_and_bounds(ents_in: str) -> Tuple[list, list]:
         bounds: List containing the lower and upper bounds of the parameters as [lower, upper],
             in the same order as the parameters list.
     """
-    df = pd.read_csv(ents_in + "/parameters_metadata.csv")
+    df = pd.read_csv(ents_in / "parameters_metadata.csv")
     parameters = df["parameter"].to_list()
     bounds = get_bounds(ents_in, parameters)
     return parameters, bounds
@@ -92,7 +92,7 @@ def get_bounds(ents_in: str, parameters):
         bounds: List containing the lower and upper bounds of the parameters as [lower, upper],
             in the same order as the parameters list.
     """
-    df = pd.read_csv(ents_in + "/parameters.csv")
+    df = pd.read_csv(ents_in / "parameters.csv")
     bounds = []
     for parameter in parameters:
         upper_bound = df[parameter].max().item()
@@ -183,8 +183,8 @@ def ents_to_sandu_agent():
     for model in model_list:
         # filepath to folder containing an Ensemble Time Series (ents) format dataset.
         folder = Path(DATA_PATH_LIVE)
-        relative_location = "ents_format_datasets/" + model["name"]
-        location = str(folder / relative_location)
+        relative_location = Path("ents_format_datasets") / Path(model["name"])
+        location = folder / relative_location
 
         # List containing dictionaries with information needed to make SensitivityInput objects.
         quantities_of_interest = model["quantities_of_interest"]

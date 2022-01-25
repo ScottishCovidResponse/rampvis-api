@@ -16,6 +16,7 @@ import numpy as np
 
 from data_pipeline_api.registry.downloader import Downloader
 from ..utils.naming import format_component_name
+from app.utils.common import own_removeprefix
 
 def to_df(f, key):
     print('converting', key)
@@ -151,13 +152,13 @@ def download_urls(urls, folder):
     for url in urls:
         try:
             # Convert to lower case to make it consistent with previous convention
-            save_to = str(folder/url['save_to']).lower()
+            save_to = folder/(url['save_to'].lower())
             parentfolder = Path(save_to).parents[0]
             parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
             if url['name'] == 'phe':
                 df = pd.read_csv(url['url'], encoding='iso-8859-1')
-
+                logger.info("Saving phe data to: " + str(save_to))
                 # Split the file based on area code
                 area_types = parse_qs(urlparse(url['url']).query).get('areaType')
                 if area_types and len(area_types) and area_types[0] != 'overview':
@@ -165,21 +166,31 @@ def download_urls(urls, folder):
                 else:
                     df.to_csv(save_to, index=None)
             elif url['url'].lower().endswith('.csv'):
+                logger.info("Saving CSV file to: " + str(save_to))
                 df = pd.read_csv(url['url'])
                 df.to_csv(save_to, index=None)
             elif url['url'].lower().endswith('.json'):
+                logger.info("Saving JSON file saved: " + str(save_to))
                 r = requests.get(url['url'])
                 with open(save_to, "w", encoding="utf-8") as f:
                     json.dump(r.json(), f, ensure_ascii=False, indent=4)
             elif url['url'].lower().endswith('.zip'): #download and unzip zip files
+                logger.info("Downloading Zip file from: " + url['url'])
+                logger.info("Saving Zip file to: " + str(save_to))
                 http_response = urlopen(url['url'])
+                logger.info("Getting http_response")
                 zipfile = ZipFile(BytesIO(http_response.read()))
+                logger.info("Creating zip file")
                 zipinfos = zipfile.infolist()
+                logger.info("Zip file created")
                 # iterate through each file and remove the top directory
                 for zipinfo in zipinfos:
-                    zipinfo.filename = zipinfo.filename.removeprefix(zipinfo.filename.split('/')[0])  #Removes the top level folder when extracting
+                    zipinfo.filename = own_removeprefix(zipinfo.filename, (zipinfo.filename.split('/')[0]))  #Removes the top level folder when extracting
                     zipfile.extract(zipinfo, path=save_to)
+                logger.info("Zip file extracted")
+            logger.info("File saved")
         except Exception as e:
+            logger.error("Failed to download a file from URL", e)
             logger.exception(e)
 
     print('Download from URLs has finished')
