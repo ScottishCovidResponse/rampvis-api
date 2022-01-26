@@ -28,7 +28,9 @@ def download_data():
         #     download_to_csvs(manifest, DATA_PATH_RAW, DATA_PATH_LIVE, DATA_PATH_STATIC)
 
         download_owid(DATA_PATH_LIVE)
-        download_open_data(DATA_PATH_LIVE)
+
+        # Not use
+        # download_open_data(DATA_PATH_LIVE)
 
         with open("manifest/urls.json") as f:
             urls = json.load(f)

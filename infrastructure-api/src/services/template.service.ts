@@ -25,8 +25,8 @@ import { IOntoPageSearch } from "../infrastructure/onto-page/onto-page-search.in
 interface INode {
   name: string;
   type: string;
-  children: INode[];
-  neighbor?: string[];
+  children?: INode[];
+  siblings?: string[];
 }
 
 @provide(TYPES.TemplateService)
@@ -71,6 +71,27 @@ export class TemplateService extends DataService<any> {
     return ontoPageExtDtos;
   }
 
+  public async resolveDatastraemLinks(ontoPages: IOntoPage[]): Promise<ILink[]> {
+    const pageLinks: ILink[] = await Promise.all(
+      ontoPages.map(async (d: IOntoPage) => {
+        const ontoVis: IOntoVis = await this.ontoVisService.get(d.visId);
+        return { pageId: d._id.toString(), name: ontoVis.function };
+      })
+    );
+    return pageLinks;
+  }
+
+  public async resolvePropagatedLinks(pageIds: string[]): Promise<ILink[]> {
+    const pageLinks: ILink[] = await Promise.all(
+      pageIds.map(async (d: string) => {
+        const ontoPage: IOntoPage = await this.ontoPageService.get(d);
+        const ontoVis: IOntoVis = await this.ontoVisService.get(ontoPage.visId);
+        return { pageId: ontoPage._id.toString(), name: ontoVis.function };
+      })
+    );
+    return pageLinks;
+  }
+
   public async resolvePageExtAndLinks(ontoPageDto: OntoPageDto) {
     // link of each data stream
     const ontoDataDtos: OntoDataDto[] = await this.ontoDataService.getOntoDataDtos(ontoPageDto.dataIds);
@@ -112,76 +133,72 @@ export class TemplateService extends DataService<any> {
     return ontoPageExtDto;
   }
 
-  public async resolveDatastraemLinks(ontoPages: IOntoPage[]): Promise<ILink[]> {
-    const pageLinks: ILink[] = await Promise.all(
-      ontoPages.map(async (d: IOntoPage) => {
-        const ontoVis: IOntoVis = await this.ontoVisService.get(d.visId);
-        return { pageId: d._id.toString(), name: ontoVis.function };
-      })
-    );
-    return pageLinks;
-  }
-
-  public async resolvePropagatedLinks(pageIds: string[]): Promise<ILink[]> {
-    const pageLinks: ILink[] = await Promise.all(
-      pageIds.map(async (d: string) => {
-        const ontoPage: IOntoPage = await this.ontoPageService.get(d);
-        const ontoVis: IOntoVis = await this.ontoVisService.get(ontoPage.visId);
-        return { pageId: ontoPage._id.toString(), name: ontoVis.function };
-      })
-    );
-    return pageLinks;
-  }
-
   private async resolveNeighborhoodLinks(location: string, visFunction: string): Promise<any> {
     // prettier-ignore
     logger.debug(`TemplateService:resolveNeighborhoodLinks: search visFunction = ${visFunction}, location = ${location}`);
     if (!this.inVisFunctionMap(visFunction)) return;
 
-    const { parent, current, children } = this.searchTree(null, this.tree, location) || {};
+    const { parent, current, children } = this.searchTree(undefined, this.tree, location) || {};
+    // prettier-ignore
+    logger.debug(`TemplateService:resolveNeighborhoodLinks: current.length = ${current?.length}, parent.length = ${JSON.stringify(parent?.length)}, children.length = ${JSON.stringify(children?.length)}`);
+
     const parentLink = parent && (await this.searchPage(parent));
     const childrenLinks = children && (await this.searchPage(children));
+
+    // prettier-ignore
+    logger.debug(`TemplateService:resolveNeighborhoodLinks: parentLink = ${JSON.stringify(parentLink)}, childrenLinks = ${JSON.stringify(childrenLinks)}`);
 
     return { parentLink, childrenLinks };
   }
 
   private async resolveNeighborLinks() {}
 
-  private searchTree(parent: INode | null, current: INode, matchingTitle: string): any {
-    if (current.name.toLocaleLowerCase() == matchingTitle.toLocaleLowerCase()) {
-      return { parent: parent, current: current, children: current?.children, neighbor: current?.neighbor };
-    } else if (current.children != null) {
+  private searchTree(parent: INode | undefined, current: INode, location: string): any {
+    logger.debug(`TemplateService:searchTree: current.name = ${current.name}, location = ${location}`);
+
+    if (current.name.toLocaleLowerCase() === location.toLocaleLowerCase()) {
+      return { parent: parent, current: current, children: current?.children, siblings: current?.siblings };
+    } else if (current.children) {
       let i;
-      let result = null;
-      for (i = 0; result == null && i < current.children.length; i++) {
-        result = this.searchTree(current, current.children[i], matchingTitle);
+      let result;
+      for (i = 0; result && i < current.children.length; i++) {
+        result = this.searchTree(current, current.children[i], location);
       }
+      logger.debug(`TemplateService:searchTree: result = ${JSON.stringify(result)}`);
       return result;
     }
-    return null;
+    logger.debug(`TemplateService:searchTree: result = null`);
+    return undefined;
   }
 
   private async searchPage(node: INode | INode[]) {
-    const search = async (node: INode): Promise<ILink> => {
+    // search function
+    const search = async (node: INode): Promise<ILink | undefined> => {
+      logger.debug(`TemplateService:searchPage: search args = ${this.visFunctionMap.get(node.type)}, ${node.name}`);
       const pages: IOntoPageSearch[] = await this.ontoPageSearchService.searchPage(
         this.visFunctionMap.get(node.type),
-        node.name
+        node.name.toLocaleLowerCase()
       );
-      return pages && { name: node.name, pageId: pages[0]?._id.toString() };
+
+      let result;
+      if (pages && pages[0]?._id.toString()) {
+        result = { name: node.name, pageId: pages[0]?._id.toString() };
+        logger.debug(`TemplateService:searchPage: search result = ${JSON.stringify(result)}`);
+      }
+      return result;
     };
 
     if (node && Array.isArray(node)) {
-      return await Promise.all(
-        node.map((d) => {
-          return search(d);
-        })
-      );
-    }
-
-    if (node) {
+      let result = [];
+      for (let d of node) {
+        const res = await search(d);
+        console.log(res);
+        if (res) result.push(res);
+      }
+    } else if (node) {
       return search(node);
     }
 
-    return null;
+    return undefined;
   }
 }

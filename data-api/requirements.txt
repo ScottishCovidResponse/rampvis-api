@@ -26,3 +26,4 @@ python-multipart
 sandu >= 0.1.2
 tslearn
 ujson
+seaborn

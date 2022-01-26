@@ -1,0 +1,58 @@
+[
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumCasesBySpecimenDate&metric=newCasesBySpecimenDate&metric=uniqueCasePositivityBySpecimenDateRollingSum&metric=cumVaccinationFirstDoseUptakeByVaccinationDatePercentage&metric=cumVaccinationSecondDoseUptakeByVaccinationDatePercentage&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group1" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=femaleCases&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group2" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=maleCases&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group3" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=newCasesBySpecimenDateAgeDemographics&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group4" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumDailyNsoDeathsByDeathDate&metric=newDailyNsoDeathsByDeathDate&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group5" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=femaleDeaths28Days&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group6" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=maleDeaths28Days&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group7" ],
+        "description": ""
+    },
+    {
+        "urlCode": "API_GOVUK",
+        "endpoint": "https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=vaccinationsAgeDemographics&format=json",
+        "dataType": "timeseries",
+        "keywords": [ "phe", "region", "group8" ],
+        "description": ""
+    }
+]
