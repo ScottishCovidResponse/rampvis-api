@@ -30,7 +30,7 @@ router.include_router(token_controller, prefix="/token")
 router.include_router(data_serve_controller, prefix="/stat/v1/data")
 router.include_router(data_downloader_agent, prefix="/stat/v1/download_data")
 router.include_router(static_data_controller, prefix="/stat/v1/static_data")
-router.include_router(propagation_controller, prefix="/stat/v1/onto-data/search")
+router.include_router(propagation_controller, prefix="/stat/v1/propagation")
 router.include_router(
     timeseries_sim_search_controller, prefix="/stat/v1/timeseries-sim-search"
 )

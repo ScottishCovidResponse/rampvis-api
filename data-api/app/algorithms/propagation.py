@@ -18,7 +18,7 @@ class Propagation:
         X & Y are Bag of Words
         """
         logger.info(
-            f"Propagate: compute boolean similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
+            f"Propagation: compute boolean similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
         )
 
         sim = 1 - euclidean_distances(X, Y)
@@ -32,7 +32,7 @@ class Propagation:
         X & Y are Bag of Words
         """
         logger.info(
-            f"Propagate: compute jaccard similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
+            f"Propagation: compute jaccard similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
         )
 
         sim = np.zeros(shape=(len(X), len(Y)))
@@ -56,7 +56,7 @@ class Propagation:
         X & Y are Bag of Words
         """
         logger.info(
-            f"Propagate: compute cosine similarity shape(X) = {X.shape}, shape(Y) = {Y.shape}"
+            f"Propagation: compute cosine similarity shape(X) = {X.shape}, shape(Y) = {Y.shape}"
         )
 
         sim = cosine_similarity(X, Y)
@@ -66,12 +66,12 @@ class Propagation:
     def weighted_average(T, K, D=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Propagate: compute weighted average for Srd, len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
+            f"Propagation: compute weighted average for Srd, len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
 
         if D is not None:
             logger.info(
-                f"Propagate: compute weighted average for Srd, len(D) = {len(D)}"
+                f"Propagation: compute weighted average for Srd, len(D) = {len(D)}"
             )
             return T * (alpha * K + beta * D)
         else:
@@ -81,12 +81,12 @@ class Propagation:
     def weighted_average2(K, D=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Propagate: compute weighted average for Sdd, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
+            f"Propagation: compute weighted average for Sdd, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
 
         if D is not None:
             logger.info(
-                f"Propagate: compute weighted average for Sdd, len(D) = {len(D)}"
+                f"Propagation: compute weighted average for Sdd, len(D) = {len(D)}"
             )
             return alpha * K + beta * D
         else:
@@ -103,17 +103,15 @@ class Propagation:
         # TODO: type and empty check
 
         logger.info(
-            f"Propagate: compute Srd, alpha = {alpha}, beta = {beta}, theta={theta}"
+            f"Propagation: compute Srd, alpha = {alpha}, beta = {beta}, theta={theta}"
         )
 
         data = np.concatenate((reference, discovered))
         rows = len(reference)
         cols = len(discovered)
 
-        logger.info(f"Propagate: compute Srd, num. examples = {rows}")
-        logger.info(f"Propagate: compute Srd, num. discovered = {cols} ")
-
-        # logger.info(f'Shape of concatinated data: {c.shape}')
+        logger.info(f"Propagation: compute Srd, num. examples = {rows}")
+        logger.info(f"Propagation: compute Srd, num. discovered = {cols} ")
 
         # For data-type field compute pair-wise similarity matrix
         datatype = [d["dataType"] for d in data]
@@ -146,7 +144,7 @@ class Propagation:
         # Weighted average
         Srd = Propagation.weighted_average(T, K, D, alpha=alpha, beta=beta, theta=theta)
 
-        logger.info(f"Propagate: computed Srd, len(Srd) = {len(Srd)}")
+        logger.info(f"Propagation: computed Srd, len(Srd) = {len(Srd)}")
         return Srd
 
     @staticmethod
@@ -158,7 +156,7 @@ class Propagation:
         C: pair-wise similarity matrix
         """
         logger.info(
-            f"Propagate: compute Sdd, alpha = {alpha}, beta = {beta}, theta={theta}"
+            f"Propagation: compute Sdd, alpha = {alpha}, beta = {beta}, theta={theta}"
         )
 
         keywords = [d["keywords"] for d in discovered]
@@ -167,10 +165,7 @@ class Propagation:
         )
         bow = count_vectorizer.fit_transform(keywords)
 
-        # logger.info(f"bow = {bow.toarray()}")
-
-        # K = Propagation.pairwise_jaccard_similarity(bow.toarray(), bow.toarray())
-        K = Propagation.pairwise_cosine_similarity(bow, bow)
+        K = Propagation.pairwise_jaccard_similarity(bow.toarray(), bow.toarray())
 
         D = None
         if beta != 0:
@@ -181,13 +176,15 @@ class Propagation:
             D = Propagation.pairwise_cosine_similarity(bow, bow)
 
         Sdd = Propagation.weighted_average2(K, D, alpha=alpha, beta=beta, theta=theta)
-        logger.info(f"Propagate: computed Sdd, len(Sdd) = {len(Sdd)}")
+        logger.info(f"Propagation: computed Sdd, len(Sdd) = {len(Sdd)}")
 
         return Sdd
 
     @staticmethod
     def cluster(Sdd, n_clusters):
-        logger.info(f"Propagate: compute clusters from Sdd, n_clusters = {n_clusters}")
+        logger.info(
+            f"Propagation: compute clusters from Sdd, n_clusters = {n_clusters}"
+        )
 
         # When only a single data stream discovered
         if len(Sdd) == 1:
@@ -199,7 +196,7 @@ class Propagation:
         # clustering = KMeans(n_clusters=n_clusters, random_state=0).fit(Sdd)
 
         logger.info(
-            f"Propagate: computed clusters from Sdd, len(clustering.labels_) = {len(clustering.labels_)}"
+            f"Propagation: computed clusters from Sdd, len(clustering.labels_) = {len(clustering.labels_)}"
         )
         return clustering.labels_
 
@@ -208,7 +205,7 @@ class Propagation:
         """ """
         np.set_printoptions(threshold=sys.maxsize)
         logger.info(
-            f"Propagate: group data streams len(Srd) = {len(Srd)}, len(discovered) = {len(discovered)}, len(clusters) = {len(clusters)}"
+            f"Propagation: group data streams len(Srd) = {len(Srd)}, len(discovered) = {len(discovered)}, len(clusters) = {len(clusters)}"
         )
 
         group_dict = dict()
@@ -239,6 +236,6 @@ class Propagation:
             groups.append({"score": round(group_score, 3), "group": group})
 
         groups.sort(key=lambda x: x["score"], reverse=True)
-        logger.info(f"Propagate: grouped data streams, len(groups) = {len(groups)}")
+        logger.info(f"Propagation: grouped data streams, len(groups) = {len(groups)}")
 
         return groups
