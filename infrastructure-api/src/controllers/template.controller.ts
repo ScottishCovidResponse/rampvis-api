@@ -24,6 +24,9 @@ import { ThumbnailService } from "../services/thumbnail.service";
 import { IThumbnail } from "../infrastructure/thumbnail/thumbnail.interface";
 import { ThumbnailDto } from "../infrastructure/thumbnail/thumbnail.dto";
 import { TemplateService } from "../services/template.service";
+import { JwtToken } from "../middleware/jwt.token";
+import { IUser } from "../infrastructure/user/user.interface";
+import { UserService } from "../services/user.service";
 
 @ApiPath({
   path: "/api/v1/template",
@@ -36,7 +39,8 @@ export class TemplateController {
     @inject(TYPES.OntoPageService) private ontoPageService: OntoPageService,
     @inject(TYPES.OntoPageSearchService) private ontoPageSearchService: OntoPageSearchService,
     @inject(TYPES.ThumbnailService) private thumbnailService: ThumbnailService,
-    @inject(TYPES.TemplateService) private templateService: TemplateService
+    @inject(TYPES.TemplateService) private templateService: TemplateService,
+    @inject(TYPES.UserService) private userService: UserService
   ) {}
 
   @ApiOperationGet({
@@ -138,7 +142,7 @@ export class TemplateController {
 
   @ApiOperationGet({
     path: "/pages/{pageId}",
-    summary: "Fetch pages template data from ontology",
+    summary: "Fetch page template data from ontology",
     description: "",
     parameters: {
       path: {
@@ -161,7 +165,7 @@ export class TemplateController {
     try {
       const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
       const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
-      const ontoPageExtDto: OntoPageDto = await this.templateService.resolvePageExtAndLinks(ontoPageDto);
+      const ontoPageExtDto: OntoPageExtDto = await this.templateService.resolvePageExtAndLinks(ontoPageDto);
 
       // logger.info(`TemplateController:getPageTemplate: ontoPageExtDto = ${JSON.stringify(ontoPageExtDto)}`);
       response.status(200).send(ontoPageExtDto);
@@ -177,9 +181,42 @@ export class TemplateController {
     logger.debug(`TemplateController: getThumbnail: pageId = ${pageId}`);
     try {
       const result: IThumbnail = await this.thumbnailService.getThumbnail(pageId);
-      const resultDto: ThumbnailDto = automapper.map(MAPPING_TYPES.IThumbnail, MAPPING_TYPES.ThumbnailDto, result);
       // logger.debug(`TemplateController: getThumbnail: resultDto = ${result}`);
       response.status(200).send(result.thumbnail);
+    } catch (error: any) {
+      next(new SomethingWentWrong(error.message));
+    }
+  }
+
+  @httpGet("/portal", JwtToken.verify)
+  public async getPortalData(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const user: IUser = <IUser>request.user;
+    const userId: string = user._id.toString();
+    logger.debug(`TemplateController: getPortalData: userId = ${userId}`);
+
+    try {
+      const user: IUser = await this.userService.getUser(userId);
+      const thumbnailDtos: ThumbnailDto[] = [];
+      if (user?.bookmarks) {
+        for (let pageId of user.bookmarks) {
+          // for title
+          const ontoPage: IOntoPage = await this.ontoPageService.get(pageId);
+          const ontoPageDto: OntoPageDto = automapper.map(MAPPING_TYPES.IOntoPage, MAPPING_TYPES.OntoPageDto, ontoPage);
+          const ontoPageExtDto: OntoPageExtDto = (await this.templateService.resolvePagesExt([ontoPageDto]))[0];
+
+          // for image
+          const thumbnail: IThumbnail = await this.thumbnailService.getThumbnail(pageId);
+          let thumbnailDto: ThumbnailDto = automapper.map(
+            MAPPING_TYPES.IThumbnail,
+            MAPPING_TYPES.ThumbnailDto,
+            thumbnail
+          );
+          thumbnailDto = { ...thumbnailDto, title: ontoPageExtDto?.title, id: pageId };
+          thumbnailDtos.push(thumbnailDto);
+        }
+      }
+      logger.debug("TemplateController: getPortalData: thumbnailDtos = " + JSON.stringify(thumbnailDtos));
+      response.status(200).send(thumbnailDtos);
     } catch (error: any) {
       next(new SomethingWentWrong(error.message));
     }
