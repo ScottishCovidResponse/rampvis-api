@@ -58,3 +58,35 @@ vm.max_map_count=262144
 The data-api and infrastructure-api are our internal services. See the [data-api README](./data-api/README.md) and [infrastructure-api README](./infrastructure-api/README.md) files.
 
 ## BibTex
+
+[1] This repository can be cited as: 
+```bash
+@misc{RAMPVIS-API:git,
+  author = {Saiful Khan, Phong Nguyen, Erik Rydow, Tuna Gonen, and Alexander Kachkaev},
+  title = {{RAMPVIS} API},
+  howpublished = {\url{https://github.com/ScottishCovidResponse/rampvis-api}},
+}
+```
+Author order is based on GitHub contribution statistics.
+
+[2] The API and service architecture and design work can be cited as:
+
+```bash
+TBD
+```
+
+[3] Propagation work can be cited as:
+
+```bash
+@article{Khan2022:IEEE-TVCG,,
+   author = {Saiful Khan, Phong Nguyen, Alfie Abdul-Rahman, Benjamin Bach, Min Chen, Euan Freeman, and Cagatay Turkay},
+   title = {Propagating Visual Designs to Numerous Plots and Dashboards},
+   journal = {IEEE Transactions on Visualization and Computer Graphics},
+   issue = {1},
+   pages = {86-95},
+   volume = {28},
+   year = {2022},
+   doi = {10.1109/TVCG.2021.3114828},
+   arxiv = {https://arxiv.org/abs/2107.08882}
+}
+```
