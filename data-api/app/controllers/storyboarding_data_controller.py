@@ -15,4 +15,5 @@ async def get():
     filename = Path(DATA_PATH_LIVE) / "phe/ltla/newcasesbypublishdate.csv"
     df = pd.read_csv(filename)
     result = df.to_json(orient="records")
+    print("storyboarding_data_controller:get: result = ", result)
     return Response(content=result, media_type="application/json")
