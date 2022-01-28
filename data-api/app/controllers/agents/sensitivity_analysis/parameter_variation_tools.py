@@ -3,11 +3,14 @@ from sandu import gaussian_process_emulator as gpe
 from sandu.sensitivity_analysis.sobol import saltelli_with_constant_bounds
 from typing import Tuple, Callable
 import pandas as pd
+import app.controllers.agents.sensitivity_analysis.interaction_tools as it
+from scipy.signal import savgol_filter
+
 
 def parameter_variation(df_in: pd.DataFrame, parameters_in: list, bounds_in: list, quantity_mean_in: str,
-                quantity_variance_in: str, N_in: int, n_steps: int,
-                scalar_mean_function: Callable[[list], float] = sum,
-                scalar_variance_function: Callable[[list], float] = sum) -> Tuple[list, list, list]:
+                        quantity_variance_in: str, N_in: int, n_steps: int,
+                        scalar_mean_function: Callable[[list], float] = sum,
+                        scalar_variance_function: Callable[[list], float] = sum, interactions_in = []) -> Tuple[list, list, list]:
     """ Returns quantities required for plotting how varying a parameter affects a scalar feature of the output.
         This involves showing the (1) raw data, (2) emulated data for a representative sample of other parameters.
 
@@ -48,13 +51,12 @@ def parameter_variation(df_in: pd.DataFrame, parameters_in: list, bounds_in: lis
     bounds_var = [bounds_in[i] for i in range(len(parameters_in)) if len(bounds_in[i]) > 1]
 
     df_s = gpe.get_scalar_features(df_in, quantity_mean_in, quantity_variance_in, scalar_mean_function,
-                                 scalar_variance_function)
+                                   scalar_variance_function)
 
     X_tr_temp, y_tr_temp, alpha_tr_temp = gpe.form_training_set(df_s, parameters_in, quantity_mean_in, quantity_variance_in)
     temp_model, temp_scaler = gpe.train_GP_emulator(X_tr_temp, y_tr_temp, alpha_tr_temp)
 
     for i, param in enumerate(parameters_var):
-
         # Get the index of the parameter in the list which can contain constant parameters
         param_index = parameters_in.index(param)
 
@@ -69,7 +71,7 @@ def parameter_variation(df_in: pd.DataFrame, parameters_in: list, bounds_in: lis
         # Inserts incremental values of parameter in question along constant Saltelli sampled values of other parameters
         X_new[:, param_index] = repeated
 
-        #Form list with points
+        # Form list with points
         points_x = df_in[param].tolist()
         points_y = df_in[quantity_mean_in].tolist()
         datapoints_x_var.append(points_x)
@@ -82,4 +84,41 @@ def parameter_variation(df_in: pd.DataFrame, parameters_in: list, bounds_in: lis
         mean = np.mean(Y, axis=0)
         y_mean_var.append(mean)
 
+    # Now deal with user specified interactions
+    df_temp, _ ,_ = it.custom_inputs(df_in, parameters_in, bounds_in, interactions_in)
+    df_padded, parameters_padded, bounds_padded = it.custom_inputs_gpe(temp_model, temp_scaler, problem_all, parameters_in, quantity_mean_in,
+                                                                                 bounds_in, N_in, 2, interactions_in)
+    param_length = len(parameters_in)
+    n_interactions = len(parameters_padded)-param_length
+    interacting_parameters = parameters_padded[-n_interactions:]
+    for interacting_parameter in interacting_parameters:
+        # Points
+        points_x = df_temp[interacting_parameter].tolist()
+        points_y = df_temp[quantity_mean_in].tolist()
+        datapoints_x_var.append(points_x)
+        datapoints_y_var.append(points_y)
+        
+        # Mean lines
+        df_mean = df_padded.groupby(interacting_parameter, as_index=False)[quantity_mean_in].mean()
+        df_mean = df_mean.sort_values(interacting_parameter)
+        length = len(df_mean[quantity_mean_in].tolist())
+        #nth_step = (length//n_steps)*4 + 1 # Number of rows between sampled rows to smooth out the data
+        #df_mean = df_mean.iloc[::nth_step, :]
+        y_mean = df_mean[quantity_mean_in]
+        
+        # Sliding window with the length of 1/10 ths of window
+        approximate_size = len(y_mean)//3
+        window_length = (approximate_size ) if (approximate_size )%2 == 1 else (approximate_size - 1)
+        y_mean = savgol_filter(y_mean, window_length, 3) #SMooth out output curve
+        y_mean_var.append(y_mean.tolist())
+        
+        # Add steps
+        steps_temp = df_mean[interacting_parameter].tolist()
+        steps_var.append(steps_temp)
+        # All lines
+        Y = np.zeros((100, len(steps_temp)))
+        y_var.append(Y.tolist())
+        # Add parameters
+        parameters_var.append(interacting_parameter)
+        
     return parameters_var, datapoints_x_var, datapoints_y_var, steps_var, y_var, y_mean_var
