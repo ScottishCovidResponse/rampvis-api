@@ -53,10 +53,26 @@ async def search_group(
     beta: float = query.beta
     theta: float = query.theta
     clusteringAlgorithm: str = query.clusteringAlgorithm
+    processor: str = query.processor
+    maxSearchWindow: int = query.maxSearchWindow
 
     logger.info(
-        f"Propagation: query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}, {theta}, {clusteringAlgorithm}"
+        f"Propagation: query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}"
     )
+    logger.info(
+        f"Propagation: search settings = {alpha}, {beta}, {theta}, {clusteringAlgorithm}, {processor}, {maxSearchWindow}"
+    )
+
+    if processor == "GPU":
+        use_gpu = True
+        from app.algorithms.cluster_gpu import cluster_gpu
+        from numba import cuda
+
+        if not cuda.is_available():
+            raise HTTPException(
+                status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"PropagationController: CUDA is not available",
+            )
 
     if visId is None or mustKeys is None or shouldKeys is None or filterKeys is None:
         raise HTTPException(
@@ -64,29 +80,44 @@ async def search_group(
             detail="PropagationController: Required parameters: visId, mustKeys, shouldKeys, filterKeys",
         )
 
-    # 1
-    example = database_service.find_example_data_of_vis(visId)
+    reference = database_service.find_example_data_of_vis(visId)
+    logger.info(f"PropagationController: len(reference) = {len(reference)}")
 
-    # 2
     query = search_service.build_query(
         mustKeys, shouldKeys, filterKeys, mustNotKeys, minimumShouldMatch
     )
     logger.info(f"PropagationController: search query = {query}")
 
-    # 3
-    discovered = search_service.search(query, use_gpu)
-    logger.info(
-        f"PropagationController: search response, len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
-    )
+    try:
+        discovered = search_service.search(query, maxSearchWindow)
+        logger.info(
+            f"PropagationController: search response, len(discovered) = {len(discovered)}"
+        )
+    except Exception as e:
+        logger.error(f"PropagationController: search error = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"PropagationController: search error = {e}",
+        )
 
     if len(discovered) <= 0:
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
             detail="PropagationController: No matching data streams found! Pease update the search query.",
         )
+    if len(reference) == 1:
+        logger.info(
+            f"PropagationController: len(reference) = {len(reference)}, return data streams"
+        )
+        return Response(
+            content=json.dumps(
+                propagation.group_single_data_stream(discovered), cls=NumpyEncoder
+            ),
+            media_type="application/json",
+        )
 
     try:
-        Srd = propagation.Srd(example, discovered, mustKeys, alpha, beta, theta)
+        Srd = propagation.Srd(reference, discovered, mustKeys, alpha, beta, theta)
     except Exception as e:
         logger.error(f"PropagationController: Srd computation error = {e}")
         raise HTTPException(
@@ -103,17 +134,17 @@ async def search_group(
             detail=f"PropagationController: Sdd computation error = {e}",
         )
 
-    n_clusters = int(len(discovered) / len(example))
+    n_clusters = int(len(discovered) / len(reference))
 
     logger.info(
-        f"PropagationController: len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
+        f"PropagationController: len(examples) = {len(reference)}, len(discovered) = {len(discovered)}"
     )
     logger.debug(f"PropagationController: n_clusters = {n_clusters}")
 
     clusters = None
 
     try:
-        if use_gpu is True:
+        if processor == "GPU":
             from app.algorithms.cluster_gpu import cluster_gpu
             from numba import cuda
 
@@ -134,6 +165,7 @@ async def search_group(
         )
 
     groups = propagation.group_data_streams(Srd, discovered, clusters)
+    logger.debug(f"PropagationController: returning len(groups) = {len(groups)}")
 
     return Response(
         content=json.dumps(groups, cls=NumpyEncoder), media_type="application/json"

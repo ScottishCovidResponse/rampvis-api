@@ -13,3 +13,5 @@ class PropagateDataQueryModel(BaseModel):
     beta: float
     theta: float
     clusteringAlgorithm: str
+    processor: str
+    maxSearchWindow: int

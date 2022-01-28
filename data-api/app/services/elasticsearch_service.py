@@ -76,13 +76,9 @@ class ElasticsearchService(SearchService):
 
         return query
 
-    def search(self, query: dict, use_gpu=False) -> list:
-        size = 5000
-        if use_gpu == True:
-            size = 15000
-
+    def search(self, query: dict, maxSearchWindow=10000) -> list:
         res = self.client.search(
-            index="rampvis.onto_data", size=size, body={"query": query}
+            index="rampvis.onto_data", size=maxSearchWindow, body={"query": query}
         )
 
         data_search = [{**d["_source"], "id": d["_id"]} for d in res["hits"]["hits"]]
