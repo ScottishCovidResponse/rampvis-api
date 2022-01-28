@@ -156,16 +156,7 @@ def download_urls(urls, folder):
             parentfolder = Path(save_to).parents[0]
             parentfolder.mkdir(parents=True, exist_ok=True)  # Create directory for file if not already present
 
-            if url['name'] == 'phe':
-                df = pd.read_csv(url['url'], encoding='iso-8859-1')
-                logger.info("Saving phe data to: " + str(save_to))
-                # Split the file based on area code
-                area_types = parse_qs(urlparse(url['url']).query).get('areaType')
-                if area_types and len(area_types) and area_types[0] != 'overview':
-                    df.groupby('areaCode').apply(lambda x: save_code(x, save_to))
-                else:
-                    df.to_csv(save_to, index=None)
-            elif url['url'].lower().endswith('.csv'):
+            if url['name'] == 'phe' or url['url'].lower().endswith('.csv'):
                 logger.info("Saving CSV file to: " + str(save_to))
                 df = pd.read_csv(url['url'])
                 df.to_csv(save_to, index=None)

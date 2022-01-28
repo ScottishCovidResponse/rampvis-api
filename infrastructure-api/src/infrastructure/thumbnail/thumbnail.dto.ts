@@ -1,9 +1,5 @@
-import { IsOptional, IsString } from 'class-validator';
-
 export class ThumbnailDto {
-    @IsString()
-    id!: string;
-
-    @IsOptional()
-    thumbnail!: any;
+  public id?: string = undefined as any;
+  public thumbnail?: any = undefined as any;
+  public title?: any = undefined as any;
 }
