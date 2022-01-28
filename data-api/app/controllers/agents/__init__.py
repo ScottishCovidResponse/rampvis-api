@@ -2,6 +2,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 from loguru import logger
 from app.controllers.agents.sensitivity_analysis_agent import convert_data
+from app.controllers.agents.sensitivity_analysis_agent import sobol_index_agent
 from app.controllers.agents.sensitivity_clustering_agent import sensitivity_clustering_agent
 from app.controllers.agents.sensitivity_range_mean_sample_agent import sensitivity_clustering_range_mean_agent
 from app.controllers.agents.sensitivity_summary_curves_agent import summary_curves_agent
@@ -46,6 +47,7 @@ def sensitivity_agents():
         t_convert.join()
         logger.info("SensitivityInput objects created from ents files.")
         threading.Thread(target=summary_curves_agent).start()
+        threading.Thread(target=sobol_index_agent).start()
         
         logger.info("Running Sensitivity Analysis Agents")
         t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)
