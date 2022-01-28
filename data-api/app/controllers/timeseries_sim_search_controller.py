@@ -34,8 +34,6 @@ class TimeSeries(BaseModel):
     query :  dict
 
 
-
-
 @timeseries_sim_search_controller.post("/search/")
 async def searchform(firstRunForm:FirstRunForm):
     targetCountry = firstRunForm.targetCountry

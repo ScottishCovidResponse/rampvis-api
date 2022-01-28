@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from app.core.settings import DATA_PATH_LIVE
 from sandu.uncertainty_quantification import mean_time_series
+import math
 
 PATH_SEARCH = DATA_PATH_LIVE + "/owid"
 
@@ -50,7 +51,11 @@ def parsePredictList(prot):
 
 
 def callTimeSeries(grouped_obj,query_form):
-    time_series = {"series":{},"meancurves":{},"query":{}}
+    time_series = {"series":{},"meancurves":{},"query":{},"query_validation":{}}
+    first_date = datetime.strptime(query_form["first_date"],"%Y-%m-%d")
+    last_date = datetime.strptime(query_form["last_date"],"%Y-%m-%d")
+    dif_date = last_date - first_date
+    query_length = math.floor(dif_date.days/2)
     for key in grouped_obj:
         file = "_".join(list(map(lowercase,key.split(" "))))
         df = pd.read_csv(PATH_SEARCH+"/{}.csv".format(file),parse_dates=[0],index_col=0)
@@ -60,7 +65,14 @@ def callTimeSeries(grouped_obj,query_form):
         time_series["series"][key] = {}
         for countries in df.columns:
             date = grouped_obj[key]["date"][count]
-            series = df[countries].loc[date:]
+            if(len(df[countries].loc[date:].index)<=query_length):
+                series = df[countries].loc[date:]
+            elif(len(df[countries].loc[date:].index)>query_length):
+                beg_date = datetime.strptime(date,"%Y-%m-%d")
+                day_delta = timedelta(days=1)
+                end_date = beg_date + query_length * day_delta
+                series = df[countries].loc[beg_date:end_date]
+                
             name = df[countries].loc[date:].name
             df_series = seriesFormat(series,key)
             df_trans = pd.concat([df_trans,df_series])
@@ -68,11 +80,17 @@ def callTimeSeries(grouped_obj,query_form):
             count += 1
         df_query = pd.read_csv(PATH_SEARCH+"/{}.csv".format(file),parse_dates=[0],index_col=0)
         df_query = df_query.filter(items= [query_form["country"]]) 
+        if (df_query.index[-1].date()>datetime.strptime(query_form["last_date"],"%Y-%m-%d").date()):
+            df_query_validation = df_query.loc[query_form["last_date"]:]  
+            df_query_validation.index = df_query_validation.index.date
+            time_series["query_validation"][key] = df_query_validation.to_dict()[query_form["country"]]
+        else:
+            time_series["query_validation"][key] = "empty"
         df_query = df_query.loc[query_form["first_date"]:query_form["last_date"]]
         df_query.index = df_query.index.date
         time_series["query"][key] = df_query.to_dict()[query_form["country"]]
         time_series["meancurves"][key] = mean_time_series.get_mean(df_trans, "day", key)
-         
+        
     return time_series
 
 def objectToUI(time_series,query_form):
