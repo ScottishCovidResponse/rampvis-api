@@ -35,10 +35,10 @@ echo "
 Restoring data from backups
 ------------------------------------------------
 "
-mongoimport --host=mongodb01 --port=27017 --db=rampvis --collection=users ./mongo-data/rampvis/users.json
-mongorestore --host=mongodb01 --port=27017 --db=rampvis --collection=onto_vis ./mongo-data/rampvis/onto_vis.bson
-mongorestore --host=mongodb01 --port=27017 --db=rampvis --collection=onto_data ./mongo-data/rampvis/onto_data.bson
-mongorestore --host=mongodb01 --port=27017 --db=rampvis --collection=onto_page ./mongo-data/rampvis/onto_page.bson
+# mongoimport --host=mongodb01 --port=27017 --db=rampvis --collection=users ./mongo-data/rampvis/users.json
+# mongorestore --host=mongodb01 --port=27017 --db=rampvis --collection=onto_vis ./mongo-data/rampvis/onto_vis.bson
+# mongorestore --host=mongodb01 --port=27017 --db=rampvis --collection=onto_data ./mongo-data/rampvis/onto_data.bson
+# mongorestore --host=mongodb01 --port=27017 --db=rampvis --collection=onto_page ./mongo-data/rampvis/onto_page.bson
 
 echo "
 ------------------------------------------------

@@ -6,8 +6,10 @@ import numpy as np
 import json
 import app.controllers.agents.uncertainty_analysis.clustering_tools as ct
 import app.controllers.agents.sensitivity_analysis.sensitivity_model_inventory as inventory
+import app.controllers.agents.sensitivity_analysis.interaction_tools as it
 from app.core.settings import DATA_PATH_LIVE
-
+from loguru import logger
+from app.utils.common import own_removesuffix
 
 def form_output_clusters(clusters: List[dict]):
     """Find clusters in raw input data, by looking at the output/time series, to enable for cluster-wise analysis.
@@ -22,21 +24,25 @@ def form_output_clusters(clusters: List[dict]):
         output_filename = folder / values["output_filename"]
         k = values["k"]
         model = values["model"]
+        interactions = values["interactions"]
 
         # Check if file exists
         if not filename.is_file():
-            print("CANNOT FIND ", filename)
+            logger.info("CANNOT FIND " + str(filename))
             return
 
         with open(filename, "r") as read_file:
             x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
 
         df = x.df()
+        
+        # Compute Cluster Labels
+        df, parameters_padded, bounds_padded = it.custom_inputs(df, x.parameters, x.bounds, interactions)
         # Compute Cluster Labels
         clusters = cb.get_kmeans_clusters(df, x.quantity_mean, k, metric, verbose=False)
         df["cluster"] = clusters
         # cluster_raw_data:
-        clusters = ct.sens_form_input_clusters(df, x.parameters, x.bounds, x.quantity_mean, x.quantity_variance)
+        clusters = ct.sens_form_input_clusters(df, parameters_padded, bounds_padded, x.quantity_mean, x.quantity_variance)
         # Save data
         ct.save_cluster_data(clusters, "clusters", output_filename, metric, k, model)
 
@@ -54,31 +60,32 @@ def form_input_clusters(clusters: List[dict]):
         output_filename = folder / values["output_filename"]
         k = values["k"]
         model = values["model"]
+        interactions = values["interactions"]
 
         # Check if file exists
         if not filename.is_file():
-            print("CANNOT FIND ", filename)
+            logger.info("CANNOT FIND " + str(filename))
             return
 
         with open(filename, "r") as read_file:
             x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
 
         df = x.df()
-
+        # Add parameters from interactions
+        df, parameters_padded, bounds_padded = it.custom_inputs(df, x.parameters, x.bounds, interactions)
         # Compute Cluster Labels
-        parameters = [x.parameters[i] for i in range(len(x.parameters)) if len(x.bounds[i]) > 1]
-        bounds = [x.bounds[i] for i in range(len(x.parameters)) if len(x.bounds[i]) > 1]
-
+        parameters = [parameters_padded[i] for i in range(len(parameters_padded)) if len(bounds_padded[i]) > 1]
+        bounds = [bounds_padded[i] for i in range(len(parameters_padded)) if len(bounds_padded[i]) > 1]
         for idx, parameter in enumerate(parameters):
             clusters = input_cluster_labels(df, parameter, bounds[idx], k)
             df["cluster"] = clusters
 
             # Generate filename
-            output_filename_param = str(output_filename).removesuffix('.json')
+            output_filename_param = own_removesuffix(str(output_filename), '.json')
             output_filename_param = output_filename_param + "_" + parameter + ".json"
 
             # cluster_raw_data:
-            clusters = ct.sens_form_input_clusters(df, x.parameters, x.bounds, x.quantity_mean, x.quantity_variance)
+            clusters = ct.sens_form_input_clusters(df, parameters, bounds, x.quantity_mean, x.quantity_variance)
             # Save data
             ct.save_cluster_data(clusters, "clusters", output_filename_param, metric, k, model)
 
@@ -112,7 +119,8 @@ def get_cluster_list(model_list: List[dict]) -> List[dict]:
                          "output_filename": "models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw_k" + str(i) + "_" +
                                             metric_abbreviation[metric] + ".json",
                          "k": i,
-                         "model": model["name"]}
+                         "model": model["name"],
+                         "interactions": model["interactions"]}
                     )
     return cluster_list
 

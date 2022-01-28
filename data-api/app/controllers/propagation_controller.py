@@ -16,11 +16,11 @@ from app.services.search_service import SearchService
 from app.services.elasticsearch_service import ElasticsearchService
 from app.algorithms.propagation import Propagation
 
+use_gpu = False
+propagation_controller = APIRouter()
 
-onto_data_search_controller = APIRouter()
 
-
-@onto_data_search_controller.get("/ping")
+@propagation_controller.get("/ping", dependencies=[Depends(validate_user_token)])
 async def ping(
     database_service: DatabaseService = Depends(MongoDBService),
     search_service: SearchService = Depends(ElasticsearchService),
@@ -33,7 +33,7 @@ async def ping(
     return status
 
 
-@onto_data_search_controller.post("/group", dependencies=[Depends(validate_user_token)])
+@propagation_controller.post("/group", dependencies=[Depends(validate_user_token)])
 async def search_group(
     query: PropagateDataQueryModel,
     database_service: DatabaseService = Depends(MongoDBService),
@@ -55,13 +55,13 @@ async def search_group(
     clusteringAlgorithm: str = query.clusteringAlgorithm
 
     logger.info(
-        f"Propagate: query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}, {theta}, {clusteringAlgorithm}"
+        f"Propagation: query params = {visId}, {mustKeys}, {shouldKeys}, {mustNotKeys}, {filterKeys}, {minimumShouldMatch}, {alpha}, {beta}, {theta}, {clusteringAlgorithm}"
     )
 
     if visId is None or mustKeys is None or shouldKeys is None or filterKeys is None:
         raise HTTPException(
             status_code=HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Required parameters: visId, mustKeys, shouldKeys, filterKeys",
+            detail="PropagationController: Required parameters: visId, mustKeys, shouldKeys, filterKeys",
         )
 
     # 1
@@ -71,47 +71,68 @@ async def search_group(
     query = search_service.build_query(
         mustKeys, shouldKeys, filterKeys, mustNotKeys, minimumShouldMatch
     )
-    logger.info(f"Propagate: search query = {query}")
+    logger.info(f"PropagationController: search query = {query}")
 
     # 3
-    discovered = search_service.search(query)
+    discovered = search_service.search(query, use_gpu)
     logger.info(
-        f"Propagate: search response, len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
+        f"PropagationController: search response, len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
     )
 
     if len(discovered) <= 0:
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="No matching data streams found! Pease update the search query.",
+            detail="PropagationController: No matching data streams found! Pease update the search query.",
         )
 
     try:
         Srd = propagation.Srd(example, discovered, mustKeys, alpha, beta, theta)
     except Exception as e:
-        logger.error(f"Propagate: Srd computation error = {e}")
+        logger.error(f"PropagationController: Srd computation error = {e}")
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Propagate: Srd computation error = {e}",
+            detail=f"PropagationController: Srd computation error = {e}",
         )
 
     try:
         Sdd = propagation.Sdd(discovered, mustKeys + shouldKeys, alpha, beta, theta)
     except Exception as e:
-        logger.error(f"Propagate: Sdd computation error = {e}")
+        logger.error(f"PropagationController: Sdd computation error = {e}")
         raise HTTPException(
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Propagate: Sdd computation error = {e}",
+            detail=f"PropagationController: Sdd computation error = {e}",
         )
-
 
     n_clusters = int(len(discovered) / len(example))
 
     logger.info(
-        f"Propagate: len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
+        f"PropagationController: len(examples) = {len(example)}, len(discovered) = {len(discovered)}"
     )
-    logger.debug(f"Propagate: n_clusters = {n_clusters}")
+    logger.debug(f"PropagationController: n_clusters = {n_clusters}")
 
-    clusters = propagation.cluster(Sdd, n_clusters)
+    clusters = None
+
+    try:
+        if use_gpu is True:
+            from app.algorithms.cluster_gpu import cluster_gpu
+            from numba import cuda
+
+            if cuda.is_available():
+                clusters = cluster_gpu(Sdd, n_clusters)
+            else:
+                raise HTTPException(
+                    status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"PropagationController: CUDA is not available, error = {e}",
+                )
+        else:
+            clusters = propagation.cluster(Sdd, n_clusters)
+    except Exception as e:
+        logger.error(f"PropagationController: clustering error = {e}")
+        raise HTTPException(
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"PropagationController: clustering error = {e}",
+        )
+
     groups = propagation.group_data_streams(Srd, discovered, clusters)
 
     return Response(

@@ -6,7 +6,7 @@ import app.controllers.agents.sensitivity_analysis.sensitivity_cluster_max as sc
 import json
 import app.controllers.agents.uncertainty_analysis.clustering_tools as ct
 import app.controllers.agents.sensitivity_analysis.sensitivity_model_inventory as inventory
-
+import app.controllers.agents.sensitivity_analysis.interaction_tools as it
 from sandu.data_types import SensitivityInput
 from app.core.settings import DATA_PATH_LIVE
 
@@ -62,10 +62,12 @@ def get_cluster_list(model_list: List[dict]) -> List[dict]:
         for i in model["k"]:
             for metric in model["metric"]:
                 for quantity in model["quantities_of_interest"]:
-                    with open(str(folder) + "/models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw.json", "r") as read_file:
+                    with open(str(folder / Path("models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw.json")), "r") as read_file:
                         x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
-                        
-                    parameters = [x.parameters[i] for i in range(len(x.parameters)) if len(x.bounds[i]) > 1]
+
+                    # Add parameters from interactions
+                    _, parameters_padded, bounds_padded = it.custom_inputs(x.df(), x.parameters, x.bounds, model["interactions"])
+                    parameters = [parameters_padded[i] for i in range(len(parameters_padded)) if len(bounds_padded[i]) > 1]
                     for parameter in parameters:
                         cluster_list.append(
                             {"filename": "models/sensitivity/" + model["name"] + "/" + quantity["name"] + "_raw_k" + str(i) + "_" +

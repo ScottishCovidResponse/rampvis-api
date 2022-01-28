@@ -40,10 +40,10 @@ class ElasticsearchService(SearchService):
 
     def build_query(
         self,
-        must_keys: list[str],
-        should_keys: list[str],
-        filter_keys: list[str],
-        must_not_keys: list[str] = None,
+        must_keys: list,
+        should_keys: list,
+        filter_keys: list,
+        must_not_keys: list = None,
         minimum_should_match: int = 1,
     ) -> dict:
 
@@ -54,8 +54,8 @@ class ElasticsearchService(SearchService):
         must_not_keys = [d.lower() for d in must_not_keys]
 
         if len(should_keys) == 0:
-              minimum_should_match = 0
-                
+            minimum_should_match = 0
+
         if not must_not_keys:
             must_not_keys = [d.lower() for d in must_not_keys]
 
@@ -76,9 +76,13 @@ class ElasticsearchService(SearchService):
 
         return query
 
-    def search(self, query: dict) -> list:
+    def search(self, query: dict, use_gpu=False) -> list:
+        size = 5000
+        if use_gpu == True:
+            size = 15000
+
         res = self.client.search(
-            index="rampvis.onto_data", size=5000, body={"query": query}
+            index="rampvis.onto_data", size=size, body={"query": query}
         )
 
         data_search = [{**d["_source"], "id": d["_id"]} for d in res["hits"]["hits"]]

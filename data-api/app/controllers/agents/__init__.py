@@ -14,41 +14,49 @@ from app.controllers.agents.time_series_precompute_agent import precompute
 
 
 def uncertainty_agents():
-    print("Running Uncertainty Analysis Agents")
-    # Start clustering
-    t_u_cluster = threading.Thread(target=uncertainty_clustering_agent)
-    t_u_cluster.start()
-
-    # Start non-clustered computations
-    threading.Thread(target=uncertainty_mean_sample_agent).start()
-
-    t_u_cluster.join()
-    print("Uncertainty Clustering Complete")
-    # Start computations requiring clustered data
-    print("Running Uncertainty Cluster Analysis")
-    threading.Thread(target=uncertainty_cluster_mean_sample_agent).start()
+    try:
+        logger.info("Running Uncertainty Analysis Agents")
+        # Start clustering
+        t_u_cluster = threading.Thread(target=uncertainty_clustering_agent)
+        t_u_cluster.start()
+    
+        # Start non-clustered computations
+        threading.Thread(target=uncertainty_mean_sample_agent).start()
+    
+        t_u_cluster.join()
+        logger.info("Uncertainty Clustering Complete")
+        # Start computations requiring clustered data
+        logger.info("Running Uncertainty Cluster Analysis")
+        threading.Thread(target=uncertainty_cluster_mean_sample_agent).start()
+    except Exception as e:
+        logger.info("Uncertainty Agents failed.")
+        logger.exception(e)
 
 
 def sensitivity_agents():
-    print("Converting ents files to sandu SensitivityInput objects.")
-    #Converts data from Ensemble Time-series (ents) format into sandu SensitivtyInput objects.
-    t_convert = threading.Thread(target=ents_to_sandu_agent)
-    t_convert.start()
-    
-    # Start non clustered threads
-    threading.Thread(target=convert_data).start()
-    
-    t_convert.join()
-    print(" SensitivityInput objects created from ents files.")
-    threading.Thread(target=summary_curves_agent).start()
-    
-    print("Running Sensitivity Analysis Agents")
-    t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)
-    t_s_cluster.start()
-    
-    t_s_cluster.join()
-    print("Sensitivity Clustering Complete")
-    threading.Thread(target=sensitivity_clustering_range_mean_agent).start()
+    try:
+        logger.info("Converting ents files to sandu SensitivityInput objects.")
+        #Converts data from Ensemble Time-series (ents) format into sandu SensitivtyInput objects.
+        t_convert = threading.Thread(target=ents_to_sandu_agent)
+        t_convert.start()
+        
+        # Start non clustered threads
+        threading.Thread(target=convert_data).start()
+        
+        t_convert.join()
+        logger.info("SensitivityInput objects created from ents files.")
+        threading.Thread(target=summary_curves_agent).start()
+        
+        logger.info("Running Sensitivity Analysis Agents")
+        t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)
+        t_s_cluster.start()
+        
+        t_s_cluster.join()
+        logger.info("Sensitivity Clustering Complete")
+        threading.Thread(target=sensitivity_clustering_range_mean_agent).start()
+    except Exception as e:
+        logger.info("Sensitivity Agents failed.")
+        logger.exception(e)
 
 def run_agents():
     download_data()
