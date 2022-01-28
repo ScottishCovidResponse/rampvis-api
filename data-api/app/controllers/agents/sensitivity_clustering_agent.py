@@ -91,7 +91,7 @@ def form_input_clusters(clusters: List[dict]):
 
 
 def input_cluster_labels(df_in, parameter_in, bounds_in, k_in):
-    bins = np.linspace(bounds_in[0], bounds_in[1], k_in + 1)
+    bins = np.linspace(bounds_in[0], bounds_in[1], k_in)
     labels = np.digitize(df_in[parameter_in], bins) - 1
     return labels
 

@@ -23,7 +23,7 @@ def unc_function_on_clusters(raw_cluster_data: str, analysis_function: Callable[
         processed_cluster_data: List with the result of the function evaluation on each cluster, as JSON strings.
     """
     processed_cluster_data = []
-    for i in range(raw_cluster_data["k"]):
+    for i in range(len(raw_cluster_data["clusters"])):
         object_string = json.dumps(raw_cluster_data["clusters"][i])
         cluster_input_object = json.loads(object_string, object_hook=lambda d: UncertaintyInput(**d))
         processed_cluster_data.append(analysis_function(cluster_input_object))
@@ -179,7 +179,7 @@ def sens_function_on_clusters(raw_cluster_data: str, analysis_function: Callable
         processed_cluster_data: List with the result of the function evaluation on each cluster, as JSON strings.
     """
     processed_cluster_data = []
-    for i in range(raw_cluster_data["k"]):
+    for i in range(len(raw_cluster_data["clusters"])):
         object_string = json.dumps(raw_cluster_data["clusters"][i])
         cluster_input_object = json.loads(object_string, object_hook=lambda d: SensitivityInput(**d))
         processed_cluster_data.append(analysis_function(cluster_input_object))
