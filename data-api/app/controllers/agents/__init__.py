@@ -12,7 +12,7 @@ from app.controllers.agents.uncertainty_mean_sample_agent import uncertainty_mea
 from app.controllers.agents.uncertainty_clustering_agent import uncertainty_clustering_agent
 from app.controllers.agents.uncertainty_cluster_mean_sample_agent import uncertainty_cluster_mean_sample_agent
 from app.controllers.agents.time_series_precompute_agent import precompute
-
+from app.controllers.agents.sensitivity_stream_registration_agent import sensitivity_stream_registration_agent
 
 def uncertainty_agents():
     try:
@@ -45,6 +45,7 @@ def sensitivity_agents():
         threading.Thread(target=convert_data).start()
         
         t_convert.join()
+        threading.Thread(target=sensitivity_stream_registration_agent).start()
         logger.info("SensitivityInput objects created from ents files.")
         threading.Thread(target=summary_curves_agent).start()
         threading.Thread(target=sobol_index_agent).start()
