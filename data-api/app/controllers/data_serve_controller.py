@@ -10,7 +10,7 @@ from starlette.status import (
 )
 
 from app.algorithms.franck import compute_metrics
-from app.utils.naming import component_to_csv_file
+from app.utils.naming import component_to_csv_file, component_to_json_file
 from app.core.settings import DATA_PATH_LIVE
 
 data_serve_controller = APIRouter()
@@ -46,7 +46,7 @@ def query(product=Query(None), component=Query(None), field=Query(None), keys=Qu
     # - each product is in a folder with subfolders as components
     # - each component is a csv containing all fields
     filename = component_to_csv_file(folder, product, component)
-    filename_json = str(filename).replace(".csv", ".json")
+    filename_json = component_to_json_file(folder, product, component)
     if Path(filename).is_file():
         df = pd.read_csv(filename)
 
