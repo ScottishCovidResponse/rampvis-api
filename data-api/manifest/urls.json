@@ -177,5 +177,10 @@
         "name": "phe",
         "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=ltla&metric=newCasesByPublishDate&format=csv",
         "save_to": "phe/ltla/newCasesByPublishDate.csv"
+    },
+    {
+        "name": "phe",
+        "url": "https://api.coronavirus.data.gov.uk/v2/data?areaType=utla&metric=newCasesByPublishDateRollingSum&format=csv",
+        "save_to": "phe/utla/newCasesByPublishDateRollingSum.csv"
     }
 ]

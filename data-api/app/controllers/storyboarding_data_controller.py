@@ -16,4 +16,18 @@ async def get():
     df = pd.read_csv(filename)
     result = df.to_json(orient="records")
     print("storyboarding_data_controller:get: result = ", result)
+
+    filename = Path(DATA_PATH_LIVE) / "phe/utla/newcasesbypublishdaterollingsum.csv"
+    df = pd.read_csv(filename)
+    result = df.to_json(orient="records")
+    print("storyboarding_data_controller:get: result = ", result)
+
+    filename = Path(DATA_PATH_LIVE) / "opendata/scotland/daily_case_trends.csv"
+    df = pd.read_csv(filename)
+    # Filter Glasgow
+    df = df.query('HB == "S08000031"')
+    result = df.to_json(orient="records")
+    print("storyboarding_data_controller:get: result = ", result)
+
+
     return Response(content=result, media_type="application/json")
