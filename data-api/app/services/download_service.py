@@ -117,24 +117,30 @@ def download_open_data_qf(base_url, folder, filename):
     url = f'https://www.opendata.nhs.scot/dataset/{base_url}/download'
     df = pd.read_csv(url)
     qf_columns = [c for c in df.columns if c.endswith('QF')]
-    df = df.drop(columns=['Country'] + qf_columns)
+    df = df.drop(columns=qf_columns)
     folder.mkdir(exist_ok=True)
     df.to_csv(folder/filename, index=False)
 
 def download_open_data(folder):
     print('Download opendata ...')
-    
+
     download_open_data_qf(
-        '6dbdd466-45e3-4348-9ee3-1eac72b5a592/resource/9b99e278-b8d8-47df-8d7a-a8cf98519ac1',
-        Path(folder)/'opendata/scotland/vaccination',
-        'daily_sex_agegroup.csv'
+        'covid-19-in-scotland/resource/2dd8534b-0a6f-4744-9253-9565d62f96c2',
+        Path(folder)/'opendata/scotland',
+        'daily_case_trends.csv'
     )
     
-    download_open_data_qf(
-        'covid-19-in-scotland/resource/9393bd66-5012-4f01-9bc5-e7a10accacf4',
-        Path(folder)/'opendata/scotland/case_trends',
-        'daily_sex_agegroup.csv'
-    )
+    # download_open_data_qf(
+    #     '6dbdd466-45e3-4348-9ee3-1eac72b5a592/resource/9b99e278-b8d8-47df-8d7a-a8cf98519ac1',
+    #     Path(folder)/'opendata/scotland/vaccination',
+    #     'daily_sex_agegroup.csv'
+    # )
+    
+    # download_open_data_qf(
+    #     'covid-19-in-scotland/resource/9393bd66-5012-4f01-9bc5-e7a10accacf4',
+    #     Path(folder)/'opendata/scotland/case_trends',
+    #     'daily_sex_agegroup.csv'
+    # )
 
 def save_code(df, save_to):
     area_code = df.iloc[0]['areaCode']
