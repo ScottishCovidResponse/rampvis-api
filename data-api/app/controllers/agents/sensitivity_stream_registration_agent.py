@@ -10,7 +10,7 @@ import numpy as np
 def addstream(streams_in, file_path_parent_in, file_path_stem_in, keywords_in, description_in):
     endpoint = str("/data/?product="+file_path_parent_in+"&component="+file_path_stem_in)
     keywords = ["sensitivity"]
-    keywords.append(keywords_in)
+    keywords += keywords_in
     entry = {"urlCode": "API_PY",
              "endpoint": endpoint,
              "dataType": "matrix",
