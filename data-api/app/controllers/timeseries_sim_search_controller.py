@@ -19,7 +19,7 @@ class FirstRunForm(BaseModel):
     firstDate: date
     lastDate: date
     indicator: str
-    method: str
+    method: list
     numberOfResults: int
     minPopulation: int
     startDate: date
@@ -47,9 +47,11 @@ async def searchform(firstRunForm:FirstRunForm):
     endDate = firstRunForm.endDate
     continentCheck = firstRunForm.continentCheck
     continentCheck = continentTransformer(continentCheck)
-    out = firstRunOutput(targetCountry,firstDate,lastDate,indicator,method,numberOfResults,minPopulation,startDate,endDate,continentCheck)
-    
-    return out
+    master = []
+    for i in method:
+        out = firstRunOutput(targetCountry,firstDate,lastDate,indicator,i,numberOfResults,minPopulation,startDate,endDate,continentCheck)
+        master.append({"method":i,"data":out})
+    return master
 
 @timeseries_sim_search_controller.post("/compare/")
 async def compareform(benchmarkCountries:BenchmarkCountries):
