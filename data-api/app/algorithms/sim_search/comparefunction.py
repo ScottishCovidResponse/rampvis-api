@@ -1,7 +1,7 @@
 import pandas as pd
 from app.core.settings import DATA_PATH_LIVE
 PATH_SEARCH = DATA_PATH_LIVE + "/owid"
-streams_to_show = ["biweekly_cases_per_million","biweekly_deaths_per_million","icu_patients_per_million","people_vaccinated_per_hundred","weekly_icu_admissions_per_million","stringency_index"];
+streams_to_show = ["biweekly_cases_per_million","biweekly_deaths_per_million","icu_patients_per_million","people_vaccinated_per_hundred","stringency_index"];
 
 def compareOutput(benchmarkCountries):
     obj_lst = []
