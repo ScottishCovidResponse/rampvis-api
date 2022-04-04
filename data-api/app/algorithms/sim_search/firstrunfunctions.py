@@ -77,6 +77,15 @@ def distfunc(target:list,comp:list,method:str)->int:
         return dtw(target,comp)
     if method == "lcs":
         return 1-lcss(target,comp)
+    if method == "pearson":
+        return distance.correlation(target,comp)
+    if method == "cosine":
+        return distance.cosine(target,comp)
+    if method == "jensenshannon":  
+        return distance.jensenshannon(target,comp)
+    if method == "braycurtis":
+        return distance.braycurtis(target,comp)
+
     
 
 def ranker(cube:pd.DataFrame,targetCountry:str,targetDate:datetime.date,method:str,topN:int)->list:
