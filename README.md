@@ -23,12 +23,18 @@ This project implements RESTful APIs of the RAMPVIS system. This repository cons
 
 We created multiple `docker compose` / `docker-compose` scripts and each script handles a set of services. This helps troubleshooting any issues. Sequentially start the following services:
 
-Ensure docker is running. Create an overlay network to allow communication between docker applications:
+Ensure docker is running. Stop and clean everything if required.
+
+```bash
+
+```
+
+Create an overlay network to allow communication between docker applications:
 
 ```bash
 docker swarm init
 docker network create --driver overlay --attachable rampvis-api-network
-# check
+# inspect the network
 docker network inspect rampvis-api-network
 ```
 
@@ -71,7 +77,7 @@ docker compose -f docker-compose-seed.yml ps
 Injecting data and creating index may take sometime, to inspect the log, run:
 
 ```bash
-docker compose -f docker-compose-seed.yml logs setup-scripts --follow
+docker compose -f docker-compose-seed.yml logs seed-data --follow
 ```
 
 ## BibTex
@@ -101,4 +107,5 @@ docker compose -f docker-compose-seed.yml logs setup-scripts --follow
 
 ## Contact
 
-if there is any issues The developers can be reached out to saiful.etc@gmail.com
+URL: https://sites.google.com/view/rampvis/teams
+Email: saiful.etc@gmail.com

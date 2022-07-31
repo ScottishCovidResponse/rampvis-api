@@ -12,10 +12,8 @@ services:
     ports:
       - 4010:4010
     volumes:
-      - ./data-api:/usr/src/data-api # mount the data-api folder
+      # - ./data-api:/usr/src/data-api # mount the data-api folder
       - ./data:/usr/src/data # mount the data
-    # networks:
-    #   - rampvis-api-network
 
   infrastructure-api:
     hostname: infrastructure-api
@@ -28,17 +26,9 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./infrastructure-api:/usr/src/infrastructure-api # mount the infrastructure-api folder
+      # - ./infrastructure-api:/usr/src/infrastructure-api # mount the infrastructure-api folder
       - ./data:/usr/src/data # mount the data folder
-    # networks:
-    #   - rampvis-api-network
 
-#
-# networks
-#
-# networks:
-#   rampvis-api-net:
-#     driver: bridge
 networks:
   default:
     external: true

@@ -1,31 +1,14 @@
 version: "3"
 
 services:
-  setup-scripts:
-    image: "setup-scripts"
-    build: "./setup-scripts"
-    container_name: "setup-scripts"
-    # depends_on:
-    #   - mongodb01
-    #   - es01
-    stdin_open: true # docker run -i
-    tty: true # docker run -t
-    volumes:
-      - mongostatus:/data/
-    # networks:
-    #   - rampvis-api-net
-#
-# volumes
-#
-volumes:
-  mongostatus:
+  seed-data:
+    image: "seed-data"
+    build: "./seed-data"
+    container_name: "seed-data"
 
 #
 # networks
 #
-# networks:
-#   rampvis-api-net:
-#     driver: bridge
 networks:
   default:
     external: true

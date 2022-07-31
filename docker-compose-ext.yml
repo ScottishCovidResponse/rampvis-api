@@ -23,8 +23,6 @@ services:
       ]
     ports:
       - 27017:27017
-    # networks:
-    #   - rampvis-api-network
 
   mongodb02:
     image: mongo:4.4.11
@@ -43,8 +41,6 @@ services:
         "--wiredTigerCacheSizeGB",
         "1",
       ]
-    # networks:
-    #   - rampvis-api-network
 
   mongodb03:
     image: mongo:4.4.11
@@ -63,8 +59,15 @@ services:
         "--wiredTigerCacheSizeGB",
         "1",
       ]
-    # networks:
-    #   - rampvis-api-network
+
+  mongosetup:
+    image: "mongo-setup"
+    build: "./mongo-setup"
+    container_name: "mongo-setup"
+    depends_on:
+      - mongodb01
+    volumes:
+      - mongostatus:/data/
 
   #
   # elasticsearch
@@ -87,8 +90,6 @@ services:
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-    # networks:
-    #   - rampvis-api-network
 
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
@@ -106,8 +107,6 @@ services:
         hard: -1
     volumes:
       - esdata02:/usr/share/elasticsearch/data
-    # networks:
-    #   - rampvis-api-network
 
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
@@ -125,8 +124,6 @@ services:
         hard: -1
     volumes:
       - esdata03:/usr/share/elasticsearch/data
-    # networks:
-    #   - rampvis-api-network
 
   #
   # kibana
@@ -139,8 +136,6 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-    # networks:
-    #   - rampvis-api-network
 
 #
 # volumes
@@ -152,13 +147,8 @@ volumes:
   mongodata01:
   mongodata02:
   mongodata03:
+  mongostatus:
 
-#
-# networks
-#
-# networks:
-#   rampvis-api-net:
-#     driver: bridge
 networks:
   default:
     external: true

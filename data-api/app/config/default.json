@@ -1,5 +1,5 @@
 {
-  "allowOriginRegex": "(http://(0\\.0\\.0\\.0|localhost)(:\\d+)?|)",
+  "allowOriginRegex": "(http://(0\\.0\\.0\\.0|localhost|rampvis-ontology-ui)(:\\d+)?|)",
   "mongodb": {
     "_url": "mongodb://localhost:27017/?directConnection=true",
     "url": "mongodb://mongodb01:27017/?directConnection=true",
