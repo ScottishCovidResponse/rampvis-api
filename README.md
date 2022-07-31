@@ -48,23 +48,10 @@ docker compose -f docker-compose-ext.yml ps
 Start the data-api and infrastructure-api
 
 ```bash
-<<<<<<< HEAD
-# Windows-11
-wsl -d docker-desktop 
-echo 262144 >> /proc/sys/vm/max_map_count
-
-# Linux
-sysctl -w vm.max_map_count=262144
-
-# Linux: set this permanently
-sudo vim /etc/sysctl.conf 
-vm.max_map_count=262144
-=======
 # start the services
 docker compose -f docker-compose-int.yml up -d
 # check the status
 docker compose -f docker-compose-int.yml ps
->>>>>>> origin/dockerise
 ```
 
 > Getting started locally --
@@ -89,27 +76,6 @@ docker compose -f docker-compose-seed.yml logs setup-scripts --follow
 
 ## BibTex
 
-<<<<<<< HEAD
-[1] This repository can be cited as: 
-```bash
-@misc{RAMPVIS-API:git,
-  author = {Saiful Khan, Phong Nguyen, Erik Rydow, Tuna Gonen, and Alexander Kachkaev},
-  title = {{RAMPVIS} API},
-  howpublished = {\url{https://github.com/ScottishCovidResponse/rampvis-api}},
-}
-```
-Author order is based on GitHub contribution statistics.
-
-[2] The API and service architecture and design work can be cited as:
-
-```bash
-TBD
-```
-
-[3] Propagation work can be cited as:
-
-```bash
-=======
 ```bash
 @article{Khan:2022:TSC,
   author        = {Khan, Saiful and Nguyen, Phong H. and Abdul-Rahman, Alfie and Freeman, Euan and Turkay, Cagatay and Chen, Min},
@@ -121,15 +87,10 @@ TBD
   doi           = {10.1109/TSC.2022.3164146}
 }
 
->>>>>>> origin/dockerise
 @article{Khan2022:IEEE-TVCG,,
    author = {Saiful Khan, Phong Nguyen, Alfie Abdul-Rahman, Benjamin Bach, Min Chen, Euan Freeman, and Cagatay Turkay},
    title = {Propagating Visual Designs to Numerous Plots and Dashboards},
    journal = {IEEE Transactions on Visualization and Computer Graphics},
-<<<<<<< HEAD
-   issue = {1},
-=======
->>>>>>> origin/dockerise
    pages = {86-95},
    volume = {28},
    year = {2022},
@@ -137,10 +98,7 @@ TBD
    arxiv = {https://arxiv.org/abs/2107.08882}
 }
 ```
-<<<<<<< HEAD
-=======
 
 ## Contact
 
 if there is any issues The developers can be reached out to saiful.etc@gmail.com
->>>>>>> origin/dockerise
