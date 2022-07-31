@@ -1,7 +1,8 @@
 {
   "allowOriginRegex": "(http://(0\\.0\\.0\\.0|localhost)(:\\d+)?|)",
   "mongodb": {
-    "url": "mongodb://localhost:27017/?directConnection=true",
+    "_url": "mongodb://localhost:27017/?directConnection=true",
+    "url": "mongodb://mongodb01:27017/?directConnection=true",
     "db": "rampvis",
     "collection": {
       "users": "users",
@@ -13,7 +14,8 @@
     }
   },
   "es": {
-    "host": "http://localhost:9200",
+    "_host": "http://localhost:9200",
+    "host": "http://es01:9200",
     "index": {
       "onto_page": "onto_page"
     }

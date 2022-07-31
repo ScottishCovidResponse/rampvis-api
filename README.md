@@ -1,8 +1,9 @@
 # About
 
-RESTful APIs of the RAMPVIS system. This repository consist of the following top-level folders.
+This project implements RESTful APIs of the RAMPVIS system. This repository consist of the following top-level folders.
 
 1. data-api
+
    - Implemented in Python, FastAPI, and other Python libraries.
    - APIs for all data.
    - API implements processing functions, e.g., analytical algorithms, propagation, scheduler agents, etc.
@@ -14,40 +15,90 @@ RESTful APIs of the RAMPVIS system. This repository consist of the following top
 
 ## Getting Started
 
-Sequence of starting the services:
+### Prerequisites
 
-1. External services
-2. Internal Services
+- This is tested in Ubuntu 22.04
 
-### Start External Services
+### Start Development Instance
 
-The infrastructure APIs are dependent on following external services:
-1. MongoDB 
-2. Elasticsearch. 
+We created multiple `docker compose` / `docker-compose` scripts and each script handles a set of services. This helps troubleshooting any issues. Sequentially start the following services:
 
-Start the services:
+Ensure docker is running. Create an overlay network to allow communication between docker applications:
 
 ```bash
-docker-compose up -d
+docker swarm init
+docker network create --driver overlay --attachable rampvis-api-network
+# check
+docker network inspect rampvis-api-network
 ```
 
-Run the command to check the containers (e.g., es*, kib*, and mongod*) are started:
+#### [1] Start External Services
+
+The infrastructure APIs are dependent on database and search engine- MongoDB, Elasticsearch, and Kibana.
 
 ```bash
-docker-compose ps
+# start the services
+docker compose -f docker-compose-ext.yml up -d
+# check the status
+docker compose -f docker-compose-ext.yml ps
 ```
 
-**Known Issues and Solutions**
+#### [2] Start Internal Services
 
-1. The elasticsearch containers require more than 2GB VM. To setup the VM size run:
+Start the data-api and infrastructure-api
 
 ```bash
-# Windows-11
-wsl -d docker-desktop 
-echo 262144 >> /proc/sys/vm/max_map_count
+# start the services
+docker compose -f docker-compose-int.yml up -d
+# check the status
+docker compose -f docker-compose-int.yml ps
 ```
 
-### Start Internal Services
-The data-api and infrastructure-api are our internal services. See the [data-api README](./data-api/README.md) and [infrastructure-api README](./infrastructure-api/README.md) files.
+> Getting started locally --
+> In order to start and debug the services locally see the [data-api README](./data-api/README.md) and [infrastructure-api README](./infrastructure-api/README.md) files.
+
+#### [3] Inject the Seed Data
+
+This script will clear the databases and search indexes, and seed the MongoDB data from `rampvis` folder. Do not run this if there are already available data that you do not want to remove.
+
+```bash
+# start the services
+docker compose -f docker-compose-seed.yml up -d
+# check the status
+docker compose -f docker-compose-seed.yml ps
+```
+
+Injecting data and creating index may take sometime, to inspect the log, run:
+
+```bash
+docker compose -f docker-compose-seed.yml logs setup-scripts --follow
+```
 
 ## BibTex
+
+```bash
+@article{Khan:2022:TSC,
+  author        = {Khan, Saiful and Nguyen, Phong H. and Abdul-Rahman, Alfie and Freeman, Euan and Turkay, Cagatay and Chen, Min},
+  title         = {Rapid Development of a Data Visualization Service in an Emergency Response},
+  journal       = {IEEE Transactions on Services Computing},
+  volume        = {15},
+  pages         = {1251-1264},
+  year          = {2022},
+  doi           = {10.1109/TSC.2022.3164146}
+}
+
+@article{Khan2022:IEEE-TVCG,,
+   author = {Saiful Khan, Phong Nguyen, Alfie Abdul-Rahman, Benjamin Bach, Min Chen, Euan Freeman, and Cagatay Turkay},
+   title = {Propagating Visual Designs to Numerous Plots and Dashboards},
+   journal = {IEEE Transactions on Visualization and Computer Graphics},
+   pages = {86-95},
+   volume = {28},
+   year = {2022},
+   doi = {10.1109/TVCG.2021.3114828},
+   arxiv = {https://arxiv.org/abs/2107.08882}
+}
+```
+
+## Contact
+
+if there is any issues The developers can be reached out to saiful.etc@gmail.com
