@@ -9,31 +9,26 @@ APIs for data, processing functions, algorithms and propagation.
 - Python 3.8.12
 - MongoDB, Elasticsearch [see](../README.md)
 
-### Start Development Instance
+### Start Development Instance Locally
 
-Create Python environment using conda
+Update the external services URL in `data-api/app/config/default.json`, e.g.,
 
 ```bash
-<<<<<<< HEAD
- conda env create --file environment.yaml
+"url": "mongodb://localhost:27017/?directConnection=true",
+"host": "http://localhost:9200",
 ```
 
-Create Python environment using pip (it will not install all packages, ignore this now)
+Create Python environment and install dependencies.
+
 ```bash
-=======
-# create python 3.9.* environment
->>>>>>> origin/dockerise
 pip install virtualenv
 virtualenv venv
-
-# activate
 source ./venv/bin/activate
 
-# install dependencies
 pip install -r requirements.txt
 ```
 
-Start the server in host machine:
+Start the server in host machine.
 
 ```bash
 uvicorn app.main:app --reload --port 4010 --host 0.0.0.0

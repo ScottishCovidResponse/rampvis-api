@@ -7,18 +7,22 @@ Infrastructure APIs: authentication, user management, ontology operations, data 
 ### Prerequisites
 
 - Node version 16.13.0
-- MongoDB, Elasticsearch [see](../README.md)
+- External services- MongoDB, Elasticsearch [see](../README.md)
 
-### Start Development Instance
+### Start Development Instance Locally
+
+Update the external services URL in `infrastructure-api/config/default.json`, e.g.,
 
 ```bash
-# install dependencies
-yarn install
+"url": "mongodb://localhost:27017/?directConnection=true",
+"host": "http://localhost:9200",
+```
 
-# in Linux/MAC
+Install dependencies and start services.
+
+```bash
+yarn install
 yarn dev
-# in Windows
-yarn dev-win
 ```
 
 ## API Documentation
