@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  data-api:
+    hostname: data-api
+    container_name: data-api
+    build:
+      context: ./data-api
+      dockerfile: Dockerfile
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    ports:
+      - 4010:4010
+    volumes:
+      - ./data-api:/usr/src/data-api # mount the data-api folder
+      - ./data:/usr/src/data # mount the data
+    # networks:
+    #   - rampvis-api-network
+
+  infrastructure-api:
+    hostname: infrastructure-api
+    container_name: infrastructure-api
+    build:
+      context: ./infrastructure-api
+      dockerfile: Dockerfile
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    ports:
+      - 4000:4000
+    volumes:
+      - ./infrastructure-api:/usr/src/infrastructure-api # mount the infrastructure-api folder
+      - ./data:/usr/src/data # mount the data folder
+    # networks:
+    #   - rampvis-api-network
+
+#
+# networks
+#
+# networks:
+#   rampvis-api-net:
+#     driver: bridge
+networks:
+  default:
+    external: true
+    name: rampvis-api-network

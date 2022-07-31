@@ -1,0 +1,43 @@
+{
+  "allowOriginRegex": "(http://(0\\.0\\.0\\.0|localhost)(:\\d+)?|)",
+  "mongodb": {
+    "_url": "mongodb://localhost:27017/?directConnection=true",
+    "url": "mongodb://mongodb01:27017/?directConnection=true",
+    "db": "rampvis",
+    "collection": {
+      "users": "users",
+      "thumbnails": "thumbnails",
+      "activities": "activities",
+      "onto_page": "onto_page",
+      "onto_vis": "onto_vis",
+      "onto_data": "onto_data"
+    }
+  },
+  "es": {
+    "_host": "http://localhost:9200",
+    "host": "http://es01:9200",
+    "index": {
+      "onto_page": "onto_page"
+    }
+  },
+  "github": {
+    "clientId": "<set>",
+    "clientSecret": "<set>",
+    "callbackUrl": "http://localhost:4000/api/v1/auth/github-callback",
+    "successRedirect": "http://localhost:3000/auth/login",
+    "failureRedirect": "http://localhost:3000/error-403"
+  },
+  "jwt": {
+    "algorithm": "RS256",
+    "pvtKey": "config/keys/jwtRS256.key",
+    "pubKey": "config/keys/jwtRS256.key.pub"
+  },
+  "session": {
+    "secret": "<set>"
+  },
+  "apiUrl": "/api/v1",
+  "urlCode": {
+    "API_JS": "http://localhost:4000/api/v1",
+    "API_PY": "http://localhost:4010/stat/v1"
+  }
+}

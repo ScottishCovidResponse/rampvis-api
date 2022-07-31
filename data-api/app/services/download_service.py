@@ -14,7 +14,6 @@ import h5py
 import pandas as pd
 import numpy as np
 
-from data_pipeline_api.registry.downloader import Downloader
 from ..utils.naming import format_component_name
 from app.utils.common import own_removeprefix
 
