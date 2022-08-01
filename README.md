@@ -80,7 +80,7 @@ Injecting data and creating index may take sometime, to inspect the log, run:
 docker compose -f docker-compose-seed.yml logs seed-data --follow
 ```
 
-### Containers View
+### Containers Network
 
 This figure illustrates the containers and their swarm network connections.
 
