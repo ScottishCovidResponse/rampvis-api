@@ -86,6 +86,8 @@ This figure illustrates the containers and their swarm network connections.
 
 ![fishy](./containers.png)
 
+The [rampvis-ui](https://github.com/ScottishCovidResponse/rampvis-ui) and [rampvis-ontology-management-ui](https://github.com/saifulkhan/rampvis-ontology-management-ui) are in a different repository.
+
 ## BibTex
 
 ```bash
