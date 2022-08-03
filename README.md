@@ -23,9 +23,24 @@ This project implements RESTful APIs for the RAMPVIS system. This repository con
 
 We created multiple `docker compose` / `docker-compose` scripts and each script handles a set of services. This helps with troubleshooting any issues. Sequentially start the following services:
 
-Ensure docker is running. Stop and clean everything if required.
+Ensure docker is running. Stop and clean everything if required. For example,
 
 ```bash
+# stop containers
+docker compose -f docker-compose-ext.yml stop
+docker compose -f docker-compose-int.yml stop
+docker compose -f docker-compose-seed.yml stop
+
+# remove containers
+docker compose -f docker-compose-ext.yml rm
+docker compose -f docker-compose-int.yml rm
+docker compose -f docker-compose-seed.yml rm
+
+# remove images
+docker rmi mongo-setup seed-data rampvis-api_data-api rampvis-api_infrastructure-api
+
+# remove volumes, this will also remove database and search indices
+docker volume rm rampvis-api_mongostatus rampvis-api_esdata01 rampvis-api_esdata02 rampvis-api_esdata03 rampvis-api_mongodata01 rampvis-api_mongodata02 rampvis-api_mongodata03
 
 ```
 
@@ -80,7 +95,7 @@ Injecting data and creating index may take some time, to inspect the log, run:
 docker compose -f docker-compose-seed.yml logs seed-data --follow
 ```
 
-### Containers Network
+### Containers and Network
 
 This figure illustrates the containers and their swarm network connections.
 
