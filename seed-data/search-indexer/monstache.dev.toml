@@ -1,9 +1,11 @@
 # connection settings
 
 # connect to MongoDB using the following URL
-mongo-url =  "mongodb://localhost:27017/?directConnection=true"
+#mongo-url =  "mongodb://localhost:27017/?directConnection=true"
+mongo-url =  "mongodb://mongodb01:27017/?directConnection=true"
 # connect to the Elasticsearch REST API at the following node URLs
-elasticsearch-urls = ["http://localhost:9200", "http://localhost:9201"] # to use local instance
+#elasticsearch-urls = ["http://localhost:9200"] # to use local instance
+elasticsearch-urls = ["http://es01:9200"] # to use local instance
 
 # frequently required settings
 

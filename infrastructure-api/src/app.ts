@@ -133,7 +133,7 @@ export class App {
       logger.info(`Created search mappings for ontologies- data, vis, page.`);
     } catch (err) {
       logger.error(`Error creating mappings, error: ${err}`);
-      process.exit();
+      // process.exit();
     }
   }
 

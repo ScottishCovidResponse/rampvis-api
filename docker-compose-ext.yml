@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   #
@@ -9,53 +9,69 @@ services:
     restart: always
     container_name: mongodb01
     volumes:
-    - mongodata01:/data/db
+      - mongodata01:/data/db
     expose:
-    - "27017"
-    entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
+      - "27017"
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rsmongo",
+        "--bind_ip_all",
+        "--wiredTigerCacheSizeGB",
+        "1",
+      ]
     ports:
       - 27017:27017
-    networks:
-      - rampvis-api-net
 
   mongodb02:
-      image: mongo:4.4.11
-      restart: always
-      container_name: mongodb02
-      volumes:
+    image: mongo:4.4.11
+    restart: always
+    container_name: mongodb02
+    volumes:
       - mongodata02:/data/db
-      expose:
+    expose:
       - "27017"
-      entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
-      networks:
-      - rampvis-api-net
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rsmongo",
+        "--bind_ip_all",
+        "--wiredTigerCacheSizeGB",
+        "1",
+      ]
 
   mongodb03:
-      image: mongo:4.4.11
-      restart: always
-      container_name: mongodb03
-      volumes:
+    image: mongo:4.4.11
+    restart: always
+    container_name: mongodb03
+    volumes:
       - mongodata03:/data/db
-      expose:
+    expose:
       - "27017"
-      entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1" ]
-      networks:
-      - rampvis-api-net
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rsmongo",
+        "--bind_ip_all",
+        "--wiredTigerCacheSizeGB",
+        "1",
+      ]
 
   mongosetup:
-      image: "mongo-setup"
-      build: "./setup-scripts"
-      container_name: "mongosetup"
-      depends_on:
-          - mongodb01
-      volumes:
-          - mongostatus:/data/
-      networks:
-      - rampvis-api-net
+    image: "mongo-setup"
+    build: "./mongo-setup"
+    container_name: "mongo-setup"
+    depends_on:
+      - mongodb01
+    volumes:
+      - mongostatus:/data/
 
   #
   # elasticsearch
-  #  
+  #
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     container_name: es01
@@ -74,8 +90,6 @@ services:
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-    networks:
-      - rampvis-api-net
 
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
@@ -93,8 +107,6 @@ services:
         hard: -1
     volumes:
       - esdata02:/usr/share/elasticsearch/data
-    networks:
-      - rampvis-api-net
 
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
@@ -112,12 +124,10 @@ services:
         hard: -1
     volumes:
       - esdata03:/usr/share/elasticsearch/data
-    networks:
-      - rampvis-api-net
-      
+
   #
   # kibana
-  #  
+  #
   kib01:
     image: docker.elastic.co/kibana/kibana:7.16.2
     container_name: kib01
@@ -126,8 +136,6 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-    networks:
-      - rampvis-api-net
 
 #
 # volumes
@@ -141,9 +149,7 @@ volumes:
   mongodata03:
   mongostatus:
 
-#
-# networks
-#
 networks:
-  rampvis-api-net:
-    driver: bridge
+  default:
+    external: true
+    name: rampvis-api-network
