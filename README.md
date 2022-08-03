@@ -1,6 +1,6 @@
 # About
 
-This project implements RESTful APIs of the RAMPVIS system. This repository consist of the following top-level folders.
+This project implements RESTful APIs for the RAMPVIS system. This repository consist of the following top-level folders.
 
 1. data-api
 
@@ -21,7 +21,7 @@ This project implements RESTful APIs of the RAMPVIS system. This repository cons
 
 ### Start Development Instance
 
-We created multiple `docker compose` / `docker-compose` scripts and each script handles a set of services. This helps troubleshooting any issues. Sequentially start the following services:
+We created multiple `docker compose` / `docker-compose` scripts and each script handles a set of services. This helps with troubleshooting any issues. Sequentially start the following services:
 
 Ensure docker is running. Stop and clean everything if required.
 
@@ -65,7 +65,7 @@ docker compose -f docker-compose-int.yml ps
 
 #### [3] Inject the Seed Data
 
-This script will clear the databases and search indexes, and seed the MongoDB data from `rampvis` folder. Do not run this if there are already available data that you do not want to remove.
+This script will clear the databases and search indices, and seed the MongoDB data from the `rampvis` folder. Do not run this if there is already available data that you do not want to remove.
 
 ```bash
 # start the services
@@ -74,7 +74,7 @@ docker compose -f docker-compose-seed.yml up -d
 docker compose -f docker-compose-seed.yml ps
 ```
 
-Injecting data and creating index may take sometime, to inspect the log, run:
+Injecting data and creating index may take some time, to inspect the log, run:
 
 ```bash
 docker compose -f docker-compose-seed.yml logs seed-data --follow
