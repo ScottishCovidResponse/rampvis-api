@@ -48,8 +48,18 @@ class Propagation:
             j = 0
             i += 1
 
-        # TODO, check. sklearn.metrics.pairwise_distances(X, Y, metric='jaccard')
+        return sim
 
+    @staticmethod
+    def pairwise_jaccard_similarity_vec(X, Y):
+        """
+        Compute pair-wise jaccard similarity between X and Y.
+        X & Y are Bag of Words
+        """
+        logger.info(
+            f"Propagation: compute jaccard similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
+        )
+        sim = 1 - pairwise_distances(X, Y, metric='jaccard', n_jobs=-1)
         return sim
 
     @staticmethod
@@ -66,37 +76,39 @@ class Propagation:
         return sim
 
     @staticmethod
-    def weighted_average(T, K, D=None, alpha=1, beta=0, theta=0):
+    def weighted_average(T, K, D=None, A=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Propagation: compute weighted average for Srd, len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
+            f"Propagation: compute weighted average for Srd, len(T) = {len(T)}, len(K) = {len(K)}, len(A) = {len(A)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
 
-        if D is not None:
-            logger.info(
-                f"Propagation: compute weighted average for Srd, len(D) = {len(D)}"
-            )
+        if all(v is not None for v in [A, D]):
+            return T * (alpha * K + beta * D + theta * A)
+        elif D is not None:
             return T * (alpha * K + beta * D)
+        elif A is not None:
+            return T * (alpha * K + theta * A)
         else:
             return T * K
 
     @staticmethod
-    def weighted_average2(K, D=None, alpha=1, beta=0, theta=0):
+    def weighted_average2(K, D=None, A=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Propagation: compute weighted average for Sdd, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
+            f"Propagation: compute weighted average for Sdd, len(K) = {len(K)}, len(A) = {len(A)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
-
-        if D is not None:
-            logger.info(
-                f"Propagation: compute weighted average for Sdd, len(D) = {len(D)}"
-            )
+        
+        if all(v is not None for v in [A, D]):
+            return alpha * K + beta * D + theta * A
+        elif D is not None:
             return alpha * K + beta * D
+        elif A is not None:
+            return alpha * K + theta * A
         else:
             return K
 
     @staticmethod
-    def Srd(reference, discovered, must_keys=[], alpha=1, beta=0, theta=0):
+    def Srd(reference, discovered, mustKeys=[], alpha=1, beta=0, theta=0):
         """
         a: Example data as array of OntoData object
         b: Search results as array of OntoData object
@@ -124,15 +136,16 @@ class Propagation:
         T = Propagation.pairwise_boolean_similarity(bow[0:rows], bow[rows:])
 
         # For keywords field compute pair-wise similarity matrix,
-        # TODO Jaccard
         keywords = [d["keywords"] for d in data]
-        count_vectorizer = CountVectorizer(
-            lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(must_keys)
+        tfidf_vectorizer = TfidfVectorizer(
+            lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(mustKeys)
         )
-        bow = count_vectorizer.fit_transform(keywords)
-        K = Propagation.pairwise_cosine_similarity(
-            bow[0:rows].toarray(), bow[rows:].toarray()
-        )
+        bow = tfidf_vectorizer.fit_transform(keywords)
+        # K = Propagation.pairwise_jaccard_similarity(bow[0:rows].toarray(), bow[rows:].toarray())
+        # K = Propagation.pairwise_jaccard_similarity_vec(bow[0:rows], bow[rows:])
+        K = Propagation.pairwise_cosine_similarity(bow[0:rows], bow[rows:])
+
+        print(bow[0:rows].shape, bow[rows:].shape)
 
         # For description field compute pair-wise similarity matrix
         D = None
@@ -144,14 +157,23 @@ class Propagation:
             D = Propagation.pairwise_cosine_similarity(bow[0:rows], bow[rows:])
             # TODO: to send possible error when description field is not empty
 
+        # For API endpoint field compute pair-wise similarity matrix
+        A = None
+        if theta != 0:
+            endpoint = [d["endpoint"] for d in data]
+
+            tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words="english")
+            bow = tfidf_vectorizer.fit_transform(endpoint)
+            A = Propagation.pairwise_cosine_similarity(bow[0:rows], bow[rows:])
+     
         # Weighted average
-        Srd = Propagation.weighted_average(T, K, D, alpha=alpha, beta=beta, theta=theta)
+        Srd = Propagation.weighted_average(T, K, D, A, alpha=alpha, beta=beta, theta=theta)
 
         logger.info(f"Propagation: computed Srd, len(Srd) = {len(Srd)}")
         return Srd
 
     @staticmethod
-    def Sdd(discovered, stop_keys=[], alpha=1, beta=0, theta=0):
+    def Sdd(discovered, mustAndShouldKeys=[], alpha=1, beta=0, theta=0):
         """
         a: Example data as array of OntoData object
         b: Search results as array of OntoData object
@@ -162,14 +184,16 @@ class Propagation:
             f"Propagation: compute Sdd, alpha = {alpha}, beta = {beta}, theta={theta}"
         )
 
-        # TODO Jaccard
+        # For keywords field compute pair-wise similarity matrix,
         keywords = [d["keywords"] for d in discovered]
-        count_vectorizer = CountVectorizer(
-            lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(stop_keys)
+        tfidf_vectorizer = TfidfVectorizer(
+            lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(mustAndShouldKeys)
         )
-        bow = count_vectorizer.fit_transform(keywords)
+        bow = tfidf_vectorizer.fit_transform(keywords)
+        # K = Propagation.pairwise_jaccard_similarity(bow.toarray(), bow.toarray())
+        # K = Propagation.pairwise_jaccard_similarity_vec(bow, bow)
         K = Propagation.pairwise_cosine_similarity(bow, bow)
-
+        
         D = None
         if beta != 0:
             description = [d["description"] for d in discovered]
@@ -178,7 +202,16 @@ class Propagation:
             bow = tfidf_vectorizer.fit_transform(description)
             D = Propagation.pairwise_cosine_similarity(bow, bow)
 
-        Sdd = Propagation.weighted_average2(K, D, alpha=alpha, beta=beta, theta=theta)
+        # For API endpoint field compute pair-wise similarity matrix
+        A = None
+        if theta != 0:
+            endpoint = [d["endpoint"] for d in discovered]
+
+            tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words="english")
+            bow = tfidf_vectorizer.fit_transform(endpoint)
+            A = Propagation.pairwise_cosine_similarity(bow, bow)
+
+        Sdd = Propagation.weighted_average2(K, D, A, alpha=alpha, beta=beta, theta=theta)
         logger.info(f"Propagation: computed Sdd, len(Sdd) = {len(Sdd)}")
 
         return Sdd
@@ -216,6 +249,9 @@ class Propagation:
             f"Propagation: group data streams len(Srd) = {len(Srd)}, len(discovered) = {len(discovered)}, len(clusters) = {len(clusters)}"
         )
 
+        # print("Srd = ", Srd)
+        # print("clusters = ", clusters)
+
         group_dict = dict()
 
         for i, d in enumerate(discovered):
@@ -240,6 +276,7 @@ class Propagation:
         for k in group_dict:
             group = group_dict[k]
             group = sorted(group, key=lambda k: k["idx"])
+            # print("group = ", group)
             group_score = sum(d["score"] for d in group)
             groups.append({"score": round(group_score, 3), "group": group})
 
