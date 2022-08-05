@@ -16,7 +16,6 @@ from app.services.search_service import SearchService
 from app.services.elasticsearch_service import ElasticsearchService
 from app.algorithms.propagation import Propagation
 
-use_gpu = False
 propagation_controller = APIRouter()
 
 
@@ -64,16 +63,22 @@ async def search_group(
     )
 
     if processor == "GPU":
-        use_gpu = True
-        from app.algorithms.cluster_gpu import cluster_gpu
-        from numba import cuda
+        try:
+            from app.algorithms.cluster_gpu import cluster_gpu
+            from numba import cuda
 
-        if not cuda.is_available():
+            if not cuda.is_available():
+                raise HTTPException(
+                    status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"PropagationController: CUDA is not available",
+                )
+        except Exception as e:
+            logger.error(f"PropagationController: no GPU available")
             raise HTTPException(
-                status_code=HTTP_422_UNPROCESSABLE_ENTITY,
-                detail=f"PropagationController: CUDA is not available",
+                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"PropagationController: no GPU available",
             )
-
+            
     if visId is None or mustKeys is None or shouldKeys is None or filterKeys is None:
         raise HTTPException(
             status_code=HTTP_422_UNPROCESSABLE_ENTITY,
@@ -143,26 +148,25 @@ async def search_group(
 
     clusters = None
 
-    try:
-        if processor == "GPU":
-            from app.algorithms.cluster_gpu import cluster_gpu
-            from numba import cuda
 
-            if cuda.is_available():
-                clusters = cluster_gpu(Sdd, n_clusters)
-            else:
-                raise HTTPException(
-                    status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-                    detail=f"PropagationController: CUDA is not available, error = {e}",
-                )
-        else:
+    if processor == "GPU":
+        try:
+            clusters = cluster_gpu(Sdd, n_clusters)
+        except Exception as e:
+            logger.error(f"PropagationController: no GPU available, error = {e}")
+            raise HTTPException(
+                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"PropagationController: no GPU available, error = {e}",
+            )
+    else:
+        try:
             clusters = propagation.cluster(Sdd, n_clusters)
-    except Exception as e:
-        logger.error(f"PropagationController: clustering error = {e}")
-        raise HTTPException(
-            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"PropagationController: clustering error = {e}",
-        )
+        except Exception as e:
+            logger.error(f"PropagationController: clustering error = {e}")
+            raise HTTPException(
+                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"PropagationController: clustering error = {e}",
+            )
 
     groups = propagation.group_data_streams(Srd, discovered, clusters)
     logger.debug(f"PropagationController: returning len(groups) = {len(groups)}")

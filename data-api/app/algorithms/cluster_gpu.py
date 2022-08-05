@@ -1,9 +1,20 @@
-import cudf
-from cuml.cluster import KMeans
 import pandas as pd
 from loguru import logger
+from starlette.exceptions import HTTPException
+from starlette.status import (
+    HTTP_422_UNPROCESSABLE_ENTITY,
+)
 
-
+try:
+   import cudf
+   from cuml.cluster import KMeans
+except ModuleNotFoundError as e:
+    logger.error(f"PropagationController: cuda is not available")
+    raise HTTPException(
+        status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+        detail=f"PropagationController: cuda is not available",
+    )    
+    
 def np2cudf(df):
     """
     convert numpy array to cuDF dataframe
