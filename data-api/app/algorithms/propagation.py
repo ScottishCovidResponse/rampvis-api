@@ -13,20 +13,6 @@ from sklearn.metrics.pairwise import pairwise_distances
 
 class Propagation:
     @staticmethod
-    def pairwise_boolean_similarity(X, Y):
-        """
-        Compute pairwise boolean (using euclidean distance) between X and Y
-        X & Y are Bag of Words
-        """
-        logger.info(
-            f"Propagation: compute boolean similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
-        )
-
-        sim = 1 - euclidean_distances(X, Y)
-        sim = sim.clip(min=0)
-        return sim
-
-    @staticmethod
     def pairwise_jaccard_similarity(X, Y):
         """
         Compute pair-wise jaccard similarity between X and Y.
@@ -63,6 +49,20 @@ class Propagation:
         return sim
 
     @staticmethod
+    def pairwise_boolean_similarity(X, Y):
+        """
+        Compute pairwise boolean (using euclidean distance) between X and Y
+        X & Y are Bag of Words
+        """
+        logger.info(
+            f"Propagation: compute boolean similarity, shape(X) = {X.shape}, shape(Y) = {Y.shape}"
+        )
+
+        sim = 1 - euclidean_distances(X, Y)
+        sim = sim.clip(min=0)
+        return sim
+
+    @staticmethod
     def pairwise_cosine_similarity(X, Y):
         """
         Compute pairwise cosine between X and Y
@@ -79,7 +79,7 @@ class Propagation:
     def weighted_average(T, K, D=None, A=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Propagation: compute weighted average for Srd, len(T) = {len(T)}, len(K) = {len(K)}, len(A) = {len(A)}, alpha={alpha}, beta={beta}, theta={theta}"
+            f"Propagation: compute weighted average for Srd, len(T) = {len(T)}, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
 
         if all(v is not None for v in [A, D]):
@@ -95,7 +95,7 @@ class Propagation:
     def weighted_average2(K, D=None, A=None, alpha=1, beta=0, theta=0):
         """ """
         logger.info(
-            f"Propagation: compute weighted average for Sdd, len(K) = {len(K)}, len(A) = {len(A)}, alpha={alpha}, beta={beta}, theta={theta}"
+            f"Propagation: compute weighted average for Sdd, len(K) = {len(K)}, alpha={alpha}, beta={beta}, theta={theta}"
         )
         
         if all(v is not None for v in [A, D]):
@@ -124,13 +124,11 @@ class Propagation:
         data = np.concatenate((reference, discovered))
         rows = len(reference)
         cols = len(discovered)
-
         logger.info(f"Propagation: compute Srd, num. examples = {rows}")
         logger.info(f"Propagation: compute Srd, num. discovered = {cols} ")
 
         # For data-type field compute pair-wise similarity matrix
         datatype = [d["dataType"] for d in data]
-
         count_vectorizer = CountVectorizer(lowercase=True)
         bow = count_vectorizer.fit_transform(datatype)
         T = Propagation.pairwise_boolean_similarity(bow[0:rows], bow[rows:])
@@ -141,11 +139,10 @@ class Propagation:
             lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(mustKeys)
         )
         bow = tfidf_vectorizer.fit_transform(keywords)
+
         # K = Propagation.pairwise_jaccard_similarity(bow[0:rows].toarray(), bow[rows:].toarray())
         # K = Propagation.pairwise_jaccard_similarity_vec(bow[0:rows], bow[rows:])
         K = Propagation.pairwise_cosine_similarity(bow[0:rows], bow[rows:])
-
-        print(bow[0:rows].shape, bow[rows:].shape)
 
         # For description field compute pair-wise similarity matrix
         D = None
@@ -168,8 +165,8 @@ class Propagation:
      
         # Weighted average
         Srd = Propagation.weighted_average(T, K, D, A, alpha=alpha, beta=beta, theta=theta)
-
         logger.info(f"Propagation: computed Srd, len(Srd) = {len(Srd)}")
+
         return Srd
 
     @staticmethod
