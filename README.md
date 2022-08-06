@@ -21,27 +21,28 @@ This project implements RESTful APIs for the RAMPVIS system. This repository con
 
 ### Start Development Instance
 
-We created multiple `docker compose` / `docker-compose` scripts and each script handles a set of services. This helps with troubleshooting any issues. Sequentially start the following services:
+We created multiple docker-compose scripts and each script handles a set of services. This helps with troubleshooting any issues. Sequentially start the following services. Note that based on what version is installed either use `docker compose` or `docker-compose`.
 
 Ensure docker is running. Stop and clean everything if required. For example,
 
 ```bash
 # stop containers
-docker compose -f docker-compose-ext.yml stop
-docker compose -f docker-compose-int.yml stop
-docker compose -f docker-compose-seed.yml stop
+docker-compose -f docker-compose-ext.yml stop
+docker-compose -f docker-compose-int.yml stop
+docker-compose -f docker-compose-seed.yml stop
 
 # remove containers
-docker compose -f docker-compose-ext.yml rm
-docker compose -f docker-compose-int.yml rm
-docker compose -f docker-compose-seed.yml rm
+docker-compose -f docker-compose-ext.yml rm
+docker-compose -f docker-compose-int.yml rm
+docker-compose -f docker-compose-seed.yml rm
 
 # remove images
 docker rmi mongo-setup seed-data rampvis-api_data-api rampvis-api_infrastructure-api
 
-# remove volumes, this will also remove database and search indices
+# remove volumes, e.g., database and search indices
 docker volume rm rampvis-api_mongostatus rampvis-api_esdata01 rampvis-api_esdata02 rampvis-api_esdata03 rampvis-api_mongodata01 rampvis-api_mongodata02 rampvis-api_mongodata03
-
+# remove dangling volumes
+docker volume prune
 ```
 
 Create an overlay network to allow communication between docker applications:
@@ -59,9 +60,9 @@ The infrastructure APIs are dependent on database and search engine- MongoDB, El
 
 ```bash
 # start the services
-docker compose -f docker-compose-ext.yml up -d
+docker-compose -f docker-compose-ext.yml up -d
 # check the status
-docker compose -f docker-compose-ext.yml ps
+docker-compose -f docker-compose-ext.yml ps
 ```
 
 #### [2] Start Internal Services
@@ -70,9 +71,9 @@ Start the data-api and infrastructure-api
 
 ```bash
 # start the services
-docker compose -f docker-compose-int.yml up -d
+docker-compose -f docker-compose-int.yml up -d
 # check the status
-docker compose -f docker-compose-int.yml ps
+docker-compose -f docker-compose-int.yml ps
 ```
 
 > Getting started locally --
@@ -84,15 +85,15 @@ This script will clear the databases and search indices, and seed the MongoDB da
 
 ```bash
 # start the services
-docker compose -f docker-compose-seed.yml up -d
+docker-compose -f docker-compose-seed.yml up -d
 # check the status
-docker compose -f docker-compose-seed.yml ps
+docker-compose -f docker-compose-seed.yml ps
 ```
 
 Injecting data and creating index may take some time, to inspect the log, run:
 
 ```bash
-docker compose -f docker-compose-seed.yml logs seed-data --follow
+docker-compose -f docker-compose-seed.yml logs seed-data --follow
 ```
 
 ### Containers and Network
