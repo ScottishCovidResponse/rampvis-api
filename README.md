@@ -23,7 +23,7 @@ This project implements RESTful APIs for the RAMPVIS system. This repository con
 
 We created multiple docker-compose scripts and each script handles a set of services. This helps with troubleshooting any issues. Sequentially start the following services. Note that based on what version is installed either use `docker compose` or `docker-compose`.
 
-Ensure docker is running. Stop and clean everything if required. For example,
+Ensure docker is running. Stop and clean everything if required. Example commands:
 
 ```bash
 # stop containers
@@ -41,8 +41,16 @@ docker rmi mongo-setup seed-data rampvis-api_data-api rampvis-api_infrastructure
 
 # remove volumes, e.g., database and search indices
 docker volume rm rampvis-api_mongostatus rampvis-api_esdata01 rampvis-api_esdata02 rampvis-api_esdata03 rampvis-api_mongodata01 rampvis-api_mongodata02 rampvis-api_mongodata03
-# remove dangling volumes
+
+# remove all unused volumes
 docker volume prune
+
+# leave swarm network
+docker swarm leave --force
+
+# remove all unused networks
+docker network prune
+
 ```
 
 Create an overlay network to allow communication between docker applications:
