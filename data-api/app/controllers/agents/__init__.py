@@ -1,6 +1,6 @@
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-import threading
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from loguru import logger
 from app.controllers.agents.sensitivity_analysis_agent import convert_data
 from app.controllers.agents.sensitivity_analysis_agent import sobol_index_agent
@@ -55,9 +55,9 @@ def run_agents():
     sensitivity_agents()
 
 # A recurrent job
-scheduler = BackgroundScheduler(daemon=True)
+# scheduler = BackgroundScheduler(daemon=True)
+scheduler = AsyncIOScheduler(daemon=True)
 
 # Cron runs now and at 0am daily
-scheduler.add_job(run_agents, "cron", hour=0, minute=0, second=0,next_run_time=datetime.now())
-
+scheduler.add_job(run_agents, "cron", hour=0, minute=0, second=0, next_run_time=datetime.now())
 scheduler.start()
