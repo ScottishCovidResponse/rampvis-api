@@ -1,3 +1,4 @@
+from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 from loguru import logger
@@ -18,19 +19,11 @@ def uncertainty_agents():
     try:
         logger.info("Running Uncertainty Analysis Agents")
         # Start clustering
-        # t_u_cluster = threading.Thread(target=uncertainty_clustering_agent)
-        # t_u_cluster.start()
         uncertainty_clustering_agent()
-
         # Start non-clustered computations
-        # threading.Thread(target=uncertainty_mean_sample_agent).start()
-        uncertainty_mean_sample_agent()
-        
-        # t_u_cluster.join()
+        uncertainty_mean_sample_agent()    
         logger.info("Uncertainty Clustering Complete")
-        # Start computations requiring clustered data
         logger.info("Running Uncertainty Cluster Analysis")
-        # threading.Thread(target=uncertainty_cluster_mean_sample_agent).start()
         uncertainty_cluster_mean_sample_agent()
     except Exception as e:
         logger.info("Uncertainty Agents failed.")
@@ -40,31 +33,16 @@ def uncertainty_agents():
 def sensitivity_agents():
     try:
         logger.info("Converting ents files to sandu SensitivityInput objects.")
-        #Converts data from Ensemble Time-series (ents) format into sandu SensitivtyInput objects.
-        # t_convert = threading.Thread(target=ents_to_sandu_agent)
-        # t_convert.start()
+        # Converts data from Ensemble Time-series (ents) format into sandu SensitivtyInput objects.
         ents_to_sandu_agent()
-
-        # Start non clustered threads
-        # threading.Thread(target=convert_data).start()
-        # t_convert.join()
         convert_data()
-        # threading.Thread(target=sensitivity_stream_registration_agent).start()
         sensitivity_stream_registration_agent()
         logger.info("SensitivityInput objects created from ents files.")
-        # threading.Thread(target=summary_curves_agent).start()
         summary_curves_agent()
-        # threading.Thread(target=sobol_index_agent).start()
         sobol_index_agent()
-
         logger.info("Running Sensitivity Analysis Agents")
-        # t_s_cluster = threading.Thread(target=sensitivity_clustering_agent)
-        # t_s_cluster.start()
         sensitivity_clustering_agent()
-
-        # t_s_cluster.join()
         logger.info("Sensitivity Clustering Complete")
-        # threading.Thread(target=sensitivity_clustering_range_mean_agent).start()
         sensitivity_clustering_range_mean_agent()
     except Exception as e:
         logger.info("Sensitivity Agents failed.")
@@ -72,9 +50,6 @@ def sensitivity_agents():
 
 def run_agents():
     download_data()
-    # threading.Thread(target=precompute).start()
-    # threading.Thread(target=uncertainty_agents).start()
-    # threading.Thread(target=sensitivity_agents).start()
     precompute()
     uncertainty_agents()
     sensitivity_agents()
@@ -82,10 +57,7 @@ def run_agents():
 # A recurrent job
 scheduler = BackgroundScheduler(daemon=True)
 
-# Cron runs at 0am daily
-scheduler.add_job(run_agents, "cron", hour=0, minute=0, second=0)
+# Cron runs now and at 0am daily
+scheduler.add_job(run_agents, "cron", hour=0, minute=0, second=0,next_run_time=datetime.now())
 
 scheduler.start()
-
-# Run immediately after server starts
-threading.Thread(target=run_agents).start()
