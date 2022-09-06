@@ -69,8 +69,51 @@ The infrastructure APIs are dependent on database and search engine- MongoDB, El
 ```bash
 # start the services
 docker-compose -f docker-compose-ext.yml up -d
+```
+
+Wait for sometime to let all the services to start.
+Check if the Elasticsearch (es01, es02, es03), Kibana (kib01), and MongoDB (mongodb01, mongodb02, mongodb03) services are running properly.
+
+
+```sh
 # check the status
 docker-compose -f docker-compose-ext.yml ps
+
+# the output should look like
+#  Name                  Command               State                 Ports
+# ----------------------------------------------------------------------------------------
+# es01          /bin/tini -- /usr/local/bi ...   Up       0.0.0.0:9200->9200/tcp, 9300/tcp
+# es02          /bin/tini -- /usr/local/bi ...   Up       9200/tcp, 9300/tcp
+# es03          /bin/tini -- /usr/local/bi ...   Up       9200/tcp, 9300/tcp
+# kib01         /bin/tini -- /usr/local/bi ...   Up       0.0.0.0:5601->5601/tcp
+# mongo-setup   docker-entrypoint.sh bash  ...   Exit 0
+# mongodb01     /usr/bin/mongod --replSet  ...   Up       0.0.0.0:27017->27017/tcp
+# mongodb02     /usr/bin/mongod --replSet  ...   Up       27017/tcp
+# mongodb03     /usr/bin/mongod --replSet  ...   Up       27017/tcp
+```
+
+Run the following command to inspect a container log.
+
+```sh
+docker-compose -f docker-compose-ext.yml logs <container_name>
+# inspect es01
+docker-compose -f docker-compose-ext.yml logs es01
+```
+**Note** The Elasticsearch services in docker sometimes crash due to a known issue: ` max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]`. 
+
+In WSL, run the following commnads in PowerShell. More information can be found [here](https://github.com/docker/for-win/issues/5202).
+
+```bash
+wsl -d docker-desktop cat /proc/sys/vm/max_map_count # current value
+# 65530
+wsl -d docker-desktop sysctl -w vm.max_map_count=262144
+# vm.max_map_count = 262144
+```
+
+In Ubuntu, run the following command. More information can be found [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html).
+
+```sh
+sudo sysctl -w vm.max_map_count=262144
 ```
 
 #### [2] Start Internal Services
@@ -82,10 +125,22 @@ Start the data-api and infrastructure-api
 docker-compose -f docker-compose-int.yml up -d
 # check the status
 docker-compose -f docker-compose-int.yml ps
+
+# the output should look like
+#        Name                     Command               State           Ports
+# ------------------------------------------------------------------------------------
+# data-api             uvicorn app.main:app --rel ...   Up      0.0.0.0:4010->4010/tcp
+# infrastructure-api   docker-entrypoint.sh yarn dev    Up      0.0.0.0:4000->4000/tcp
 ```
 
-> Getting started locally --
-> In order to start and debug the services locally see the [data-api README](./data-api/README.md) and [infrastructure-api README](./infrastructure-api/README.md) files.
+To test if the service internal services/APIs are started properly, open the following URLs 
+- http://localhost:4010/docs and 
+- http://localhost:4000/api-docs/swagger/
+
+These the URLs should display the list of the APIs.
+
+
+**Note** In order to start and debug the services locally see the [data-api README](./data-api/README.md) and [infrastructure-api README](./infrastructure-api/README.md) files.
 
 #### [3] Inject the Seed Data
 
@@ -101,8 +156,22 @@ docker-compose -f docker-compose-seed.yml ps
 Injecting data and creating index may take some time, to inspect the log, run:
 
 ```bash
-docker-compose -f docker-compose-seed.yml logs seed-data --follow
+docker-compose -f docker-compose-seed.yml logs seed-data
 ```
+
+To inspect if the index are created properly, run:
+
+```sh
+# check the search index
+curl localhost:9200/_cat/indices
+
+# the following index must be present in the oupuput
+# green open rampvis.onto_vis                9d4VfZyyRCursKTYtVP-vw 1 1    27    0  65.1kb  32.5kb
+# green open rampvis.onto_page               nwrlo8-eR3OOSITUho4zRQ 1 1 11125    0     4mb     2mb
+# green open rampvis.onto_data               beS7p-fWTmWan-FA_ndhVw 1 1 18635    0   5.1mb   2.5mb
+
+```
+
 
 ### Containers and Network
 
