@@ -17,13 +17,34 @@ This project implements RESTful APIs for the RAMPVIS system. This repository con
 
 ### Prerequisites
 
-- This is tested in Ubuntu 22.04
+- This is tested in Ubuntu 22.04 and WSL.
+- Ensure docker is running. 
+- We created multiple docker-compose scripts and each script handles a set of services. Sequentially start the services. Note that based on what version is installed either use `docker compose` or `docker-compose`.
 
-### Start Development Instance
+- Update docker virtual memory size. Sometimes, the Elasticsearch services in docker crash due to a known issue: ` max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]`. Follow the instructions below to resolve this issue,
 
-We created multiple docker-compose scripts and each script handles a set of services. This helps with troubleshooting any issues. Sequentially start the following services. Note that based on what version is installed either use `docker compose` or `docker-compose`.
+In WSL, run the following commnads in PowerShell. More information can be found [here](https://github.com/docker/for-win/issues/5202).
 
-Ensure docker is running. Stop and clean everything if required. Example commands:
+```bash
+wsl -d docker-desktop cat /proc/sys/vm/max_map_count # current value
+# 65530
+wsl -d docker-desktop sysctl -w vm.max_map_count=262144
+# vm.max_map_count = 262144
+```
+
+In Ubuntu, run the following command. More information can be found [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html).
+
+```sh
+sudo sysctl -w vm.max_map_count=262144
+```
+
+### Stop & Clean (optional)
+
+Stop & clean [rampvis-ui](https://github.com/ScottishCovidResponse/rampvis-ui#stop--clean-optional) and [rampvis-ontology-management-ui](https://github.com/saifulkhan/rampvis-ontology-management-ui#stop--clean-optional)
+
+
+Following commands will stop the containers and and clean the images related to this repository.
+
 
 ```bash
 # stop containers
@@ -52,6 +73,8 @@ docker swarm leave --force
 docker network prune
 
 ```
+
+### Start Development Instance
 
 Create an overlay network to allow communication between docker applications:
 
@@ -92,28 +115,13 @@ docker-compose -f docker-compose-ext.yml ps
 # mongodb03     /usr/bin/mongod --replSet  ...   Up       27017/tcp
 ```
 
-Run the following command to inspect a container log.
+Run the following command to inspect any container log.
 
 ```sh
 docker-compose -f docker-compose-ext.yml logs <container_name>
-# inspect es01
+
+# for example, inspect es01
 docker-compose -f docker-compose-ext.yml logs es01
-```
-**Note** The Elasticsearch services in docker sometimes crash due to a known issue: ` max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]`. 
-
-In WSL, run the following commnads in PowerShell. More information can be found [here](https://github.com/docker/for-win/issues/5202).
-
-```bash
-wsl -d docker-desktop cat /proc/sys/vm/max_map_count # current value
-# 65530
-wsl -d docker-desktop sysctl -w vm.max_map_count=262144
-# vm.max_map_count = 262144
-```
-
-In Ubuntu, run the following command. More information can be found [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html).
-
-```sh
-sudo sysctl -w vm.max_map_count=262144
 ```
 
 #### [2] Start Internal Services
@@ -158,7 +166,7 @@ Injecting data and creating index may take some time, to inspect the log, run:
 ```bash
 docker-compose -f docker-compose-seed.yml logs seed-data
 ```
-
+ 
 To inspect if the index are created properly, run:
 
 ```sh
@@ -171,7 +179,7 @@ curl localhost:9200/_cat/indices
 # green open rampvis.onto_data               beS7p-fWTmWan-FA_ndhVw 1 1 18635    0   5.1mb   2.5mb
 
 ```
-
+ 
 
 ### Containers and Network
 
