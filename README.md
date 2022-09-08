@@ -38,7 +38,6 @@ In Ubuntu, run the following command. More information can be found [here](https
 sudo sysctl -w vm.max_map_count=262144
 ```
 
-
 ### Stop & Clean (optional)
 
 Stop & clean [rampvis-ui](https://github.com/ScottishCovidResponse/rampvis-ui#stop--clean-optional) and [rampvis-ontology-management-ui](https://github.com/saifulkhan/rampvis-ontology-management-ui#stop--clean-optional)
@@ -116,11 +115,12 @@ docker-compose -f docker-compose-ext.yml ps
 # mongodb03     /usr/bin/mongod --replSet  ...   Up       27017/tcp
 ```
 
-Run the following command to inspect a container log.
+Run the following command to inspect any container log.
 
 ```sh
 docker-compose -f docker-compose-ext.yml logs <container_name>
-# inspect es01
+
+# for example, inspect es01
 docker-compose -f docker-compose-ext.yml logs es01
 ```
 
@@ -166,7 +166,7 @@ Injecting data and creating index may take some time, to inspect the log, run:
 ```bash
 docker-compose -f docker-compose-seed.yml logs seed-data
 ```
-
+ 
 To inspect if the index are created properly, run:
 
 ```sh
@@ -179,7 +179,7 @@ curl localhost:9200/_cat/indices
 # green open rampvis.onto_data               beS7p-fWTmWan-FA_ndhVw 1 1 18635    0   5.1mb   2.5mb
 
 ```
-
+ 
 
 ### Containers and Network
 
