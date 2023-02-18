@@ -141,11 +141,12 @@ docker-compose -f docker-compose-int.yml ps
 # infrastructure-api   docker-entrypoint.sh yarn dev    Up      0.0.0.0:4000->4000/tcp
 ```
 
-To test if the service internal services/APIs are started properly, open the following URLs 
-- http://localhost:4010/docs and 
-- http://localhost:4000/api-docs/swagger/
+To display the list of the APIs and test test if the service internal services/APIs are started properly, open the following URLs:
 
-These the URLs should display the list of the APIs.
+- http://localhost:4010/docs and 
+- http://localhost:4000/api-docs/swagger/ 
+
+Note: Not all the infrastructure APIs are documented and this UI will only show the few APIs that are documented.
 
 
 **Note** In order to start and debug the services locally see the [data-api README](./data-api/README.md) and [infrastructure-api README](./infrastructure-api/README.md) files.
@@ -201,7 +202,8 @@ The [rampvis-ui](https://github.com/ScottishCovidResponse/rampvis-ui) and [rampv
   year          = {2022},
   doi           = {10.1109/TSC.2022.3164146}
 }
-
+```
+```bash
 @article{Khan2022:IEEE-TVCG,,
    author = {Saiful Khan, Phong Nguyen, Alfie Abdul-Rahman, Benjamin Bach, Min Chen, Euan Freeman, and Cagatay Turkay},
    title = {Propagating Visual Designs to Numerous Plots and Dashboards},
@@ -217,4 +219,5 @@ The [rampvis-ui](https://github.com/ScottishCovidResponse/rampvis-ui) and [rampv
 ## Contact
 
 URL: https://sites.google.com/view/rampvis/teams
-Email: saiful.etc@gmail.com
+
+Email: khan.saiful@outlook.com
